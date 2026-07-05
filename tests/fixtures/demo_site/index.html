@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Acme Cloud — Home</title>
+  <meta name="description" content="Acme Cloud is a demo platform for agent-native capture.">
+  <link rel="canonical" href="http://demo.local/">
+  <link rel="alternate" type="application/rss+xml" title="Acme Blog" href="/feed.xml">
+  <script src="/app.js"></script>
+  <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "Organization", "name": "Acme Cloud"}
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="/index.html">Home</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/docs/api.html">API Docs</a>
+  </nav>
+  <h1>Welcome to Acme Cloud</h1>
+  <p>Acme Cloud provides scalable widget hosting for modern teams.</p>
+  <p>Our platform serves over 9,000 widgets per second.</p>
+  <a href="/pricing.html"><img src="/img/hero.png" alt="Compare Acme Cloud plans"></a>
+  <a href="https://partner.example.org/deal">Partner offer</a>
+  <a href="/private/secret.html">Internal area</a>
+  <h2>Why Acme</h2>
+  <ul>
+    <li>Deploy widgets in seconds</li>
+    <li>Pay only for what you use</li>
+  </ul>
+  <form action="/search" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <button type="submit">Search</button>
+  </form>
+  <script>
+    fetch('/api/quotes').then(r => r.json());
+  </script>
+</body>
+</html>

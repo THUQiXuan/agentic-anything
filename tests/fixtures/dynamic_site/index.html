@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dynamic Widgets</title>
+</head>
+<body>
+  <h1>Dynamic Widgets</h1>
+  <div id="status">loading…</div>
+  <div id="list"></div>
+  <script>
+    fetch('/api/widgets.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        document.getElementById('status').innerHTML = '<p>Loaded ' + data.widgets.length + ' widgets dynamically</p>';
+        document.getElementById('list').innerHTML =
+          data.widgets.map(function (w) { return '<li>' + w + '</li>'; }).join('');
+        var a = document.createElement('a');
+        a.href = '/detail.html';
+        a.textContent = 'Widget detail';
+        document.body.appendChild(a);
+      });
+  </script>
+</body>
+</html>

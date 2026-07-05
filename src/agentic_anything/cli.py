@@ -1,0 +1,309 @@
+"""The `agentic-anything` command-line interface (alias: `aany`).
+
+Subcommands:
+  build  URL        capture a website into a site pack
+  skill  PACK_DIR   generate skills/SKILL.md for a pack (LLM or --no-llm)
+  clify  PACK_DIR   generate a zero-dependency site CLI for a pack
+  pack   URL        one-shot: build + skill + clify
+  query  PACK_DIR Q keyword search over a pack
+  page   PACK_DIR ID  print one page (md or json)
+  apis   PACK_DIR   show the discovered API surface
+  info   PACK_DIR   pack summary
+
+Every data-producing command supports --json. Exit codes: 0 ok, 1 error.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+from . import __version__
+from .config import BuildConfig, LLMConfig
+from .packer import build_pack
+from .query import PackNotFound, PackReader, search_pack
+from .sitecli import generate_site_cli
+from .skills import generate_skill
+from .util import site_slug_from_url
+
+
+def _print_json(payload) -> None:
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+
+
+def _build_config_from_args(args) -> BuildConfig:
+    return BuildConfig(
+        max_pages=args.max_pages,
+        same_origin_only=not args.allow_cross_origin,
+        respect_robots=not args.ignore_robots,
+        timeout=args.timeout,
+        render=args.render or args.screenshots,
+        screenshots=args.screenshots,
+        include_html=not args.no_html,
+        probe_well_known=not args.no_probe,
+        extra_seeds=args.seed or [],
+    )
+
+
+def _llm_config_from_args(args) -> LLMConfig:
+    return LLMConfig.from_env(
+        model=getattr(args, "model", None),
+        base_url=getattr(args, "base_url", None),
+    )
+
+
+def _add_build_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("url", help="website URL (https:// is assumed if omitted)")
+    parser.add_argument("-o", "--output", default=None,
+                        help="pack directory (default: packs/<site-slug>)")
+    parser.add_argument("--site-id", default=None, help="override the site id/slug")
+    parser.add_argument("--max-pages", type=int, default=20)
+    parser.add_argument("--render", action="store_true",
+                        help="render pages with Chromium (requires the [render] extra)")
+    parser.add_argument("--screenshots", action="store_true",
+                        help="save full-page screenshots (implies --render)")
+    parser.add_argument("--no-html", action="store_true", help="do not keep captured HTML")
+    parser.add_argument("--allow-cross-origin", action="store_true",
+                        help="follow links to other origins (default: same-origin only)")
+    parser.add_argument("--ignore-robots", action="store_true",
+                        help="do not check robots.txt (use responsibly)")
+    parser.add_argument("--no-probe", action="store_true",
+                        help="skip sitemap/openapi/.well-known probes")
+    parser.add_argument("--timeout", type=float, default=20.0)
+    parser.add_argument("--seed", action="append", default=None,
+                        help="extra seed URL (repeatable)")
+
+
+def _add_llm_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--model", default=None,
+                        help="chat model id (default: env AGENTIC_MODEL or google/gemini-3.5-flash)")
+    parser.add_argument("--base-url", default=None,
+                        help="OpenAI-compatible base URL (default: env AGENTIC_BASE_URL or OpenRouter)")
+    parser.add_argument("--no-llm", action="store_true",
+                        help="deterministic generation without any API calls")
+    parser.add_argument("--language", choices=["en", "zh", "both"], default="en",
+                        help="skill language (default: en)")
+
+
+def _resolve_output(args) -> Path:
+    if args.output:
+        return Path(args.output)
+    url = args.url if "://" in args.url else f"https://{args.url}"
+    slug = args.site_id or site_slug_from_url(url)
+    return Path("packs") / slug
+
+
+def _run_build(args) -> tuple[int, dict]:
+    config = _build_config_from_args(args)
+    out = _resolve_output(args)
+
+    def progress(page) -> None:
+        if not args.json:
+            print(f"  captured {page.page_id}  ({page.final_url})", file=sys.stderr)
+
+    result = build_pack(args.url, out, config=config, site_id=args.site_id, progress=progress)
+    return (0 if result.page_count > 0 else 1), result.as_json()
+
+
+def _run_skill(args) -> dict:
+    llm_config = _llm_config_from_args(args)
+    use_llm = not args.no_llm
+    if use_llm and not llm_config.available:
+        print(
+            "warning: no OPENROUTER_API_KEY / AGENTIC_API_KEY set; "
+            "falling back to deterministic skill generation (--no-llm).",
+            file=sys.stderr,
+        )
+        use_llm = False
+    path = generate_skill(args.pack_dir, llm_config=llm_config, use_llm=use_llm,
+                          language=args.language)
+    return {"skill_path": str(path), "llm_used": use_llm,
+            "model": llm_config.model if use_llm else None}
+
+
+def cmd_build(args) -> int:
+    rc, payload = _run_build(args)
+    if args.json:
+        _print_json(payload)
+    else:
+        print(f"pack: {payload['pack_dir']}")
+        print(f"pages captured: {payload['page_count']}   frontier: {payload['frontier_count']}   "
+              f"api surface entries: {payload['api_count']}")
+        for warning in payload["warnings"]:
+            print(f"warning: {warning}", file=sys.stderr)
+    return rc
+
+
+def cmd_skill(args) -> int:
+    payload = _run_skill(args)
+    if args.json:
+        _print_json(payload)
+    else:
+        print(f"skill written: {payload['skill_path']}")
+    return 0
+
+
+def cmd_clify(args) -> int:
+    path = generate_site_cli(args.pack_dir)
+    if args.json:
+        _print_json({"cli_path": str(path)})
+    else:
+        print(f"site CLI written: {path}")
+        print(f"try: python {path} pages")
+    return 0
+
+
+def cmd_pack(args) -> int:
+    rc, build_payload = _run_build(args)
+    if rc != 0:
+        if args.json:
+            _print_json({"build": build_payload, "skill": None, "cli": None})
+        else:
+            for warning in build_payload["warnings"]:
+                print(f"warning: {warning}", file=sys.stderr)
+        return rc
+    out = _resolve_output(args)
+    args.pack_dir = str(out)
+    skill_payload = _run_skill(args)
+    cli_path = generate_site_cli(args.pack_dir)
+    if args.json:
+        _print_json({"build": build_payload, "skill": skill_payload,
+                     "cli": {"cli_path": str(cli_path)}})
+    else:
+        print(f"pack: {build_payload['pack_dir']}")
+        print(f"pages captured: {build_payload['page_count']}   "
+              f"frontier: {build_payload['frontier_count']}   "
+              f"api surface entries: {build_payload['api_count']}")
+        print(f"skill written: {skill_payload['skill_path']}")
+        print(f"site CLI written: {cli_path}")
+        print(f"\ndone. explore the pack:\n  agentic-anything info {out}\n"
+              f"  cat {out}/skills/SKILL.md")
+    return 0
+
+
+def cmd_query(args) -> int:
+    results = search_pack(args.pack_dir, args.query, top=args.top)
+    if args.json:
+        _print_json(results)
+    else:
+        if not results:
+            print("(no matches)")
+        for r in results:
+            print(f"{r['score']:>7}  {r['page_id']:<36} {r['title']}")
+            for ev in r["evidence"][:3]:
+                print(f"         - [{ev['kind']}] {ev['text'][:110]}")
+    return 0
+
+
+def cmd_page(args) -> int:
+    reader = PackReader(args.pack_dir)
+    if args.format == "json" or args.json:
+        _print_json(reader.page(args.page_id))
+    else:
+        print(reader.page_markdown(args.page_id), end="")
+    return 0
+
+
+def cmd_apis(args) -> int:
+    reader = PackReader(args.pack_dir)
+    apis = reader.apis
+    if args.json:
+        _print_json(apis)
+    else:
+        total = 0
+        for key in ("forms", "endpoints", "observed_network", "openapi", "feeds",
+                    "well_known", "sitemaps"):
+            items = apis.get(key, [])
+            total += len(items)
+            for item in items:
+                label = item.get("url") or item.get("action_url", "")
+                method = item.get("method", "")
+                print(f"[{key}] {method} {label}".replace("  ", " "))
+        if total == 0:
+            print("(no API surface discovered)")
+    return 0
+
+
+def cmd_info(args) -> int:
+    reader = PackReader(args.pack_dir)
+    info = reader.info()
+    if args.json:
+        _print_json(info)
+    else:
+        for key, value in info.items():
+            print(f"{key}: {value}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        prog="agentic-anything",
+        description="Turn any website into an agent-native toolkit.",
+    )
+    parser.add_argument("--version", action="version", version=f"agentic-anything {__version__}")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p = sub.add_parser("build", help="capture a website into a site pack")
+    _add_build_options(p)
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_build)
+
+    p = sub.add_parser("skill", help="generate skills/SKILL.md for a pack")
+    p.add_argument("pack_dir")
+    _add_llm_options(p)
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_skill)
+
+    p = sub.add_parser("clify", help="generate a site-specific CLI for a pack")
+    p.add_argument("pack_dir")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_clify)
+
+    p = sub.add_parser("pack", help="one-shot: build + skill + clify")
+    _add_build_options(p)
+    _add_llm_options(p)
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_pack)
+
+    p = sub.add_parser("query", help="keyword search over a pack")
+    p.add_argument("pack_dir")
+    p.add_argument("query")
+    p.add_argument("--top", type=int, default=5)
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_query)
+
+    p = sub.add_parser("page", help="print one captured page")
+    p.add_argument("pack_dir")
+    p.add_argument("page_id")
+    p.add_argument("--format", choices=["md", "json"], default="md")
+    p.add_argument("--json", action="store_true", help="same as --format json")
+    p.set_defaults(func=cmd_page)
+
+    p = sub.add_parser("apis", help="show the discovered API surface")
+    p.add_argument("pack_dir")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_apis)
+
+    p = sub.add_parser("info", help="pack summary")
+    p.add_argument("pack_dir")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_info)
+
+    args = parser.parse_args(argv)
+    try:
+        return args.func(args)
+    except PackNotFound as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    except KeyboardInterrupt:
+        print("interrupted", file=sys.stderr)
+        return 130
+    except Exception as exc:
+        print(f"error: {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

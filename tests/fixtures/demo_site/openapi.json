@@ -1,0 +1,8 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "Acme Cloud API", "version": "1.0.0" },
+  "paths": {
+    "/api/v1/widgets.json": { "get": { "summary": "List widgets" } },
+    "/api/quotes": { "get": { "summary": "Quote of the day" } }
+  }
+}

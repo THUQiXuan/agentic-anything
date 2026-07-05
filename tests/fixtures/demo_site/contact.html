@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Acme Cloud — Contact</title>
+</head>
+<body>
+  <h1>Contact sales</h1>
+  <p>Tell us about your widget needs.</p>
+  <form id="contact-form" action="/submit" method="post">
+    <label for="full_name">Full name</label>
+    <input type="text" id="full_name" name="full_name" required>
+    <label for="work_email">Work email</label>
+    <input type="email" id="work_email" name="work_email" required placeholder="you@company.com">
+    <label for="topic">Topic</label>
+    <select id="topic" name="topic">
+      <option>Sales</option>
+      <option>Support</option>
+      <option>Partnership</option>
+    </select>
+    <label for="message">Message</label>
+    <textarea id="message" name="message"></textarea>
+    <input type="hidden" name="csrf" value="fixture-token">
+    <button type="submit">Send message</button>
+  </form>
+</body>
+</html>

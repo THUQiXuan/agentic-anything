@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-anything"
+dynamic = ["version"]
+description = "Turn any website into an agent-native toolkit: structured site packs, generated agent skills, and per-site CLIs."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Agentic Anything Contributors" }]
+keywords = ["agent", "llm", "web", "crawler", "skills", "cli", "openrouter"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.optional-dependencies]
+render = ["playwright>=1.40,<2"]
+dev = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/THUQiXuan/agentic-anything"
+Repository = "https://github.com/THUQiXuan/agentic-anything"
+
+[project.scripts]
+agentic-anything = "agentic_anything.cli:main"
+aany = "agentic_anything.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.dynamic]
+version = { attr = "agentic_anything._version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
