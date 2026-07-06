@@ -19,6 +19,9 @@ venv/
 .mypy_cache/
 .ruff_cache/
 
+# Local work reports (never published)
+reports/
+
 # Generated site packs (build artifacts, not source)
 packs/
 
