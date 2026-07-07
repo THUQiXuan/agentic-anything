@@ -30,11 +30,30 @@ from .util import sha256_bytes, slugify, truncate_text, utc_now_iso, write_json
 
 SPEC_VERSION = "0.2"
 
-DOCUMENT_EXTENSIONS = {".txt", ".md", ".markdown", ".epub", ".pdf", ".srt", ".vtt", ".html", ".htm"}
+# Text-family formats handled by the built-in splitters.
+TEXT_EXTENSIONS = {".txt", ".rst", ".log", ".yaml", ".yml", ".toml", ".ini",
+                   ".cfg", ".tex", ".text"}
+MARKDOWN_EXTENSIONS = {".md", ".markdown", ".mdx"}
+OFFICE_EXTENSIONS = {".docx", ".pptx", ".xlsx"}
+DATA_EXTENSIONS = {".csv", ".tsv", ".json", ".jsonl", ".ipynb",
+                   ".db", ".sqlite", ".sqlite3", ".eml", ".mbox"}
+ARCHIVE_EXTENSIONS = {".zip", ".tar", ".tgz"}  # plus .tar.gz via name check
+SUBTITLE_EXTENSIONS = {".srt", ".vtt"}
+
+# Everything ingestible as a single file (directory walking uses a subset).
+DOCUMENT_EXTENSIONS = (
+    TEXT_EXTENSIONS | MARKDOWN_EXTENSIONS | OFFICE_EXTENSIONS | DATA_EXTENSIONS
+    | SUBTITLE_EXTENSIONS | {".epub", ".pdf", ".html", ".htm"}
+)
+# Directory walking excludes archives (recursion risk) and media (tool-heavy),
+# but media files inside a folder are still attempted, with warnings on skip.
+_DIR_WALK_EXTENSIONS = DOCUMENT_EXTENSIONS
 
 # Units bigger than this are split (characters of content text).
 _MAX_UNIT_CHARS = 12_000
 _MIN_UNIT_CHARS = 200
+_MAX_ARCHIVE_MEMBERS = 4000
+_MAX_ARCHIVE_BYTES = 500_000_000  # decompressed cap (zip-bomb guard)
 
 
 @dataclass
@@ -83,22 +102,69 @@ def detect_source_kind(source: str) -> str:
 
 def ingest_file(path: Path) -> tuple[str, list[Unit]]:
     """Returns (resource_type, units)."""
+    from .ingest_media import MEDIA_EXTENSIONS
+
     suffix = path.suffix.lower()
-    if suffix in (".txt",):
+    name_lower = path.name.lower()
+    if suffix in TEXT_EXTENSIONS:
         return "document", _ingest_text(path)
-    if suffix in (".md", ".markdown"):
+    if suffix in MARKDOWN_EXTENSIONS:
         return "document", _ingest_markdown(path)
     if suffix == ".epub":
         return "book", _ingest_epub(path)
     if suffix == ".pdf":
         return "document", _ingest_pdf(path)
-    if suffix in (".srt", ".vtt"):
+    if suffix in SUBTITLE_EXTENSIONS:
         return "video", _ingest_subtitles(path)
     if suffix in (".html", ".htm"):
         return "document", _ingest_html_file(path)
+    if suffix == ".docx":
+        from .ingest_office import ingest_docx
+
+        return "document", ingest_docx(path)
+    if suffix == ".pptx":
+        from .ingest_office import ingest_pptx
+
+        return "presentation", ingest_pptx(path)
+    if suffix == ".xlsx":
+        from .ingest_office import ingest_xlsx
+
+        return "dataset", ingest_xlsx(path)
+    if suffix in (".csv", ".tsv"):
+        from .ingest_data import ingest_csv
+
+        return "dataset", ingest_csv(path)
+    if suffix in (".json", ".jsonl"):
+        from .ingest_data import ingest_json
+
+        return "dataset", ingest_json(path)
+    if suffix == ".ipynb":
+        from .ingest_data import ingest_ipynb
+
+        return "notebook", ingest_ipynb(path)
+    if suffix in (".db", ".sqlite", ".sqlite3"):
+        from .ingest_data import ingest_sqlite
+
+        return "database", ingest_sqlite(path)
+    if suffix == ".eml":
+        from .ingest_data import ingest_eml
+
+        return "email", ingest_eml(path)
+    if suffix == ".mbox":
+        from .ingest_data import ingest_mbox
+
+        return "email", ingest_mbox(path)
+    if suffix in MEDIA_EXTENSIONS:
+        from .ingest_media import ingest_local_media
+
+        resource = "audio" if suffix in {".mp3", ".wav", ".m4a", ".flac",
+                                         ".ogg", ".opus", ".aac"} else "video"
+        return resource, ingest_local_media(path)
+    if suffix in ARCHIVE_EXTENSIONS or name_lower.endswith(".tar.gz"):
+        return _ingest_archive(path)
     raise IngestError(
         f"unsupported file type '{suffix}' "
-        f"(supported: {', '.join(sorted(DOCUMENT_EXTENSIONS))})"
+        f"(supported: {', '.join(sorted(DOCUMENT_EXTENSIONS | ARCHIVE_EXTENSIONS | MEDIA_EXTENSIONS))})"
     )
 
 
@@ -515,6 +581,11 @@ def _split_large_units(units: list[Unit]) -> list[Unit]:
 
 
 def ingest_directory(path: Path) -> tuple[str, list[Unit], list[str]]:
+    # A source tree is ingested as code (tree overview + per-file units).
+    from .ingest_code import ingest_repo_dir, looks_like_repo
+
+    if looks_like_repo(path):
+        return "code", ingest_repo_dir(path), []
     units: list[Unit] = []
     warnings: list[str] = []
     files = sorted(
@@ -548,22 +619,279 @@ def ingest_directory(path: Path) -> tuple[str, list[Unit], list[str]]:
 
 
 # --------------------------------------------------------------------------
-# pack writer (shared shape with the web packer)
+# archives
 # --------------------------------------------------------------------------
+
+def _safe_extract_zip(zip_path: Path, dest: Path) -> None:
+    """Extract a zip while refusing traversal, symlinks and decompression bombs."""
+    dest.mkdir(parents=True, exist_ok=True)
+    total = 0
+    with zipfile.ZipFile(zip_path) as book:
+        members = book.infolist()
+        if len(members) > _MAX_ARCHIVE_MEMBERS:
+            raise IngestError(f"archive has too many members ({len(members)})")
+        for member in members:
+            name = member.filename
+            target = (dest / name).resolve()
+            if not str(target).startswith(str(dest.resolve())):
+                continue  # path traversal attempt
+            if member.is_dir():
+                target.mkdir(parents=True, exist_ok=True)
+                continue
+            # skip symlinks (external attr high byte 0xA = symlink)
+            if (member.external_attr >> 28) == 0xA:
+                continue
+            total += member.file_size
+            if total > _MAX_ARCHIVE_BYTES:
+                raise IngestError("archive decompresses beyond the 500MB cap")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with book.open(member) as src, open(target, "wb") as dst:
+                remaining = _MAX_ARCHIVE_BYTES
+                while True:
+                    chunk = src.read(1 << 20)
+                    if not chunk:
+                        break
+                    remaining -= len(chunk)
+                    if remaining < 0:
+                        raise IngestError("archive decompresses beyond the 500MB cap")
+                    dst.write(chunk)
+
+
+def _safe_extract_tar(tar_path: Path, dest: Path) -> None:
+    import tarfile
+
+    dest.mkdir(parents=True, exist_ok=True)
+    with tarfile.open(tar_path) as book:
+        members = book.getmembers()
+        if len(members) > _MAX_ARCHIVE_MEMBERS:
+            raise IngestError(f"archive has too many members ({len(members)})")
+        total = 0
+        safe = []
+        for member in members:
+            if not (member.isfile() or member.isdir()):
+                continue  # no symlinks/devices
+            target = (dest / member.name).resolve()
+            if not str(target).startswith(str(dest.resolve())):
+                continue
+            total += member.size
+            if total > _MAX_ARCHIVE_BYTES:
+                raise IngestError("archive decompresses beyond the 500MB cap")
+            safe.append(member)
+        book.extractall(dest, members=safe)  # noqa: S202 - members pre-filtered
+
+
+def _ingest_archive(path: Path) -> tuple[str, list[Unit]]:
+    import tempfile
+
+    workdir = Path(tempfile.mkdtemp(prefix="aany_archive_"))
+    if path.suffix.lower() == ".zip":
+        _safe_extract_zip(path, workdir)
+    else:
+        _safe_extract_tar(path, workdir)
+    roots = [p for p in workdir.iterdir()]
+    root = roots[0] if len(roots) == 1 and roots[0].is_dir() else workdir
+    resource_type, units, warnings = ingest_directory(root)
+    for unit in units:
+        unit.source_path = f"{path}!{Path(unit.source_path).name}" \
+            if unit.source_path else str(path)
+        unit.meta.setdefault("archive", str(path))
+    if warnings:
+        units[0].meta["ingest_warnings"] = warnings
+    return ("archive" if resource_type == "collection" else resource_type), units
+
+
+# --------------------------------------------------------------------------
+# URL assets (non-crawl sources reachable by URL)
+# --------------------------------------------------------------------------
+
+_ARXIV_RE = re.compile(
+    r"^(?:arxiv:|https?://(?:www\.)?arxiv\.org/(?:abs|pdf)/)"
+    r"(\d{4}\.\d{4,5}|[a-z\-]+(?:\.[A-Z]{2})?/\d{7})(v\d+)?(?:\.pdf)?/?$",
+    re.IGNORECASE,
+)
+_GITHUB_BLOB_RE = re.compile(
+    r"^https?://(?:www\.)?github\.com/([\w.\-]+)/([\w.\-]+)/(?:blob|raw)/([\w.\-/%]+)$"
+)
+_FILE_URL_EXTENSIONS = DOCUMENT_EXTENSIONS - {".html", ".htm"}
+_MAX_DOWNLOAD_BYTES = 80_000_000
+
+
+def classify_url(url: str) -> str:
+    """'crawl' | 'video' | 'repo' | 'arxiv' | 'file' | 'feed' for a URL."""
+    from urllib.parse import urlsplit
+
+    from .ingest_code import is_github_repo_url
+    from .ingest_media import is_video_url
+
+    bare = url.split("?")[0].split("#")[0]
+    if _ARXIV_RE.match(bare):
+        return "arxiv"
+    if is_github_repo_url(url):
+        return "repo"
+    if _GITHUB_BLOB_RE.match(bare):
+        return "file"  # rewritten to raw.githubusercontent.com when fetched
+    if is_video_url(url):
+        return "video"
+    # Extension checks apply to the URL *path* only — a bare host whose TLD
+    # collides with an extension (gov.md, example.zip) must still crawl.
+    path = urlsplit(bare).path if "://" in bare else "/" + bare.split("/", 1)[-1]
+    lower = path.lower()
+    if lower in ("", "/"):
+        return "crawl"
+    if lower.endswith(tuple(_FILE_URL_EXTENSIONS)) or lower.endswith(".tar.gz") \
+            or lower.endswith(tuple(ARCHIVE_EXTENSIONS)):
+        return "file"
+    if lower.endswith(("/feed", "/feed/", "/rss", "/rss/", "/feed.xml",
+                       "/rss.xml", "/atom.xml", ".rss", ".atom")):
+        return "feed"
+    return "crawl"
+
+
+def build_pack_from_url_asset(url: str, output_dir: str | Path,
+                              site_id: str | None = None):
+    """Ingest a non-crawl URL (video, repo, arXiv, direct file, feed)."""
+    import tempfile
+
+    from .fetcher import fetch
+    from .util import site_slug_from_url
+
+    kind = classify_url(url)
+    if kind == "crawl":
+        raise IngestError(f"{url} is a regular website; use the crawler path")
+
+    if kind == "video":
+        from .ingest_media import ingest_remote_video
+
+        title, units = ingest_remote_video(url)
+        return _write_units_pack(
+            units, "video", site_id or slugify(title, 60) or "video",
+            output_dir, source_label=url)
+
+    if kind == "repo":
+        from .ingest_code import ingest_github_url
+
+        repo_name, units = ingest_github_url(url)
+        return _write_units_pack(
+            units, "code", site_id or slugify(repo_name, 60) or "repo",
+            output_dir, source_label=url)
+
+    if kind == "arxiv":
+        match = _ARXIV_RE.match(url.split("?")[0].split("#")[0])
+        paper_id = match.group(1) + (match.group(2) or "")
+        pdf_url = f"https://arxiv.org/pdf/{paper_id}"
+        result = fetch(pdf_url, timeout=60, max_bytes=_MAX_DOWNLOAD_BYTES, retries=1)
+        if not result.ok or not result.body.startswith(b"%PDF"):
+            raise IngestError(f"could not download arXiv paper {paper_id}")
+        workdir = Path(tempfile.mkdtemp(prefix="aany_arxiv_"))
+        pdf_path = workdir / f"arxiv-{paper_id.replace('/', '-')}.pdf"
+        pdf_path.write_bytes(result.body)
+        units = _ingest_pdf(pdf_path)
+        for unit in units:
+            unit.source_path = f"https://arxiv.org/abs/{paper_id}"
+        return _write_units_pack(
+            units, "paper",
+            site_id or "arxiv-" + slugify(paper_id.replace("/", "-"), 40),
+            output_dir, source_label=f"https://arxiv.org/abs/{paper_id}")
+
+    if kind == "feed":
+        from .ingest_data import DataError, parse_feed
+
+        result = fetch(url, timeout=30, max_bytes=_MAX_DOWNLOAD_BYTES, retries=1)
+        if not result.ok:
+            raise IngestError(f"could not fetch feed {url} (HTTP {result.status})")
+        try:
+            feed_title, units = parse_feed(result.body, url)
+        except DataError as exc:
+            raise IngestError(
+                f"{url} does not look like an RSS/Atom feed ({exc}); "
+                "try building it as a website instead"
+            ) from exc
+        return _write_units_pack(
+            units, "feed", site_id or slugify(feed_title, 60) or "feed",
+            output_dir, source_label=url)
+
+    # kind == "file": download then reuse the local-file adapters
+    bare = url.split("?")[0].split("#")[0]
+    blob = _GITHUB_BLOB_RE.match(bare)
+    fetch_url = url
+    if blob:  # GitHub blob pages serve HTML; fetch the raw file instead
+        fetch_url = (f"https://raw.githubusercontent.com/"
+                     f"{blob.group(1)}/{blob.group(2)}/{blob.group(3)}")
+    result = fetch(fetch_url, timeout=60, max_bytes=_MAX_DOWNLOAD_BYTES, retries=1)
+    if not result.ok:
+        raise IngestError(f"could not download {fetch_url} (HTTP {result.status})")
+    filename = Path(bare).name or "download"
+    _check_downloaded_body(filename, result)
+    workdir = Path(tempfile.mkdtemp(prefix="aany_dl_"))
+    local = workdir / filename
+    local.write_bytes(result.body)
+    resource_type, units = ingest_file(local)
+    for unit in units:
+        unit.source_path = url
+    return _write_units_pack(
+        units, resource_type,
+        site_id or slugify(Path(filename).stem, 60) or site_slug_from_url(url),
+        output_dir, source_label=url)
+
+
+def _check_downloaded_body(filename: str, result) -> None:
+    """A .pdf/.docx/... URL that returns an HTML page (login wall, soft-404)
+    must fail loudly instead of ingesting markup as document content."""
+    suffix = Path(filename).suffix.lower()
+    if suffix in (".html", ".htm"):
+        return
+    body = result.body.lstrip()[:512]
+    looks_html = result.is_html or body[:1] == b"<" and (
+        b"<html" in body.lower() or b"<!doctype" in body.lower())
+    if looks_html:
+        raise IngestError(
+            f"the server returned an HTML page instead of a {suffix} file "
+            "(login wall, soft-404, or share-preview page?); "
+            "use the direct download link, or build it as a website"
+        )
+    if suffix == ".pdf" and not result.body.startswith(b"%PDF"):
+        raise IngestError("downloaded file is not a valid PDF")
+    if suffix in (".zip", ".docx", ".pptx", ".xlsx", ".epub") \
+            and result.body[:2] != b"PK":
+        raise IngestError(f"downloaded file is not a valid {suffix} archive")
+
+
+def build_pack_from_cli_tool(name: str, output_dir: str | Path,
+                             site_id: str | None = None):
+    """Installed software → agent pack (``build cli:<tool>``)."""
+    from .ingest_code import ingest_cli_tool
+
+    tool_name, units = ingest_cli_tool(name)
+    return _write_units_pack(
+        units, "software", site_id or slugify(tool_name, 60) or "tool",
+        output_dir, source_label=f"cli:{tool_name}")
 
 def build_pack_from_source(source: str, output_dir: str | Path, site_id: str | None = None):
     """Ingest a local file/directory into a pack. Returns a BuildResult."""
-    from .packer import BuildResult
-
     path = Path(source).expanduser().resolve()
     warnings: list[str] = []
     if path.is_dir():
         resource_type, units, warnings = ingest_directory(path)
         default_id = slugify(path.name, 60)
     else:
-        resource_type, units = ingest_file(path)
+        result = ingest_file(path)
+        resource_type, units = result
         default_id = slugify(path.stem, 60)
     site_id = site_id or default_id or "resource"
+    return _write_units_pack(units, resource_type, site_id, output_dir,
+                             source_label=str(path), warnings=warnings)
+
+
+def _write_units_pack(units: list[Unit], resource_type: str, site_id: str,
+                      output_dir: str | Path, source_label: str,
+                      warnings: list[str] | None = None):
+    """Write any list of units as a pack. Shared by every non-web source."""
+    from .packer import BuildResult
+
+    warnings = list(warnings or [])
+    # surface per-unit ingest warnings stashed in meta (archives do this)
+    for unit in units:
+        warnings.extend(unit.meta.pop("ingest_warnings", []))
 
     pack_dir = Path(output_dir).resolve()
     pack_dir.mkdir(parents=True, exist_ok=True)
@@ -627,7 +955,7 @@ def build_pack_from_source(source: str, output_dir: str | Path, site_id: str | N
         "generator": f"agentic-anything/{__version__}",
         "site_id": site_id,
         "resource_type": resource_type,
-        "seed_url": str(path),
+        "seed_url": source_label,
         "captured_at": started,
         "finished_at": utc_now_iso(),
         "capture_mode": "ingest",
@@ -648,9 +976,9 @@ def build_pack_from_source(source: str, output_dir: str | Path, site_id: str | N
         "spec_version": SPEC_VERSION,
         "kind": "agentic-anything-pack",
         "site_id": site_id,
-        "site_name": units[0].title if len(units) == 1 else path.name,
+        "site_name": units[0].title if len(units) == 1 else site_id,
         "resource_type": resource_type,
-        "seed_url": str(path),
+        "seed_url": source_label,
         "generated_at": started,
         "generator": f"agentic-anything/{__version__}",
         "capabilities": ["site_snapshot", "page_index", "page_manifests",

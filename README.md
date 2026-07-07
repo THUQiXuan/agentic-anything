@@ -4,11 +4,11 @@
 
 # Agentic Anything
 
-**Turn anything — websites, books, videos, documents — into a chatable, agent-native resource.**
+**Turn anything — websites, papers, books, videos, data, software — into a chatable, agent-native resource.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-121%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-160%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
@@ -29,10 +29,16 @@ Resources are built for human consumption. Agents deserve better: structured dat
 ```
 
 - **`build`** — captures ANY source into a structured *pack*:
-  - **websites**: same-site crawl, structured manifests, markdown views, full **API surface inventory** (forms, JS endpoints, OpenAPI, feeds, observed network calls), HTML evidence, optional screenshots;
-  - **books**: EPUB chapters (stdlib zip + built-in HTML parser), PDF (`[docs]` extra);
-  - **videos**: SRT/VTT transcripts split into time-coded segments;
-  - **documents & folders**: Markdown by sections, plain text by passages, whole directories as collections.
+
+  | Kind | Sources |
+  |---|---|
+  | Websites | same-site crawl · structured manifests · **API surface** (forms, JS endpoints, OpenAPI, feeds, observed network calls) · HTML evidence · optional screenshots |
+  | Papers & docs | PDF (local, **direct URL, `arxiv:<id>`**) · DOCX · EPUB · Markdown · plain text/RST/LaTeX |
+  | Presentations & data | PPTX · XLSX · CSV/TSV · JSON/JSONL · Jupyter notebooks · **SQLite databases** |
+  | Videos & audio | online video URLs (YouTube/Bilibili/… via `yt-dlp` subtitles) · local media (`ffmpeg` embedded subs → `whisper` transcription) · SRT/VTT |
+  | Software & code | **installed CLI tools** (`build cli:git` — help/subcommands/man introspection) · **GitHub repos by URL** · local source trees |
+  | Everything else | folders · zip/tar archives · RSS/Atom feeds & podcasts · email (.eml/.mbox) |
+
 - **`chat`** — the pack becomes a conversational agent: retrieval-grounded answers with unit citations (`[page_id]`), honest "not in my resource" refusals, multi-turn history — in your terminal or one-shot with `--ask`.
 - **`serve`** — hosts packs as agents over HTTP: an `/agents` directory with agent cards, `POST /agents/<id>/ask`, and an **OpenAI-compatible `/v1/chat/completions`** where each agent is a "model" — so any agent framework can talk to your resources, and **agents can consult each other** (`--enable-a2a`, or `chat --peer id=url` across servers).
 - **`skill`** / **`clify`** — generate a SKILL.md usage guide and a zero-dependency per-resource CLI (see below).
@@ -45,8 +51,13 @@ The result: an agent (or you) can *chat* with a website, *interview* a book, *qu
 pip install -e .                 # core: zero runtime dependencies
 pip install -e '.[render]'       # + Playwright for JS rendering & screenshots
 pip install -e '.[docs]'         # + pypdf for PDF ingestion
+pip install -e '.[media]'        # + yt-dlp for online videos
 python -m playwright install chromium
 ```
+
+Optional system tools unlock more sources: `ffmpeg` (embedded subtitles in
+local media), `openai-whisper` (speech-to-text). Note: YouTube may require
+cookies on datacenter IPs (a yt-dlp/YouTube constraint).
 
 Requires Python 3.10+. The core installation uses only the standard library.
 
@@ -54,10 +65,15 @@ Requires Python 3.10+. The core installation uses only the standard library.
 
 ```bash
 # 1. Agentify ANY resource (no API key needed for capture)
-agentic-anything build https://quotes.toscrape.com/ -o packs/quotes --max-pages 10
-agentic-anything build alice.txt        -o packs/alice      # a book
-agentic-anything build lecture.srt      -o packs/lecture    # a video transcript
-agentic-anything build ./my-docs/       -o packs/docs       # a whole folder
+agentic-anything build https://quotes.toscrape.com/  -o packs/quotes   # website
+agentic-anything build arxiv:1706.03762              -o packs/paper    # arXiv paper
+agentic-anything build report.docx                   -o packs/report   # Word / PDF / EPUB
+agentic-anything build metrics.xlsx                  -o packs/metrics  # spreadsheet / CSV / SQLite
+agentic-anything build "https://youtu.be/VIDEO_ID"   -o packs/talk     # online video (yt-dlp)
+agentic-anything build lecture.mp4                   -o packs/lect     # local media (ffmpeg/whisper)
+agentic-anything build https://github.com/psf/requests -o packs/req    # GitHub repo
+agentic-anything build cli:git                       -o packs/git      # installed software
+agentic-anything build ./my-notes/                   -o packs/notes    # folder / archive / repo
 
 # 2. Chat with it (any OpenAI-compatible LLM; OpenRouter by default)
 export OPENROUTER_API_KEY="sk-or-..."
@@ -118,7 +134,7 @@ Design principles (inherited from the projects that inspired this one — see
 
 | Command | What it does |
 |---|---|
-| `build SOURCE -o DIR` | Agentify a source: URL, `.txt` `.md` `.epub` `.pdf` `.srt` `.vtt` `.html`, or a folder. Web options: `--max-pages`, `--render`, `--screenshots`, `--allow-cross-origin`, `--ignore-robots`, `--no-html`, `--no-probe`, `--seed URL`, `--timeout` |
+| `build SOURCE -o DIR` | Agentify a source: website / video / repo / arXiv / feed URL; local file (`.pdf .docx .pptx .xlsx .epub .md .csv .json .ipynb .sqlite .eml .srt .mp4 .zip` …); folder / repo; `cli:<tool>`. Web options: `--max-pages`, `--render`, `--screenshots`, `--allow-cross-origin`, `--ignore-robots`, `--no-html`, `--no-probe`, `--seed URL`, `--timeout` |
 | `chat PACK [--ask Q]` | Converse with the pack (REPL or one-shot). Options: `--top-k`, `--model`, `--base-url`, `--peer ID=URL` (consult remote agents), `--json` |
 | `serve PACK... ` | Host packs as HTTP agents. Options: `--host`, `--port`, `--enable-a2a`, `--model`, `--top-k` |
 | `skill PACK` | Generate `skills/SKILL.md`. Options: `--model`, `--base-url`, `--language en\|zh\|both`, `--no-llm` |
@@ -199,7 +215,7 @@ server.serve_forever()
 
 ```bash
 pip install -e '.[dev]'
-python -m pytest tests -q        # 121 tests; rendered-mode tests auto-skip without Playwright
+python -m pytest tests -q        # 160 tests; rendered-mode tests auto-skip without Playwright
 ```
 
 The suite covers the HTML parser, crawler policies (budget, robots.txt, same-site boundary, sitemap seeding), API discovery (forms, JS scanning, OpenAPI probing), non-web ingestion (markdown/text/EPUB/SRT/folders), pack building, search, the chat agent (retrieval grounding, citations, peer @ask protocol, hop budgets — against a scripted local LLM), the agent server (directory, ask, OpenAI-compatible endpoint, A2A), skill generation, the generated site CLI (run as a real subprocess), and the LLM client. No test calls external services.

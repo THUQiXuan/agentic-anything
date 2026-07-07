@@ -27,6 +27,7 @@ from .crawler import CrawledPage, crawl
 from .markdown import page_to_markdown
 from .util import (
     page_id_from_url,
+    with_default_scheme,
     sha256_bytes,
     site_slug_from_url,
     truncate_text,
@@ -103,8 +104,7 @@ def build_pack(
     into it, so pass e.g. ``packs/example-com``).
     """
     config = config or BuildConfig()
-    if not re.match(r"^https?://", url):
-        url = "https://" + url
+    url = with_default_scheme(url)
     site_id = site_id or site_slug_from_url(url)
     pack_dir = Path(output_dir).resolve()
     pack_dir.mkdir(parents=True, exist_ok=True)

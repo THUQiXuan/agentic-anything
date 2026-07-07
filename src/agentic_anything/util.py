@@ -87,6 +87,18 @@ def same_origin(a: str, b: str) -> bool:
     return (pa.scheme, pa.netloc.lower()) == (pb.scheme, pb.netloc.lower())
 
 
+def with_default_scheme(source: str) -> str:
+    """Prepend a scheme to a bare host; localhost/private hosts get http."""
+    if "://" in source:
+        return source
+    host = source.split("/")[0].split(":")[0].lower()
+    private = (host in ("localhost", "127.0.0.1", "::1", "0.0.0.0")
+               or host.startswith(("192.168.", "10.", "172.16.", "172.17.",
+                                   "172.18.", "172.19.", "172.2", "172.30.",
+                                   "172.31.")))
+    return ("http://" if private else "https://") + source
+
+
 def _site_host(url: str) -> str:
     host = urlsplit(url).netloc.split("@")[-1].lower()
     if host.startswith("www."):

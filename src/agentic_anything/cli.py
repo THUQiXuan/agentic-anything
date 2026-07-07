@@ -24,12 +24,19 @@ from pathlib import Path
 
 from . import __version__
 from .config import BuildConfig, LLMConfig
-from .ingest import IngestError, build_pack_from_source, detect_source_kind
+from .ingest import (
+    IngestError,
+    build_pack_from_cli_tool,
+    build_pack_from_source,
+    build_pack_from_url_asset,
+    classify_url,
+    detect_source_kind,
+)
 from .packer import build_pack
 from .query import PackNotFound, PackReader, search_pack
 from .sitecli import generate_site_cli
 from .skills import generate_skill
-from .util import site_slug_from_url, slugify
+from .util import site_slug_from_url, slugify, with_default_scheme
 
 
 def _print_json(payload) -> None:
@@ -59,8 +66,11 @@ def _llm_config_from_args(args) -> LLMConfig:
 
 def _add_build_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("url", metavar="source",
-                        help="website URL, or a local file/folder "
-                             "(.txt .md .epub .pdf .srt .vtt .html or a directory)")
+                        help="what to agentify: a website URL; a video/repo/arXiv/"
+                             "PDF/feed URL; a local file (.pdf .docx .pptx .xlsx "
+                             ".epub .md .txt .csv .json .ipynb .sqlite .eml .srt "
+                             ".mp4 .zip ...); a folder or repo; or cli:<tool> for "
+                             "installed software")
     parser.add_argument("-o", "--output", default=None,
                         help="pack directory (default: packs/<site-slug>)")
     parser.add_argument("--site-id", default=None, help="override the site id/slug")
@@ -95,21 +105,50 @@ def _add_llm_options(parser: argparse.ArgumentParser) -> None:
 def _resolve_output(args) -> Path:
     if args.output:
         return Path(args.output)
+    if args.url.startswith("cli:"):
+        slug = args.site_id or slugify(args.url[4:], 60) or "tool"
+        return Path("packs") / slug
+    if args.url.lower().startswith("arxiv:"):
+        slug = args.site_id or ("arxiv-" + slugify(args.url[6:], 40))
+        return Path("packs") / slug
     if detect_source_kind(args.url) != "web":
         path = Path(args.url).expanduser()
         slug = args.site_id or slugify(path.stem if path.is_file() else path.name, 60)
     else:
-        url = args.url if "://" in args.url else f"https://{args.url}"
-        slug = args.site_id or site_slug_from_url(url)
+        url = with_default_scheme(args.url)
+        if classify_url(url) != "crawl":
+            import hashlib
+
+            stem = slugify(Path(url.split("?")[0]).stem, 40)
+            tail = hashlib.sha1(url.encode()).hexdigest()[:6]
+            slug = args.site_id or f"{stem or site_slug_from_url(url)}-{tail}"
+        else:
+            slug = args.site_id or site_slug_from_url(url)
     return Path("packs") / slug
 
 
 def _run_build(args) -> tuple[int, dict]:
-    kind = detect_source_kind(args.url)
     out = _resolve_output(args)
 
+    # installed software: build cli:<tool>
+    if args.url.startswith("cli:"):
+        result = build_pack_from_cli_tool(args.url[4:], out, site_id=args.site_id)
+        return (0 if result.page_count > 0 else 1), result.as_json()
+
+    # bare arXiv id: build arxiv:2401.12345
+    if args.url.lower().startswith("arxiv:"):
+        result = build_pack_from_url_asset(args.url, out, site_id=args.site_id)
+        return (0 if result.page_count > 0 else 1), result.as_json()
+
+    kind = detect_source_kind(args.url)
     if kind in ("file", "dir"):
         result = build_pack_from_source(args.url, out, site_id=args.site_id)
+        return (0 if result.page_count > 0 else 1), result.as_json()
+
+    # web URL: crawl, or a URL asset (video / repo / arXiv / file / feed)
+    url = with_default_scheme(args.url)
+    if classify_url(url) != "crawl":
+        result = build_pack_from_url_asset(url, out, site_id=args.site_id)
         return (0 if result.page_count > 0 else 1), result.as_json()
 
     config = _build_config_from_args(args)

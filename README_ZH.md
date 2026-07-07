@@ -4,11 +4,11 @@
 
 # Agentic Anything
 
-**把任何东西——网站、书籍、视频、文档——变成可对话的 Agent。**
+**把任何东西——网站、论文、书籍、视频、数据、软件——变成可对话的 Agent。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-121%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-160%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
@@ -29,10 +29,16 @@
 ```
 
 - **`build`** —— 把任何来源抓成结构化 *pack*：
-  - **网站**：同站爬取、结构化 manifest、Markdown 视图、完整 **API 面清单**（表单、JS 接口、OpenAPI、feed、网络观测）、HTML 证据、可选截图；
-  - **书籍**：EPUB 按章节（stdlib zip + 内置 HTML 解析器）、PDF（`[docs]` extra）；
-  - **视频**：SRT/VTT 字幕/转写，按时间窗分段；
-  - **文档与文件夹**：Markdown 按节、纯文本按段、整个目录作为合集。
+
+  | 类别 | 来源 |
+  |---|---|
+  | 网站 | 同站爬取 · 结构化 manifest · **API 面清单**（表单、JS 接口、OpenAPI、feed、网络观测）· HTML 证据 · 可选截图 |
+  | 论文与文档 | PDF（本地、**直链 URL、`arxiv:<id>`**）· DOCX · EPUB · Markdown · 纯文本/RST/LaTeX |
+  | 演示与数据 | PPTX · XLSX · CSV/TSV · JSON/JSONL · Jupyter 笔记本 · **SQLite 数据库** |
+  | 音视频 | 在线视频 URL（YouTube/B站等，yt-dlp 拉字幕）· 本地音视频（ffmpeg 抽内嵌字幕 → whisper 转写）· SRT/VTT |
+  | 软件与代码 | **已安装的 CLI 软件**（`build cli:git`，help/子命令/man 自省）· **GitHub 仓库 URL** · 本地代码树 |
+  | 其他 | 文件夹 · zip/tar 压缩包 · RSS/Atom 订阅与播客 · 邮件（.eml/.mbox） |
+
 - **`chat`** —— pack 变成可对话 Agent：检索接地的回答带单元引用（`[page_id]`）、诚实的"我的资源里没有"、多轮历史——终端 REPL 或 `--ask` 一次性问答。
 - **`serve`** —— 把多个 pack 托管为 HTTP Agent：`/agents` 目录（agent 卡片）、`POST /agents/<id>/ask`、以及 **OpenAI 兼容的 `/v1/chat/completions`**（每个 agent 就是一个"模型"）——任何 agent 框架都能直接对话你的资源，并且 **agent 之间可以互相咨询**（`--enable-a2a`，或跨服务器 `chat --peer id=url`）。
 - **`skill`** / **`clify`** —— 生成 SKILL.md 使用指南和零依赖的资源专用 CLI。
@@ -45,8 +51,13 @@
 pip install -e .                 # 核心：零运行时依赖
 pip install -e '.[render]'       # + Playwright，支持 JS 渲染和截图
 pip install -e '.[docs]'         # + pypdf，支持 PDF 摄入
+pip install -e '.[media]'        # + yt-dlp，支持在线视频
 python -m playwright install chromium
 ```
+
+可选系统工具解锁更多来源：`ffmpeg`（本地媒体内嵌字幕）、`openai-whisper`
+（语音转写）。注意：数据中心 IP 访问 YouTube 可能被要求 cookies（yt-dlp/
+YouTube 的上游限制）。
 
 需要 Python 3.10+。核心安装只用标准库。
 
@@ -54,10 +65,15 @@ python -m playwright install chromium
 
 ```bash
 # 1. Agent 化任何资源（抓取不需要 API key）
-agentic-anything build https://quotes.toscrape.com/ -o packs/quotes --max-pages 10
-agentic-anything build alice.txt        -o packs/alice      # 一本书
-agentic-anything build lecture.srt      -o packs/lecture    # 一个视频（字幕/转写）
-agentic-anything build ./my-docs/       -o packs/docs       # 整个文件夹
+agentic-anything build https://quotes.toscrape.com/  -o packs/quotes   # 网站
+agentic-anything build arxiv:1706.03762              -o packs/paper    # arXiv 论文
+agentic-anything build report.docx                   -o packs/report   # Word / PDF / EPUB
+agentic-anything build metrics.xlsx                  -o packs/metrics  # 表格 / CSV / SQLite
+agentic-anything build "https://youtu.be/VIDEO_ID"   -o packs/talk     # 在线视频（yt-dlp）
+agentic-anything build lecture.mp4                   -o packs/lect     # 本地音视频（ffmpeg/whisper）
+agentic-anything build https://github.com/psf/requests -o packs/req    # GitHub 仓库
+agentic-anything build cli:git                       -o packs/git      # 已安装的软件
+agentic-anything build ./my-notes/                   -o packs/notes    # 文件夹 / 压缩包 / 代码库
 
 # 2. 和它聊天（任何 OpenAI 兼容 LLM，默认 OpenRouter）
 export OPENROUTER_API_KEY="sk-or-..."
@@ -117,7 +133,7 @@ packs/quotes/
 
 | 命令 | 作用 |
 |---|---|
-| `build SOURCE -o DIR` | Agent 化一个来源：URL、`.txt` `.md` `.epub` `.pdf` `.srt` `.vtt` `.html` 或文件夹。网站选项：`--max-pages`、`--render`、`--screenshots`、`--allow-cross-origin`、`--ignore-robots`、`--no-html`、`--no-probe`、`--seed URL`、`--timeout` |
+| `build SOURCE -o DIR` | Agent 化一个来源：网站 / 视频 / 仓库 / arXiv / feed URL；本地文件（`.pdf .docx .pptx .xlsx .epub .md .csv .json .ipynb .sqlite .eml .srt .mp4 .zip` 等）；文件夹 / 代码库；`cli:<软件名>`。网站选项：`--max-pages`、`--render`、`--screenshots`、`--allow-cross-origin`、`--ignore-robots`、`--no-html`、`--no-probe`、`--seed URL`、`--timeout` |
 | `chat PACK [--ask 问题]` | 与 pack 对话（REPL 或一次性）。选项：`--top-k`、`--model`、`--base-url`、`--peer ID=URL`（咨询远端 agent）、`--json` |
 | `serve PACK...` | 把 pack 托管为 HTTP Agent。选项：`--host`、`--port`、`--enable-a2a`、`--model`、`--top-k` |
 | `skill PACK` | 生成 `skills/SKILL.md`。选项：`--model`、`--base-url`、`--language en\|zh\|both`、`--no-llm` |
@@ -197,7 +213,7 @@ server.serve_forever()
 
 ```bash
 pip install -e '.[dev]'
-python -m pytest tests -q        # 121 个测试；未装 Playwright 时渲染测试自动跳过
+python -m pytest tests -q        # 160 个测试；未装 Playwright 时渲染测试自动跳过
 ```
 
 测试覆盖：HTML 解析器、爬虫策略（预算、robots.txt、同站边界、sitemap 播种）、API 发现（表单、JS 扫描、OpenAPI 探测）、非网页摄入（Markdown/文本/EPUB/SRT/文件夹）、pack 构建、检索、对话 Agent（检索接地、引用、@ask 互调协议、跳数预算——对本地脚本化 LLM）、Agent 服务器（目录、ask、OpenAI 兼容端点、A2A）、技能生成、生成的站点 CLI（真实子进程运行）、LLM 客户端。没有任何测试调用外部服务。
