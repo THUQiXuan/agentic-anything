@@ -1,10 +1,12 @@
 """The `agentic-anything` command-line interface (alias: `aany`).
 
 Subcommands:
-  build  URL        capture a website into a site pack
+  build  SOURCE     capture a website / file / folder into a pack
+  chat   PACK_DIR   talk to the pack as a conversational agent
+  serve  PACK...    host packs as agents over HTTP (A2A capable)
   skill  PACK_DIR   generate skills/SKILL.md for a pack (LLM or --no-llm)
   clify  PACK_DIR   generate a zero-dependency site CLI for a pack
-  pack   URL        one-shot: build + skill + clify
+  pack   SOURCE     one-shot: build + skill + clify
   query  PACK_DIR Q keyword search over a pack
   page   PACK_DIR ID  print one page (md or json)
   apis   PACK_DIR   show the discovered API surface
@@ -22,11 +24,12 @@ from pathlib import Path
 
 from . import __version__
 from .config import BuildConfig, LLMConfig
+from .ingest import IngestError, build_pack_from_source, detect_source_kind
 from .packer import build_pack
 from .query import PackNotFound, PackReader, search_pack
 from .sitecli import generate_site_cli
 from .skills import generate_skill
-from .util import site_slug_from_url
+from .util import site_slug_from_url, slugify
 
 
 def _print_json(payload) -> None:
@@ -55,7 +58,9 @@ def _llm_config_from_args(args) -> LLMConfig:
 
 
 def _add_build_options(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("url", help="website URL (https:// is assumed if omitted)")
+    parser.add_argument("url", metavar="source",
+                        help="website URL, or a local file/folder "
+                             "(.txt .md .epub .pdf .srt .vtt .html or a directory)")
     parser.add_argument("-o", "--output", default=None,
                         help="pack directory (default: packs/<site-slug>)")
     parser.add_argument("--site-id", default=None, help="override the site id/slug")
@@ -90,14 +95,24 @@ def _add_llm_options(parser: argparse.ArgumentParser) -> None:
 def _resolve_output(args) -> Path:
     if args.output:
         return Path(args.output)
-    url = args.url if "://" in args.url else f"https://{args.url}"
-    slug = args.site_id or site_slug_from_url(url)
+    if detect_source_kind(args.url) != "web":
+        path = Path(args.url).expanduser()
+        slug = args.site_id or slugify(path.stem if path.is_file() else path.name, 60)
+    else:
+        url = args.url if "://" in args.url else f"https://{args.url}"
+        slug = args.site_id or site_slug_from_url(url)
     return Path("packs") / slug
 
 
 def _run_build(args) -> tuple[int, dict]:
-    config = _build_config_from_args(args)
+    kind = detect_source_kind(args.url)
     out = _resolve_output(args)
+
+    if kind in ("file", "dir"):
+        result = build_pack_from_source(args.url, out, site_id=args.site_id)
+        return (0 if result.page_count > 0 else 1), result.as_json()
+
+    config = _build_config_from_args(args)
 
     def progress(page) -> None:
         if not args.json:
@@ -237,6 +252,77 @@ def cmd_info(args) -> int:
     return 0
 
 
+def cmd_chat(args) -> int:
+    from .chat import HttpPeer, ResourceAgent, run_chat_repl
+
+    llm_config = _llm_config_from_args(args)
+    if not llm_config.available:
+        print(
+            "error: chat requires an API key. Set OPENROUTER_API_KEY (or "
+            "AGENTIC_API_KEY), and optionally AGENTIC_MODEL / AGENTIC_BASE_URL.",
+            file=sys.stderr,
+        )
+        return 1
+    peers = {}
+    for spec in args.peer or []:
+        peer_id, _, url = spec.partition("=")
+        if not url:
+            print(f"error: --peer expects id=http://host:port, got '{spec}'", file=sys.stderr)
+            return 1
+        peers[peer_id] = HttpPeer(peer_id, url, description=f"remote agent at {url}")
+    agent = ResourceAgent(args.pack_dir, llm_config, top_k=args.top_k, peers=peers)
+
+    if args.ask:
+        reply = agent.ask(args.ask)
+        if args.json:
+            _print_json({"agent": agent.agent_id, **reply.as_json()})
+        else:
+            print(reply.answer)
+            if reply.citations:
+                print(f"\ncitations: {', '.join(reply.citations)}", file=sys.stderr)
+        return 0
+    return run_chat_repl(agent)
+
+
+def cmd_serve(args) -> int:
+    from .server import AgentServer
+
+    llm_config = _llm_config_from_args(args)
+    if not llm_config.available:
+        print(
+            "error: serve requires an API key. Set OPENROUTER_API_KEY (or "
+            "AGENTIC_API_KEY), and optionally AGENTIC_MODEL / AGENTIC_BASE_URL.",
+            file=sys.stderr,
+        )
+        return 1
+    try:
+        server = AgentServer(
+            args.pack_dirs,
+            llm_config,
+            host=args.host,
+            port=args.port,
+            enable_a2a=args.enable_a2a,
+            top_k=args.top_k,
+        )
+    except PackNotFound as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    print(f"agent server on {server.base_url}")
+    for agent_id, agent in server.agents.items():
+        print(f"  - {agent_id} ({agent.resource_type}: {agent.name})")
+    print(f"try:  curl {server.base_url}/agents")
+    print(f'      curl -X POST {server.base_url}/agents/{next(iter(server.agents))}/ask '
+          f'-d \'{{"question": "..."}}\'')
+    if args.enable_a2a and len(server.agents) > 1:
+        print("agent-to-agent: enabled (every agent can @ask its co-hosted peers)")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        server.shutdown()
+        print("\nstopped")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="agentic-anything",
@@ -245,10 +331,32 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--version", action="version", version=f"agentic-anything {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p = sub.add_parser("build", help="capture a website into a site pack")
+    p = sub.add_parser("build", help="capture a website / file / folder into a pack")
     _add_build_options(p)
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_build)
+
+    p = sub.add_parser("chat", help="talk to a pack as a conversational agent")
+    p.add_argument("pack_dir")
+    p.add_argument("--ask", default=None, help="one-shot question (default: interactive REPL)")
+    p.add_argument("--model", default=None)
+    p.add_argument("--base-url", default=None)
+    p.add_argument("--top-k", type=int, default=6, help="retrieved units per question")
+    p.add_argument("--peer", action="append", default=None, metavar="ID=URL",
+                   help="peer agent server, e.g. books=http://127.0.0.1:8373 (repeatable)")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_chat)
+
+    p = sub.add_parser("serve", help="host packs as chatable agents over HTTP")
+    p.add_argument("pack_dirs", nargs="+", metavar="PACK_DIR")
+    p.add_argument("--host", default="127.0.0.1")
+    p.add_argument("--port", type=int, default=8373)
+    p.add_argument("--enable-a2a", action="store_true",
+                   help="let co-hosted agents consult each other")
+    p.add_argument("--model", default=None)
+    p.add_argument("--base-url", default=None)
+    p.add_argument("--top-k", type=int, default=6)
+    p.set_defaults(func=cmd_serve)
 
     p = sub.add_parser("skill", help="generate skills/SKILL.md for a pack")
     p.add_argument("pack_dir")
@@ -295,6 +403,9 @@ def main(argv: list[str] | None = None) -> int:
     try:
         return args.func(args)
     except PackNotFound as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    except IngestError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
     except KeyboardInterrupt:

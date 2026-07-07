@@ -4,11 +4,11 @@
 
 # Agentic Anything
 
-**Turn any website into an agent-native toolkit.**
+**Turn anything — websites, books, videos, documents — into a chatable, agent-native resource.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-121%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
@@ -16,30 +16,35 @@
 
 ---
 
-Websites are built for human eyes. Agents deserve better: structured data instead of pixel-parsing, documented interfaces instead of guesswork, and ready-made tools instead of ad-hoc scraping.
+Resources are built for human consumption. Agents deserve better: structured data instead of pixel-parsing, documented interfaces instead of guesswork, and — above all — **a conversation** instead of a scraping session.
 
-**Agentic Anything** processes any website into three progressively richer, agent-native layers:
+**Agentic Anything** turns any resource into an agent:
 
 ```
-              build                skill                clify
- Any URL ────────────▶ Site Pack ─────────▶ SKILL.md ─────────▶ site CLI
-            capture &      structured JSON+MD   usage guide for     zero-dependency
-            distill        API surface          agents (any LLM     per-site command
-                           HTML evidence        via OpenRouter)     line tool
-                           screenshots*
+  website ─┐                       ┌─ chat   talk to it (grounded answers + citations)
+  book ────┤                       ├─ serve  host it as an HTTP agent; agents call
+  video ───┼──▶ build ──▶ PACK ──▶ │         each other (A2A) & OpenAI-compatible API
+  docs ────┤     capture &         ├─ skill  SKILL.md usage guide for agents
+  folder ──┘     distill           └─ clify  zero-dependency per-resource CLI
 ```
 
-1. **`build`** — crawls the site and distills every page into structured manifests (`pages/*.json`), readable markdown views (`pages/*.md`), a full **API surface inventory** (forms, endpoints found in JavaScript, OpenAPI specs, feeds, sitemaps, live network calls), plus raw HTML evidence and optional full-page **screenshots** for agents that want visual grounding.
-2. **`skill`** — generates a `SKILL.md` that teaches an agent *how to use this specific site*: what's on it, which interfaces exist, concrete workflows, and honest caveats. Uses any OpenAI-compatible LLM (OpenRouter by default), with a fully deterministic `--no-llm` fallback.
-3. **`clify`** — emits a **zero-dependency, site-specific CLI** (stdlib-only Python) over the pack: `search`, `page`, `apis`, `forms`, `form-curl`, same-origin `fetch` — every command with `--json` output for agent consumption.
+- **`build`** — captures ANY source into a structured *pack*:
+  - **websites**: same-site crawl, structured manifests, markdown views, full **API surface inventory** (forms, JS endpoints, OpenAPI, feeds, observed network calls), HTML evidence, optional screenshots;
+  - **books**: EPUB chapters (stdlib zip + built-in HTML parser), PDF (`[docs]` extra);
+  - **videos**: SRT/VTT transcripts split into time-coded segments;
+  - **documents & folders**: Markdown by sections, plain text by passages, whole directories as collections.
+- **`chat`** — the pack becomes a conversational agent: retrieval-grounded answers with unit citations (`[page_id]`), honest "not in my resource" refusals, multi-turn history — in your terminal or one-shot with `--ask`.
+- **`serve`** — hosts packs as agents over HTTP: an `/agents` directory with agent cards, `POST /agents/<id>/ask`, and an **OpenAI-compatible `/v1/chat/completions`** where each agent is a "model" — so any agent framework can talk to your resources, and **agents can consult each other** (`--enable-a2a`, or `chat --peer id=url` across servers).
+- **`skill`** / **`clify`** — generate a SKILL.md usage guide and a zero-dependency per-resource CLI (see below).
 
-The result: an agent can *read* the site like documentation, *query* it like a database, and *operate* it like a tool.
+The result: an agent (or you) can *chat* with a website, *interview* a book, *query* a lecture video — and resource-agents can answer each other's questions over an API.
 
 ## Installation
 
 ```bash
 pip install -e .                 # core: zero runtime dependencies
 pip install -e '.[render]'       # + Playwright for JS rendering & screenshots
+pip install -e '.[docs]'         # + pypdf for PDF ingestion
 python -m playwright install chromium
 ```
 
@@ -48,19 +53,32 @@ Requires Python 3.10+. The core installation uses only the standard library.
 ## Quick start
 
 ```bash
-# 1. Capture a website into a site pack (no API key needed)
+# 1. Agentify ANY resource (no API key needed for capture)
 agentic-anything build https://quotes.toscrape.com/ -o packs/quotes --max-pages 10
+agentic-anything build alice.txt        -o packs/alice      # a book
+agentic-anything build lecture.srt      -o packs/lecture    # a video transcript
+agentic-anything build ./my-docs/       -o packs/docs       # a whole folder
 
-# 2. Generate the agent skill (uses OpenRouter; see "LLM configuration" below)
-export OPENROUTER_API_KEY="sk-or-..."          # your own key
+# 2. Chat with it (any OpenAI-compatible LLM; OpenRouter by default)
+export OPENROUTER_API_KEY="sk-or-..."
+agentic-anything chat packs/alice                             # interactive REPL
+agentic-anything chat packs/lecture --ask "What does E42 mean?"
+
+# 3. Host resources as agents; let them talk to each other
+agentic-anything serve packs/alice packs/lecture --port 8373 --enable-a2a
+curl localhost:8373/agents                                    # agent directory
+curl -X POST localhost:8373/agents/alice/ask \
+     -d '{"question": "According to the lecture agent, what is E42?"}'
+# ...alice consults the lecture agent over the @ask protocol and answers.
+
+# Any OpenAI client can talk to a resource agent (model = agent id):
+curl -X POST localhost:8373/v1/chat/completions \
+     -d '{"model": "lecture", "messages": [{"role":"user","content":"Summarize the video"}]}'
+
+# 4. Classic toolkit layers still apply to every pack
 agentic-anything skill packs/quotes --language both   # SKILL.md + SKILL_ZH.md
-
-# 3. Generate the site-specific CLI
-agentic-anything clify packs/quotes
-python packs/quotes/cli/quotes_toscrape_com_cli.py search "Einstein miracle"
-
-# ... or do all three in one shot:
-agentic-anything pack https://quotes.toscrape.com/ -o packs/quotes
+agentic-anything clify packs/quotes                   # zero-dependency site CLI
+agentic-anything pack  https://books.toscrape.com/    # build+skill+clify in one shot
 ```
 
 For JavaScript-heavy sites, add rendering and visual snapshots:
@@ -100,20 +118,40 @@ Design principles (inherited from the projects that inspired this one — see
 
 | Command | What it does |
 |---|---|
-| `build URL -o DIR` | Capture a site into a pack. Options: `--max-pages`, `--render`, `--screenshots`, `--allow-cross-origin`, `--ignore-robots`, `--no-html`, `--no-probe`, `--seed URL`, `--timeout` |
+| `build SOURCE -o DIR` | Agentify a source: URL, `.txt` `.md` `.epub` `.pdf` `.srt` `.vtt` `.html`, or a folder. Web options: `--max-pages`, `--render`, `--screenshots`, `--allow-cross-origin`, `--ignore-robots`, `--no-html`, `--no-probe`, `--seed URL`, `--timeout` |
+| `chat PACK [--ask Q]` | Converse with the pack (REPL or one-shot). Options: `--top-k`, `--model`, `--base-url`, `--peer ID=URL` (consult remote agents), `--json` |
+| `serve PACK... ` | Host packs as HTTP agents. Options: `--host`, `--port`, `--enable-a2a`, `--model`, `--top-k` |
 | `skill PACK` | Generate `skills/SKILL.md`. Options: `--model`, `--base-url`, `--language en\|zh\|both`, `--no-llm` |
 | `clify PACK` | Generate `cli/<site>_cli.py` + its README |
-| `pack URL -o DIR` | One-shot: build + skill + clify |
+| `pack SOURCE -o DIR` | One-shot: build + skill + clify |
 | `query PACK "question"` | Keyword search across the pack with evidence blocks |
-| `page PACK PAGE_ID [--format md\|json]` | Print one captured page |
-| `apis PACK` | Show the discovered API surface |
+| `page PACK PAGE_ID [--format md\|json]` | Print one captured unit |
+| `apis PACK` | Show the discovered API surface (websites) |
 | `info PACK` | Pack summary |
 
 All data-producing commands accept `--json`. `aany` is a short alias for `agentic-anything`.
 
+## Agent server API
+
+`serve` exposes every pack as an agent:
+
+| Endpoint | Description |
+|---|---|
+| `GET /agents` | Directory of hosted agents (cards: id, type, description, peers) |
+| `GET /agents/<id>/card` | One agent card |
+| `POST /agents/<id>/ask` | `{"question", "history"?}` → `{"answer", "citations", "used_units", "peer_calls"}` |
+| `POST /v1/chat/completions` | OpenAI-compatible; `model` = agent id; citations returned under `agentic_anything` |
+| `GET /v1/models` | Hosted agents as OpenAI models |
+
+With `--enable-a2a`, co-hosted agents may consult each other: when an agent
+decides another resource holds the answer, it emits `@ask <peer> <question>`,
+the engine routes it (in-process or over HTTP via `chat --peer`), and the
+final answer attributes what came from which agent (`peer_calls` in the
+response). Hops are budgeted to prevent loops.
+
 ## LLM configuration (OpenRouter & friends)
 
-Skill generation talks to any **OpenAI-compatible** chat endpoint. Defaults target [OpenRouter](https://openrouter.ai) so one key unlocks every hosted model:
+`chat`, `serve` and skill generation talk to any **OpenAI-compatible** chat endpoint. Defaults target [OpenRouter](https://openrouter.ai) so one key unlocks every hosted model:
 
 | Environment variable | Default | Meaning |
 |---|---|---|
@@ -124,37 +162,47 @@ Skill generation talks to any **OpenAI-compatible** chat endpoint. Defaults targ
 
 ```bash
 export OPENROUTER_API_KEY="sk-or-..."
-agentic-anything skill packs/quotes --model anthropic/claude-sonnet-4.5   # pick any model
-agentic-anything skill packs/quotes --no-llm                              # or no LLM at all
+agentic-anything chat  packs/alice  --model anthropic/claude-sonnet-4.5  # pick any model
+agentic-anything skill packs/quotes --no-llm                             # or no LLM at all
 ```
 
-Everything except `skill` (and `pack`'s skill step) runs **without any API key**.
+Capture (`build`), search (`query`) and the generated CLIs run **without any API key**.
 
 ## Python API
 
 ```python
-from agentic_anything import build_pack, generate_skill, generate_site_cli, search_pack
+from agentic_anything import (
+    ResourceAgent, build_pack, build_pack_from_source,
+    generate_skill, generate_site_cli, search_pack,
+)
 from agentic_anything.config import BuildConfig, LLMConfig
 
-result = build_pack(
-    "https://quotes.toscrape.com/",
-    "packs/quotes",
-    config=BuildConfig(max_pages=10, render=False),
-)
-generate_skill(result.pack_dir, llm_config=LLMConfig.from_env(), language="both")
-generate_site_cli(result.pack_dir)
+# agentify a website ...
+build_pack("https://quotes.toscrape.com/", "packs/quotes",
+           config=BuildConfig(max_pages=10))
+# ... or anything else
+build_pack_from_source("alice.txt", "packs/alice")
 
-hits = search_pack(result.pack_dir, "login form fields", top=3)
+# chat with it
+agent = ResourceAgent("packs/alice", LLMConfig.from_env())
+reply = agent.ask("How does Alice enter the rabbit hole?")
+print(reply.answer, reply.citations)
+
+# host agents programmatically
+from agentic_anything.server import AgentServer
+server = AgentServer(["packs/alice", "packs/quotes"], LLMConfig.from_env(),
+                     port=8373, enable_a2a=True)
+server.serve_forever()
 ```
 
 ## Testing
 
 ```bash
 pip install -e '.[dev]'
-python -m pytest tests -q        # 78 tests; rendered-mode tests auto-skip without Playwright
+python -m pytest tests -q        # 121 tests; rendered-mode tests auto-skip without Playwright
 ```
 
-The suite covers the HTML parser, crawler policies (budget, robots.txt, same-site boundary, sitemap seeding), API discovery (forms, JS scanning, OpenAPI probing), pack building, search, skill generation (LLM stubbed + deterministic), the generated site CLI (run as a real subprocess), and the LLM client (against a local fake server). No test calls external services.
+The suite covers the HTML parser, crawler policies (budget, robots.txt, same-site boundary, sitemap seeding), API discovery (forms, JS scanning, OpenAPI probing), non-web ingestion (markdown/text/EPUB/SRT/folders), pack building, search, the chat agent (retrieval grounding, citations, peer @ask protocol, hop budgets — against a scripted local LLM), the agent server (directory, ask, OpenAI-compatible endpoint, A2A), skill generation, the generated site CLI (run as a real subprocess), and the LLM client. No test calls external services.
 
 ## Responsible use
 

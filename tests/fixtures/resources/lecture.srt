@@ -1,0 +1,23 @@
+1
+00:00:01,000 --> 00:00:06,000
+Welcome to the widget engineering lecture.
+
+2
+00:00:06,500 --> 00:00:15,000
+Today we cover the three laws of widget dynamics.
+
+3
+00:01:00,000 --> 00:01:20,000
+The first law states that a widget at rest stays at rest.
+
+4
+00:03:30,000 --> 00:03:50,000
+The second law relates torque to spin acceleration.
+
+5
+00:04:10,000 --> 00:04:40,000
+Remember: the exam covers laws one and two only.
+
+6
+00:07:00,000 --> 00:07:30,000
+Finally, error code E42 means the widget cache is stale.
