@@ -1,0 +1,18 @@
+[
+  {"id": "doc-zh-refund", "pack": "document", "query": "退款必须在多少天内申请，需要什么材料", "relevant": ["handbook-zh__002"]},
+  {"id": "doc-zh-token", "pack": "document", "query": "生产环境如何轮换访问令牌", "relevant": ["handbook-zh__003"]},
+  {"id": "doc-mixed-e42", "pack": "document", "query": "E42 缓存过期怎么办", "relevant": ["handbook-zh__004"]},
+  {"id": "doc-negative", "pack": "document", "query": "量子纠缠是什么颜色", "relevant": []},
+
+  {"id": "video-en-e42", "pack": "video", "query": "What caused error E42 in the incident?", "relevant": ["incident__002__00-03-30"]},
+  {"id": "video-mixed-token", "pack": "video", "query": "OMEGA-7 令牌多久轮换", "relevant": ["incident__003__00-07-00"]},
+  {"id": "video-zh-name", "pack": "video", "query": "服务代号是什么颜色", "relevant": ["incident__001__00-00-01"]},
+  {"id": "video-negative", "pack": "video", "query": "火星天气温度", "relevant": []},
+
+  {"id": "code-en-cache", "pack": "code", "query": "Which function flushes stale E42 cache entries?", "relevant": ["file__src--cache-py"]},
+  {"id": "code-zh-auth", "pack": "code", "query": "身份验证令牌在哪里轮换", "relevant": ["file__src--auth-py"]},
+  {"id": "code-en-config", "pack": "code", "query": "default retry backoff milliseconds", "relevant": ["file__config-toml"]},
+  {"id": "code-en-canary", "pack": "code", "query": "how are canary deployments validated", "relevant": ["file__src--deploy-py"]},
+  {"id": "code-negative", "pack": "code", "query": "量子纠缠是什么颜色", "relevant": []}
+]
+

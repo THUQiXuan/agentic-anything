@@ -4,6 +4,8 @@ Subcommands:
   build  SOURCE     capture a website / file / folder into a pack
   chat   PACK_DIR   talk to the pack as a conversational agent
   serve  PACK...    host packs as agents over HTTP (A2A capable)
+  mcp    PACK...    expose packs as a read-only stdio MCP server
+  mcp-config PACK... print Codex or Claude Code MCP configuration
   skill  PACK_DIR   generate skills/SKILL.md for a pack (LLM or --no-llm)
   clify  PACK_DIR   generate a zero-dependency site CLI for a pack
   pack   SOURCE     one-shot: build + skill + clify
@@ -238,7 +240,7 @@ def cmd_pack(args) -> int:
 
 
 def cmd_query(args) -> int:
-    results = search_pack(args.pack_dir, args.query, top=args.top)
+    results = search_pack(args.pack_dir, args.query, top=args.top, method=args.method)
     if args.json:
         _print_json(results)
     else:
@@ -362,10 +364,26 @@ def cmd_serve(args) -> int:
     return 0
 
 
+def cmd_mcp(args) -> int:
+    from .mcp import run_stdio_server
+
+    return run_stdio_server(args.pack_dirs)
+
+
+def cmd_mcp_config(args) -> int:
+    from .mcp import claude_config, codex_config
+
+    if args.client == "codex":
+        print(codex_config(args.pack_dirs, server_name=args.server_name), end="")
+    else:
+        _print_json(claude_config(args.pack_dirs, server_name=args.server_name))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="agentic-anything",
-        description="Turn any website into an agent-native toolkit.",
+        description="Turn any resource into an evidence-preserving agent interface.",
     )
     parser.add_argument("--version", action="version", version=f"agentic-anything {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -397,6 +415,16 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--top-k", type=int, default=6)
     p.set_defaults(func=cmd_serve)
 
+    p = sub.add_parser("mcp", help="expose packs as a read-only stdio MCP server")
+    p.add_argument("pack_dirs", nargs="+", metavar="PACK_DIR")
+    p.set_defaults(func=cmd_mcp)
+
+    p = sub.add_parser("mcp-config", help="print MCP configuration for an agent runtime")
+    p.add_argument("pack_dirs", nargs="+", metavar="PACK_DIR")
+    p.add_argument("--client", choices=["codex", "claude"], default="codex")
+    p.add_argument("--server-name", default="agentic_anything")
+    p.set_defaults(func=cmd_mcp_config)
+
     p = sub.add_parser("skill", help="generate skills/SKILL.md for a pack")
     p.add_argument("pack_dir")
     _add_llm_options(p)
@@ -418,6 +446,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("pack_dir")
     p.add_argument("query")
     p.add_argument("--top", type=int, default=5)
+    p.add_argument("--method", choices=["hybrid", "legacy"], default="hybrid")
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_query)
 

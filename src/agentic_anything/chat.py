@@ -155,14 +155,7 @@ class ResourceAgent:
             used.append(page_id)
             blocks.append(f"--- excerpt [{page_id}] ---\n{truncate_text(md, per_unit)}")
         if not blocks:
-            # fall back to the first units so small packs still answer
-            for page_id in self.reader.page_ids()[: min(3, self.top_k)]:
-                try:
-                    md = self.reader.page_markdown(page_id)
-                except FileNotFoundError:
-                    continue
-                used.append(page_id)
-                blocks.append(f"--- excerpt [{page_id}] ---\n{truncate_text(md, per_unit)}")
+            return "(no matching evidence units were retrieved)", []
         return "\n\n".join(blocks)[:_MAX_CONTEXT_CHARS], used
 
     def _overview(self) -> str:

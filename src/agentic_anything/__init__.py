@@ -18,6 +18,7 @@ from .chat import AgentReply, HttpPeer, LocalPeer, ResourceAgent  # noqa: E402
 from .ingest import build_pack_from_source  # noqa: E402
 from .packer import build_pack  # noqa: E402
 from .query import PackReader, search_pack  # noqa: E402
+from .mcp import ResourceMCPServer  # noqa: E402
 from .skills import generate_skill  # noqa: E402
 from .sitecli import generate_site_cli  # noqa: E402
 
@@ -31,6 +32,7 @@ __all__ = [
     "build_pack_from_source",
     "PackReader",
     "search_pack",
+    "ResourceMCPServer",
     "generate_skill",
     "generate_site_cli",
 ]

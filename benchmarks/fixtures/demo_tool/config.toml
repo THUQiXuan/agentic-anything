@@ -1,0 +1,4 @@
+[retry]
+max_attempts = 4
+backoff_milliseconds = 750
+

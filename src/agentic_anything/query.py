@@ -12,6 +12,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from .retrieval import BM25FIndex, SearchDocument, analyze, fields_from_manifest
 from .util import read_json
 
 
@@ -31,6 +32,7 @@ class PackReader:
         self._site: dict | None = None
         self._apis: dict | None = None
         self._pages: dict[str, dict] = {}
+        self._retrieval_index: BM25FIndex | None = None
 
     @property
     def discovery(self) -> dict:
@@ -103,7 +105,8 @@ def _tokens(text: str) -> list[str]:
     return _TOKEN_RE.findall(text.lower())
 
 
-def search_pack(pack: PackReader | str | Path, query: str, top: int = 5) -> list[dict]:
+def _legacy_search_pack(pack: PackReader | str | Path, query: str, top: int = 5) -> list[dict]:
+    """Original v0.3 TF field scorer, retained as an experiment baseline."""
     reader = pack if isinstance(pack, PackReader) else PackReader(pack)
     q_tokens = set(_tokens(query))
     if not q_tokens:
@@ -153,3 +156,72 @@ def search_pack(pack: PackReader | str | Path, query: str, top: int = 5) -> list
 
     results.sort(key=lambda r: r["score"], reverse=True)
     return results[:top]
+
+
+def _hybrid_search_pack(reader: PackReader, query: str, top: int = 5) -> list[dict]:
+    if reader._retrieval_index is None:
+        documents = [
+            SearchDocument(page_id, fields_from_manifest(reader.page(page_id)))
+            for page_id in reader.page_ids()
+        ]
+        reader._retrieval_index = BM25FIndex(documents)
+    ranked = reader._retrieval_index.search(query, top=top)
+    results: list[dict] = []
+    for hit in ranked:
+        page_id = hit["doc_id"]
+        manifest = reader.page(page_id)
+        results.append({
+            "page_id": page_id,
+            "url": manifest.get("source_url", ""),
+            "title": manifest.get("title", ""),
+            "score": round(hit["score"], 3),
+            "evidence": _evidence(manifest, query),
+            "retrieval_method": "bm25f-unicode",
+        })
+    return results
+
+
+def _evidence(manifest: dict, query: str) -> list[dict]:
+    query_tokens = set(analyze(query))
+    evidence: list[dict] = []
+
+    def add(kind: str, text: str) -> None:
+        if not text or len(evidence) >= 5:
+            return
+        matched = query_tokens.intersection(analyze(text))
+        if matched:
+            evidence.append({
+                "kind": kind,
+                "text": text[:300],
+                "matched": sorted({token.split(":", 1)[-1] for token in matched}),
+            })
+
+    add("title", manifest.get("title", ""))
+    add("summary", manifest.get("summary", ""))
+    for item in manifest.get("content", []):
+        add(item.get("kind", "block"), item.get("text", ""))
+    for link in manifest.get("links", []):
+        add("link", link.get("text", ""))
+    for form in manifest.get("forms", []):
+        add("form", " ".join(
+            [form.get("form_id", "")]
+            + [f"{field.get('name', '')} {field.get('label', '')}"
+               for field in form.get("fields", [])]
+        ))
+    return evidence
+
+
+def search_pack(
+    pack: PackReader | str | Path,
+    query: str,
+    top: int = 5,
+    *,
+    method: str = "hybrid",
+) -> list[dict]:
+    """Search a pack with Unicode BM25F (default) or the v0.3 legacy scorer."""
+    reader = pack if isinstance(pack, PackReader) else PackReader(pack)
+    if method == "hybrid":
+        return _hybrid_search_pack(reader, query, top=top)
+    if method == "legacy":
+        return _legacy_search_pack(reader, query, top=top)
+    raise ValueError(f"unknown retrieval method '{method}' (expected hybrid or legacy)")
