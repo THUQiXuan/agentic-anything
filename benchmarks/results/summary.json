@@ -1,0 +1,26 @@
+{
+  "date": "2026-07-10",
+  "beir": {
+    "primary_metric": "nDCG@10",
+    "paired_bootstrap_samples": 2000,
+    "datasets": {
+      "arguana": {"queries": 1406, "legacy_tf": 0.2202041334, "bm25": 0.3348475904, "bm25f_unicode": 0.3426974859, "delta_vs_bm25_ci95": [0.0047165728, 0.0111283527]},
+      "nfcorpus": {"queries": 323, "legacy_tf": 0.2479358653, "bm25": 0.3055556396, "bm25f_unicode": 0.3033883732, "delta_vs_bm25_ci95": [-0.0075643602, 0.0028936829]},
+      "fiqa": {"queries": 648, "legacy_tf": 0.1144760192, "bm25": 0.2375384067, "bm25f_unicode": 0.2375384067, "delta_vs_bm25_ci95": [0.0, 0.0]}
+    }
+  },
+  "multilingual_diagnostic": {
+    "positive_queries": 10,
+    "negative_queries": 3,
+    "legacy_recall_at_1": 0.6,
+    "final_recall_at_1": 1.0,
+    "cjk_unigram_negative_empty_accuracy": 0.6666666667,
+    "final_negative_empty_accuracy": 1.0
+  },
+  "mcp_smoke": {
+    "assertions_passed": 13,
+    "assertions_total": 13,
+    "codex": "configuration accepted and enabled",
+    "claude_code": "connected"
+  }
+}

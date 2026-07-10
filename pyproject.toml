@@ -5,13 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "agentic-anything"
 dynamic = ["version"]
-description = "Turn any website into an agent-native toolkit: structured site packs, generated agent skills, and per-site CLIs."
+description = "Turn any resource into an evidence-preserving agent interface with MCP, grounded search, chat, and HTTP APIs."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Agentic Anything Contributors" }]
-keywords = ["agent", "llm", "web", "crawler", "skills", "cli", "openrouter"]
+keywords = ["agent", "llm", "mcp", "rag", "web", "crawler", "skills", "cli", "openrouter"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",

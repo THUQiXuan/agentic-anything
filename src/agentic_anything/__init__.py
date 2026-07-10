@@ -5,12 +5,13 @@ plain documents, video transcripts (SRT/VTT), or whole folders:
 
 1. ``build``  - capture ANY source into a structured *pack* (non-visual,
                 evidence-preserving units + API surface for websites).
-2. ``chat``   - talk to the pack: a retrieval-grounded conversational agent
+2. ``mcp``    - expose packs as read-only resources/tools/prompts to any MCP host.
+3. ``chat``   - talk to the pack: a retrieval-grounded conversational agent
                 with citations; agents can consult each other (A2A).
-3. ``serve``  - host packs as agents over HTTP, including an OpenAI-compatible
+4. ``serve``  - host packs as agents over HTTP, including an OpenAI-compatible
                 /v1/chat/completions endpoint (an agent per "model").
-4. ``skill``  - generate a SKILL.md usage guide (LLM or deterministic).
-5. ``clify``  - emit a zero-dependency, resource-specific CLI.
+5. ``skill``  - generate a SKILL.md usage guide (LLM or deterministic).
+6. ``clify``  - emit a zero-dependency, resource-specific CLI.
 """
 
 from ._version import __version__  # noqa: E402

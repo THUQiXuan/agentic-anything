@@ -9,6 +9,7 @@ model-controlled retrieval without an LLM call inside the server.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 from urllib.parse import quote, unquote, urlparse
@@ -314,6 +315,8 @@ class ResourceMCPServer:
         if params.get("name") != "use_resource":
             raise ValueError(f"unknown prompt '{params.get('name')}'")
         arguments = params.get("arguments") or {}
+        if not isinstance(arguments, dict):
+            raise ValueError("prompt arguments must be an object")
         question = arguments.get("question")
         if not isinstance(question, str) or not question.strip():
             raise ValueError("prompt argument 'question' is required")
@@ -372,6 +375,7 @@ def run_stdio_server(pack_dirs: list[str | Path]) -> int:
 
 
 def codex_config(pack_dirs: list[str | Path], *, server_name: str = "agentic_anything") -> str:
+    _validate_server_name(server_name)
     args = ["mcp", *[str(Path(path).resolve()) for path in pack_dirs]]
     return (
         f"[mcp_servers.{server_name}]\n"
@@ -383,6 +387,7 @@ def codex_config(pack_dirs: list[str | Path], *, server_name: str = "agentic_any
 
 
 def claude_config(pack_dirs: list[str | Path], *, server_name: str = "agentic-anything") -> dict:
+    _validate_server_name(server_name)
     return {
         "mcpServers": {
             server_name: {
@@ -393,3 +398,10 @@ def claude_config(pack_dirs: list[str | Path], *, server_name: str = "agentic-an
             }
         }
     }
+
+
+def _validate_server_name(server_name: str) -> None:
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", server_name):
+        raise ValueError(
+            "server_name must contain 1-64 letters, digits, underscores, or hyphens"
+        )

@@ -18,7 +18,15 @@ from agentic_anything.ingest import build_pack_from_source  # noqa: E402
 from agentic_anything.query import PackReader, search_pack  # noqa: E402
 from agentic_anything.retrieval import BM25FIndex, SearchDocument, fields_from_manifest  # noqa: E402
 
-METHODS = ["legacy_tf", "bm25_flat_word", "bm25_flat_unicode", "bm25f_word", "bm25f_unicode"]
+METHODS = [
+    "legacy_tf",
+    "bm25_flat_word",
+    "bm25_flat_unicode_unigram",
+    "bm25_flat_unicode",
+    "bm25f_word",
+    "bm25f_unicode_unigram",
+    "bm25f_unicode",
+]
 
 
 def build_fixture_packs(work_dir: Path) -> dict[str, PackReader]:
@@ -55,14 +63,20 @@ def build_indices(readers: dict[str, PackReader], method: str):
             indices[pack_id] = BM25FIndex(
                 documents, field_weights={"body": 1.0}, field_b={"body": 0.75}, cjk=False
             )
-        elif method == "bm25_flat_unicode":
+        elif method in ("bm25_flat_unicode", "bm25_flat_unicode_unigram"):
             indices[pack_id] = BM25FIndex(
-                documents, field_weights={"body": 1.0}, field_b={"body": 0.75}, cjk=True
+                documents,
+                field_weights={"body": 1.0},
+                field_b={"body": 0.75},
+                cjk=True,
+                cjk_unigrams=method.endswith("_unigram"),
             )
         elif method == "bm25f_word":
             indices[pack_id] = BM25FIndex(documents, cjk=False)
-        elif method == "bm25f_unicode":
-            indices[pack_id] = BM25FIndex(documents, cjk=True)
+        elif method in ("bm25f_unicode", "bm25f_unicode_unigram"):
+            indices[pack_id] = BM25FIndex(
+                documents, cjk=True, cjk_unigrams=method.endswith("_unigram")
+            )
         else:
             raise ValueError(method)
     return indices

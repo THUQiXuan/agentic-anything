@@ -49,6 +49,7 @@ def _request(request_id, method, params=None):
 def test_unicode_analyzer_keeps_latin_and_cjk_features():
     tokens = analyze("退款 Policy E42")
     assert "g:退款" in tokens
+    assert "c:退" not in tokens
     assert "w:policy" in tokens
     assert "w:e42" in tokens
 
@@ -66,6 +67,10 @@ def test_hybrid_search_handles_code_like_terms(chinese_pack):
     results = search_pack(chinese_pack, "E42 缓存")
     assert results
     assert "故障恢复" in results[0]["title"]
+
+
+def test_cjk_bigrams_avoid_single_character_false_positive(chinese_pack):
+    assert search_pack(chinese_pack, "火星天气温度") == []
 
 
 def test_mcp_initialize_tools_search_and_resource_read(chinese_pack):
@@ -152,3 +157,5 @@ def test_runtime_config_generators_use_stdio_and_absolute_paths(chinese_pack):
     assert entry["type"] == "stdio"
     assert entry["args"][0] == "mcp"
     assert entry["args"][1] == str(chinese_pack.resolve())
+    with pytest.raises(ValueError):
+        codex_config([chinese_pack], server_name="bad.name]")

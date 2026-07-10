@@ -4,11 +4,11 @@
 
 # Agentic Anything
 
-**Turn anything — websites, papers, books, videos, data, software — into a chatable, agent-native resource.**
+**Turn anything — websites, papers, books, videos, data, software — into an evidence-preserving resource agent.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-160%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-168%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
@@ -21,9 +21,9 @@ Resources are built for human consumption. Agents deserve better: structured dat
 **Agentic Anything** turns any resource into an agent:
 
 ```
-  website ─┐                       ┌─ chat   talk to it (grounded answers + citations)
-  book ────┤                       ├─ serve  host it as an HTTP agent; agents call
-  video ───┼──▶ build ──▶ PACK ──▶ │         each other (A2A) & OpenAI-compatible API
+  website ─┐                       ┌─ mcp    native tools/resources for Codex, Claude Code, …
+  book ────┤                       ├─ chat   grounded answers + verifiable unit citations
+  video ───┼──▶ build ──▶ PACK ──▶ ├─ serve  HTTP agent, A2A & OpenAI-compatible API
   docs ────┤     capture &         ├─ skill  SKILL.md usage guide for agents
   folder ──┘     distill           └─ clify  zero-dependency per-resource CLI
 ```
@@ -39,6 +39,7 @@ Resources are built for human consumption. Agents deserve better: structured dat
   | Software & code | **installed CLI tools** (`build cli:git` — help/subcommands/man introspection) · **GitHub repos by URL** · local source trees |
   | Everything else | folders · zip/tar archives · RSS/Atom feeds & podcasts · email (.eml/.mbox) |
 
+- **`mcp`** — exposes one or more packs as a read-only Model Context Protocol server: discoverable resources, evidence search/open tools, and a grounded-use prompt. Codex and Claude Code can use the same pack directly, without an LLM call inside Agentic Anything.
 - **`chat`** — the pack becomes a conversational agent: retrieval-grounded answers with unit citations (`[page_id]`), honest "not in my resource" refusals, multi-turn history — in your terminal or one-shot with `--ask`.
 - **`serve`** — hosts packs as agents over HTTP: an `/agents` directory with agent cards, `POST /agents/<id>/ask`, and an **OpenAI-compatible `/v1/chat/completions`** where each agent is a "model" — so any agent framework can talk to your resources, and **agents can consult each other** (`--enable-a2a`, or `chat --peer id=url` across servers).
 - **`skill`** / **`clify`** — generate a SKILL.md usage guide and a zero-dependency per-resource CLI (see below).
@@ -75,12 +76,19 @@ agentic-anything build https://github.com/psf/requests -o packs/req    # GitHub 
 agentic-anything build cli:git                       -o packs/git      # installed software
 agentic-anything build ./my-notes/                   -o packs/notes    # folder / archive / repo
 
-# 2. Chat with it (any OpenAI-compatible LLM; OpenRouter by default)
+# 2. Give the resource directly to Codex or Claude Code (no API key)
+agentic-anything mcp-config packs/alice --client codex    # paste into .codex/config.toml
+agentic-anything mcp-config packs/alice --client claude  # save as .mcp.json
+
+# Or start the stdio MCP server yourself
+agentic-anything mcp packs/alice
+
+# 3. Chat with it (any OpenAI-compatible LLM; OpenRouter by default)
 export OPENROUTER_API_KEY="sk-or-..."
 agentic-anything chat packs/alice                             # interactive REPL
 agentic-anything chat packs/lecture --ask "What does E42 mean?"
 
-# 3. Host resources as agents; let them talk to each other
+# 4. Host resources as agents; let them talk to each other
 agentic-anything serve packs/alice packs/lecture --port 8373 --enable-a2a
 curl localhost:8373/agents                                    # agent directory
 curl -X POST localhost:8373/agents/alice/ask \
@@ -91,7 +99,7 @@ curl -X POST localhost:8373/agents/alice/ask \
 curl -X POST localhost:8373/v1/chat/completions \
      -d '{"model": "lecture", "messages": [{"role":"user","content":"Summarize the video"}]}'
 
-# 4. Classic toolkit layers still apply to every pack
+# 5. Classic toolkit layers still apply to every pack
 agentic-anything skill packs/quotes --language both   # SKILL.md + SKILL_ZH.md
 agentic-anything clify packs/quotes                   # zero-dependency site CLI
 agentic-anything pack  https://books.toscrape.com/    # build+skill+clify in one shot
@@ -129,6 +137,8 @@ Design principles (inherited from the projects that inspired this one — see
 - **Evidence preserved**: every manifest links back to captured HTML with a SHA-256; claims are verifiable.
 - **Honest boundaries**: the crawl frontier records every URL that was discovered but *not* captured, with the reason (budget, robots.txt, cross-site, fetch error).
 - **Agent-contract CLI**: everything supports `--json`, exit codes are meaningful, errors go to stderr.
+- **Protocol-native access**: MCP tools are read-only and return unit ids, evidence, and provenance; captured resource text is treated as untrusted data, never as server instructions.
+- **Multilingual retrieval**: BM25F preserves title/heading/body structure, Unicode words cover most languages, and CJK bigrams avoid the silent zero-token failure of ASCII-only search.
 
 ## CLI reference
 
@@ -137,6 +147,8 @@ Design principles (inherited from the projects that inspired this one — see
 | `build SOURCE -o DIR` | Agentify a source: website / video / repo / arXiv / feed URL; local file (`.pdf .docx .pptx .xlsx .epub .md .csv .json .ipynb .sqlite .eml .srt .mp4 .zip` …); folder / repo; `cli:<tool>`. Web options: `--max-pages`, `--render`, `--screenshots`, `--allow-cross-origin`, `--ignore-robots`, `--no-html`, `--no-probe`, `--seed URL`, `--timeout` |
 | `chat PACK [--ask Q]` | Converse with the pack (REPL or one-shot). Options: `--top-k`, `--model`, `--base-url`, `--peer ID=URL` (consult remote agents), `--json` |
 | `serve PACK... ` | Host packs as HTTP agents. Options: `--host`, `--port`, `--enable-a2a`, `--model`, `--top-k` |
+| `mcp PACK...` | Expose packs as a read-only stdio MCP server (resources + tools + prompts; no API key) |
+| `mcp-config PACK...` | Print a Codex TOML or Claude Code JSON configuration (`--client codex\|claude`) |
 | `skill PACK` | Generate `skills/SKILL.md`. Options: `--model`, `--base-url`, `--language en\|zh\|both`, `--no-llm` |
 | `clify PACK` | Generate `cli/<site>_cli.py` + its README |
 | `pack SOURCE -o DIR` | One-shot: build + skill + clify |
@@ -145,7 +157,38 @@ Design principles (inherited from the projects that inspired this one — see
 | `apis PACK` | Show the discovered API surface (websites) |
 | `info PACK` | Pack summary |
 
-All data-producing commands accept `--json`. `aany` is a short alias for `agentic-anything`.
+All data-producing commands accept `--json`. `query` uses Unicode BM25F by default; `--method legacy` reproduces the v0.3 scorer. `aany` is a short alias for `agentic-anything`.
+
+## Use a resource from Codex or Claude Code
+
+`mcp` is the shortest path from a captured resource to an existing coding
+agent. It exposes three read-only tools:
+
+| Tool | Purpose |
+|---|---|
+| `resource_info` | Inspect resource type, capture boundary, capabilities, and unit ids |
+| `search_resource` | Search one or all packs; returns ranked unit ids and matching evidence |
+| `read_unit` | Read Markdown plus source locator and SHA-256 provenance |
+
+The same units are also available through MCP `resources/list` / `resources/read`,
+and `use_resource` is exposed as an MCP prompt. To configure Codex:
+
+```bash
+agentic-anything mcp-config packs/alice --client codex
+```
+
+Paste the printed table into `~/.codex/config.toml` or a trusted project's
+`.codex/config.toml`. Codex CLI, the IDE extension, and the desktop app share
+that host configuration. For Claude Code:
+
+```bash
+agentic-anything mcp-config packs/alice --client claude > .mcp.json
+```
+
+Claude Code asks for approval before using project-scoped servers. Both clients
+launch the same local stdio command; no resource contents or credentials are
+uploaded by Agentic Anything itself. Other MCP hosts can run
+`agentic-anything mcp PACK...` directly.
 
 ## Agent server API
 
@@ -188,7 +231,7 @@ Capture (`build`), search (`query`) and the generated CLIs run **without any API
 
 ```python
 from agentic_anything import (
-    ResourceAgent, build_pack, build_pack_from_source,
+    ResourceAgent, ResourceMCPServer, build_pack, build_pack_from_source,
     generate_skill, generate_site_cli, search_pack,
 )
 from agentic_anything.config import BuildConfig, LLMConfig
@@ -209,16 +252,20 @@ from agentic_anything.server import AgentServer
 server = AgentServer(["packs/alice", "packs/quotes"], LLMConfig.from_env(),
                      port=8373, enable_a2a=True)
 server.serve_forever()
+
+# or embed the protocol adapter (handle one decoded JSON-RPC message)
+mcp = ResourceMCPServer(["packs/alice"])
+print(mcp.handle({"jsonrpc": "2.0", "id": 1, "method": "tools/list"}))
 ```
 
 ## Testing
 
 ```bash
 pip install -e '.[dev]'
-python -m pytest tests -q        # 160 tests; rendered-mode tests auto-skip without Playwright
+python -m pytest tests -q        # 168 tests; rendered-mode tests auto-skip without Playwright
 ```
 
-The suite covers the HTML parser, crawler policies (budget, robots.txt, same-site boundary, sitemap seeding), API discovery (forms, JS scanning, OpenAPI probing), non-web ingestion (markdown/text/EPUB/SRT/folders), pack building, search, the chat agent (retrieval grounding, citations, peer @ask protocol, hop budgets — against a scripted local LLM), the agent server (directory, ask, OpenAI-compatible endpoint, A2A), skill generation, the generated site CLI (run as a real subprocess), and the LLM client. No test calls external services.
+The suite covers the HTML parser, crawler policies, API discovery, non-web ingestion, pack building, Unicode/BM25F retrieval, MCP lifecycle/resources/tools/prompts and stdout purity, the chat agent, the HTTP agent server, skill generation, the generated site CLI, and the LLM client. No unit test calls an external service or model. Reproducible retrieval and host-compatibility evaluations live in [`benchmarks/`](benchmarks/).
 
 ## Responsible use
 

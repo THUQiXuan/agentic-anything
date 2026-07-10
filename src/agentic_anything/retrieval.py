@@ -47,7 +47,7 @@ def _is_cjk(char: str) -> bool:
     )
 
 
-def analyze(text: str, *, cjk: bool = True) -> list[str]:
+def analyze(text: str, *, cjk: bool = True, cjk_unigrams: bool = False) -> list[str]:
     """Normalize text into word tokens plus optional CJK character features."""
     normalized = unicodedata.normalize("NFKC", text or "").casefold()
     tokens: list[str] = []
@@ -60,23 +60,30 @@ def analyze(text: str, *, cjk: bool = True) -> list[str]:
                     run.append(char)
                 else:
                     if run:
-                        tokens.extend(_cjk_tokens("".join(run), cjk=cjk))
+                        tokens.extend(_cjk_tokens(
+                            "".join(run), cjk=cjk, cjk_unigrams=cjk_unigrams
+                        ))
                         run = []
                     if char.isalnum():
                         tokens.append("w:" + char)
             if run:
-                tokens.extend(_cjk_tokens("".join(run), cjk=cjk))
+                tokens.extend(_cjk_tokens(
+                    "".join(run), cjk=cjk, cjk_unigrams=cjk_unigrams
+                ))
         elif len(word) >= 2 or word.isdigit():
             tokens.append("w:" + word)
     return tokens
 
 
-def _cjk_tokens(run: str, *, cjk: bool) -> list[str]:
+def _cjk_tokens(run: str, *, cjk: bool, cjk_unigrams: bool) -> list[str]:
     if not run:
         return []
     if not cjk:
         return ["w:" + run]
-    out = ["c:" + char for char in run]
+    # Unigrams make partial matching easy but create severe false positives
+    # (e.g. 火星天气 matching 每三十天 through the single character 天).  Keep
+    # them as an explicit ablation only; a one-character run remains usable.
+    out = ["c:" + char for char in run] if cjk_unigrams or len(run) == 1 else []
     out.extend("g:" + run[i:i + 2] for i in range(len(run) - 1))
     # Exact short phrases are useful for names and error codes without making
     # the vocabulary explode on paragraphs with no spaces.
@@ -110,12 +117,14 @@ class BM25FIndex:
         field_b: dict[str, float] | None = None,
         k1: float = 1.2,
         cjk: bool = True,
+        cjk_unigrams: bool = False,
     ) -> None:
         self.documents = list(documents)
         self.field_weights = field_weights or DEFAULT_FIELD_WEIGHTS
         self.field_b = field_b or DEFAULT_FIELD_B
         self.k1 = k1
         self.cjk = cjk
+        self.cjk_unigrams = cjk_unigrams
         self._field_tfs: list[dict[str, Counter[str]]] = []
         self._field_lengths: list[dict[str, int]] = []
         totals: dict[str, int] = defaultdict(int)
@@ -127,7 +136,9 @@ class BM25FIndex:
             field_lengths: dict[str, int] = {}
             seen: set[str] = set()
             for field in self.field_weights:
-                tokens = analyze(document.fields.get(field, ""), cjk=cjk)
+                tokens = analyze(
+                    document.fields.get(field, ""), cjk=cjk, cjk_unigrams=cjk_unigrams
+                )
                 field_tfs[field] = Counter(tokens)
                 field_lengths[field] = len(tokens)
                 totals[field] += len(tokens)
@@ -146,7 +157,9 @@ class BM25FIndex:
         self._postings = postings
 
     def search(self, query: str, *, top: int = 5) -> list[dict]:
-        query_tf = Counter(analyze(query, cjk=self.cjk))
+        query_tf = Counter(analyze(
+            query, cjk=self.cjk, cjk_unigrams=self.cjk_unigrams
+        ))
         if not query_tf or not self.documents or top <= 0:
             return []
         count = len(self.documents)
