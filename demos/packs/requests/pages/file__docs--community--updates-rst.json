@@ -1,0 +1,46 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--community--updates-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/community/updates.rst",
+  "url_path": "docs/community/updates.rst",
+  "title": "docs/community/updates.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/community/updates.rst",
+  "summary": ".. _updates:\nCommunity Updates\n=================\nIf you'd like to stay up to date on the community and development of Requests,\nthere are several options:\nGitHub\n------\nThe best way to track the development of Requests is through\n`the GitH…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _updates:"
+    },
+    {
+      "kind": "p",
+      "text": "Community Updates\n================="
+    },
+    {
+      "kind": "p",
+      "text": "If you'd like to stay up to date on the community and development of Requests,\nthere are several options:"
+    },
+    {
+      "kind": "p",
+      "text": "GitHub\n------"
+    },
+    {
+      "kind": "p",
+      "text": "The best way to track the development of Requests is through\n`the GitHub repo <https://github.com/psf/requests>`_."
+    },
+    {
+      "kind": "p",
+      "text": ".. include:: ../../HISTORY.md"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/community/updates.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "fc3b6038009a9945f23e708e2b2c9793f99fbaf72f7f9831c717cc4f0a26f23d"
+  }
+}

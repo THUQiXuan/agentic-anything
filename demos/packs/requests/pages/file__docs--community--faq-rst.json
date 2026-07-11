@@ -1,0 +1,118 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--community--faq-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/community/faq.rst",
+  "url_path": "docs/community/faq.rst",
+  "title": "docs/community/faq.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/community/faq.rst",
+  "summary": ".. _faq:\nFrequently Asked Questions\n==========================\nThis part of the documentation answers common questions about Requests.\nEncoded Data?\n-------------\nRequests automatically decompresses gzip-encoded responses, and does\nits bes…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _faq:"
+    },
+    {
+      "kind": "p",
+      "text": "Frequently Asked Questions\n=========================="
+    },
+    {
+      "kind": "p",
+      "text": "This part of the documentation answers common questions about Requests."
+    },
+    {
+      "kind": "p",
+      "text": "Encoded Data?\n-------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests automatically decompresses gzip-encoded responses, and does\nits best to decode response content to unicode when possible."
+    },
+    {
+      "kind": "p",
+      "text": "When either the `brotli <https://pypi.org/project/Brotli/>`_ or `brotlicffi <https://pypi.org/project/brotlicffi/>`_\npackage is installed, requests also decodes Brotli-encoded responses."
+    },
+    {
+      "kind": "p",
+      "text": "You can get direct access to the raw response (and even the socket),\nif needed as well."
+    },
+    {
+      "kind": "p",
+      "text": "Custom User-Agents?\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests allows you to easily override User-Agent strings, along with\nany other HTTP Header. See :ref:`documentation about headers <custom-headers>`."
+    },
+    {
+      "kind": "p",
+      "text": "Why not Httplib2?\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "Chris Adams gave an excellent summary on\n`Hacker News <https://news.ycombinator.com/item?id=2884406>`_:"
+    },
+    {
+      "kind": "p",
+      "text": "httplib2 is part of why you should use requests: it's far more respectable\n    as a client but not as well documented and it still takes way too much code\n    for basic operations. I appreciate what httplib2 is trying to do, that\n    there's a ton of hard low-level annoyances in building a modern HTTP\n    client, but really, just use requests instead. Kenneth Reitz is very\n    motivated and he gets the degree to which simple things should be simple\n    whereas httplib2 feels more like an academic exercise than something\n    people should use to build production systems[1]."
+    },
+    {
+      "kind": "p",
+      "text": "Disclosure: I'm listed in the requests AUTHORS file but can claim credit\n    for, oh, about 0.0001% of the awesomeness."
+    },
+    {
+      "kind": "p",
+      "text": "1. https://code.google.com/p/httplib2/issues/detail?id=96 is a good example:\n    an annoying bug that affected many people, there was a fix available for\n    months, which worked great when I applied it in a fork and pounded a couple\n    TB of data through it, but it took over a year to make it into trunk and\n    even longer to make it onto PyPI where any other project which required \"\n    httplib2\" would get the working version."
+    },
+    {
+      "kind": "p",
+      "text": "Python 3 Support?\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "Yes! Requests supports all `officially supported versions of Python <https://devguide.python.org/versions/>`_\nand recent releases of PyPy."
+    },
+    {
+      "kind": "p",
+      "text": "Python 2 Support?\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "No! As of Requests 2.28.0, Requests no longer supports Python 2.7. Users who\nhave been unable to migrate should pin to `requests<2.28`. Full information\ncan be found in `psf/requests#6023 <https://github.com/psf/requests/issues/6023>`_."
+    },
+    {
+      "kind": "p",
+      "text": "It is *highly* recommended users migrate to a supported Python 3.x version now since\nPython 2.7 is no longer receiving bug fixes or security updates as of January 1, 2020."
+    },
+    {
+      "kind": "p",
+      "text": "What are \"hostname doesn't match\" errors?\n-----------------------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "These errors occur when :ref:`SSL certificate verification <verification>`\nfails to match the certificate the server responds with to the hostname\nRequests thinks it's contacting. If you're certain the server's SSL setup is\ncorrect (for example, because you can visit the site with your browser) and\nyou're using Python 2.7, a possible explanation is that you need\nServer-Name-Indication."
+    },
+    {
+      "kind": "p",
+      "text": "`Server-Name-Indication`_, or SNI, is an official extension to SSL where the\nclient tells the server what hostname it is contacting. This is important\nwhen servers are using `Virtual Hosting`_. When such servers are hosting\nmore than one SSL site they need to be able to return the appropriate\ncertificate based on the hostname the client is connecting to."
+    },
+    {
+      "kind": "p",
+      "text": "Python 3 already includes native support for SNI in their SSL modules."
+    },
+    {
+      "kind": "p",
+      "text": ".. _`Server-Name-Indication`: https://en.wikipedia.org/wiki/Server_Name_Indication\n.. _`virtual hosting`: https://en.wikipedia.org/wiki/Virtual_hosting"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/community/faq.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "5c2ee4cd1ddbd44a238d216069a9306b83d34aa8bdd97a0dea0b3992fd3a3e2b"
+  }
+}

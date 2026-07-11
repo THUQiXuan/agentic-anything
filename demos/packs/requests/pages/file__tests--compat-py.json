@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--compat-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/compat.py",
+  "url_path": "tests/compat.py",
+  "title": "tests/compat.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/compat.py",
+  "summary": "import warnings\n\ntry:\n    import StringIO\nexcept ImportError:\n    import io as StringIO\n\ntry:\n    from cStringIO import StringIO as cStringIO\nexcept ImportError:\n    cStringIO = None\n\n\ndef u(s):\n    warnings.warn(\n        (\n            \"Th…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import warnings\n\ntry:\n    import StringIO\nexcept ImportError:\n    import io as StringIO\n\ntry:\n    from cStringIO import StringIO as cStringIO\nexcept ImportError:\n    cStringIO = None\n\n\ndef u(s):\n    warnings.warn(\n        (\n            \"This helper function is no longer relevant in Python 3. \"\n            \"Usage of this alias should be discontinued as it will be \"\n            \"removed in a future release of Requests.\"\n        ),\n        DeprecationWarning,\n    )\n    return s\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/compat.py",
+    "capture_mode": "ingest",
+    "content_sha256": "d58ff5e3167de0140a667cc51427f809c552e485875c95b9dad43ce13ba15083"
+  }
+}

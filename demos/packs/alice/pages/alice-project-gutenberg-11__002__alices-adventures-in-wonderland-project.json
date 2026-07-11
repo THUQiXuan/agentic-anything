@@ -1,0 +1,175 @@
+{
+  "spec_version": "0.2",
+  "page_id": "alice-project-gutenberg-11__002__alices-adventures-in-wonderland-project",
+  "source_url": "https://www.gutenberg.org/ebooks/11!OEBPS/7126951391209738045_11-h-0.htm.xhtml",
+  "url_path": "chapter 2",
+  "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+  "page_type": "chapter",
+  "unit_kind": "chapter",
+  "locator": "chapter 2",
+  "summary": "The Project Gutenberg eBook of Alice's Adventures in Wonderland\nThis eBook is for the use of anyone anywhere in the United States and most other parts of the world at no cost and with almost no restrictions whatsoever. You may copy it, giv…",
+  "content": [
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "The Project Gutenberg eBook of Alice's Adventures in Wonderland"
+    },
+    {
+      "kind": "text",
+      "text": "This eBook is for the use of anyone anywhere in the United States and most other parts of the world at no cost and with almost no restrictions whatsoever. You may copy it, give it away or re-use it under the terms of the Project Gutenberg License included with this eBook or online at . If you are not located in the United States, you will have to check the laws of the country where you are located before using this eBook."
+    },
+    {
+      "kind": "p",
+      "text": "Title: Alice's Adventures in Wonderland"
+    },
+    {
+      "kind": "p",
+      "text": "Author: Lewis Carroll"
+    },
+    {
+      "kind": "p",
+      "text": "Release date: June 27, 2008 [eBook #11] Most recently updated: June 26, 2025"
+    },
+    {
+      "kind": "p",
+      "text": "Language: English"
+    },
+    {
+      "kind": "p",
+      "text": "Other information and formats: www.gutenberg.org/ebooks/11"
+    },
+    {
+      "kind": "p",
+      "text": "Credits: Arthur DiBianca and David Widger"
+    },
+    {
+      "kind": "text",
+      "text": "*** START OF THE PROJECT GUTENBERG EBOOK ALICE'S ADVENTURES IN WONDERLAND ***"
+    },
+    {
+      "kind": "heading",
+      "level": 1,
+      "text": "Alice’s Adventures in Wonderland"
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "by Lewis Carroll"
+    },
+    {
+      "kind": "heading",
+      "level": 4,
+      "text": "THE MILLENNIUM FULCRUM EDITION 3.0"
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Contents"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER I."
+    },
+    {
+      "kind": "td",
+      "text": "Down the Rabbit-Hole"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER II."
+    },
+    {
+      "kind": "td",
+      "text": "The Pool of Tears"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER III."
+    },
+    {
+      "kind": "td",
+      "text": "A Caucus-Race and a Long Tale"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER IV."
+    },
+    {
+      "kind": "td",
+      "text": "The Rabbit Sends in a Little Bill"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER V."
+    },
+    {
+      "kind": "td",
+      "text": "Advice from a Caterpillar"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER VI."
+    },
+    {
+      "kind": "td",
+      "text": "Pig and Pepper"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER VII."
+    },
+    {
+      "kind": "td",
+      "text": "A Mad Tea-Party"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER VIII."
+    },
+    {
+      "kind": "td",
+      "text": "The Queen’s Croquet-Ground"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER IX."
+    },
+    {
+      "kind": "td",
+      "text": "The Mock Turtle’s Story"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER X."
+    },
+    {
+      "kind": "td",
+      "text": "The Lobster Quadrille"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER XI."
+    },
+    {
+      "kind": "td",
+      "text": "Who Stole the Tarts?"
+    },
+    {
+      "kind": "td",
+      "text": "CHAPTER XII."
+    },
+    {
+      "kind": "td",
+      "text": "Alice’s Evidence"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://www.gutenberg.org/ebooks/11!OEBPS/7126951391209738045_11-h-0.htm.xhtml",
+    "capture_mode": "ingest",
+    "content_sha256": "a7e9e2e3a63fde496dec8f3ab032706c76f041eb4d6c8462e33d508790465e44"
+  }
+}

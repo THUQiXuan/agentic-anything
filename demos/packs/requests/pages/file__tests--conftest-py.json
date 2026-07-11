@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--conftest-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/conftest.py",
+  "url_path": "tests/conftest.py",
+  "title": "tests/conftest.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/conftest.py",
+  "summary": "try:\n    from http.server import HTTPServer, SimpleHTTPRequestHandler\nexcept ImportError:\n    from BaseHTTPServer import HTTPServer\n    from SimpleHTTPServer import SimpleHTTPRequestHandler\n\nimport ssl\nimport threading\n\nimport pytest\n\nfrom…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "try:\n    from http.server import HTTPServer, SimpleHTTPRequestHandler\nexcept ImportError:\n    from BaseHTTPServer import HTTPServer\n    from SimpleHTTPServer import SimpleHTTPRequestHandler\n\nimport ssl\nimport threading\n\nimport pytest\n\nfrom requests.compat import urljoin\n\n\ndef prepare_url(value):\n    # Issue #1483: Make sure the URL always has a trailing slash\n    httpbin_url = value.url.rstrip(\"/\") + \"/\"\n\n    def inner(*suffix):\n        return urljoin(httpbin_url, \"/\".join(suffix))\n\n    return inner\n\n\n@pytest.fixture(autouse=True)\ndef clean_proxy_environ(monkeypatch):\n    \"\"\"Remove proxy related environment variables for every test.\"\"\"\n    proxy_vars = (\"http_proxy\", \"https_proxy\", \"no_proxy\", \"ftp_proxy\", \"all_proxy\")\n    for var in proxy_vars:\n        monkeypatch.delenv(var, raising=False)\n        monkeypatch.delenv(var.upper(), raising=False)\n\n\n@pytest.fixture\ndef httpbin(httpbin):\n    return prepare_url(httpbin)\n\n\n@pytest.fixture\ndef httpbin_secure(httpbin_secure):\n    return prepare_url(httpbin_secure)\n\n\n@pytest.fixture\ndef nosan_server(tmp_path_factory):\n    # delay importing until the fixture in order to make it possible\n    # to deselect the test via command-line when trustme is not available\n    import trustme\n\n    tmpdir = tmp_path_factory.mktemp(\"certs\")\n    ca = trustme.CA()\n    # only commonName, no subjectAltName\n    server_cert = ca.issue_cert(common_name=\"localhost\")\n    ca_bundle = str(tmpdir / \"ca.pem\")\n    ca.cert_pem.write_to_path(ca_bundle)\n\n    context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\n    server_cert.configure_cert(context)\n    server = HTTPServer((\"localhost\", 0), SimpleHTTPRequestHandler)\n    server.socket = context.wrap_socket(server.socket, server_side=True)\n    server_thread = threading.Thread(target=server.serve_forever)\n    server_thread.start()\n\n    yield \"localhost\", server.server_address[1], ca_bundle\n\n    server.shutdown()\n    server_thread.join()\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/conftest.py",
+    "capture_mode": "ingest",
+    "content_sha256": "6d65ffb582519f80a66c5d1ef571e3c33395a199f9e67fcb500c6ad2d7800e0a"
+  }
+}

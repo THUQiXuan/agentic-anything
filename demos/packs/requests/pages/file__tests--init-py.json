@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--init-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/__init__.py",
+  "url_path": "tests/__init__.py",
+  "title": "tests/__init__.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/__init__.py",
+  "summary": "\"\"\"Requests test package initialisation.\"\"\"\n\nimport warnings\n\ntry:\n    from urllib3.exceptions import SNIMissingWarning\n\n    # urllib3 1.x sets SNIMissingWarning to only go off once,\n    # while this test suite requires it to always fire…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "\"\"\"Requests test package initialisation.\"\"\"\n\nimport warnings\n\ntry:\n    from urllib3.exceptions import SNIMissingWarning\n\n    # urllib3 1.x sets SNIMissingWarning to only go off once,\n    # while this test suite requires it to always fire\n    # so that it occurs during test_requests.test_https_warnings\n    warnings.simplefilter(\"always\", SNIMissingWarning)\nexcept ImportError:\n    # urllib3 2.0 removed that warning and errors out instead\n    SNIMissingWarning = None\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/__init__.py",
+    "capture_mode": "ingest",
+    "content_sha256": "ac7f253daae0905f9b3dec647cae736bb3c090185aa373b30b3e851599e5342c"
+  }
+}

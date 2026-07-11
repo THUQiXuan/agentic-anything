@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__src--requests--compat-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/src/requests/compat.py",
+  "url_path": "src/requests/compat.py",
+  "title": "src/requests/compat.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "src/requests/compat.py",
+  "summary": "\"\"\"\nrequests.compat\n~~~~~~~~~~~~~~~\n\nThis module previously handled import compatibility issues\nbetween Python 2 and Python 3. It remains for backwards\ncompatibility until the next major version.\n\"\"\"\n\n# pyright: reportUnusedImport=false\n\nf…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "\"\"\"\nrequests.compat\n~~~~~~~~~~~~~~~\n\nThis module previously handled import compatibility issues\nbetween Python 2 and Python 3. It remains for backwards\ncompatibility until the next major version.\n\"\"\"\n\n# pyright: reportUnusedImport=false\n\nfrom __future__ import annotations\n\nimport importlib\nimport sys\nfrom types import ModuleType\n\n# -------\n# urllib3\n# -------\nfrom urllib3 import (\n    __version__ as urllib3_version,  # type: ignore[reportPrivateImportUsage]\n)\n\n# Detect which major version of urllib3 is being used.\ntry:\n    is_urllib3_1 = int(urllib3_version.split(\".\")[0]) == 1\nexcept (TypeError, AttributeError):\n    # If we can't discern a version, prefer old functionality.\n    is_urllib3_1 = True\n\n# -------------------\n# Character Detection\n# -------------------\n\n\ndef _resolve_char_detection() -> ModuleType | None:\n    \"\"\"Find supported character detection libraries.\"\"\"\n    chardet = None\n    for lib in (\"chardet\", \"charset_normalizer\"):\n        if chardet is None:\n            try:\n                chardet = importlib.import_module(lib)\n            except ImportError:\n                pass\n    return chardet\n\n\nchardet = _resolve_char_detection()\n\n# -------\n# Pythons\n# -------\n\n# Syntax sugar.\n_ver = sys.version_info\n\n#: Python 2.x?\nis_py2 = _ver[0] == 2\n\n#: Python 3.x?\nis_py3 = _ver[0] == 3\n\n# json/simplejson module import resolution\nhas_simplejson = False\ntry:\n    import simplejson as json  # type: ignore[import-not-found]\n\n    has_simplejson = True\nexcept ImportError:\n    import json\n\nif has_simplejson:\n    from simplejson import JSONDecodeError  # type: ignore[import-not-found]\nelse:\n    from json import JSONDecodeError\n\n# Keep OrderedDict for backwards compatibility.\nfrom collections import OrderedDict\nfrom collections.abc import Callable, Mapping, MutableMapping\nfrom http import cookiejar as cookielib\nfrom http.cookies import Morsel\nfrom io import StringIO\n\n# --------------\n# Legacy Imports\n# --------------\nfrom urllib.parse import (\n    quote,\n    quote_plus,\n    unquote,\n    unquote_plus,\n    urldefrag,\n    urlencode,\n    urljoin,\n    urlparse,\n    urlsplit,\n    urlunparse,\n)\nfrom urllib.request import (\n    getproxies,\n    getproxies_environment,\n    parse_http_list,\n    proxy_bypass,\n    proxy_bypass_environment,  # type: ignore[attr-defined]  # https://github.com/python/cpython/issues/145331\n)\n\nbuiltin_str = str\nstr = str\nbytes = bytes\nbasestring = (str, bytes)\nnumeric_types = (int, float)\ninteger_types = (int,)\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/src/requests/compat.py",
+    "capture_mode": "ingest",
+    "content_sha256": "5d79ba289690b5015044341a1f7bc7d24134fc13a2db3efcf852515bf9aa18b4"
+  }
+}

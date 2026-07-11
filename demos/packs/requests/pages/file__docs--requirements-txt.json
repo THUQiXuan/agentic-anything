@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--requirements-txt",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/requirements.txt",
+  "url_path": "docs/requirements.txt",
+  "title": "docs/requirements.txt",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/requirements.txt",
+  "summary": "# Pinning to avoid unexpected breakages.\n# Used by RTD to generate docs.\nSphinx==7.2.6",
+  "content": [
+    {
+      "kind": "p",
+      "text": "# Pinning to avoid unexpected breakages.\n# Used by RTD to generate docs.\nSphinx==7.2.6"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/requirements.txt",
+    "capture_mode": "ingest",
+    "content_sha256": "054818d709f32450171a94583089806288ca0e0d876bf2dd78757eb1d1ac75fb"
+  }
+}

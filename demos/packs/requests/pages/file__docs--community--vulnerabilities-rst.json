@@ -1,0 +1,30 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--community--vulnerabilities-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/community/vulnerabilities.rst",
+  "url_path": "docs/community/vulnerabilities.rst",
+  "title": "docs/community/vulnerabilities.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/community/vulnerabilities.rst",
+  "summary": "Vulnerability Disclosure\n========================\nThe latest vulnerability disclosure information can be found on GitHub in our\n`Security Policy <https://github.com/psf/requests/blob/main/.github/SECURITY.md>`_.",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Vulnerability Disclosure\n========================"
+    },
+    {
+      "kind": "p",
+      "text": "The latest vulnerability disclosure information can be found on GitHub in our\n`Security Policy <https://github.com/psf/requests/blob/main/.github/SECURITY.md>`_."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/community/vulnerabilities.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "6e4713d4ac520c47582edfbac098ba43edc0ecc44a8a4e55be49f1d1d5e87301"
+  }
+}

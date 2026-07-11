@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--certs--mtls--client--makefile",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/mtls/client/Makefile",
+  "url_path": "tests/certs/mtls/client/Makefile",
+  "title": "tests/certs/mtls/client/Makefile",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/certs/mtls/client/Makefile",
+  "summary": ".PHONY: all clean\n\nclient.key:\n\topenssl genrsa -out $@ 2048\n\nclient.csr: client.key\n\topenssl req -key $< -new -out $@ -config cert.cnf\n\nclient.pem: client.csr\n\topenssl x509 -req -CA ./ca/ca.crt -CAkey ./ca/ca-private.key -in client.csr -ou…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": ".PHONY: all clean\n\nclient.key:\n\topenssl genrsa -out $@ 2048\n\nclient.csr: client.key\n\topenssl req -key $< -new -out $@ -config cert.cnf\n\nclient.pem: client.csr\n\topenssl x509 -req -CA ./ca/ca.crt -CAkey ./ca/ca-private.key -in client.csr -outform PEM -out client.pem -days 730 -CAcreateserial\n\topenssl x509 -in ./ca/ca.crt -outform PEM >> $@\n\nall: client.pem\n\nclean:\n\trm -f client.*\n"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/mtls/client/Makefile",
+    "capture_mode": "ingest",
+    "content_sha256": "ec153d8d19a0987a41977094bc8b01cbca1a8b5adc589f1bd8d9bec562bdb9d8"
+  }
+}

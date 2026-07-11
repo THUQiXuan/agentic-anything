@@ -1,0 +1,82 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--community--release-process-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/community/release-process.rst",
+  "url_path": "docs/community/release-process.rst",
+  "title": "docs/community/release-process.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/community/release-process.rst",
+  "summary": "Release Process and Rules\n=========================\n.. versionadded:: v2.6.2\nStarting with the version to be released after ``v2.6.2``, the following rules\nwill govern and describe how the Requests core team produces a new release.\nMajor R…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Release Process and Rules\n========================="
+    },
+    {
+      "kind": "p",
+      "text": ".. versionadded:: v2.6.2"
+    },
+    {
+      "kind": "p",
+      "text": "Starting with the version to be released after ``v2.6.2``, the following rules\nwill govern and describe how the Requests core team produces a new release."
+    },
+    {
+      "kind": "p",
+      "text": "Major Releases\n--------------"
+    },
+    {
+      "kind": "p",
+      "text": "A major release will include breaking changes. When it is versioned, it will\nbe versioned as ``vX.0.0``. For example, if the previous release was\n``v10.2.7`` the next version will be ``v11.0.0``."
+    },
+    {
+      "kind": "p",
+      "text": "Breaking changes are changes that break backwards compatibility with prior\nversions. If the project were to change the ``text`` attribute on a\n``Response`` object to a method, that would only happen in a Major release."
+    },
+    {
+      "kind": "p",
+      "text": "Major releases may also include miscellaneous bug fixes. The core developers of\nRequests are committed to providing a good user experience. This means we're\nalso committed to preserving backwards compatibility as much as possible. Major\nreleases will be infrequent and will need strong justifications before they are\nconsidered."
+    },
+    {
+      "kind": "p",
+      "text": "Minor Releases\n--------------"
+    },
+    {
+      "kind": "p",
+      "text": "A minor release will not include breaking changes but may include miscellaneous\nbug fixes. If the previous version of Requests released was ``v10.2.7`` a minor\nrelease would be versioned as ``v10.3.0``."
+    },
+    {
+      "kind": "p",
+      "text": "Minor releases will be backwards compatible with releases that have the same\nmajor version number. In other words, all versions that would start with\n``v10.`` should be compatible with each other."
+    },
+    {
+      "kind": "p",
+      "text": "Hotfix Releases\n---------------"
+    },
+    {
+      "kind": "p",
+      "text": "A hotfix release will only include bug fixes that were missed when the project\nreleased the previous version. If the previous version of Requests released\n``v10.2.7`` the hotfix release would be versioned as ``v10.2.8``."
+    },
+    {
+      "kind": "p",
+      "text": "Hotfixes will **not** include upgrades to vendored dependencies after\n``v2.6.2``"
+    },
+    {
+      "kind": "p",
+      "text": "Reasoning\n---------"
+    },
+    {
+      "kind": "p",
+      "text": "In the 2.5 and 2.6 release series, the Requests core team upgraded vendored\ndependencies and caused a great deal of headaches for both users and the core\nteam. To reduce this pain, we're forming a concrete set of procedures so\nexpectations will be properly set."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/community/release-process.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "c39d86fd7e3485b73bb969886d236e5d1e774f277c10ece901d2cf84316164ff"
+  }
+}

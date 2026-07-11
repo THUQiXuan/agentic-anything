@@ -1,0 +1,30 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--certs--mtls--readme-md",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/mtls/README.md",
+  "url_path": "tests/certs/mtls/README.md",
+  "title": "tests/certs/mtls/README.md",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/certs/mtls/README.md",
+  "summary": "# Certificate Examples for mTLS\nThis has some generated certificates for mTLS utilization. The idea is to be\nable to have testing around how Requests handles client certificates.",
+  "content": [
+    {
+      "kind": "p",
+      "text": "# Certificate Examples for mTLS"
+    },
+    {
+      "kind": "p",
+      "text": "This has some generated certificates for mTLS utilization. The idea is to be\nable to have testing around how Requests handles client certificates."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/mtls/README.md",
+    "capture_mode": "ingest",
+    "content_sha256": "d3b5535516f5349b4206e94b5f5c219bc82ec51cc68081e0de3ce79f50fa04f8"
+  }
+}

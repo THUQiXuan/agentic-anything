@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--static--custom-css",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/_static/custom.css",
+  "url_path": "docs/_static/custom.css",
+  "title": "docs/_static/custom.css",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/_static/custom.css",
+  "summary": "img.logo {margin-left: -20px!important;}\n\ndiv#searchbox h3 {text-transform: capitalize;}\n\ndiv.document {width: 1008px;}\n\ndiv.highlight pre {padding: 11px 14px;}\n\n@media screen and (max-width: 1008px) {\n  div.document {width: 100%!important…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "img.logo {margin-left: -20px!important;}\n\ndiv#searchbox h3 {text-transform: capitalize;}\n\ndiv.document {width: 1008px;}\n\ndiv.highlight pre {padding: 11px 14px;}\n\n@media screen and (max-width: 1008px) {\n  div.document {width: 100%!important;}\n  div.highlight pre {margin-right: -30px;}\n}\n",
+      "lang": "css"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/_static/custom.css",
+    "capture_mode": "ingest",
+    "content_sha256": "f07ee16edd645ce4ccf941c84febf1328dd0a5a638d232ec7f7901580fcce8f8"
+  }
+}

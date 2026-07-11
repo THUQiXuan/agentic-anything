@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__src--requests--certs-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/src/requests/certs.py",
+  "url_path": "src/requests/certs.py",
+  "title": "src/requests/certs.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "src/requests/certs.py",
+  "summary": "#!/usr/bin/env python\n\n\"\"\"\nrequests.certs\n~~~~~~~~~~~~~~\n\nThis module returns the preferred default CA certificate bundle. There is\nonly one — the one from the certifi package.\n\nIf you are packaging Requests, e.g., for a Linux distribution…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "#!/usr/bin/env python\n\n\"\"\"\nrequests.certs\n~~~~~~~~~~~~~~\n\nThis module returns the preferred default CA certificate bundle. There is\nonly one — the one from the certifi package.\n\nIf you are packaging Requests, e.g., for a Linux distribution or a managed\nenvironment, you can change the definition of where() to return a separately\npackaged CA bundle.\n\"\"\"\n\nfrom certifi import where\n\nif __name__ == \"__main__\":\n    print(where())\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/src/requests/certs.py",
+    "capture_mode": "ingest",
+    "content_sha256": "fd9c6b83359cef90ff6c4eeeab8dcc2388da382ebca7d00a499b3c0b434a87e4"
+  }
+}

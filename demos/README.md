@@ -1,42 +1,41 @@
-# Agentic Anything demo gallery
+# Agentic Anything authentic-source showcase
 
-[Open the hosted demo](https://thuqixuan.github.io/agentic-anything/) ·
+[Open the hosted walkthrough](https://thuqixuan.github.io/agentic-anything/) ·
 [inspect the raw results](results/showcase.json) ·
+[audit the source manifest](sources/real-sources.json) ·
 [read the main project documentation](../README.md)
 
-This directory is a checked-in, reproducible product walkthrough of what the
-current Agentic Anything code can do without an LLM or API key. The page is
-organized around one concrete question: what changes between the native
-resource, the generated agent-native pack, and the way a person or agent uses
-that pack afterward?
+This directory is a checked-in, reproducible walkthrough built from real
+external resources. No source passage, code file, table row, or book chapter
+was invented for the demo.
 
-## What to try first
+## What the walkthrough proves
 
-1. Follow the flagship incident across a transcript, handbook, and CSV. Each
-   claim exposes the exact source locator and content hash behind it.
-2. In the transformation lab, switch among all five resource types and compare
-   the native rendering with the real generated unit inventory.
-3. Use the same transformed pack through evidence search, its generated CLI,
-   or the MCP interface. The result panels are loaded from checked-in build
-   output rather than illustrative placeholder text.
+The flagship case traces the Requests redirect limit through three pieces of
+the real `v2.34.2` repository: the constant definition, `Session` default, and
+runtime guard. The transformation lab then applies the same contract to five
+different native formats:
 
-## Included demos
-
-| Resource | Source | What the demo finds |
+| Resource | Publisher and pinned version | Checked question |
 |---|---|---|
-| Document | bilingual Markdown handbook | Chinese E42 remediation and rollback code |
-| Video | SRT incident timeline | recovery time and incident sequence |
-| Dataset | CSV service metrics | the AP South latency/incident row |
-| Code | tiny Python repository | retry mode, timeout, and retry limit |
-| Website | two-page local site | runbook ID, maintenance window, and form surface |
+| Code repository | PSF Requests `v2.34.2` | redirect ceiling and enforcement |
+| Book | Project Gutenberg eBook #11 | whether the Hatter answers his riddle |
+| Website | Python 3.13.14 documentation | recommended token randomness |
+| Dataset | NASA GISTEMP v4 snapshot | the 2024 annual anomaly |
+| Paper | FAIR Principles, PMCID PMC4792175 | the meaning of machine-actionable |
 
-Every resource is committed in three forms:
+Each source is retained as an unmodified local snapshot. The
+[`real-sources.json`](sources/real-sources.json) manifest records its publisher
+URL, format, version, license, snapshot filename, and SHA-256. The build fails
+if any byte no longer matches.
 
-1. `sources/` — the small synthetic input;
-2. `packs/` — the actual agent-native pack, generated skill/CLI, interface
-   manifest, and human entry guide;
-3. `results/` — exact search, CLI, MCP, and verification transcripts consumed
-   by the HTML gallery.
+Every resource is committed in three layers:
+
+1. `sources/` — publisher snapshots and their provenance manifest;
+2. `packs/` — actual agent-native packs, generated CLIs, interface manifests,
+   skills, and AGENT guides;
+3. `results/` — exact evidence, CLI, MCP, and quality transcripts consumed by
+   the HTML walkthrough.
 
 ## Rebuild and verify
 
@@ -47,10 +46,12 @@ python demos/build_demos.py
 python demos/verify_demos.py
 ```
 
-The builder removes `OPENROUTER_API_KEY` and `AGENTIC_API_KEY` from its child
-processes and normalizes capture timestamps to a fixed demo snapshot, so a
-rebuild is stable. No credential, paid request, or model output is needed. To
-view the page locally:
+Missing snapshots are downloaded from their declared publisher URL, then
+verified. Existing snapshots are never silently refreshed. The builder removes
+`OPENROUTER_API_KEY` and `AGENTIC_API_KEY` from child processes and normalizes
+capture timestamps, so no credential, paid request, or model output is needed.
+
+To view the page locally:
 
 ```bash
 python -m http.server 8000 --directory demos
@@ -59,7 +60,8 @@ python -m http.server 8000 --directory demos
 
 ## Scope
 
-These demos validate deterministic capture, structured evidence retrieval,
-generated resource CLIs, stable interface manifests, and read-only MCP access.
-They deliberately do not claim generative answer quality, human productivity,
-perfect ingestion fidelity, or compatibility with every host.
+The demo validates deterministic capture, focused evidence retrieval, generated
+resource CLIs, stable interface manifests, and read-only MCP access over pinned
+real resources. The short evidence-backed answers are editorially curated and
+verified against the captured text; this is not a benchmark of generative answer
+quality or human productivity.

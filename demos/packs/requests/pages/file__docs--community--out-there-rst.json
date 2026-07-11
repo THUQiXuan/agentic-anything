@@ -1,0 +1,30 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--community--out-there-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/community/out-there.rst",
+  "url_path": "docs/community/out-there.rst",
+  "title": "docs/community/out-there.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/community/out-there.rst",
+  "summary": "Integrations\n============\nArticles & Talks\n================\n- `Daniel Greenfeld's Review of Requests <https://pydanny.blogspot.com/2011/05/python-http-requests-for-humans.html>`_\n- `Issac Kelly's 'Consuming Web APIs' talk <https://issackel…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Integrations\n============"
+    },
+    {
+      "kind": "p",
+      "text": "Articles & Talks\n================\n- `Daniel Greenfeld's Review of Requests <https://pydanny.blogspot.com/2011/05/python-http-requests-for-humans.html>`_\n- `Issac Kelly's 'Consuming Web APIs' talk <https://issackelly.github.io/Consuming-Web-APIs-with-Python-Talk/slides/slides.html>`_\n- `Blog post about Requests via Yum <https://arunsag.wordpress.com/2011/08/17/new-package-python-requests-http-for-humans/>`_\n- `Russian blog post introducing Requests <https://habr.com/post/126262/>`_\n- `Sending JSON in Requests <https://www.coglib.com/~icordasc/blog/2014/11/sending-json-in-requests.html>`_"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/community/out-there.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "6f5d93846d50408926170871b1a393b2a5ff42d4716ed1b6bab7faea1ea96c01"
+  }
+}

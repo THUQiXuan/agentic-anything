@@ -16,6 +16,7 @@ from urllib.parse import quote, unquote, urlparse
 
 from ._version import __version__
 from .query import PackReader, search_pack
+from .retrieval import analyze
 
 LATEST_PROTOCOL_VERSION = "2025-11-25"
 SUPPORTED_PROTOCOL_VERSIONS = {
@@ -216,21 +217,33 @@ class ResourceMCPServer:
 
     def _search(self, query: str, resource_id: str | None, top_k: int) -> dict:
         targets = [self._reader(resource_id)] if resource_id else list(self.readers.items())
+        query_features = {token.split(":", 1)[-1] for token in analyze(query)}
         hits: list[dict] = []
         for resolved, reader in targets:
             pack_hits = search_pack(reader, query, top=top_k)
             best = pack_hits[0]["score"] if pack_hits else 1.0
             for hit in pack_hits:
+                matched = {
+                    token
+                    for evidence in hit.get("evidence", [])
+                    for token in evidence.get("matched", [])
+                }
+                coverage = len(query_features.intersection(matched))
                 hits.append({
                     "resource_id": resolved,
                     "unit_id": hit["page_id"],
                     "title": hit["title"],
                     "score": hit["score"],
-                    "normalized_score": round(hit["score"] / max(best, 1e-9), 6),
+                    "normalized_score": round(coverage / max(len(query_features), 1), 6),
+                    "query_coverage": coverage,
+                    "pack_normalized_score": round(hit["score"] / max(best, 1e-9), 6),
                     "evidence": hit["evidence"],
                     "uri": self._unit_uri(resolved, hit["page_id"]),
                 })
-        hits.sort(key=lambda item: (-item["normalized_score"], -item["score"], item["resource_id"], item["unit_id"]))
+        hits.sort(key=lambda item: (
+            -item["normalized_score"], -item["pack_normalized_score"],
+            -item["score"], item["resource_id"], item["unit_id"],
+        ))
         return {"query": query, "retrieval_method": "bm25f-unicode", "hits": hits[:top_k]}
 
     def _unit(self, resource_id: str | None, unit_id: str) -> dict:

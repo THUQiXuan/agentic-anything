@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__src--requests--packages-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/src/requests/packages.py",
+  "url_path": "src/requests/packages.py",
+  "title": "src/requests/packages.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "src/requests/packages.py",
+  "summary": "import sys\n\nfrom .compat import chardet\n\n# This code exists for backwards compatibility reasons.\n# I don't like it either. Just look the other way. :)\n\nfor package in (\"urllib3\", \"idna\"):\n    locals()[package] = __import__(package)\n    # T…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import sys\n\nfrom .compat import chardet\n\n# This code exists for backwards compatibility reasons.\n# I don't like it either. Just look the other way. :)\n\nfor package in (\"urllib3\", \"idna\"):\n    locals()[package] = __import__(package)\n    # This traversal is apparently necessary such that the identities are\n    # preserved (requests.packages.urllib3.* is urllib3.*)\n    for mod in list(sys.modules):\n        if mod == package or mod.startswith(f\"{package}.\"):\n            sys.modules[f\"requests.packages.{mod}\"] = sys.modules[mod]\n\nif chardet is not None:\n    target = chardet.__name__\n    for mod in list(sys.modules):\n        if mod == target or mod.startswith(f\"{target}.\"):\n            imported_mod = sys.modules[mod]\n            sys.modules[f\"requests.packages.{mod}\"] = imported_mod\n            mod = mod.replace(target, \"chardet\")\n            sys.modules[f\"requests.packages.{mod}\"] = imported_mod\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/src/requests/packages.py",
+    "capture_mode": "ingest",
+    "content_sha256": "fe0d2067af355320252874631fa91a9db6a8c71d9e01beaacdc5e2383c932287"
+  }
+}

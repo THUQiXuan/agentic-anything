@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__src--requests--version-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/src/requests/__version__.py",
+  "url_path": "src/requests/__version__.py",
+  "title": "src/requests/__version__.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "src/requests/__version__.py",
+  "summary": "# .-. .-. .-. . . .-. .-. .-. .-.\n# |(  |-  |.| | | |-  `-.  |  `-.\n# ' ' `-' `-`.`-' `-' `-'  '  `-'\n\n__title__ = \"requests\"\n__description__ = \"Python HTTP for Humans.\"\n__url__ = \"https://requests.readthedocs.io\"\n__version__ = \"2.34.2\"\n__…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "# .-. .-. .-. . . .-. .-. .-. .-.\n# |(  |-  |.| | | |-  `-.  |  `-.\n# ' ' `-' `-`.`-' `-' `-'  '  `-'\n\n__title__ = \"requests\"\n__description__ = \"Python HTTP for Humans.\"\n__url__ = \"https://requests.readthedocs.io\"\n__version__ = \"2.34.2\"\n__build__ = 0x023402\n__author__ = \"Kenneth Reitz\"\n__author_email__ = \"me@kennethreitz.org\"\n__license__ = \"Apache-2.0\"\n__copyright__ = \"Copyright Kenneth Reitz\"\n__cake__ = \"\\u2728 \\U0001f370 \\u2728\"\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/src/requests/__version__.py",
+    "capture_mode": "ingest",
+    "content_sha256": "abba90670b0370a3dc40d97c2dea46a35d4bec941ff10d7c3cf3098ef04a17f9"
+  }
+}

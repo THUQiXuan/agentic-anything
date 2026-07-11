@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--test-structures-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/test_structures.py",
+  "url_path": "tests/test_structures.py",
+  "title": "tests/test_structures.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/test_structures.py",
+  "summary": "import pytest\n\nfrom requests.structures import CaseInsensitiveDict, LookupDict\n\n\nclass TestCaseInsensitiveDict:\n    @pytest.fixture(autouse=True)\n    def setup(self):\n        \"\"\"CaseInsensitiveDict instance with \"Accept\" header.\"\"\"…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import pytest\n\nfrom requests.structures import CaseInsensitiveDict, LookupDict\n\n\nclass TestCaseInsensitiveDict:\n    @pytest.fixture(autouse=True)\n    def setup(self):\n        \"\"\"CaseInsensitiveDict instance with \"Accept\" header.\"\"\"\n        self.case_insensitive_dict = CaseInsensitiveDict()\n        self.case_insensitive_dict[\"Accept\"] = \"application/json\"\n\n    def test_list(self):\n        assert list(self.case_insensitive_dict) == [\"Accept\"]\n\n    possible_keys = pytest.mark.parametrize(\n        \"key\", (\"accept\", \"ACCEPT\", \"aCcEpT\", \"Accept\")\n    )\n\n    @possible_keys\n    def test_getitem(self, key):\n        assert self.case_insensitive_dict[key] == \"application/json\"\n\n    @possible_keys\n    def test_delitem(self, key):\n        del self.case_insensitive_dict[key]\n        assert key not in self.case_insensitive_dict\n\n    def test_lower_items(self):\n        assert list(self.case_insensitive_dict.lower_items()) == [\n            (\"accept\", \"application/json\")\n        ]\n\n    def test_repr(self):\n        assert repr(self.case_insensitive_dict) == \"{'Accept': 'application/json'}\"\n\n    def test_copy(self):\n        copy = self.case_insensitive_dict.copy()\n        assert copy is not self.case_insensitive_dict\n        assert copy == self.case_insensitive_dict\n\n    @pytest.mark.parametrize(\n        \"other, result\",\n        (\n            ({\"AccePT\": \"application/json\"}, True),\n            ({}, False),\n            (None, False),\n        ),\n    )\n    def test_instance_equality(self, other, result):\n        assert (self.case_insensitive_dict == other) is result\n\n\nclass TestLookupDict:\n    @pytest.fixture(autouse=True)\n    def setup(self):\n        \"\"\"LookupDict instance with \"bad_gateway\" attribute.\"\"\"\n        self.lookup_dict = LookupDict(\"test\")\n        self.lookup_dict.bad_gateway = 502\n\n    def test_repr(self):\n        assert repr(self.lookup_dict) == \"<lookup 'test'>\"\n\n    get_item_parameters = pytest.mark.parametrize(\n        \"key, value\",\n        (\n            (\"bad_gateway\", 502),\n            (\"not_a_key\", None),\n        ),\n    )\n\n    @get_item_parameters\n    def test_getitem(self, key, value):\n        assert self.lookup_dict[key] == value\n\n    @get_item_parameters\n    def test_get(self, key, value):\n        assert self.lookup_dict.get(key) == value\n\n    def test_hasattr(self):\n        assert hasattr(self.lookup_dict, \"bad_gateway\") is True\n        assert hasattr(self.lookup_dict, \"not_a_key\") is False\n\n    def test_getattr(self):\n        assert getattr(self.lookup_dict, \"bad_gateway\") == 502\n        with pytest.raises(AttributeError):\n            getattr(self.lookup_dict, \"not_a_key\")\n\n    @get_item_parameters\n    def test_getattr_default(self, key, value):\n        assert getattr(self.lookup_dict, key, None) == value\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/test_structures.py",
+    "capture_mode": "ingest",
+    "content_sha256": "f984b7fc68fb2bd6ec82463b0cf5b6bd2ac773293cac6629fc3361f9f66947e9"
+  }
+}

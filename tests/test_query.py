@@ -1,6 +1,6 @@
 import pytest
 
-from agentic_anything.query import PackNotFound, PackReader, search_pack
+from agentic_anything.query import PackNotFound, PackReader, _evidence, search_pack
 
 
 def test_pack_reader_info(built_pack):
@@ -43,3 +43,22 @@ def test_search_finds_form_page(built_pack):
 
 def test_search_empty_query(built_pack):
     assert search_pack(built_pack, "!!!") == []
+
+
+def test_evidence_focuses_long_blocks_and_ranks_query_coverage():
+    manifest = {
+        "title": "Long real-world resource",
+        "content": [
+            {"kind": "p", "text": "attention appears alone"},
+            {
+                "kind": "p",
+                "text": "unrelated preface " * 80
+                + "Scaled dot-product attention divides logits before softmax."
+                + " trailing appendix" * 80,
+            },
+        ],
+    }
+    evidence = _evidence(manifest, "scaled dot product attention")
+    assert evidence[0]["matched"] == ["attention", "dot", "product", "scaled"]
+    assert "Scaled dot-product attention" in evidence[0]["text"]
+    assert len(evidence[0]["text"]) <= 302

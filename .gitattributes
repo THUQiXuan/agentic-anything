@@ -1,0 +1,18 @@
+# Preserve upstream publisher snapshots byte-for-byte. Generated JSON and
+# Markdown remain normal text so their evidence changes stay reviewable.
+demos/sources/*.html -text -diff
+demos/sources/*.epub -text -diff
+demos/sources/*.zip -text -diff
+
+# Generated Markdown faithfully mirrors upstream whitespace. Keep it diffable,
+# but do not flag source-owned trailing spaces as repository formatting errors.
+demos/packs/*/pages/*.md whitespace=-trailing-space
+
+# These two Requests documentation pages intentionally contain examples of
+# merge-conflict markers; they are source evidence, not unresolved repo state.
+demos/packs/requests/pages/file__docs--community--support-rst.md -diff
+demos/packs/requests/pages/file__docs--dev--authors-rst.md -diff
+
+# The captured official webpage is a byte-faithful HTML mirror; its distilled
+# JSON and Markdown remain reviewable alongside it.
+demos/packs/secrets/html/* -text -diff

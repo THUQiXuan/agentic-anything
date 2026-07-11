@@ -3,458 +3,502 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="See heterogeneous resources before and after Agentic Anything turns them into usable resource agents.">
-  <meta name="theme-color" content="#f4f5f2">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2311141a'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='28' font-family='Arial' font-weight='700' fill='white'%3EA+%3C/text%3E%3C/svg%3E">
-  <title>Agentic Anything — Before, After, Use It</title>
+  <meta name="description" content="A before-and-after walkthrough built from five pinned real-world resources: a book, GitHub repository, official documentation, NASA dataset, and open-access paper.">
+  <meta name="theme-color" content="#f5f3ee">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23131720'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='28' font-family='Arial' font-weight='700' fill='white'%3EA+%3C/text%3E%3C/svg%3E">
+  <title>Agentic Anything — Real Inputs, Inspectable Outputs</title>
   <style>
     :root {
-      --paper: #f4f5f2;
+      --paper: #f5f3ee;
       --white: #fff;
-      --ink: #11141a;
-      --muted: #626a78;
-      --line: #dfe2dc;
-      --blue: #3157ff;
+      --ink: #131720;
+      --muted: #667080;
+      --line: #dcded8;
+      --blue: #2f55ff;
       --blue-soft: #e9edff;
-      --lime: #c8f36a;
-      --orange: #ff7849;
+      --lime: #c9f36a;
+      --lime-dark: #20300f;
+      --orange: #ff7648;
       --dark: #10141e;
-      --dark-2: #181e2a;
+      --dark-2: #181e2b;
       --radius: 22px;
-      --shadow: 0 24px 70px rgba(25, 30, 45, .1);
+      --shadow: 0 24px 70px rgba(25, 31, 43, .1);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
       background: var(--paper);
     }
     * { box-sizing: border-box; }
-    mark { background: #dcff54; color: inherit; border-radius: 3px; padding: 0 .14em; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--paper); }
-    a { color: inherit; }
-    button, input { font: inherit; }
+    body { margin: 0; background: var(--paper); color: var(--ink); }
+    button, a { font: inherit; }
     button { color: inherit; }
-    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
-    .wrap { width: min(1240px, calc(100% - 40px)); margin-inline: auto; }
-    .kicker { display: flex; align-items: center; gap: 9px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
-    .kicker::before { content: ""; width: 22px; height: 2px; background: currentColor; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); text-decoration: none; cursor: pointer; font-weight: 700; font-size: 14px; }
-    .btn:hover { border-color: var(--blue); transform: translateY(-1px); }
-    .btn.primary { color: white; border-color: var(--blue); background: var(--blue); box-shadow: 0 12px 24px rgba(49, 87, 255, .2); }
-    .btn.dark { color: white; border-color: #343b49; background: #202634; }
-    nav { position: sticky; top: 0; z-index: 30; background: rgba(244,245,242,.88); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(17,20,26,.08); }
-    .nav-inner { height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 850; letter-spacing: -.02em; }
-    .logo { width: 33px; height: 33px; display: grid; place-items: center; border-radius: 10px; color: white; background: var(--ink); font-size: 15px; }
-    .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; color: var(--muted); }
-    .nav-links a { text-decoration: none; }
-    .nav-links a:hover { color: var(--ink); }
+    a { color: inherit; }
+    mark { background: #dcff58; color: inherit; border-radius: 3px; padding: 0 .12em; }
+    code, pre, .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .shell { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar { position: sticky; top: 0; z-index: 30; height: 68px; background: rgba(245,243,238,.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(19,23,32,.08); }
+    .topbar .shell { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; gap: 11px; align-items: center; font-weight: 780; text-decoration: none; }
+    .brand-badge { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--ink); color: white; font-size: 13px; }
+    .nav { display: flex; align-items: center; gap: 26px; color: #5f6877; font-size: 14px; }
+    .nav a { text-decoration: none; }
+    .nav .github { padding: 11px 16px; border: 1px solid var(--line); border-radius: 12px; background: white; color: var(--ink); font-weight: 700; }
 
-    .hero { padding: 82px 0 62px; overflow: hidden; }
-    .hero-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 52px; align-items: center; }
-    h1 { margin: 18px 0 22px; font-size: clamp(52px, 6.5vw, 88px); line-height: .98; letter-spacing: -.065em; max-width: 720px; }
-    h1 em { color: var(--blue); font-style: normal; }
-    .hero-copy { max-width: 650px; color: var(--muted); font-size: 19px; line-height: 1.65; }
-    .hero-copy strong { color: var(--ink); }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-    .hero-proof { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 32px; color: var(--muted); font-size: 13px; }
-    .hero-proof span { display: flex; align-items: center; gap: 7px; }
-    .hero-proof i { width: 18px; height: 18px; display: grid; place-items: center; color: #1a642f; background: #dff4d7; border-radius: 50%; font-style: normal; font-size: 11px; }
-    .hero-visual { position: relative; min-height: 530px; }
-    .hero-visual::before { content: ""; position: absolute; inset: -30px -80px 25% 25%; background: linear-gradient(135deg, #dbe2ff, #f1ffd3); border-radius: 80px; transform: rotate(-4deg); }
-    .source-stack { position: absolute; left: 0; top: 56px; width: 47%; z-index: 2; }
-    .stack-label, .pack-label { margin-bottom: 10px; font-size: 11px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-    .source-card { position: absolute; left: 0; width: 100%; height: 88px; padding: 15px 17px; border: 1px solid rgba(17,20,26,.12); border-radius: 15px; background: var(--white); box-shadow: 0 14px 32px rgba(25,30,45,.12); }
-    .source-card:nth-of-type(2) { top: 38px; transform: rotate(-5deg); }
-    .source-card:nth-of-type(3) { top: 108px; left: 18px; transform: rotate(2deg); }
-    .source-card:nth-of-type(4) { top: 178px; left: -2px; transform: rotate(-2deg); }
-    .source-card:nth-of-type(5) { top: 248px; left: 22px; transform: rotate(4deg); }
-    .source-card:nth-of-type(6) { top: 318px; left: 2px; transform: rotate(-1deg); }
-    .source-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-    .file-icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; font-size: 12px; font-weight: 900; }
-    .file-icon.md { color: #214ccf; background: #e3eaff; }
-    .file-icon.srt { color: #8a4f00; background: #fff0ce; }
-    .file-icon.csv { color: #156536; background: #dff4e3; }
-    .file-icon.py { color: #75216e; background: #f6ddf1; }
-    .file-icon.web { color: #9d3515; background: #ffe4d7; }
-    .source-name { font-size: 12px; font-weight: 800; }
-    .source-noise { height: 7px; border-radius: 6px; background: #e9eae6; }
-    .source-noise.short { width: 62%; margin-top: 6px; }
-    .transform-badge { position: absolute; z-index: 5; left: 43%; top: 244px; width: 118px; padding: 12px 8px; color: white; background: var(--blue); border: 6px solid var(--paper); border-radius: 999px; text-align: center; font-size: 12px; font-weight: 850; box-shadow: 0 12px 32px rgba(49,87,255,.3); }
-    .pack-card { position: absolute; z-index: 3; right: 0; top: 32px; width: 51%; min-height: 454px; padding: 19px; color: #f3f6ff; background: var(--dark); border-radius: 20px; box-shadow: 0 28px 65px rgba(16,20,30,.28); transform: rotate(1.2deg); }
-    .pack-title { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #303748; }
-    .pack-title strong { font-size: 15px; }
-    .live-pill { padding: 5px 8px; color: var(--lime); background: rgba(200,243,106,.1); border-radius: 999px; font-size: 10px; font-weight: 850; }
-    .tree { padding: 14px 4px 5px; color: #aeb8c9; font: 12px/1.9 "SFMono-Regular", Consolas, monospace; }
-    .tree b { color: #f4f7ff; font-weight: 650; }
-    .tree .accent { color: var(--lime); }
-    .pack-query { margin-top: 12px; padding: 14px; background: #1b2230; border: 1px solid #343d50; border-radius: 12px; }
-    .pack-query small { color: #8d99ad; }
-    .pack-query p { margin: 7px 0 0; font-size: 13px; line-height: 1.5; }
+    .hero { min-height: 665px; padding: 82px 0 54px; display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: 64px; }
+    .eyebrow { display: flex; align-items: center; gap: 9px; color: var(--blue); text-transform: uppercase; font-size: 11px; letter-spacing: .17em; font-weight: 850; }
+    .eyebrow::before { content: ""; width: 20px; height: 2px; background: currentColor; }
+    h1 { margin: 16px 0 22px; font-size: clamp(56px, 6.3vw, 90px); line-height: .91; letter-spacing: -.065em; max-width: 780px; }
+    h1 .blue { color: var(--blue); }
+    .hero-copy > p { max-width: 660px; margin: 0; color: var(--muted); font-size: 18px; line-height: 1.65; }
+    .hero-copy > p strong { color: var(--ink); }
+    .hero-actions { display: flex; gap: 10px; margin-top: 28px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; padding: 13px 18px; border-radius: 12px; text-decoration: none; font-weight: 750; font-size: 14px; }
+    .button.primary { background: var(--blue); color: white; box-shadow: 0 12px 24px rgba(47,85,255,.24); }
+    .button.secondary { background: white; border: 1px solid var(--line); }
+    .truth-row { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; color: var(--muted); font-size: 12px; }
+    .truth-row span::before { content: "✓"; display: inline-grid; place-items: center; width: 17px; height: 17px; margin-right: 6px; border-radius: 50%; background: #def6d8; color: #20803a; font-weight: 900; }
 
-    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--white); }
-    .metric { padding: 22px 28px; border-right: 1px solid var(--line); }
-    .metric:last-child { border: 0; }
-    .metric strong { display: block; font-size: 27px; letter-spacing: -.04em; }
-    .metric span { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .hero-proof { position: relative; min-height: 470px; }
+    .proof-aura { position: absolute; inset: 22px -20px 18px 20px; border-radius: 70px; background: linear-gradient(135deg, #dce4ff, #ebf3d5); transform: rotate(-3deg); }
+    .proof-board { position: absolute; inset: 0; padding: 24px; border-radius: 28px; background: var(--dark); color: white; box-shadow: 0 36px 70px rgba(16,20,30,.25); transform: rotate(1.5deg); }
+    .proof-board-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid #313847; }
+    .proof-board-head b { font-size: 13px; }
+    .verified { color: var(--lime); background: rgba(201,243,106,.11); padding: 7px 10px; border-radius: 99px; font-size: 10px; font-weight: 850; letter-spacing: .08em; }
+    .source-stack { display: grid; gap: 9px; padding: 18px 0; }
+    .real-source { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 11px; padding: 11px 12px; background: var(--dark-2); border: 1px solid #2c3444; border-radius: 12px; }
+    .source-icon { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: #273044; color: var(--lime); font-weight: 900; font-size: 10px; }
+    .real-source b { display: block; font-size: 12px; }
+    .real-source small { display: block; margin-top: 3px; color: #8f9aad; font-size: 9px; }
+    .real-source .check { color: var(--lime); font-size: 12px; }
+    .transform-line { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; border-top: 1px solid #313847; padding-top: 17px; color: #9ca6b8; font-size: 10px; }
+    .transform-line i { height: 1px; background: #3a4355; }
+    .transform-line strong { background: var(--blue); color: white; font-style: normal; padding: 9px 12px; border-radius: 99px; }
+    .proof-output { margin-top: 14px; padding: 13px; border-radius: 12px; background: #20283a; border-left: 3px solid var(--lime); }
+    .proof-output b { display: block; font-size: 11px; }
+    .proof-output code { display: block; margin-top: 7px; color: #b7c2d4; font-size: 9px; line-height: 1.6; }
 
-    section { padding: 82px 0; }
-    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
-    h2 { margin: 10px 0 0; font-size: clamp(37px, 4.4vw, 59px); line-height: 1.04; letter-spacing: -.055em; }
-    .section-head > p { max-width: 520px; margin: 0; color: var(--muted); line-height: 1.65; }
+    .metrics { display: grid; grid-template-columns: repeat(5, 1fr); background: white; border: 1px solid var(--line); border-radius: 18px 18px 0 0; overflow: hidden; }
+    .metric { min-height: 92px; padding: 22px; border-right: 1px solid var(--line); }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; font-size: 25px; letter-spacing: -.04em; }
+    .metric small { display: block; margin-top: 6px; color: var(--muted); font-size: 10px; }
 
-    .case-section { color: #f6f8ff; background: var(--dark); }
-    .case-section .kicker { color: var(--lime); }
-    .case-section .section-head > p { color: #aab4c6; }
-    .mission { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; margin-bottom: 18px; }
-    .mission-card { padding: 29px; border: 1px solid #303849; border-radius: var(--radius); background: var(--dark-2); }
-    .mission-label { color: var(--orange); font-size: 11px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
-    .mission-card h3 { margin: 12px 0 9px; font-size: 28px; letter-spacing: -.025em; }
-    .mission-card p { margin: 0; color: #aeb8ca; line-height: 1.65; }
-    .format-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-    .format-chip { padding: 17px 12px; border: 1px solid #303849; border-radius: 13px; background: #141a25; text-align: center; }
-    .format-chip b { display: block; margin-top: 7px; font-size: 12px; }
-    .format-chip span { color: #7f8b9f; font-size: 10px; }
-    .investigation { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
-    .evidence-card { position: relative; padding: 24px; border: 1px solid #303849; border-radius: 18px; background: #141a25; overflow: hidden; }
-    .evidence-card::before { content: attr(data-step); position: absolute; right: 14px; top: -15px; color: rgba(255,255,255,.045); font-size: 82px; font-weight: 900; }
-    .evidence-source { display: inline-flex; padding: 5px 8px; color: var(--lime); background: rgba(200,243,106,.09); border-radius: 999px; font-size: 10px; font-weight: 850; text-transform: uppercase; }
-    .evidence-card h3 { position: relative; margin: 16px 0 12px; font-size: 18px; }
-    .finding { position: relative; min-height: 100px; color: #dce3ef; font-size: 14px; line-height: 1.65; }
-    .citation { margin-top: 18px; padding-top: 14px; border-top: 1px solid #2b3343; color: #7f8ba0; font: 10px/1.5 "SFMono-Regular", Consolas, monospace; overflow-wrap: anywhere; }
-    .resolution { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; margin-top: 14px; padding: 25px; color: var(--ink); background: var(--lime); border-radius: 18px; }
-    .resolution-icon { width: 46px; height: 46px; display: grid; place-items: center; color: white; background: var(--ink); border-radius: 50%; font-weight: 900; }
-    .resolution strong { display: block; font-size: 18px; }
-    .resolution p { margin: 4px 0 0; font-size: 14px; line-height: 1.5; }
-    .resolution .tag { padding: 8px 11px; border: 1px solid rgba(17,20,26,.25); border-radius: 999px; font-size: 11px; font-weight: 850; }
+    .flagship { background: var(--dark); color: white; padding: 76px 0 82px; }
+    .flagship-head { display: grid; grid-template-columns: .82fr 1.18fr; gap: 70px; align-items: end; }
+    .flagship h2, .section-title h2 { margin: 12px 0 0; font-size: clamp(42px, 5vw, 66px); line-height: .96; letter-spacing: -.055em; }
+    .flagship-question { color: #aab3c2; line-height: 1.65; }
+    .flagship-question strong { display: block; color: white; margin-bottom: 8px; font-size: 16px; }
+    .answer-number { display: flex; align-items: center; gap: 18px; margin: 40px 0 24px; padding: 22px 24px; border: 1px solid #303849; border-radius: 17px; background: var(--dark-2); }
+    .answer-number > span { font-size: 64px; line-height: 1; color: var(--lime); font-weight: 900; letter-spacing: -.07em; }
+    .answer-number p { margin: 0; color: #d9dfeb; line-height: 1.5; }
+    .answer-number p b { display: block; color: white; font-size: 17px; }
+    .trace { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .trace-card { min-height: 260px; padding: 20px; border: 1px solid #303849; border-radius: 17px; background: var(--dark-2); display: flex; flex-direction: column; }
+    .trace-top { display: flex; justify-content: space-between; align-items: center; color: var(--lime); text-transform: uppercase; letter-spacing: .1em; font-size: 9px; font-weight: 850; }
+    .trace-top span:last-child { color: #69768a; font-size: 34px; letter-spacing: -.05em; }
+    .trace-card h3 { margin: 10px 0 9px; font-size: 17px; }
+    .trace-code { margin: 0; padding: 13px; border-radius: 10px; background: #0d1119; color: #c9d2df; font-size: 10px; line-height: 1.55; white-space: pre-wrap; overflow: hidden; flex: 1; }
+    .trace-meta { margin-top: 11px; color: #727f92; font-size: 9px; line-height: 1.45; overflow-wrap: anywhere; }
+    .trace-card a { color: #b9c5ff; text-decoration: none; }
+    .flagship-result { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 17px 20px; border-radius: 14px; background: var(--lime); color: var(--lime-dark); font-size: 13px; }
+    .flagship-result b { font-size: 14px; }
+    .flagship-result span { white-space: nowrap; font-size: 10px; font-weight: 800; }
 
-    .lab-section { background: #eef0ec; }
-    .resource-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; }
-    .resource-tab { flex: 1 0 140px; display: flex; align-items: center; gap: 10px; padding: 13px 15px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.7); cursor: pointer; text-align: left; }
-    .resource-tab:hover { border-color: #a7afbd; }
-    .resource-tab.active { color: white; border-color: var(--ink); background: var(--ink); box-shadow: 0 12px 24px rgba(17,20,26,.15); }
-    .tab-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; color: var(--blue); background: var(--blue-soft); font-size: 11px; font-weight: 900; }
-    .resource-tab.active .tab-icon { color: var(--ink); background: var(--lime); }
-    .resource-tab b { display: block; font-size: 13px; }
-    .resource-tab small { color: #8a92a0; font-size: 10px; }
-    .comparison { display: grid; grid-template-columns: 1fr 110px 1fr; gap: 0; align-items: stretch; margin-top: 16px; }
-    .compare-card { min-width: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); overflow: hidden; }
-    .compare-head { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
-    .compare-head small { display: block; margin-bottom: 4px; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
-    .compare-head strong { font-size: 16px; }
-    .problem-pill { max-width: 220px; color: #8f3c1e; font-size: 10px; line-height: 1.4; text-align: right; }
-    .transform { display: grid; place-items: center; position: relative; }
-    .transform::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: #cbd0c9; }
-    .agentify { position: relative; z-index: 2; width: 84px; height: 84px; display: grid; place-items: center; color: white; background: var(--blue); border: 8px solid #eef0ec; border-radius: 50%; text-align: center; font-size: 11px; font-weight: 850; box-shadow: 0 14px 28px rgba(49,87,255,.25); }
-    .native-preview, .pack-preview { height: 478px; overflow: auto; }
-    .native-preview { background: #f8f9f6; }
-    .pack-preview { padding: 18px; color: #f0f4ff; background: var(--dark); }
-    .loading { padding: 35px; color: var(--muted); }
+    .passports { padding: 80px 0 26px; }
+    .section-title { display: grid; grid-template-columns: 1fr .7fr; align-items: end; gap: 50px; }
+    .section-title p { margin: 0; color: var(--muted); line-height: 1.65; }
+    .passport-grid { margin-top: 30px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .passport { min-height: 250px; display: flex; flex-direction: column; padding: 18px; border: 1px solid var(--line); border-radius: 17px; background: white; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+    .passport:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .passport-top { display: flex; justify-content: space-between; align-items: center; }
+    .passport-type { padding: 6px 8px; border-radius: 7px; background: var(--blue-soft); color: var(--blue); text-transform: uppercase; font-size: 9px; font-weight: 900; }
+    .passport-top span:last-child { color: #45a151; font-size: 11px; }
+    .passport h3 { margin: 16px 0 7px; font-size: 15px; line-height: 1.25; }
+    .passport .publisher { color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .passport dl { margin: auto 0 0; }
+    .passport dt { margin-top: 11px; color: #8a92a0; text-transform: uppercase; letter-spacing: .08em; font-size: 8px; font-weight: 850; }
+    .passport dd { margin: 4px 0 0; font-size: 9px; line-height: 1.45; overflow-wrap: anywhere; }
+    .passport .sha { font-family: "SFMono-Regular", Consolas, monospace; color: #4a5464; }
 
-    .doc-view { min-height: 100%; padding: 28px 34px; background: white; }
-    .doc-toolbar { display: flex; gap: 5px; margin-bottom: 20px; }
-    .doc-toolbar span { width: 8px; height: 8px; background: #d4d7d0; border-radius: 50%; }
-    .doc-view h1 { margin: 0 0 20px; font-size: 28px; letter-spacing: -.03em; }
-    .doc-view h2 { margin: 21px 0 8px; font-size: 17px; letter-spacing: -.01em; }
-    .doc-view p { margin: 6px 0; color: #596170; font-size: 13px; line-height: 1.65; }
-    .doc-view code { padding: 2px 5px; color: #2846c4; background: #eef1ff; border-radius: 4px; }
-    .timeline-view { padding: 24px; }
-    .timeline-row { display: grid; grid-template-columns: 78px 16px 1fr; gap: 11px; min-height: 92px; }
-    .timeline-time { color: #7b8492; font: 10px/1.5 monospace; }
-    .timeline-line { position: relative; border-left: 2px solid #d9ddd5; }
-    .timeline-line::before { content: ""; position: absolute; left: -6px; top: 1px; width: 10px; height: 10px; background: var(--blue); border: 3px solid #f8f9f6; border-radius: 50%; }
-    .timeline-text { padding: 0 0 22px; color: #3f4754; font-size: 13px; line-height: 1.55; }
-    .sheet { min-width: 650px; border-collapse: collapse; background: white; font-size: 12px; }
-    .sheet th { position: sticky; top: 0; padding: 11px 13px; color: #4e5867; background: #e9ece6; border: 1px solid #d7dbd4; text-align: left; }
-    .sheet td { padding: 13px; border: 1px solid #e3e6e0; }
-    .sheet tr:nth-child(4) td { background: #fff3dd; font-weight: 700; }
-    .code-view { min-height: 100%; color: #dce5f4; background: #161b24; }
-    .code-tabs { padding: 12px 18px; color: #8c99ad; background: #202734; border-bottom: 1px solid #303847; font-size: 11px; }
-    .code-lines { margin: 0; padding: 20px; font-size: 12px; line-height: 1.75; white-space: pre; overflow: auto; }
-    .code-lines .kw { color: #f38fc5; }
-    .code-lines .str { color: #d6e980; }
-    .website-frame { width: 100%; height: 100%; border: 0; background: white; }
+    .lab { padding: 80px 0 92px; }
+    .resource-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 28px 0 16px; }
+    .resource-tab { min-height: 62px; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: white; cursor: pointer; text-align: left; }
+    .resource-tab.active { background: var(--ink); color: white; border-color: var(--ink); box-shadow: 0 10px 24px rgba(19,23,32,.18); }
+    .tab-icon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--blue-soft); color: var(--blue); font-size: 9px; font-weight: 900; }
+    .resource-tab.active .tab-icon { background: var(--lime); color: var(--ink); }
+    .resource-tab b, .resource-tab small { display: block; }
+    .resource-tab b { font-size: 12px; }
+    .resource-tab small { margin-top: 3px; color: #8b94a3; font-size: 9px; }
 
-    .pack-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-    .pack-summary b { font-size: 13px; }
-    .pack-count { padding: 5px 8px; color: var(--lime); background: rgba(200,243,106,.09); border-radius: 999px; font-size: 10px; font-weight: 850; }
+    .compare { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 92px; }
+    .compare::before { content: "agentify →"; position: absolute; left: 50%; top: 46%; transform: translate(-50%,-50%); z-index: 4; width: 74px; height: 74px; display: grid; place-items: center; border-radius: 50%; border: 7px solid var(--paper); background: var(--blue); color: white; font-size: 11px; font-weight: 850; box-shadow: 0 12px 28px rgba(47,85,255,.25); }
+    .compare::after { content: ""; position: absolute; left: calc(50% - 46px); top: 46%; width: 92px; height: 1px; background: var(--line); }
+    .compare-card { min-height: 560px; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: var(--shadow); }
+    .compare-head { min-height: 82px; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 17px 20px; border-bottom: 1px solid var(--line); }
+    .compare-head small { display: block; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: 9px; font-weight: 850; }
+    .compare-head strong { display: block; margin-top: 5px; font-size: 16px; }
+    .source-link, .manifest-link { padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; white-space: nowrap; text-decoration: none; font-size: 10px; font-weight: 800; }
+    .source-context { padding: 11px 20px; background: #fff8ee; border-bottom: 1px solid #efe2d2; color: #9b512f; font-size: 10px; line-height: 1.45; }
+    .native-preview { height: 420px; overflow: auto; padding: 24px; }
+    .source-foot { display: flex; justify-content: space-between; gap: 15px; padding: 11px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 9px; }
+    .source-foot span { overflow-wrap: anywhere; }
+    .doc-preview { max-width: 520px; margin: 0 auto; color: #30394a; line-height: 1.7; }
+    .doc-preview .doc-kicker { color: var(--blue); text-transform: uppercase; letter-spacing: .1em; font-size: 9px; font-weight: 900; }
+    .doc-preview h3 { margin: 9px 0 17px; color: var(--ink); font-family: Georgia, serif; font-size: 27px; line-height: 1.1; }
+    .doc-preview p { padding-left: 16px; border-left: 3px solid var(--lime); font-family: Georgia, serif; font-size: 14px; }
+    .code-file { margin-bottom: 14px; border: 1px solid #2b3343; border-radius: 12px; overflow: hidden; background: #111722; }
+    .code-file-head { display: flex; justify-content: space-between; padding: 9px 12px; background: #1b2230; color: #9da9bb; font-size: 9px; }
+    .code-file pre { margin: 0; padding: 12px; color: #c7d1df; font-size: 9.5px; line-height: 1.6; white-space: pre; overflow: auto; }
+    .dataset-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .dataset-table th { position: sticky; top: 0; background: var(--ink); color: white; text-align: right; padding: 10px 8px; }
+    .dataset-table th:first-child, .dataset-table td:first-child { text-align: left; font-weight: 800; }
+    .dataset-table td { text-align: right; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+    .dataset-table tr.focus td { background: #edffd0; color: #263314; font-weight: 750; }
+    .dataset-note { margin-top: 13px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .web-preview { max-width: 530px; margin: 0 auto; }
+    .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px; border: 1px solid var(--line); border-radius: 10px 10px 0 0; background: #edf0f5; }
+    .browser-dot { width: 7px; height: 7px; border-radius: 50%; background: #bbc1cc; }
+    .browser-url { margin-left: 7px; flex: 1; padding: 5px 8px; border-radius: 5px; background: white; color: #727c8b; font-size: 8px; }
+    .web-body { padding: 20px; border: 1px solid var(--line); border-top: 0; color: #323b49; line-height: 1.65; }
+    .web-body h3 { margin: 0 0 13px; font-size: 21px; color: var(--ink); }
+    .web-body p { font-size: 12px; }
+    .web-body p:first-of-type { padding: 12px; background: #f3f6ff; border-left: 3px solid var(--blue); }
+
+    .after-card { background: var(--dark); color: white; border-color: var(--dark); }
+    .after-card .compare-head { border-color: #303849; background: #151a25; }
+    .after-card .compare-head small { color: #9aa5b8; }
+    .manifest-link { border-color: #3a4355; }
+    .pack-preview { height: 466px; padding: 20px; overflow: auto; }
+    .pack-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 13px; font-size: 11px; }
+    .pack-count { padding: 5px 8px; border-radius: 99px; background: rgba(201,243,106,.12); color: var(--lime); font-size: 9px; font-weight: 850; }
     .unit-list { display: grid; gap: 8px; }
-    .unit-card { padding: 12px; border: 1px solid #303849; border-radius: 11px; background: #171d29; }
+    .unit { padding: 11px 12px; border: 1px solid #30394a; border-radius: 11px; background: var(--dark-2); }
     .unit-top { display: flex; justify-content: space-between; gap: 12px; }
-    .unit-top strong { font-size: 12px; }
-    .unit-type { color: #91a0b5; font-size: 9px; text-transform: uppercase; }
-    .unit-id { margin-top: 7px; color: #778399; font: 9px/1.45 monospace; overflow-wrap: anywhere; }
-    .unit-meta { display: flex; gap: 10px; margin-top: 7px; color: #aeb8c8; font: 9px/1.4 monospace; }
-    .interfaces { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; padding-top: 14px; border-top: 1px solid #303849; }
-    .interface { padding: 5px 7px; color: #b9c4d7; background: #242c3a; border-radius: 6px; font-size: 9px; }
+    .unit b { font-size: 11px; }
+    .unit em { color: #8490a3; font-style: normal; font-size: 8px; text-transform: uppercase; }
+    .unit code { display: block; margin-top: 6px; color: #778397; font-size: 8px; overflow-wrap: anywhere; }
+    .unit small { display: block; margin-top: 6px; color: #9ba7ba; font-family: "SFMono-Regular", Consolas, monospace; font-size: 8px; }
+    .more-units { padding: 10px; text-align: center; color: #788497; font-size: 9px; }
+    .interfaces { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #303849; }
+    .interface { padding: 6px 8px; border-radius: 7px; background: #293243; color: #b7c1cf; font-size: 8px; }
 
-    .use-panel { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); overflow: hidden; }
-    .use-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid var(--line); }
-    .use-head strong { font-size: 14px; }
-    .use-tabs { display: flex; gap: 5px; }
-    .use-tab { padding: 8px 11px; border: 0; border-radius: 8px; background: transparent; cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 750; }
-    .use-tab.active { color: white; background: var(--ink); }
-    .use-body { display: grid; grid-template-columns: .85fr 1.15fr; min-height: 250px; }
-    .command-pane { padding: 20px; background: #f7f8f5; border-right: 1px solid var(--line); }
-    .command-pane small, .result-pane small { display: block; margin-bottom: 9px; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
-    .command-box { position: relative; padding: 17px 44px 17px 17px; color: #e7edff; background: var(--dark); border-radius: 12px; font: 11px/1.65 monospace; overflow-wrap: anywhere; }
-    .copy { position: absolute; right: 8px; top: 8px; width: 28px; height: 28px; border: 1px solid #3a4354; border-radius: 7px; color: #9facbf; background: #222936; cursor: pointer; }
-    .use-note { margin: 14px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
-    .result-pane { padding: 20px; }
-    .result-card { padding: 17px; border-left: 3px solid var(--blue); background: var(--blue-soft); border-radius: 0 12px 12px 0; }
-    .result-card strong { font-size: 14px; }
-    .result-card p { margin: 9px 0; color: #3f4962; font-size: 12px; line-height: 1.65; white-space: pre-wrap; }
-    .result-meta { color: #69738c; font: 9px/1.5 monospace; overflow-wrap: anywhere; }
-    .terminal-result { margin: 0; padding: 15px; max-height: 180px; color: #dbe6f8; background: var(--dark); border-radius: 12px; font-size: 10px; line-height: 1.65; white-space: pre-wrap; overflow: auto; }
+    .answer-panel { margin-top: 14px; border: 1px solid var(--line); border-radius: 19px; background: white; overflow: hidden; }
+    .answer-head { display: grid; grid-template-columns: .9fr 1.1fr; }
+    .question-box, .answer-box { padding: 20px; }
+    .question-box { border-right: 1px solid var(--line); }
+    .answer-label { color: var(--blue); text-transform: uppercase; letter-spacing: .11em; font-size: 9px; font-weight: 900; }
+    .question-box p, .answer-box p { margin: 8px 0 0; line-height: 1.5; }
+    .question-box p { font-size: 14px; font-weight: 750; }
+    .answer-box { background: #eef1ff; border-left: 3px solid var(--blue); }
+    .answer-box p { font-size: 13px; }
+    .use-head { min-height: 58px; display: flex; justify-content: space-between; align-items: center; padding: 0 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .use-head strong { font-size: 12px; }
+    .use-tabs { display: flex; gap: 3px; }
+    .use-tab { padding: 8px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); cursor: pointer; font-size: 9px; font-weight: 800; }
+    .use-tab.active { background: var(--ink); color: white; }
+    .use-body { display: grid; grid-template-columns: .82fr 1.18fr; min-height: 220px; }
+    .command-side, .result-side { padding: 18px; }
+    .command-side { border-right: 1px solid var(--line); }
+    .tiny-label { display: block; margin-bottom: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-size: 8px; font-weight: 850; }
+    .command { position: relative; margin: 0; min-height: 50px; padding: 12px 40px 12px 12px; border-radius: 10px; background: var(--dark); color: #d1daea; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 9px; line-height: 1.55; }
+    .copy { position: absolute; right: 9px; top: 9px; width: 25px; height: 25px; border: 1px solid #3b4557; border-radius: 7px; background: #252d3d; color: white; cursor: pointer; }
+    .use-note { margin: 12px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .result-card { padding: 14px; border-radius: 11px; background: #eef1ff; border-left: 3px solid var(--blue); }
+    .result-card strong { font-size: 12px; }
+    .result-card p { margin: 8px 0; font-size: 11px; line-height: 1.55; white-space: pre-wrap; }
+    .result-meta { color: #66718a; font-family: "SFMono-Regular", Consolas, monospace; font-size: 8px; line-height: 1.5; overflow-wrap: anywhere; }
+    .terminal-result { max-height: 190px; overflow: auto; margin: 0; padding: 14px; border-radius: 11px; background: var(--dark); color: #c7d2e2; font-size: 9px; line-height: 1.6; white-space: pre-wrap; }
 
-    .outputs { display: grid; grid-template-columns: .8fr 1.2fr; gap: 17px; }
-    .output-copy { padding: 31px; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
-    .output-copy h3 { margin: 0 0 12px; font-size: 29px; letter-spacing: -.035em; }
-    .output-copy p { color: var(--muted); line-height: 1.7; }
-    .file-tree { padding: 27px; color: #b8c4d8; background: var(--dark); border-radius: var(--radius); box-shadow: var(--shadow); font: 12px/1.9 monospace; }
-    .file-tree b { color: white; }
-    .file-tree .new { color: var(--lime); }
-    .scope { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 17px; }
-    .scope-card { padding: 25px; border: 1px solid var(--line); border-radius: 17px; background: white; }
-    .scope-card h3 { margin: 0 0 12px; font-size: 17px; }
-    .scope-card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.85; }
-    footer { padding: 40px 0 58px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .ok { color: #25673b; }
+    .boundary { padding: 34px 0 74px; border-top: 1px solid var(--line); }
+    .boundary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .boundary-card { padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: white; }
+    .boundary-card h3 { margin: 0 0 12px; font-size: 14px; }
+    .boundary-card ul { margin: 0; padding-left: 17px; color: var(--muted); font-size: 11px; line-height: 1.75; }
+    footer { padding: 24px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 9px; }
+    footer .shell { display: flex; justify-content: space-between; }
+    .ok { color: #348845; }
 
     @media (max-width: 980px) {
-      .hero-grid, .mission, .outputs { grid-template-columns: 1fr; }
-      .hero-visual { min-height: 500px; max-width: 700px; }
-      .investigation { grid-template-columns: 1fr; }
-      .finding { min-height: auto; }
-      .comparison { grid-template-columns: 1fr; gap: 12px; }
-      .transform { height: 84px; }
-      .transform::before { top: 0; bottom: 0; left: 50%; width: 1px; height: auto; }
-      .agentify { width: 72px; height: 72px; }
-      .use-body { grid-template-columns: 1fr; }
-      .command-pane { border-right: 0; border-bottom: 1px solid var(--line); }
+      .hero { grid-template-columns: 1fr; padding-top: 60px; }
+      .hero-proof { min-height: 470px; }
+      .flagship-head, .section-title { grid-template-columns: 1fr; gap: 24px; }
+      .passport-grid { grid-template-columns: repeat(2, 1fr); }
+      .passport:last-child { grid-column: span 2; }
+      .compare { gap: 28px; }
+      .compare::before, .compare::after { display: none; }
+      .metrics { grid-template-columns: repeat(3, 1fr); }
+      .metric:nth-child(3) { border-right: 0; }
+      .metric:nth-child(n+4) { border-top: 1px solid var(--line); }
     }
-    @media (max-width: 680px) {
-      .wrap { width: min(100% - 24px, 1240px); }
-      .nav-links > a:not(.btn) { display: none; }
-      .hero { padding-top: 52px; }
-      h1 { font-size: 50px; }
-      .hero-visual { min-height: 440px; transform: scale(.88); transform-origin: top left; width: 113%; }
-      .metrics { grid-template-columns: 1fr 1fr; }
-      .metric:nth-child(2) { border-right: 0; }
-      .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-      .section-head { align-items: start; flex-direction: column; }
-      .format-row { grid-template-columns: repeat(2, 1fr); }
-      .resolution { grid-template-columns: auto 1fr; }
-      .resolution .tag { grid-column: 1 / -1; text-align: center; }
-      .native-preview, .pack-preview { height: 420px; }
-      .scope { grid-template-columns: 1fr; }
-      .use-head { align-items: start; flex-direction: column; gap: 12px; }
-      .footer-inner { align-items: start; flex-direction: column; }
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 24px, 1220px); }
+      .topbar { height: 68px; }
+      .nav > a:not(.github) { display: none; }
+      .hero { min-height: 0; padding: 54px 0 42px; gap: 46px; }
+      h1 { font-size: 52px; }
+      .hero-copy > p { font-size: 16px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .truth-row { gap: 12px; }
+      .hero-proof { min-height: 490px; overflow: hidden; border-radius: 52px; }
+      .proof-aura { inset: 10px -5px; }
+      .proof-board { padding: 16px; }
+      .real-source { grid-template-columns: 32px 1fr auto; padding: 9px; }
+      .source-icon { width: 30px; height: 30px; }
+      .metrics { grid-template-columns: 1fr 1fr; border-radius: 14px; }
+      .metric { min-height: 80px; padding: 16px; border-top: 1px solid var(--line); }
+      .metric:nth-child(odd) { border-right: 1px solid var(--line); }
+      .metric:nth-child(even) { border-right: 0; }
+      .metric:first-child, .metric:nth-child(2) { border-top: 0; }
+      .metric:last-child { grid-column: span 2; }
+      .flagship { padding: 58px 0; }
+      .flagship h2, .section-title h2 { font-size: 43px; }
+      .answer-number { align-items: flex-start; }
+      .answer-number > span { font-size: 52px; }
+      .trace { grid-template-columns: 1fr; }
+      .trace-card { min-height: 0; }
+      .flagship-result { align-items: flex-start; flex-direction: column; }
+      .passports, .lab { padding-top: 58px; }
+      .passport-grid { grid-template-columns: 1fr; }
+      .passport:last-child { grid-column: auto; }
+      .passport { min-height: 210px; }
+      .resource-tabs { display: flex; overflow-x: auto; padding-bottom: 6px; }
+      .resource-tab { min-width: 145px; }
+      .compare { grid-template-columns: 1fr; gap: 12px; }
+      .compare-card { min-height: 0; }
+      .native-preview { height: 400px; }
+      .pack-preview { height: 420px; }
+      .answer-head, .use-body { grid-template-columns: 1fr; }
+      .question-box { border-right: 0; border-bottom: 1px solid var(--line); }
+      .command-side { border-right: 0; border-bottom: 1px solid var(--line); }
+      .use-head { align-items: flex-start; flex-direction: column; gap: 10px; padding: 14px; }
+      .use-tabs { width: 100%; }
+      .use-tab { flex: 1; }
+      .boundary-grid { grid-template-columns: 1fr; }
+      footer .shell { gap: 10px; flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="wrap nav-inner">
-      <a class="brand" href="#top"><span class="logo">A²</span>Agentic Anything</a>
-      <div class="nav-links"><a href="#case">The task</a><a href="#lab">Before / after</a><a href="#use">How to use</a><a class="btn" href="https://github.com/THUQiXuan/agentic-anything">View GitHub ↗</a></div>
+  <header class="topbar">
+    <div class="shell">
+      <a class="brand" href="#top"><span class="brand-badge">A²</span><span>Agentic Anything</span></a>
+      <nav class="nav"><a href="#proof">The proof</a><a href="#sources">Real sources</a><a href="#lab">Try the packs</a><a class="github" href="https://github.com/THUQiXuan/agentic-anything" target="_blank" rel="noreferrer">View GitHub ↗</a></nav>
     </div>
-  </nav>
+  </header>
 
   <main id="top">
-    <header class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <div class="kicker">Interactive product walkthrough</div>
-          <h1>One incident.<br>Five formats.<br><em>One usable layer.</em></h1>
-          <p class="hero-copy">原始资源对人类友好，却各有自己的页面、时间轴、表格和文件结构。<strong>Agentic Anything 把它们转换成可检索、可引用、可调用的 resource agent</strong>——而且不需要先理解每种资源的内部组织。</p>
-          <div class="hero-actions"><a class="btn primary" href="#lab">See before → after</a><a class="btn" href="#case">Follow the incident</a></div>
-          <div class="hero-proof"><span><i>✓</i>actual generated packs</span><span><i>✓</i>exact evidence & hashes</span><span><i>✓</i>zero model calls</span></div>
-        </div>
-        <div class="hero-visual" aria-label="five raw resources transformed into one agent-native pack">
+    <section class="shell hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Real-world product walkthrough</div>
+        <h1>Real inputs.<br><span class="blue">Inspectable</span><br>outputs.</h1>
+        <p>No invented handbook and no toy repository. This page runs <strong>Agentic Anything</strong> against a public-domain book, a tagged GitHub release, official Python documentation, NASA data, and a CC BY research paper—then exposes the exact evidence behind every answer.</p>
+        <div class="hero-actions"><a class="button primary" href="#proof">Trace a real code answer</a><a class="button secondary" href="#lab">Compare all five sources</a></div>
+        <div class="truth-row"><span>publisher links</span><span>pinned versions & SHA-256</span><span>zero synthetic source lines</span></div>
+      </div>
+      <div class="hero-proof" aria-label="Five verified real resources become one agent-native layer">
+        <div class="proof-aura"></div>
+        <div class="proof-board">
+          <div class="proof-board-head"><b>source-passports.json</b><span class="verified">5 / 5 VERIFIED</span></div>
           <div class="source-stack">
-            <div class="stack-label">Before · five native interfaces</div>
-            <div class="source-card"><div class="source-top"><span class="file-icon md">MD</span><span class="source-name">operations-handbook.md</span></div><div class="source-noise"></div><div class="source-noise short"></div></div>
-            <div class="source-card"><div class="source-top"><span class="file-icon srt">SRT</span><span class="source-name">incident timeline</span></div><div class="source-noise"></div><div class="source-noise short"></div></div>
-            <div class="source-card"><div class="source-top"><span class="file-icon csv">CSV</span><span class="source-name">service-metrics.csv</span></div><div class="source-noise"></div><div class="source-noise short"></div></div>
-            <div class="source-card"><div class="source-top"><span class="file-icon py">PY</span><span class="source-name">orbit-sdk/</span></div><div class="source-noise"></div><div class="source-noise short"></div></div>
-            <div class="source-card"><div class="source-top"><span class="file-icon web">WEB</span><span class="source-name">status + runbook</span></div><div class="source-noise"></div><div class="source-noise short"></div></div>
+            <div class="real-source"><span class="source-icon">GIT</span><span><b>psf/requests · v2.34.2</b><small>GitHub release archive · Apache-2.0</small></span><span class="check">✓</span></div>
+            <div class="real-source"><span class="source-icon">EPUB</span><span><b>Alice · Gutenberg #11</b><small>Public-domain book · 14 chapters</small></span><span class="check">✓</span></div>
+            <div class="real-source"><span class="source-icon">DOC</span><span><b>Python 3.13 secrets</b><small>Official PSF documentation</small></span><span class="check">✓</span></div>
+            <div class="real-source"><span class="source-icon">CSV</span><span><b>NASA GISTEMP v4</b><small>Global anomaly data · 1880–2026</small></span><span class="check">✓</span></div>
+            <div class="real-source"><span class="source-icon">CC</span><span><b>FAIR Principles paper</b><small>PMC4792175 · CC BY 4.0</small></span><span class="check">✓</span></div>
           </div>
-          <div class="transform-badge">agentify →</div>
-          <div class="pack-card">
-            <div class="pack-title"><strong>aurora-resource-agents/</strong><span class="live-pill">READY</span></div>
-            <div class="tree"><b>├── agent-pack.json</b><br><span class="accent">├── agent-interface.json</span><br><span class="accent">├── AGENT.md</span><br>├── units/<br>│&nbsp;&nbsp; ├── incident__00-07.json<br>│&nbsp;&nbsp; ├── cache-procedure.json<br>│&nbsp;&nbsp; └── metrics__rows-1-4.json<br>├── skills/SKILL.md<br>└── cli/aurora_cli.py</div>
-            <div class="pack-query"><small>search_resource("E42 cache recovery")</small><p>→ incident / 00:07:00–00:07:25<br>→ handbook / section 3</p></div>
-          </div>
+          <div class="transform-line"><i></i><strong>agentify →</strong><i></i></div>
+          <div class="proof-output"><b>One consistent resource-agent contract</b><code>typed units · focused evidence · locators · hashes<br>generated CLI · MCP · AGENT.md</code></div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <div class="metrics wrap" aria-label="verified demo metrics">
-      <div class="metric"><strong id="metric-types">5</strong><span>native resource types</span></div>
-      <div class="metric"><strong id="metric-units">14</strong><span>structured evidence units</span></div>
-      <div class="metric"><strong id="metric-checks">7 / 7</strong><span>showcase checks passing</span></div>
-      <div class="metric"><strong id="metric-models">0</strong><span>model calls required</span></div>
+    <div class="shell metrics" aria-label="Verified demo metrics">
+      <div class="metric"><strong id="metric-publishers">—</strong><small>independent publishers</small></div>
+      <div class="metric"><strong id="metric-types">—</strong><small>native resource types</small></div>
+      <div class="metric"><strong id="metric-units">—</strong><small>real evidence units</small></div>
+      <div class="metric"><strong id="metric-checks">—</strong><small>quality checks passing</small></div>
+      <div class="metric"><strong id="metric-synthetic">—</strong><small>synthetic source lines</small></div>
     </div>
 
-    <section class="case-section" id="case">
-      <div class="wrap">
-        <div class="section-head"><div><div class="kicker">Flagship scenario</div><h2>Resolve an incident without<br>learning five interfaces.</h2></div><p>09:14 UTC: checkout latency spikes. The answer is split across a transcript, bilingual runbook and spreadsheet. The demo below assembles direct, hash-backed evidence—no generated prose is needed.</p></div>
-        <div class="mission">
-          <article class="mission-card"><div class="mission-label">Incident commander asks</div><h3>“What happened, what is the approved fix, and who owns the follow-up?”</h3><p>Normally this means opening the recording, scrubbing timestamps, searching a handbook, then comparing rows in a CSV.</p></article>
-          <article class="mission-card"><div class="mission-label">Evidence is scattered across</div><div class="format-row"><div class="format-chip">📄<b>Runbook</b><span>Markdown</span></div><div class="format-chip">▶<b>Recording</b><span>SRT timeline</span></div><div class="format-chip">▦<b>Metrics</b><span>CSV table</span></div><div class="format-chip">⌘<b>SDK</b><span>Repository</span></div><div class="format-chip">◎<b>Status</b><span>Website</span></div></div></article>
+    <section class="flagship" id="proof">
+      <div class="shell">
+        <div class="flagship-head">
+          <div><div class="eyebrow" style="color:var(--lime)">Flagship proof · real GitHub release</div><h2>Trace behavior,<br>not keywords.</h2></div>
+          <div class="flagship-question"><strong>Question</strong><span id="flagship-task">Loading the verified code question…</span></div>
         </div>
-        <div class="investigation" id="investigation"><div class="loading">Loading exact investigation evidence…</div></div>
-        <div class="resolution"><div class="resolution-icon">✓</div><div><strong>Actionable result, with no interface-specific navigation</strong><p>E42 cache lock → inspect and unlock with INC-204 → service recovered 09:22 → Team Cygnus owns ap-south follow-up.</p></div><span class="tag">3 sources · 3 citations</span></div>
+        <div class="answer-number"><span>30</span><p><b>redirects by default</b><span id="flagship-answer">Loading the checked answer…</span></p></div>
+        <div class="trace" id="flagship-trace"></div>
+        <div class="flagship-result"><b>One answer assembled from a constant, object initialization, and runtime guard.</b><span id="flagship-citations">3 locators · 3 content hashes</span></div>
       </div>
     </section>
 
-    <section class="lab-section" id="lab">
-      <div class="wrap">
-        <div class="section-head"><div><div class="kicker">Transformation lab</div><h2>See exactly what changes.</h2></div><p>Pick a resource. The left side is the native source as a person encounters it. The right side is the actual pack created by the repository code: typed units, locators, hashes and ready-to-use interfaces.</p></div>
-        <div class="resource-tabs" id="resource-tabs"></div>
-        <div class="comparison">
-          <article class="compare-card">
-            <header class="compare-head"><div><small>Before · native resource</small><strong id="before-title">Loading…</strong></div><span class="problem-pill" id="before-problem"></span></header>
-            <div class="native-preview" id="native-preview"><div class="loading">Loading source…</div></div>
-          </article>
-          <div class="transform"><div class="agentify">agentify<br>→</div></div>
-          <article class="compare-card">
-            <header class="compare-head"><div><small>After · agent-native pack</small><strong id="after-title">Loading…</strong></div><a class="btn" id="manifest-link" href="#">Open manifest ↗</a></header>
-            <div class="pack-preview" id="pack-preview"><div class="loading">Loading generated units…</div></div>
-          </article>
-        </div>
-
-        <div class="use-panel" id="use">
-          <header class="use-head"><strong>Now use the transformed resource</strong><div class="use-tabs"><button class="use-tab active" data-use="search">Search evidence</button><button class="use-tab" data-use="cli">Generated CLI</button><button class="use-tab" data-use="mcp">Connect MCP</button></div></header>
-          <div class="use-body"><div class="command-pane"><small>Run this</small><div class="command-box"><span id="use-command">—</span><button class="copy" id="copy-command" title="Copy command">⧉</button></div><p class="use-note" id="use-note"></p></div><div class="result-pane"><small>Actual checked-in result</small><div id="use-result"></div></div></div>
-        </div>
+    <section class="shell passports" id="sources">
+      <div class="section-title">
+        <div><div class="eyebrow">Authenticity ledger</div><h2>Every input has<br>a source passport.</h2></div>
+        <p>A demo is only convincing if its inputs can be audited. Each card links to the publisher and records the exact version, license, snapshot file, and byte-level hash used to build the checked-in pack.</p>
       </div>
+      <div class="passport-grid" id="passport-grid"></div>
     </section>
 
-    <section>
-      <div class="wrap">
-        <div class="section-head"><div><div class="kicker">Concrete output</div><h2>Not a wrapper. A portable contract.</h2></div><p>Every transformed resource gets the same discovery layer, while its native structure and evidence locators remain visible.</p></div>
-        <div class="outputs">
-          <article class="output-copy"><h3>Hand it to a person, script, or agent host.</h3><p><b>AGENT.md</b> tells a human or agent where to start. <b>agent-interface.json</b> advertises machine-readable entry points. Search and read work offline; MCP exposes the same evidence to Codex and other hosts.</p><a class="btn primary" href="packs/handbook/AGENT.md">Open a generated AGENT.md</a></article>
-          <div class="file-tree"><b>packs/handbook/</b><br><span class="new">├── agent-interface.json</span>&nbsp; # machine entry point<br><span class="new">├── AGENT.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # human/agent guide<br>├── agent-pack.json&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # discovery + boundaries<br>├── pages/<br>│&nbsp;&nbsp; ├── release-procedure.json/.md<br>│&nbsp;&nbsp; ├── cache-troubleshooting.json/.md<br>│&nbsp;&nbsp; └── support-policy.json/.md<br><span class="new">├── skills/SKILL.md</span><br><span class="new">└── cli/handbook_cli.py</span></div>
-        </div>
-        <div class="scope"><article class="scope-card"><h3>✓ Directly demonstrated</h3><ul><li>Five source types become valid resource-agent packs.</li><li>Every result carries unit, locator and content hash.</li><li>Generated CLIs run; MCP searches and reads multiple packs.</li><li>All displayed evidence comes from committed raw results.</li></ul></article><article class="scope-card"><h3>Boundary of this demo</h3><ul><li>It measures deterministic capture and use—not LLM answer quality.</li><li>It does not claim perfect ingestion of every resource.</li><li>Read-only MCP reduces tool risk but cannot eliminate host prompt injection.</li><li>Human productivity still requires a separate user study.</li></ul></article></div>
+    <section class="shell lab" id="lab">
+      <div class="section-title">
+        <div><div class="eyebrow">Before → pack → use</div><h2>See exactly what<br>becomes usable.</h2></div>
+        <p>Pick a source. The left side preserves a recognizable native view; the right side is the actual generated pack. Below them, run the real query through search, its generated CLI, or MCP.</p>
+      </div>
+      <div class="resource-tabs" id="resource-tabs"></div>
+      <div class="compare">
+        <article class="compare-card">
+          <header class="compare-head"><div><small>Before · authentic source</small><strong id="before-title">Loading…</strong></div><a class="source-link" id="source-link" target="_blank" rel="noreferrer">Open publisher ↗</a></header>
+          <div class="source-context" id="before-problem"></div>
+          <div class="native-preview" id="native-preview"></div>
+          <div class="source-foot"><span id="source-version"></span><span class="mono" id="source-sha"></span></div>
+        </article>
+        <article class="compare-card after-card">
+          <header class="compare-head"><div><small>After · agent-native pack</small><strong id="after-title">Loading…</strong></div><a class="manifest-link" id="manifest-link" target="_blank">Open manifest ↗</a></header>
+          <div class="pack-preview" id="pack-preview"></div>
+        </article>
+      </div>
+      <section class="answer-panel">
+        <div class="answer-head"><div class="question-box"><span class="answer-label">Human asks</span><p id="demo-question"></p></div><div class="answer-box"><span class="answer-label">Evidence-backed answer</span><p id="demo-answer"></p></div></div>
+        <header class="use-head"><strong>Now use the transformed resource</strong><div class="use-tabs"><button class="use-tab active" data-use="search">Search evidence</button><button class="use-tab" data-use="cli">Generated CLI</button><button class="use-tab" data-use="mcp">Connect MCP</button></div></header>
+        <div class="use-body"><div class="command-side"><span class="tiny-label">Run this</span><pre class="command"><code id="use-command"></code><button class="copy" id="copy-command" aria-label="Copy command">⧉</button></pre><p class="use-note" id="use-note"></p></div><div class="result-side"><span class="tiny-label">Actual checked-in result</span><div id="use-result"></div></div></div>
+      </section>
+    </section>
+
+    <section class="boundary">
+      <div class="shell boundary-grid">
+        <div class="boundary-card"><h3>Directly demonstrated</h3><ul><li>Five unmodified, hash-verified external source snapshots.</li><li>Real EPUB, GitHub release, webpage, CSV, and scholarly HTML ingestion.</li><li>Focused evidence snippets with unit locator and content hash.</li><li>Generated resource CLIs, MCP access, AGENT.md, and manifests.</li></ul></div>
+        <div class="boundary-card"><h3>Boundary of this demo</h3><ul><li>Evidence-backed editorial answers are curated; no LLM is invoked at build time.</li><li>The showcase does not benchmark human productivity or generative answer quality.</li><li>Read-only MCP access does not authorize mutation of upstream resources.</li><li>Publisher license and attribution requirements still apply to source reuse.</li></ul></div>
       </div>
     </section>
   </main>
 
-  <footer><div class="wrap footer-inner"><span>Agentic Anything · interactive demo snapshot · v0.4.1</span><span id="load-state">Loading committed evidence…</span></div></footer>
+  <footer><div class="shell"><span>Agentic Anything · authentic-source showcase · snapshot 2026-07-11</span><span id="load-state">loading committed evidence…</span></div></footer>
 
   <script>
-    const tabMeta = {
-      handbook: ["DOC", "Runbook"], incident: ["▶", "Timeline"], metrics: ["CSV", "Metrics"], code: ["PY", "Code"], website: ["WEB", "Website"]
-    };
     let showcase;
     let selected = 0;
     let useMode = "search";
-    const sourceCache = new Map();
+    const tabMeta = {
+      requests: ["GIT", "Requests"], alice: ["EPUB", "Alice"], secrets: ["DOC", "Python docs"],
+      gistemp: ["CSV", "NASA"], "fair-paper": ["CC", "FAIR paper"]
+    };
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+    const shortHash = value => esc(String(value || "").slice(0, 12));
 
-    const esc = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[char]));
-    const highlight = text => esc(text).replace(/(E42|INC-204|ORBIT-17|OMEGA-7|09:22|ap-south|Team Cygnus)/gi, "<mark>$1</mark>");
-
-    async function sourceText(demo) {
-      if (!sourceCache.has(demo.id)) sourceCache.set(demo.id, await (await fetch(demo.source_path)).text());
-      return sourceCache.get(demo.id);
-    }
-
-    function documentPreview(text) {
-      const body = text.split(/\n/).map(line => {
-        if (line.startsWith("# ")) return `<h1>${highlight(line.slice(2))}</h1>`;
-        if (line.startsWith("## ")) return `<h2>${highlight(line.slice(3))}</h2>`;
-        if (!line.trim()) return "";
-        return `<p>${highlight(line).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")}</p>`;
-      }).join("");
-      return `<div class="doc-view"><div class="doc-toolbar"><span></span><span></span><span></span></div>${body}</div>`;
-    }
-    function timelinePreview(text) {
-      const blocks = text.trim().split(/\n\s*\n/).map(block => block.split(/\n/));
-      return `<div class="timeline-view">${blocks.map(lines => `<div class="timeline-row"><div class="timeline-time">${esc(lines[1]?.split(" --> ")[0] || "")}</div><div class="timeline-line"></div><div class="timeline-text">${highlight(lines.slice(2).join(" "))}</div></div>`).join("")}</div>`;
-    }
-    function tablePreview(text) {
-      const rows = text.trim().split(/\n/).map(line => line.split(","));
-      return `<table class="sheet"><thead><tr>${rows[0].map(cell => `<th>${esc(cell)}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(row => `<tr>${row.map(cell => `<td>${highlight(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
-    }
-    function codePreview(text) {
-      const colored = esc(text).replace(/\b(from|import|def|return|raise|if|bool)\b/g, '<span class="kw">$1</span>').replace(/(&quot;[^&]*?&quot;)/g, '<span class="str">$1</span>');
-      return `<div class="code-view"><div class="code-tabs">orbit-sdk&nbsp;&nbsp;/&nbsp;&nbsp;client.py</div><pre class="code-lines">${colored}</pre></div>`;
-    }
-    async function renderNative(demo) {
-      const target = document.getElementById("native-preview");
-      if (demo.before_kind === "website") { target.innerHTML = `<iframe class="website-frame" title="Aurora source website" src="${esc(demo.source_path)}"></iframe>`; return; }
-      const text = await sourceText(demo);
-      target.innerHTML = demo.before_kind === "document" ? documentPreview(text) : demo.before_kind === "timeline" ? timelinePreview(text) : demo.before_kind === "table" ? tablePreview(text) : codePreview(text);
+    function highlighted(text, matched = []) {
+      let safe = esc(text);
+      [...matched].sort((a,b) => b.length - a.length).forEach(term => {
+        if (!term || term.length < 2) return;
+        const pattern = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        safe = safe.replace(new RegExp(`(${pattern})`, "gi"), "<mark>$1</mark>");
+      });
+      return safe;
     }
 
-    function renderPack(demo) {
-      const units = demo.units.map(unit => `<div class="unit-card"><div class="unit-top"><strong>${esc(unit.title)}</strong><span class="unit-type">${esc(unit.type)}</span></div><div class="unit-id">${esc(unit.unit_id)}</div><div class="unit-meta"><span>↳ ${esc(unit.locator)}</span><span>sha ${esc(unit.content_sha256.slice(0, 10))}…</span></div></div>`).join("");
-      const interfaces = demo.interfaces.map(name => `<span class="interface">${esc(name)}</span>`).join("");
-      document.getElementById("pack-preview").innerHTML = `<div class="pack-summary"><b>agent-pack.json → units</b><span class="pack-count">${demo.unit_count} captured</span></div><div class="unit-list">${units}</div><div class="interfaces">${interfaces}</div>`;
+    function renderMetrics() {
+      const s = showcase.summary;
+      document.getElementById("metric-publishers").textContent = s.publishers;
+      document.getElementById("metric-types").textContent = s.resource_types;
+      document.getElementById("metric-units").textContent = s.units;
+      document.getElementById("metric-checks").textContent = `${s.assertions_passed} / ${s.assertions_total}`;
+      document.getElementById("metric-synthetic").textContent = showcase.synthetic_source_lines;
     }
 
-    function resultMarkup(result) {
-      return `<div class="result-card"><strong>${esc(result.title)}</strong><p>${highlight(result.evidence)}</p><div class="result-meta">unit: ${esc(result.unit_id)}<br>locator: ${esc(result.locator)}<br>sha256: ${esc(result.content_sha256)}</div></div>`;
+    function renderFlagship() {
+      const flag = showcase.flagship;
+      document.getElementById("flagship-task").textContent = flag.task;
+      document.getElementById("flagship-answer").textContent = flag.answer;
+      document.getElementById("flagship-trace").innerHTML = flag.steps.map(step => `<article class="trace-card"><div class="trace-top"><span>${esc(step.label)}</span><span>${esc(step.step)}</span></div><h3>${esc(step.finding)}</h3><pre class="trace-code">${highlighted(step.result.evidence, step.result.matched)}</pre><div class="trace-meta"><a href="${esc(step.deep_link)}" target="_blank" rel="noreferrer">${esc(step.result.locator)} ↗</a><br>rank ${esc(step.result.rank)} · sha256 ${shortHash(step.result.content_sha256)}…</div></article>`).join("");
+      document.getElementById("flagship-citations").textContent = `${flag.steps.length} locators · ${flag.steps.length} content hashes`;
     }
-    function renderUse() {
-      const demo = showcase.demos[selected];
-      const command = demo.use_commands[useMode];
-      document.getElementById("use-command").textContent = command;
-      const note = document.getElementById("use-note");
-      const result = document.getElementById("use-result");
-      if (useMode === "search") {
-        note.textContent = "Structured Unicode BM25F returns a typed unit, matching evidence, source locator and provenance hash.";
-        result.innerHTML = resultMarkup(demo.query_result);
-      } else if (useMode === "cli") {
-        note.textContent = "The CLI is generated inside the pack and uses only Python's standard library. This is its actual captured stdout.";
-        result.innerHTML = `<pre class="terminal-result">${esc(demo.cli_result.search)}</pre>`;
+
+    function renderPassports() {
+      document.getElementById("passport-grid").innerHTML = showcase.demos.map(demo => `<a class="passport" href="${esc(demo.source.origin_url)}" target="_blank" rel="noreferrer"><div class="passport-top"><span class="passport-type">${esc(demo.resource_type)}</span><span>✓ verified</span></div><h3>${esc(demo.source.title)}</h3><div class="publisher">${esc(demo.source.publisher)}</div><dl><dt>Version</dt><dd>${esc(demo.source.version)}</dd><dt>License</dt><dd>${esc(demo.source.license)}</dd><dt>Snapshot SHA-256</dt><dd class="sha">${shortHash(demo.source.sha256)}…</dd></dl></a>`).join("");
+    }
+
+    function renderNative(demo) {
+      const preview = demo.preview;
+      const host = document.getElementById("native-preview");
+      if (preview.kind === "code") {
+        host.innerHTML = preview.files.map(file => `<div class="code-file"><div class="code-file-head"><span>${esc(file.path.split("/").slice(-3).join("/"))}</span><span>line ${esc(file.start_line)}</span></div><pre>${highlighted(file.code, ["DEFAULT_REDIRECT_LIMIT", "max_redirects", "TooManyRedirects", "30"])}</pre></div>`).join("");
+      } else if (preview.kind === "dataset") {
+        host.innerHTML = `<div class="doc-preview"><span class="doc-kicker">${esc(preview.title)}</span><h3>Global temperature anomaly</h3></div><table class="dataset-table"><thead><tr>${preview.columns.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${preview.rows.map(row => `<tr class="${row[0] === "2024" ? "focus" : ""}">${row.map(cell => `<td>${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table><p class="dataset-note">${esc(preview.note)}</p>`;
+      } else if (preview.kind === "web") {
+        host.innerHTML = `<div class="web-preview"><div class="browser-bar"><i class="browser-dot"></i><i class="browser-dot"></i><i class="browser-dot"></i><span class="browser-url">${esc(demo.source.origin_url)}</span></div><div class="web-body"><h3>${esc(preview.heading)}</h3>${preview.passages.map(text => `<p>${highlighted(text, demo.query_result.matched)}</p>`).join("")}</div></div>`;
       } else {
-        note.textContent = "Any MCP host can call resource_info, search_resource and read_unit. The server is read-only and requires no model key.";
-        result.innerHTML = `<pre class="terminal-result">tools/list\n  resource_info   → boundaries + unit ids\n  search_resource → BM25F evidence\n  read_unit       → markdown + locator + sha256\n\nprotocol: ${esc(showcase.mcp.initialize.result.protocolVersion)}\nmodel calls inside server: 0</pre>`;
+        host.innerHTML = `<div class="doc-preview"><span class="doc-kicker">${esc(preview.kind === "book" ? preview.chapter : "Open-access paper · CC BY 4.0")}</span><h3>${esc(preview.kind === "book" ? demo.source.title : preview.heading)}</h3>${preview.passages.map(text => `<p>${highlighted(text, demo.query_result.matched)}</p>`).join("")}</div>`;
       }
     }
 
-    async function selectResource(index) {
+    function renderPack(demo) {
+      const chosen = demo.query_result.unit_id;
+      const ordered = [...demo.units].sort((a,b) => (a.unit_id === chosen ? -1 : b.unit_id === chosen ? 1 : 0));
+      const visible = ordered.slice(0, 5);
+      document.getElementById("pack-preview").innerHTML = `<div class="pack-summary"><b>agent-pack.json → typed units</b><span class="pack-count">${demo.unit_count} captured</span></div><div class="unit-list">${visible.map(unit => `<div class="unit"><div class="unit-top"><b>${esc(unit.title)}</b><em>${esc(unit.type)}</em></div><code>${esc(unit.locator)}</code><small>sha256 ${shortHash(unit.content_sha256)}…</small></div>`).join("")}${demo.unit_count > visible.length ? `<div class="more-units">+ ${demo.unit_count - visible.length} more units in the manifest</div>` : ""}</div><div class="interfaces">${demo.interfaces.map(name => `<span class="interface">${esc(name)}</span>`).join("")}</div>`;
+    }
+
+    function evidenceResult(result) {
+      const blocks = result.evidence_blocks.slice(0, 2).map(block => `<p>${highlighted(block.text, block.matched)}</p>`).join("");
+      return `<div class="result-card"><strong>${esc(result.title)}</strong>${blocks}<div class="result-meta">unit: ${esc(result.unit_id)}<br>locator: ${esc(result.locator)}<br>rank: ${esc(result.rank)} · sha256: ${esc(result.content_sha256)}</div></div>`;
+    }
+
+    function renderUse() {
+      const demo = showcase.demos[selected];
+      const commandKey = useMode === "search" ? "query" : useMode;
+      document.getElementById("use-command").textContent = demo.use_commands[commandKey];
+      const note = document.getElementById("use-note");
+      const result = document.getElementById("use-result");
+      if (useMode === "search") {
+        note.textContent = "Unicode BM25F returns a typed unit and a focused snippet centered on the matched terms, plus source locator and provenance hash.";
+        result.innerHTML = evidenceResult(demo.query_result);
+      } else if (useMode === "cli") {
+        note.textContent = "This resource-specific CLI was generated inside the pack. The panel shows its actual checked-in stdout for the same query.";
+        result.innerHTML = `<pre class="terminal-result">${esc(demo.cli_result.search)}</pre>`;
+      } else {
+        note.textContent = "A read-only MCP host can inspect boundaries, search all five packs, and read an exact unit without a model key.";
+        result.innerHTML = `<pre class="terminal-result">tools/list\n  resource_info   → boundaries + unit ids\n  search_resource → focused BM25F evidence\n  read_unit       → markdown + locator + sha256\n\nprotocol: ${esc(showcase.mcp.initialize.result.protocolVersion)}\nfirst cross-resource hit: ${esc(showcase.mcp.search_response.hits[0].resource_id)}\nmodel calls inside server: 0</pre>`;
+      }
+    }
+
+    function selectResource(index) {
       selected = index;
       const demo = showcase.demos[index];
       document.querySelectorAll(".resource-tab").forEach((node, i) => node.classList.toggle("active", i === index));
-      document.getElementById("before-title").textContent = demo.source_label;
+      document.getElementById("before-title").textContent = demo.source.title;
       document.getElementById("before-problem").textContent = demo.before_problem;
+      document.getElementById("source-link").href = demo.source.origin_url;
+      document.getElementById("source-version").textContent = `${demo.source.publisher} · ${demo.source.version}`;
+      document.getElementById("source-sha").textContent = `sha256 ${demo.source.sha256.slice(0, 12)}…`;
       document.getElementById("after-title").textContent = `${demo.resource_type} pack · ${demo.unit_count} units`;
       document.getElementById("manifest-link").href = `packs/${demo.id}/agent-interface.json`;
-      document.getElementById("native-preview").innerHTML = '<div class="loading">Loading exact source…</div>';
-      await renderNative(demo);
+      document.getElementById("demo-question").textContent = demo.question;
+      document.getElementById("demo-answer").textContent = demo.answer;
+      renderNative(demo);
       renderPack(demo);
       renderUse();
-    }
-
-    function renderInvestigation() {
-      document.getElementById("investigation").innerHTML = showcase.investigation.map(item => `<article class="evidence-card" data-step="${esc(item.step)}"><span class="evidence-source">${esc(item.resource)} · ${esc(item.result.locator)}</span><h3>${esc(item.question)}</h3><div class="finding">${highlight(item.finding)}</div><div class="citation">${esc(item.result.unit_id)}<br>sha256 ${esc(item.result.content_sha256)}</div></article>`).join("");
     }
 
     async function load() {
       try {
         showcase = await (await fetch("results/showcase.json")).json();
-        document.getElementById("metric-types").textContent = showcase.summary.resource_types;
-        document.getElementById("metric-units").textContent = showcase.summary.units;
-        document.getElementById("metric-checks").textContent = `${showcase.summary.assertions_passed} / ${showcase.summary.assertions_total}`;
-        document.getElementById("metric-models").textContent = showcase.model_calls;
+        renderMetrics();
+        renderFlagship();
+        renderPassports();
         const tabs = document.getElementById("resource-tabs");
         showcase.demos.forEach((demo, index) => {
           const [icon, label] = tabMeta[demo.id];
           const button = document.createElement("button");
           button.className = "resource-tab";
+          button.dataset.sourceId = demo.id;
           button.innerHTML = `<span class="tab-icon">${icon}</span><span><b>${label}</b><small>${demo.resource_type}</small></span>`;
           button.addEventListener("click", () => selectResource(index));
           tabs.appendChild(button);
         });
-        renderInvestigation();
-        await selectResource(0);
-        const state = document.getElementById("load-state"); state.textContent = "✓ committed evidence loaded"; state.className = "ok";
+        selectResource(0);
+        const state = document.getElementById("load-state");
+        state.textContent = "✓ verified real-source evidence loaded";
+        state.className = "ok";
       } catch (error) {
         document.getElementById("load-state").textContent = `Demo data failed to load: ${error.message}`;
       }

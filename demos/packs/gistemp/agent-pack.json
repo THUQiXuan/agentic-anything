@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "kind": "agentic-anything-pack",
+  "site_id": "gistemp",
+  "site_name": "gistemp",
+  "resource_type": "dataset",
+  "seed_url": "https://data.giss.nasa.gov/gistemp/data_v4.html",
+  "generated_at": "2026-07-11T00:00:00Z",
+  "generator": "agentic-anything/0.4.1",
+  "capabilities": [
+    "site_snapshot",
+    "page_index",
+    "page_manifests",
+    "markdown_views",
+    "api_surface",
+    "resource_agent_interface"
+  ],
+  "contents": {
+    "site_snapshot": "site.json",
+    "page_manifests": "pages/*.json",
+    "markdown_views": "pages/*.md",
+    "api_surface": "api/apis.json",
+    "skill": "skills/SKILL.md",
+    "agent_interface": "agent-interface.json",
+    "agent_guide": "AGENT.md"
+  }
+}

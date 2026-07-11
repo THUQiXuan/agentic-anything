@@ -1,0 +1,682 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--user--advanced-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/user/advanced.rst",
+  "url_path": "docs/user/advanced.rst",
+  "title": "docs/user/advanced.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/user/advanced.rst",
+  "summary": ".. _advanced:\nAdvanced Usage\n==============\nThis document covers some of Requests more advanced features.\n.. _session-objects:\nSession Objects\n---------------\nThe Session object allows you to persist certain parameters across\nrequests. It…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _advanced:"
+    },
+    {
+      "kind": "p",
+      "text": "Advanced Usage\n=============="
+    },
+    {
+      "kind": "p",
+      "text": "This document covers some of Requests more advanced features."
+    },
+    {
+      "kind": "p",
+      "text": ".. _session-objects:"
+    },
+    {
+      "kind": "p",
+      "text": "Session Objects\n---------------"
+    },
+    {
+      "kind": "p",
+      "text": "The Session object allows you to persist certain parameters across\nrequests. It also persists cookies across all requests made from the\nSession instance, and will use ``urllib3``'s `connection pooling`_. So if\nyou're making several requests to the same host, the underlying TCP\nconnection will be reused, which can result in a significant performance\nincrease (see `HTTP persistent connection`_)."
+    },
+    {
+      "kind": "p",
+      "text": "A Session object has all the methods of the main Requests API."
+    },
+    {
+      "kind": "p",
+      "text": "Let's persist some cookies across requests::"
+    },
+    {
+      "kind": "p",
+      "text": "s = requests.Session()"
+    },
+    {
+      "kind": "p",
+      "text": "s.get('https://httpbin.org/cookies/set/sessioncookie/123456789')\n    r = s.get('https://httpbin.org/cookies')"
+    },
+    {
+      "kind": "p",
+      "text": "print(r.text)\n    # '{\"cookies\": {\"sessioncookie\": \"123456789\"}}'"
+    },
+    {
+      "kind": "p",
+      "text": "Sessions can also be used to provide default data to the request methods. This\nis done by providing data to the properties on a Session object::"
+    },
+    {
+      "kind": "p",
+      "text": "s = requests.Session()\n    s.auth = ('user', 'pass')\n    s.headers.update({'x-test': 'true'})"
+    },
+    {
+      "kind": "p",
+      "text": "# both 'x-test' and 'x-test2' are sent\n    s.get('https://httpbin.org/headers', headers={'x-test2': 'true'})"
+    },
+    {
+      "kind": "p",
+      "text": "Any dictionaries that you pass to a request method will be merged with the\nsession-level values that are set. The method-level parameters override session\nparameters."
+    },
+    {
+      "kind": "p",
+      "text": "Note, however, that method-level parameters will *not* be persisted across\nrequests, even if using a session. This example will only send the cookies\nwith the first request, but not the second::"
+    },
+    {
+      "kind": "p",
+      "text": "s = requests.Session()"
+    },
+    {
+      "kind": "p",
+      "text": "r = s.get('https://httpbin.org/cookies', cookies={'from-my': 'browser'})\n    print(r.text)\n    # '{\"cookies\": {\"from-my\": \"browser\"}}'"
+    },
+    {
+      "kind": "p",
+      "text": "r = s.get('https://httpbin.org/cookies')\n    print(r.text)\n    # '{\"cookies\": {}}'"
+    },
+    {
+      "kind": "p",
+      "text": "If you want to manually add cookies to your session, use the\n:ref:`Cookie utility functions <api-cookies>` to manipulate\n:attr:`Session.cookies <requests.Session.cookies>`."
+    },
+    {
+      "kind": "p",
+      "text": "Sessions can also be used as context managers::"
+    },
+    {
+      "kind": "p",
+      "text": "with requests.Session() as s:\n        s.get('https://httpbin.org/cookies/set/sessioncookie/123456789')"
+    },
+    {
+      "kind": "p",
+      "text": "This will make sure the session is closed as soon as the ``with`` block is\nexited, even if unhandled exceptions occurred."
+    },
+    {
+      "kind": "p",
+      "text": ".. admonition:: Remove a Value From a Dict Parameter"
+    },
+    {
+      "kind": "p",
+      "text": "Sometimes you'll want to omit session-level keys from a dict parameter. To\n    do this, you simply set that key's value to ``None`` in the method-level\n    parameter. It will automatically be omitted."
+    },
+    {
+      "kind": "p",
+      "text": "All values that are contained within a session are directly available to you.\nSee the :ref:`Session API Docs <sessionapi>` to learn more."
+    },
+    {
+      "kind": "p",
+      "text": ".. _request-and-response-objects:"
+    },
+    {
+      "kind": "p",
+      "text": "Request and Response Objects\n----------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Whenever a call is made to ``requests.get()`` and friends, you are doing two\nmajor things. First, you are constructing a ``Request`` object which will be\nsent off to a server to request or query some resource. Second, a ``Response``\nobject is generated once Requests gets a response back from the server.\nThe ``Response`` object contains all of the information returned by the server and\nalso contains the ``Request`` object you created originally. Here is a simple\nrequest to get some very important information from Wikipedia's servers::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://en.wikipedia.org/wiki/Monty_Python')"
+    },
+    {
+      "kind": "p",
+      "text": "If we want to access the headers the server sent back to us, we do this::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.headers\n    {'content-length': '56170', 'x-content-type-options': 'nosniff', 'x-cache':\n    'HIT from cp1006.eqiad.wmnet, MISS from cp1010.eqiad.wmnet', 'content-encoding':\n    'gzip', 'age': '3080', 'content-language': 'en', 'vary': 'Accept-Encoding,Cookie',\n    'server': 'Apache', 'last-modified': 'Wed, 13 Jun 2012 01:33:50 GMT',\n    'connection': 'close', 'cache-control': 'private, s-maxage=0, max-age=0,\n    must-revalidate', 'date': 'Thu, 14 Jun 2012 12:59:39 GMT', 'content-type':\n    'text/html; charset=UTF-8', 'x-cache-lookup': 'HIT from cp1006.eqiad.wmnet:3128,\n    MISS from cp1010.eqiad.wmnet:80'}"
+    },
+    {
+      "kind": "p",
+      "text": "However, if we want to get the headers we sent the server, we simply access the\nrequest, and then the request's headers::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.request.headers\n    {'Accept-Encoding': 'identity, deflate, compress, gzip',\n    'Accept': '*/*', 'User-Agent': 'python-requests/1.2.0'}"
+    },
+    {
+      "kind": "p",
+      "text": ".. _prepared-requests:"
+    },
+    {
+      "kind": "p",
+      "text": "Prepared Requests\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "Whenever you receive a :class:`Response <requests.Response>` object\nfrom an API call or a Session call, the ``request`` attribute is actually the\n``PreparedRequest`` that was used. In some cases you may wish to do some extra\nwork to the body or headers (or anything else really) before sending a\nrequest. The simple recipe for this is the following::"
+    },
+    {
+      "kind": "p",
+      "text": "from requests import Request, Session"
+    },
+    {
+      "kind": "p",
+      "text": "s = Session()"
+    },
+    {
+      "kind": "p",
+      "text": "req = Request('POST', url, data=data, headers=headers)\n    prepped = req.prepare()"
+    },
+    {
+      "kind": "p",
+      "text": "# do something with prepped.body\n    prepped.body = 'No, I want exactly this as the body.'"
+    },
+    {
+      "kind": "p",
+      "text": "# do something with prepped.headers\n    del prepped.headers['Content-Type']"
+    },
+    {
+      "kind": "p",
+      "text": "resp = s.send(prepped,\n        stream=stream,\n        verify=verify,\n        proxies=proxies,\n        cert=cert,\n        timeout=timeout\n    )"
+    },
+    {
+      "kind": "p",
+      "text": "print(resp.status_code)"
+    },
+    {
+      "kind": "p",
+      "text": "Since you are not doing anything special with the ``Request`` object, you\nprepare it immediately and modify the ``PreparedRequest`` object. You then\nsend that with the other parameters you would have sent to ``requests.*`` or\n``Session.*``."
+    },
+    {
+      "kind": "p",
+      "text": "However, the above code will lose some of the advantages of having a Requests\n:class:`Session <requests.Session>` object. In particular,\n:class:`Session <requests.Session>`-level state such as cookies will\nnot get applied to your request. To get a\n:class:`PreparedRequest <requests.PreparedRequest>` with that state\napplied, replace the call to :meth:`Request.prepare()\n<requests.Request.prepare>` with a call to\n:meth:`Session.prepare_request() <requests.Session.prepare_request>`, like this::"
+    },
+    {
+      "kind": "p",
+      "text": "from requests import Request, Session"
+    },
+    {
+      "kind": "p",
+      "text": "s = Session()\n    req = Request('GET',  url, data=data, headers=headers)"
+    },
+    {
+      "kind": "p",
+      "text": "prepped = s.prepare_request(req)"
+    },
+    {
+      "kind": "p",
+      "text": "# do something with prepped.body\n    prepped.body = 'Seriously, send exactly these bytes.'"
+    },
+    {
+      "kind": "p",
+      "text": "# do something with prepped.headers\n    prepped.headers['Keep-Dead'] = 'parrot'"
+    },
+    {
+      "kind": "p",
+      "text": "resp = s.send(prepped,\n        stream=stream,\n        verify=verify,\n        proxies=proxies,\n        cert=cert,\n        timeout=timeout\n    )"
+    },
+    {
+      "kind": "p",
+      "text": "print(resp.status_code)"
+    },
+    {
+      "kind": "p",
+      "text": "When you are using the prepared request flow, keep in mind that it does not take into account the environment.\nThis can cause problems if you are using environment variables to change the behaviour of requests.\nFor example: Self-signed SSL certificates specified in ``REQUESTS_CA_BUNDLE`` will not be taken into account.\nAs a result an ``SSL: CERTIFICATE_VERIFY_FAILED`` is thrown.\nYou can get around this behaviour by explicitly merging the environment settings into your session::"
+    },
+    {
+      "kind": "p",
+      "text": "from requests import Request, Session"
+    },
+    {
+      "kind": "p",
+      "text": "s = Session()\n    req = Request('GET', url)"
+    },
+    {
+      "kind": "p",
+      "text": "prepped = s.prepare_request(req)"
+    },
+    {
+      "kind": "p",
+      "text": "# Merge environment settings into session\n    settings = s.merge_environment_settings(prepped.url, {}, None, None, None)\n    resp = s.send(prepped, **settings)"
+    },
+    {
+      "kind": "p",
+      "text": "print(resp.status_code)"
+    },
+    {
+      "kind": "p",
+      "text": ".. _verification:"
+    },
+    {
+      "kind": "p",
+      "text": "SSL Cert Verification\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests verifies SSL certificates for HTTPS requests, just like a web browser.\nBy default, SSL verification is enabled, and Requests will throw a SSLError if\nit's unable to verify the certificate::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://requestb.in')\n    requests.exceptions.SSLError: hostname 'requestb.in' doesn't match either of '*.herokuapp.com', 'herokuapp.com'"
+    },
+    {
+      "kind": "p",
+      "text": "I don't have SSL setup on this domain, so it throws an exception. Excellent. GitHub does though::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://github.com')\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "You can pass ``verify`` the path to a CA_BUNDLE file or directory with certificates of trusted CAs::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://github.com', verify='/path/to/certfile')"
+    },
+    {
+      "kind": "p",
+      "text": "or persistent::"
+    },
+    {
+      "kind": "p",
+      "text": "s = requests.Session()\n    s.verify = '/path/to/certfile'"
+    },
+    {
+      "kind": "p",
+      "text": ".. note:: If ``verify`` is set to a path to a directory, the directory must have been processed using\n  the ``c_rehash`` utility supplied with OpenSSL."
+    },
+    {
+      "kind": "p",
+      "text": "This list of trusted CAs can also be specified through the ``REQUESTS_CA_BUNDLE`` environment variable.\nIf ``REQUESTS_CA_BUNDLE`` is not set, ``CURL_CA_BUNDLE`` will be used as fallback."
+    },
+    {
+      "kind": "p",
+      "text": "Requests can also ignore verifying the SSL certificate if you set ``verify`` to False::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://kennethreitz.org', verify=False)\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "Note that when ``verify`` is set to ``False``, requests will accept any TLS\ncertificate presented by the server, and will ignore hostname mismatches\nand/or expired certificates, which will make your application vulnerable to\nman-in-the-middle (MitM) attacks. Setting verify to ``False`` may be useful\nduring local development or testing."
+    },
+    {
+      "kind": "p",
+      "text": "By default, ``verify`` is set to True. Option ``verify`` only applies to host certs."
+    },
+    {
+      "kind": "p",
+      "text": "Client Side Certificates\n------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "You can also specify a local cert to use as client side certificate, as a single\nfile (containing the private key and the certificate) or as a tuple of both\nfiles' paths::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://kennethreitz.org', cert=('/path/client.cert', '/path/client.key'))\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "or persistent::"
+    },
+    {
+      "kind": "p",
+      "text": "s = requests.Session()\n    s.cert = '/path/client.cert'"
+    },
+    {
+      "kind": "p",
+      "text": "If you specify a wrong path or an invalid cert, you'll get a SSLError::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://kennethreitz.org', cert='/wrong_path/client.pem')\n    SSLError: [Errno 336265225] _ssl.c:347: error:140B0009:SSL routines:SSL_CTX_use_PrivateKey_file:PEM lib"
+    },
+    {
+      "kind": "p",
+      "text": ".. warning:: The private key to your local certificate *must* be unencrypted.\n   Currently, Requests does not support using encrypted keys."
+    },
+    {
+      "kind": "p",
+      "text": ".. _ca-certificates:"
+    },
+    {
+      "kind": "p",
+      "text": "CA Certificates\n---------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests uses certificates from the package `certifi`_. This allows for users\nto update their trusted certificates without changing the version of Requests."
+    },
+    {
+      "kind": "p",
+      "text": "Before version 2.16, Requests bundled a set of root CAs that it trusted,\nsourced from the `Mozilla trust store`_. The certificates were only updated\nonce for each Requests version. When ``certifi`` was not installed, this led to\nextremely out-of-date certificate bundles when using significantly older\nversions of Requests."
+    },
+    {
+      "kind": "p",
+      "text": "For the sake of security we recommend upgrading certifi frequently!"
+    },
+    {
+      "kind": "p",
+      "text": ".. _HTTP persistent connection: https://en.wikipedia.org/wiki/HTTP_persistent_connection\n.. _connection pooling: https://urllib3.readthedocs.io/en/latest/reference/urllib3.connectionpool.html\n.. _certifi: https://certifiio.readthedocs.io/\n.. _Mozilla trust store: https://hg.mozilla.org/mozilla-central/raw-file/tip/security/nss/lib/ckfw/builtins/certdata.txt"
+    },
+    {
+      "kind": "p",
+      "text": ".. _body-content-workflow:"
+    },
+    {
+      "kind": "p",
+      "text": "Body Content Workflow\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "By default, when you make a request, the body of the response is downloaded\nimmediately. You can override this behaviour and defer downloading the response\nbody until you access the :attr:`Response.content <requests.Response.content>`\nattribute with the ``stream`` parameter::"
+    },
+    {
+      "kind": "p",
+      "text": "tarball_url = 'https://github.com/psf/requests/tarball/main'\n    r = requests.get(tarball_url, stream=True)"
+    },
+    {
+      "kind": "p",
+      "text": "At this point only the response headers have been downloaded and the connection\nremains open, hence allowing us to make content retrieval conditional::"
+    },
+    {
+      "kind": "p",
+      "text": "if int(r.headers['content-length']) < TOO_LONG:\n      content = r.content\n      ..."
+    },
+    {
+      "kind": "p",
+      "text": "You can further control the workflow by use of the :meth:`Response.iter_content() <requests.Response.iter_content>`\nand :meth:`Response.iter_lines() <requests.Response.iter_lines>` methods.\nAlternatively, you can read the undecoded body from the underlying\nurllib3 :class:`urllib3.HTTPResponse <urllib3.response.HTTPResponse>` at\n:attr:`Response.raw <requests.Response.raw>`."
+    },
+    {
+      "kind": "p",
+      "text": "If you set ``stream`` to ``True`` when making a request, Requests cannot\nrelease the connection back to the pool unless you consume all the data or call\n:meth:`Response.close <requests.Response.close>`. This can lead to\ninefficiency with connections. If you find yourself partially reading request\nbodies (or not reading them at all) while using ``stream=True``, you should\nmake the request within a ``with`` statement to ensure it's always closed::"
+    },
+    {
+      "kind": "p",
+      "text": "with requests.get('https://httpbin.org/get', stream=True) as r:\n        # Do things with the response here."
+    },
+    {
+      "kind": "p",
+      "text": ".. _keep-alive:"
+    },
+    {
+      "kind": "p",
+      "text": "Keep-Alive\n----------"
+    },
+    {
+      "kind": "p",
+      "text": "Excellent news — thanks to urllib3, keep-alive is 100% automatic within a session!\nAny requests that you make within a session will automatically reuse the appropriate\nconnection!"
+    },
+    {
+      "kind": "p",
+      "text": "Note that connections are only released back to the pool for reuse once all body\ndata has been read; be sure to either set ``stream`` to ``False`` or read the\n``content`` property of the ``Response`` object."
+    },
+    {
+      "kind": "p",
+      "text": ".. _streaming-uploads:"
+    },
+    {
+      "kind": "p",
+      "text": "Streaming Uploads\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests supports streaming uploads, which allow you to send large streams or\nfiles without reading them into memory. To stream and upload, simply provide a\nfile-like object for your body::"
+    },
+    {
+      "kind": "p",
+      "text": "with open('massive-body', 'rb') as f:\n        requests.post('http://some.url/streamed', data=f)"
+    },
+    {
+      "kind": "p",
+      "text": ".. warning:: It is strongly recommended that you open files in :ref:`binary\n             mode <tut-files>`. This is because Requests may attempt to provide\n             the ``Content-Length`` header for you, and if it does this value\n             will be set to the number of *bytes* in the file. Errors may occur\n             if you open the file in *text mode*."
+    },
+    {
+      "kind": "p",
+      "text": ".. _chunk-encoding:"
+    },
+    {
+      "kind": "p",
+      "text": "Chunk-Encoded Requests\n----------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests also supports Chunked transfer encoding for outgoing and incoming requests.\nTo send a chunk-encoded request, simply provide a generator (or any iterator without\na length) for your body::"
+    },
+    {
+      "kind": "p",
+      "text": "def gen():\n        yield 'hi'\n        yield 'there'"
+    },
+    {
+      "kind": "p",
+      "text": "requests.post('http://some.url/chunked', data=gen())"
+    },
+    {
+      "kind": "p",
+      "text": "For chunked encoded responses, it's best to iterate over the data using\n:meth:`Response.iter_content() <requests.Response.iter_content>`. In\nan ideal situation you'll have set ``stream=True`` on the request, in which\ncase you can iterate chunk-by-chunk by calling ``iter_content`` with a ``chunk_size``\nparameter of ``None``. If you want to set a maximum size of the chunk,\nyou can set a ``chunk_size`` parameter to any integer."
+    },
+    {
+      "kind": "p",
+      "text": ".. _multipart:"
+    },
+    {
+      "kind": "p",
+      "text": "POST Multiple Multipart-Encoded Files\n-------------------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "You can send multiple files in one request. For example, suppose you want to\nupload image files to an HTML form with a multiple file field 'images'::"
+    },
+    {
+      "kind": "p",
+      "text": "<input type=\"file\" name=\"images\" multiple=\"true\" required=\"true\"/>"
+    },
+    {
+      "kind": "p",
+      "text": "To do that, just set files to a list of tuples of ``(form_field_name, file_info)``::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://httpbin.org/post'\n    >>> multiple_files = [\n    ...     ('images', ('foo.png', open('foo.png', 'rb'), 'image/png')),\n    ...     ('images', ('bar.png', open('bar.png', 'rb'), 'image/png'))]\n    >>> r = requests.post(url, files=multiple_files)\n    >>> r.text\n    {\n      ...\n      'files': {'images': 'data:image/png;base64,iVBORw ....'}\n      'Content-Type': 'multipart/form-data; boundary=3131623adb2043caaeb5538cc7aa0b3a',\n      ...\n    }"
+    },
+    {
+      "kind": "p",
+      "text": ".. warning:: It is strongly recommended that you open files in :ref:`binary\n             mode <tut-files>`. This is because Requests may attempt to provide\n             the ``Content-Length`` header for you, and if it does this value\n             will be set to the number of *bytes* in the file. Errors may occur\n             if you open the file in *text mode*."
+    },
+    {
+      "kind": "p",
+      "text": ".. _event-hooks:"
+    },
+    {
+      "kind": "p",
+      "text": "Event Hooks\n-----------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests has a hook system that you can use to manipulate portions of\nthe request process, or signal event handling."
+    },
+    {
+      "kind": "p",
+      "text": "Available hooks:"
+    },
+    {
+      "kind": "p",
+      "text": "``response``:\n    The response generated from a Request."
+    },
+    {
+      "kind": "p",
+      "text": "You can assign a hook function on a per-request basis by passing a\n``{hook_name: callback_function}`` dictionary to the ``hooks`` request\nparameter::"
+    },
+    {
+      "kind": "p",
+      "text": "hooks={'response': print_url}"
+    },
+    {
+      "kind": "p",
+      "text": "That ``callback_function`` will receive a chunk of data as its first\nargument."
+    },
+    {
+      "kind": "p",
+      "text": "::"
+    },
+    {
+      "kind": "p",
+      "text": "def print_url(r, *args, **kwargs):\n        print(r.url)"
+    },
+    {
+      "kind": "p",
+      "text": "Your callback function must handle its own exceptions. Any unhandled exception won't be passed silently and thus should be handled by the code calling Requests."
+    },
+    {
+      "kind": "p",
+      "text": "If the callback function returns a value, it is assumed that it is to\nreplace the data that was passed in. If the function doesn't return\nanything, nothing else is affected."
+    },
+    {
+      "kind": "p",
+      "text": "::"
+    },
+    {
+      "kind": "p",
+      "text": "def record_hook(r, *args, **kwargs):\n        r.hook_called = True\n        return r"
+    },
+    {
+      "kind": "p",
+      "text": "Let's print some request method arguments at runtime::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://httpbin.org/', hooks={'response': print_url})\n    https://httpbin.org/\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "You can add multiple hooks to a single request.  Let's call two hooks at once::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://httpbin.org/', hooks={'response': [print_url, record_hook]})\n    https://httpbin.org/\n    >>> r.hook_called\n    True"
+    },
+    {
+      "kind": "p",
+      "text": "You can also add hooks to a ``Session`` instance.  Any hooks you add will then\nbe called on every request made to the session.  For example::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> s = requests.Session()\n   >>> s.hooks['response'].append(print_url)\n   >>> s.get('https://httpbin.org/')\n    https://httpbin.org/\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "A ``Session`` can have multiple hooks, which will be called in the order\nthey are added."
+    },
+    {
+      "kind": "p",
+      "text": ".. _custom-auth:"
+    },
+    {
+      "kind": "p",
+      "text": "Custom Authentication\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests allows you to specify your own authentication mechanism."
+    },
+    {
+      "kind": "p",
+      "text": "Any callable which is passed as the ``auth`` argument to a request method will\nhave the opportunity to modify the request before it is dispatched."
+    },
+    {
+      "kind": "p",
+      "text": "Authentication implementations are subclasses of :class:`AuthBase <requests.auth.AuthBase>`,\nand are easy to define. Requests provides two common authentication scheme\nimplementations in ``requests.auth``: :class:`HTTPBasicAuth <requests.auth.HTTPBasicAuth>` and\n:class:`HTTPDigestAuth <requests.auth.HTTPDigestAuth>`."
+    },
+    {
+      "kind": "p",
+      "text": "Let's pretend that we have a web service that will only respond if the\n``X-Pizza`` header is set to a password value. Unlikely, but just go with it."
+    },
+    {
+      "kind": "p",
+      "text": "::"
+    },
+    {
+      "kind": "p",
+      "text": "from requests.auth import AuthBase"
+    },
+    {
+      "kind": "p",
+      "text": "class PizzaAuth(AuthBase):\n        \"\"\"Attaches HTTP Pizza Authentication to the given Request object.\"\"\"\n        def __init__(self, username):\n            # setup any auth-related data here\n            self.username = username"
+    },
+    {
+      "kind": "p",
+      "text": "def __call__(self, r):\n            # modify and return the request\n            r.headers['X-Pizza'] = self.username\n            return r"
+    },
+    {
+      "kind": "p",
+      "text": "Then, we can make a request using our Pizza Auth::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('http://pizzabin.org/admin', auth=PizzaAuth('kenneth'))\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": ".. _streaming-requests:"
+    },
+    {
+      "kind": "p",
+      "text": "Streaming Requests\n------------------"
+    },
+    {
+      "kind": "p",
+      "text": "With :meth:`Response.iter_lines() <requests.Response.iter_lines>` you can easily\niterate over streaming APIs such as the `Twitter Streaming\nAPI <https://dev.twitter.com/streaming/overview>`_. Simply\nset ``stream`` to ``True`` and iterate over the response with\n:meth:`~requests.Response.iter_lines()`::"
+    },
+    {
+      "kind": "p",
+      "text": "import json\n    import requests"
+    },
+    {
+      "kind": "p",
+      "text": "r = requests.get('https://httpbin.org/stream/20', stream=True)"
+    },
+    {
+      "kind": "p",
+      "text": "for line in r.iter_lines():"
+    },
+    {
+      "kind": "p",
+      "text": "# filter out keep-alive new lines\n        if line:\n            decoded_line = line.decode('utf-8')\n            print(json.loads(decoded_line))"
+    },
+    {
+      "kind": "p",
+      "text": "When using `decode_unicode=True` with\n:meth:`Response.iter_lines() <requests.Response.iter_lines>` or\n:meth:`Response.iter_content() <requests.Response.iter_content>`, you'll want\nto provide a fallback encoding in the event the server doesn't provide one::"
+    },
+    {
+      "kind": "p",
+      "text": "r = requests.get('https://httpbin.org/stream/20', stream=True)"
+    },
+    {
+      "kind": "p",
+      "text": "if r.encoding is None:\n        r.encoding = 'utf-8'"
+    },
+    {
+      "kind": "p",
+      "text": "for line in r.iter_lines(decode_unico"
+    },
+    {
+      "kind": "p",
+      "text": "(truncated at 20000 chars)"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/user/advanced.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "3cb8ac63e7009f25c3e1fe1f68b811b2eb4b4c6beeed0a5fdd73e05fda90eeed"
+  }
+}

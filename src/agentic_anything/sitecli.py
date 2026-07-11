@@ -103,37 +103,89 @@ def cmd_page(args):
         print(path.read_text(encoding="utf-8"))
 
 
-_TOKEN_RE = re.compile(r"[a-z0-9]{{2,}}")
+_TOKEN_RE = re.compile(r"[^\W_]{{2,}}", re.UNICODE)
+
+
+def _tokens(text):
+    return set(_TOKEN_RE.findall((text or "").casefold()))
+
+
+def _focused_snippet(text, query, limit=240):
+    if len(text) <= limit:
+        return text
+    lowered = text.casefold()
+    positions = []
+    for token in query:
+        start = 0
+        while len(positions) < 200:
+            found = lowered.find(token, start)
+            if found < 0:
+                break
+            positions.append(found)
+            start = found + max(1, len(token))
+    if not positions:
+        return text[:limit].rstrip() + "…"
+    best = None
+    for position in positions:
+        start = max(0, min(len(text) - limit, position - limit // 3))
+        window = text[start:start + limit]
+        candidate = (len(query.intersection(_tokens(window))), -start, start)
+        if best is None or candidate > best:
+            best = candidate
+    start = best[2]
+    snippet = text[start:start + limit].strip()
+    if start:
+        snippet = "…" + snippet
+    if start + limit < len(text):
+        snippet += "…"
+    return snippet
 
 
 def cmd_search(args):
-    query = set(_TOKEN_RE.findall(" ".join(args.query).lower()))
+    query = _tokens(" ".join(args.query))
     if not query:
         _fail("empty query")
     results = []
     for p in _site().get("pages", []):
         manifest = _read_json(PACK_DIR / "pages" / f"{{p['page_id']}}.json")
-        score = 0
-        evidence = []
-        fields = [("title", manifest.get("title", ""), 5)]
+        token_weights = {{}}
+        evidence_candidates = []
+        block_coverage = 0
+        fields = [("title", manifest.get("title", ""), 5),
+                  ("locator", manifest.get("locator", ""), 3)]
         fields += [("content", c.get("text", ""), 3 if c.get("kind") == "heading" else 1)
                    for c in manifest.get("content", [])]
-        for kind, text, weight in fields:
-            hits = query.intersection(_TOKEN_RE.findall(text.lower()))
+        for order, (kind, text, weight) in enumerate(fields):
+            hits = query.intersection(_tokens(text))
             if hits:
-                score += weight * len(hits)
-                if len(evidence) < 4:
-                    evidence.append({{"kind": kind, "text": text[:240]}})
-        if score:
-            results.append({{"page_id": p["page_id"], "score": score,
-                             "title": manifest.get("title", ""), "evidence": evidence}})
-    results.sort(key=lambda r: -r["score"])
+                block_coverage = max(block_coverage, len(hits))
+                for token in hits:
+                    token_weights[token] = max(weight, token_weights.get(token, 0))
+                snippet = _focused_snippet(text, query)
+                visible = query.intersection(_tokens(snippet))
+                evidence_candidates.append((
+                    -len(visible), -weight, order,
+                    {{"kind": kind, "text": snippet, "matched": sorted(visible)}},
+                ))
+        if token_weights:
+            evidence_candidates.sort(key=lambda item: (item[0], item[1], item[2]))
+            results.append({{
+                "page_id": p["page_id"],
+                "score": sum(token_weights.values()),
+                "coverage": len(token_weights),
+                "block_coverage": block_coverage,
+                "title": manifest.get("title", ""),
+                "evidence": [item[3] for item in evidence_candidates[:4]],
+            }})
+    results.sort(key=lambda r: (
+        -r["block_coverage"], -r["coverage"], -r["score"], r["page_id"]
+    ))
     results = results[: args.top]
     human_lines = []
     for r in results:
         human_lines.append(f"{{r['score']:>4}}  {{r['page_id']}}  {{r['title']}}")
         for ev in r["evidence"]:
-            human_lines.append(f"      - {{ev['text'][:110]}}")
+            human_lines.append(f"      - {{ev['text'][:220]}}")
     _emit(results, args.json, "\\n".join(human_lines) or "(no matches)")
 
 

@@ -1,0 +1,72 @@
+{
+  "snapshot_date": "2026-07-11",
+  "policy": "Every demo input is an unmodified snapshot downloaded from the named publisher. The builder verifies each byte-for-byte SHA-256 before agentification.",
+  "sources": {
+    "alice": {
+      "title": "Alice's Adventures in Wonderland",
+      "publisher": "Project Gutenberg",
+      "resource_type": "book",
+      "format": "EPUB3",
+      "version": "eBook #11, updated 2025-06-26",
+      "origin_url": "https://www.gutenberg.org/ebooks/11",
+      "snapshot_url": "https://www.gutenberg.org/ebooks/11.epub3.images",
+      "snapshot_file": "alice-project-gutenberg-11.epub",
+      "sha256": "4ac9fc092435338fdb28e96b02989a46bbe075ec310f1789db87a653761cce92",
+      "license": "Public domain in the USA; Project Gutenberg terms apply",
+      "license_url": "https://www.gutenberg.org/policy/permission.html"
+    },
+    "requests": {
+      "title": "Requests",
+      "publisher": "Python Software Foundation / psf",
+      "resource_type": "code",
+      "format": "GitHub release archive",
+      "version": "v2.34.2, commit 6e83187b8feb273ed4c6cdab5efd8d54901dfab3",
+      "origin_url": "https://github.com/psf/requests/tree/v2.34.2",
+      "snapshot_url": "https://codeload.github.com/psf/requests/zip/refs/tags/v2.34.2",
+      "snapshot_file": "requests-v2.34.2.zip",
+      "archive_root": "requests-2.34.2",
+      "sha256": "f552f594e029e3631ed886dc34b42e86bbaca0858b6d06ec55fe81385f3c8d46",
+      "license": "Apache License 2.0",
+      "license_url": "https://github.com/psf/requests/blob/v2.34.2/LICENSE"
+    },
+    "secrets": {
+      "title": "secrets — Generate secure random numbers for managing secrets",
+      "publisher": "Python Software Foundation",
+      "resource_type": "web",
+      "format": "Official documentation webpage",
+      "version": "Python 3.13.14 documentation",
+      "origin_url": "https://docs.python.org/3.13/library/secrets.html",
+      "snapshot_url": "https://docs.python.org/3.13/library/secrets.html",
+      "snapshot_file": "python-3.13-secrets.html",
+      "sha256": "9464167bbc2a965a479e0a1dc2ff1fb4a701077e0b8c92bc1fa7937916711a74",
+      "license": "Python Software Foundation License Version 2",
+      "license_url": "https://docs.python.org/3.13/license.html"
+    },
+    "gistemp": {
+      "title": "GISS Surface Temperature Analysis (GISTEMP v4)",
+      "publisher": "NASA Goddard Institute for Space Studies",
+      "resource_type": "dataset",
+      "format": "CSV",
+      "version": "Snapshot 2026-07-11, observations through June 2026",
+      "origin_url": "https://data.giss.nasa.gov/gistemp/data_v4.html",
+      "snapshot_url": "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts%2BdSST.csv",
+      "snapshot_file": "nasa-gistemp-global.csv",
+      "sha256": "99d659d8c955c6599e93be3691467ff56eff80ee4b066c5cacfaaa6f7332ca9f",
+      "license": "NASA data with source acknowledgment requested",
+      "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    },
+    "fair-paper": {
+      "title": "The FAIR Guiding Principles for scientific data management and stewardship",
+      "publisher": "Scientific Data / PubMed Central",
+      "resource_type": "document",
+      "format": "Open-access scholarly HTML",
+      "version": "Scientific Data 3, 160018 (2016), PMCID PMC4792175",
+      "origin_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+      "snapshot_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+      "snapshot_file": "fair-guiding-principles-pmc4792175.html",
+      "sha256": "4ad8a99796d424923a47cb798c135699bca55fa1e2c322645959adc751f3a6a2",
+      "license": "Creative Commons Attribution 4.0 International",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  }
+}

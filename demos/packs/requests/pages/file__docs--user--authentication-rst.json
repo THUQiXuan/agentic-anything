@@ -1,0 +1,182 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--user--authentication-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/user/authentication.rst",
+  "url_path": "docs/user/authentication.rst",
+  "title": "docs/user/authentication.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/user/authentication.rst",
+  "summary": ".. _authentication:\nAuthentication\n==============\nThis document discusses using various kinds of authentication with Requests.\nMany web services require authentication, and there are many different types.\nBelow, we outline various forms of…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _authentication:"
+    },
+    {
+      "kind": "p",
+      "text": "Authentication\n=============="
+    },
+    {
+      "kind": "p",
+      "text": "This document discusses using various kinds of authentication with Requests."
+    },
+    {
+      "kind": "p",
+      "text": "Many web services require authentication, and there are many different types.\nBelow, we outline various forms of authentication available in Requests, from\nthe simple to the complex."
+    },
+    {
+      "kind": "p",
+      "text": "Basic Authentication\n--------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Many web services that require authentication accept HTTP Basic Auth. This is\nthe simplest kind, and Requests supports it straight out of the box."
+    },
+    {
+      "kind": "p",
+      "text": "Making requests with HTTP Basic Auth is very simple::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> from requests.auth import HTTPBasicAuth\n    >>> basic = HTTPBasicAuth('user', 'pass')\n    >>> requests.get('https://httpbin.org/basic-auth/user/pass', auth=basic)\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "In fact, HTTP Basic Auth is so common that Requests provides a handy shorthand\nfor using it::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://httpbin.org/basic-auth/user/pass', auth=('user', 'pass'))\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "Providing the credentials in a tuple like this is exactly the same as the\n``HTTPBasicAuth`` example above."
+    },
+    {
+      "kind": "p",
+      "text": "netrc Authentication\n~~~~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "kind": "p",
+      "text": "If no authentication method is given with the ``auth`` argument, Requests will\nattempt to get the authentication credentials for the URL's hostname from the\nuser's netrc file. The netrc file overrides raw HTTP authentication headers\nset with `headers=`."
+    },
+    {
+      "kind": "p",
+      "text": "If credentials for the hostname are found, the request is sent with HTTP Basic\nAuth."
+    },
+    {
+      "kind": "p",
+      "text": "Requests will search for the netrc file at `~/.netrc`, `~/_netrc`, or at the path\nspecified by the `NETRC` environment variable. `~` denotes the user's home\ndirectory, which is `$HOME` on Unix based systems and `%USERPROFILE%` on Windows."
+    },
+    {
+      "kind": "p",
+      "text": "Usage of netrc file can be disabled by setting `trust_env` to `False` in the\nRequests session::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> s = requests.Session()\n    >>> s.trust_env = False\n    >>> s.get('https://httpbin.org/basic-auth/user/pass')"
+    },
+    {
+      "kind": "p",
+      "text": "Digest Authentication\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Another very popular form of HTTP Authentication is Digest Authentication,\nand Requests supports this out of the box as well::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> from requests.auth import HTTPDigestAuth\n    >>> url = 'https://httpbin.org/digest-auth/auth/user/pass'\n    >>> requests.get(url, auth=HTTPDigestAuth('user', 'pass'))\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "OAuth 1 Authentication\n----------------------"
+    },
+    {
+      "kind": "p",
+      "text": "A common form of authentication for several web APIs is OAuth. The ``requests-oauthlib``\nlibrary allows Requests users to easily make OAuth 1 authenticated requests::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> import requests\n    >>> from requests_oauthlib import OAuth1"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://api.twitter.com/1.1/account/verify_credentials.json'\n    >>> auth = OAuth1('YOUR_APP_KEY', 'YOUR_APP_SECRET',\n    ...               'USER_OAUTH_TOKEN', 'USER_OAUTH_TOKEN_SECRET')"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get(url, auth=auth)\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "For more information on how to OAuth flow works, please see the official `OAuth`_ website.\nFor examples and documentation on requests-oauthlib, please see the `requests_oauthlib`_\nrepository on GitHub"
+    },
+    {
+      "kind": "p",
+      "text": "OAuth 2 and OpenID Connect Authentication\n-----------------------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "The ``requests-oauthlib`` library also handles OAuth 2, the authentication mechanism\nunderpinning OpenID Connect. See the `requests-oauthlib OAuth2 documentation`_ for\ndetails of the various OAuth 2 credential management flows:"
+    },
+    {
+      "kind": "p",
+      "text": "* `Web Application Flow`_\n* `Mobile Application Flow`_\n* `Legacy Application Flow`_\n* `Backend Application Flow`_"
+    },
+    {
+      "kind": "p",
+      "text": "Other Authentication\n--------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests is designed to allow other forms of authentication to be easily and\nquickly plugged in. Members of the open-source community frequently write\nauthentication handlers for more complicated or less commonly-used forms of\nauthentication. Some of the best have been brought together under the\n`Requests organization`_, including:"
+    },
+    {
+      "kind": "p",
+      "text": "- Kerberos_\n- NTLM_"
+    },
+    {
+      "kind": "p",
+      "text": "If you want to use any of these forms of authentication, go straight to their\nGitHub page and follow the instructions."
+    },
+    {
+      "kind": "p",
+      "text": "New Forms of Authentication\n---------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "If you can't find a good implementation of the form of authentication you\nwant, you can implement it yourself. Requests makes it easy to add your own\nforms of authentication."
+    },
+    {
+      "kind": "p",
+      "text": "To do so, subclass :class:`AuthBase <requests.auth.AuthBase>` and implement the\n``__call__()`` method::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> import requests\n    >>> class MyAuth(requests.auth.AuthBase):\n    ...     def __call__(self, r):\n    ...         # Implement my authentication\n    ...         return r\n    ...\n    >>> url = 'https://httpbin.org/get'\n    >>> requests.get(url, auth=MyAuth())\n    <Response [200]>"
+    },
+    {
+      "kind": "p",
+      "text": "When an authentication handler is attached to a request,\nit is called during request setup. The ``__call__`` method must therefore do\nwhatever is required to make the authentication work. Some forms of\nauthentication will additionally add hooks to provide further functionality."
+    },
+    {
+      "kind": "p",
+      "text": "Further examples can be found under the `Requests organization`_ and in the\n``auth.py`` file."
+    },
+    {
+      "kind": "p",
+      "text": ".. _OAuth: https://oauth.net/\n.. _requests_oauthlib: https://github.com/requests/requests-oauthlib\n.. _requests-oauthlib OAuth2 documentation: https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html\n.. _Web Application Flow: https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#web-application-flow\n.. _Mobile Application Flow: https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#mobile-application-flow\n.. _Legacy Application Flow: https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#legacy-application-flow\n.. _Backend Application Flow: https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#backend-application-flow\n.. _Kerberos: https://github.com/requests/requests-kerberos\n.. _NTLM: https://github.com/requests/requests-ntlm\n.. _Requests organization: https://github.com/requests"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/user/authentication.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "eb5fcb3b308d31d90a66157109ccf06c279cf619bb60ac6db003e31e4ff16089"
+  }
+}

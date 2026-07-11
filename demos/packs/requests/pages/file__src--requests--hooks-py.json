@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__src--requests--hooks-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/src/requests/hooks.py",
+  "url_path": "src/requests/hooks.py",
+  "title": "src/requests/hooks.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "src/requests/hooks.py",
+  "summary": "\"\"\"\nrequests.hooks\n~~~~~~~~~~~~~~\n\nThis module provides the capabilities for the Requests hooks system.\n\nAvailable hooks:\n\n``response``:\n    The response generated from a Request.\n\"\"\"\n\nfrom __future__ import annotations\n\nfrom collections.a…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "\"\"\"\nrequests.hooks\n~~~~~~~~~~~~~~\n\nThis module provides the capabilities for the Requests hooks system.\n\nAvailable hooks:\n\n``response``:\n    The response generated from a Request.\n\"\"\"\n\nfrom __future__ import annotations\n\nfrom collections.abc import Callable, Iterable\nfrom typing import TYPE_CHECKING, Any\n\nif TYPE_CHECKING:\n    from . import _types as _t\n    from .models import Response\n\nHOOKS: list[str] = [\"response\"]\n\n\ndef default_hooks() -> dict[str, list[_t.HookType]]:\n    return {event: [] for event in HOOKS}\n\n\n# TODO: response is the only one\n\n\ndef dispatch_hook(\n    key: str,\n    hooks: _t.HooksInputType | None,\n    hook_data: Response,\n    **kwargs: Any,\n) -> Response:\n    \"\"\"Dispatches a hook dictionary on a given piece of data.\"\"\"\n    hooks_dict = hooks or {}\n    hook_list: Iterable[_t.HookType] | _t.HookType | None = hooks_dict.get(key)\n    if hook_list:\n        if isinstance(hook_list, Callable):\n            hook_list = [hook_list]\n        for hook in hook_list:\n            _hook_data = hook(hook_data, **kwargs)\n            if _hook_data is not None:\n                hook_data = _hook_data\n    return hook_data\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/src/requests/hooks.py",
+    "capture_mode": "ingest",
+    "content_sha256": "ebd8a02475d31a0e473a8f553e9501ff43645b9563885ad52844e7a63f0d76ab"
+  }
+}

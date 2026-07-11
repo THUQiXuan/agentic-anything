@@ -1,0 +1,23 @@
+# docs/_static/custom.css
+
+- page_id: `file__docs--static--custom-css`
+- url: https://github.com/psf/requests/tree/v2.34.2/docs/_static/custom.css
+- type: code
+
+## Content
+
+```
+img.logo {margin-left: -20px!important;}
+
+div#searchbox h3 {text-transform: capitalize;}
+
+div.document {width: 1008px;}
+
+div.highlight pre {padding: 11px 14px;}
+
+@media screen and (max-width: 1008px) {
+  div.document {width: 100%!important;}
+  div.highlight pre {margin-right: -30px;}
+}
+
+```

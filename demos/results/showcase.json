@@ -1,275 +1,624 @@
 {
   "project": "Agentic Anything",
   "generated_with": "v0.4.1 deterministic --no-llm path",
+  "snapshot_date": "2026-07-11",
+  "source_policy": "Every demo input is an unmodified snapshot downloaded from the named publisher. The builder verifies each byte-for-byte SHA-256 before agentification.",
   "model_calls": 0,
+  "synthetic_source_lines": 0,
   "summary": {
     "resource_types": 5,
     "resource_cases": 5,
-    "units": 14,
-    "assertions_passed": 7,
-    "assertions_total": 7
+    "publishers": 5,
+    "units": 93,
+    "assertions_passed": 11,
+    "assertions_total": 11
   },
   "assertions": {
+    "five_authentic_publishers": true,
     "five_resource_types": true,
-    "every_query_has_evidence": true,
+    "all_source_hashes_verified": true,
+    "all_sources_have_origin_and_license": true,
+    "every_query_has_expected_evidence": true,
     "every_pack_has_interface_manifest": true,
     "every_pack_has_agent_guide": true,
+    "flagship_traces_real_code": true,
     "mcp_cross_resource_search": true,
-    "generated_cli_runs": true,
+    "generated_clis_run": true,
     "zero_model_calls": true
   },
   "demos": [
     {
-      "id": "handbook",
-      "resource_type": "document",
-      "source_label": "Bilingual operations handbook",
-      "source_path": "sources/operations-handbook.md",
-      "before_kind": "document",
-      "before_problem": "A reader must scan headings and switch languages to find the approved E42 procedure.",
-      "agentify_command": "agentic-anything agentify demos/sources/operations-handbook.md -o demos/packs/handbook --no-llm",
-      "unit_count": 4,
-      "units": [
-        {
-          "unit_id": "operations-handbook__001__aurora-operations-handbook",
-          "title": "Aurora Operations Handbook",
-          "type": "section",
-          "locator": "section 1",
-          "content_sha256": "c9473e37610fc52dd3346b7dd43f1d8c5e695fc7fe2db1dfe435dd3eb8508c75"
-        },
-        {
-          "unit_id": "operations-handbook__002__release-procedure",
-          "title": "Release procedure",
-          "type": "section",
-          "locator": "section 2",
-          "content_sha256": "d04824b42fc0219e4fe2697b60ca5a737f9d8a03cd5daa5ab07ec49741cedec1"
-        },
-        {
-          "unit_id": "operations-handbook__003",
-          "title": "缓存故障处理",
-          "type": "section",
-          "locator": "section 3",
-          "content_sha256": "e7dda87f5bea811baad253392be4a54da0cd20ecc82acfa488b72606322a563c"
-        },
-        {
-          "unit_id": "operations-handbook__004__support-policy",
-          "title": "Support policy",
-          "type": "section",
-          "locator": "section 4",
-          "content_sha256": "1beb1e59585a16f13f3f746c4d3424061ac0c531c8aaea16095cb1ab52c53410"
-        }
-      ],
-      "query_result": {
-        "query": "错误码 E42 如何处理？",
-        "unit_id": "operations-handbook__003",
-        "title": "缓存故障处理",
-        "score": 7.129,
-        "evidence": "缓存故障处理\n错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁止直接重启全部节点。",
-        "matched": [
-          "e42",
-          "处理",
-          "误码",
-          "错误",
-          "错误码"
-        ],
-        "locator": "section 3",
-        "content_sha256": "e7dda87f5bea811baad253392be4a54da0cd20ecc82acfa488b72606322a563c"
-      },
-      "interfaces": [
-        "conversation",
-        "http_agent",
-        "inspect",
-        "mcp",
-        "resource_cli",
-        "search",
-        "skill"
-      ],
-      "cli_result": {
-        "cli": "cli/handbook_cli.py",
-        "info": "site_id: handbook\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 4\nfrontier_count: 0",
-        "search": "1  operations-handbook__003  缓存故障处理\n      - 错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁"
-      },
-      "use_commands": {
-        "query": "agentic-anything query demos/packs/handbook \"错误码 E42 如何处理？\" --json",
-        "cli": "python demos/packs/handbook/cli/handbook_cli.py search \"错误码 E42 如何处理？\"",
-        "mcp": "agentic-anything mcp demos/packs/handbook"
-      }
-    },
-    {
-      "id": "incident",
-      "resource_type": "video",
-      "source_label": "Eight-minute incident transcript",
-      "source_path": "sources/incident.srt",
-      "before_kind": "timeline",
-      "before_problem": "The cause and recovery time live at different timestamps in a linear transcript.",
-      "agentify_command": "agentic-anything agentify demos/sources/incident.srt -o demos/packs/incident --no-llm",
-      "unit_count": 3,
-      "units": [
-        {
-          "unit_id": "incident__001__00-00-01",
-          "title": "transcript 00:00:01–00:00:18",
-          "type": "segment",
-          "locator": "00:00:01–00:00:18",
-          "content_sha256": "05e4b0d28e7f06d4ad9a530926dd3d260e605d360a9fce8c3d684469dc59e115"
-        },
-        {
-          "unit_id": "incident__002__00-03-30",
-          "title": "transcript 00:03:30–00:03:56",
-          "type": "segment",
-          "locator": "00:03:30–00:03:56",
-          "content_sha256": "08b1ae25a8c2d846edfa4eae401a1f7c7e13d3dd5a0a4db165e6fe98750eb860"
-        },
-        {
-          "unit_id": "incident__003__00-07-00",
-          "title": "transcript 00:07:00–00:07:25",
-          "type": "segment",
-          "locator": "00:07:00–00:07:25",
-          "content_sha256": "c37916e90f0652579d4d5c3558a8765bfb64de6bfdf95eb4b37ed927f134a49b"
-        }
-      ],
-      "query_result": {
-        "query": "INC-204 E42 latency recovered 09:22",
-        "unit_id": "incident__003__00-07-00",
-        "title": "transcript 00:07:00–00:07:25",
-        "score": 5.687,
-        "evidence": "The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC. No nodes were restarted. Team Cygnus scheduled a follow-up for the ap-south region.",
-        "matched": [
-          "09",
-          "204",
-          "22",
-          "inc",
-          "latency",
-          "recovered"
-        ],
-        "locator": "00:07:00–00:07:25",
-        "content_sha256": "c37916e90f0652579d4d5c3558a8765bfb64de6bfdf95eb4b37ed927f134a49b"
-      },
-      "interfaces": [
-        "conversation",
-        "http_agent",
-        "inspect",
-        "mcp",
-        "resource_cli",
-        "search",
-        "skill"
-      ],
-      "cli_result": {
-        "cli": "cli/incident_cli.py",
-        "info": "site_id: incident\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 3\nfrontier_count: 0",
-        "search": "6  incident__003__00-07-00  transcript 00:07:00–00:07:25\n      - The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC. No nodes were restarted. Team\n   4  incident__001__00-00-01  transcript 00:00:01–00:00:18\n      - At 09:14 UTC, checkout latency crossed 900 milliseconds. The first alert pointed to ap-south and incident comm\n   1  incident__002__00-03-30  transcript 00:03:30–00:03:56\n      - 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner."
-      },
-      "use_commands": {
-        "query": "agentic-anything query demos/packs/incident \"INC-204 E42 latency recovered 09:22\" --json",
-        "cli": "python demos/packs/incident/cli/incident_cli.py search \"INC-204 E42 latency recovered 09:22\"",
-        "mcp": "agentic-anything mcp demos/packs/incident"
-      }
-    },
-    {
-      "id": "metrics",
-      "resource_type": "dataset",
-      "source_label": "Regional service metrics",
-      "source_path": "sources/service-metrics.csv",
-      "before_kind": "table",
-      "before_problem": "The operator must know the schema and compare rows before finding the owner and outlier.",
-      "agentify_command": "agentic-anything agentify demos/sources/service-metrics.csv -o demos/packs/metrics --no-llm",
-      "unit_count": 2,
-      "units": [
-        {
-          "unit_id": "service-metrics__001__service-metrics-csv-overview",
-          "title": "service-metrics.csv overview",
-          "type": "table",
-          "locator": "overview",
-          "content_sha256": "22dc1162f272a47458fea4645b7082a6b8cdacd5665c2d73da2c418eee6531ea"
-        },
-        {
-          "unit_id": "service-metrics__002__service-metrics-csv-rows-1-4",
-          "title": "service-metrics.csv rows 1-4",
-          "type": "table",
-          "locator": "rows 1-4",
-          "content_sha256": "2611db6bbb6be88c863459987b391b64ce4f874b1ae012924b30e5d56cb7242f"
-        }
-      ],
-      "query_result": {
-        "query": "ap-south p95 latency incidents",
-        "unit_id": "service-metrics__002__service-metrics-csv-rows-1-4",
-        "title": "service-metrics.csv rows 1-4",
-        "score": 2.677,
-        "evidence": "region | availability_pct | p95_latency_ms | incidents | owner\nus-east | 99.97 | 182 | 2 | Team Atlas\neu-west | 99.94 | 211 | 3 | Team Borealis\nap-south | 99.91 | 248 | 5 | Team Cygnus\ncn-north | 99.96 | 196 | 1 | Team Dragon",
-        "matched": [
-          "ap",
-          "incidents",
-          "latency",
-          "p95",
-          "south"
-        ],
-        "locator": "rows 1-4",
-        "content_sha256": "2611db6bbb6be88c863459987b391b64ce4f874b1ae012924b30e5d56cb7242f"
-      },
-      "interfaces": [
-        "conversation",
-        "http_agent",
-        "inspect",
-        "mcp",
-        "resource_cli",
-        "search",
-        "skill"
-      ],
-      "cli_result": {
-        "cli": "cli/metrics_cli.py",
-        "info": "site_id: metrics\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 2\nfrontier_count: 0",
-        "search": "5  service-metrics__002__service-metrics-csv-rows-1-4  service-metrics.csv rows 1-4\n      - region | availability_pct | p95_latency_ms | incidents | owner\n      - ap-south | 99.91 | 248 | 5 | Team Cygnus\n   3  service-metrics__001__service-metrics-csv-overview  service-metrics.csv overview\n      - Columns: region, availability_pct, p95_latency_ms, incidents, owner"
-      },
-      "use_commands": {
-        "query": "agentic-anything query demos/packs/metrics \"ap-south p95 latency incidents\" --json",
-        "cli": "python demos/packs/metrics/cli/metrics_cli.py search \"ap-south p95 latency incidents\"",
-        "mcp": "agentic-anything mcp demos/packs/metrics"
-      }
-    },
-    {
-      "id": "code",
+      "id": "requests",
       "resource_type": "code",
-      "source_label": "Orbit SDK repository",
-      "source_path": "sources/orbit-sdk/client.py",
-      "before_kind": "code",
-      "before_problem": "Usage constraints are split between a README, constants and implementation details.",
-      "agentify_command": "agentic-anything agentify demos/sources/orbit-sdk -o demos/packs/code --no-llm",
-      "unit_count": 3,
+      "source": {
+        "title": "Requests",
+        "publisher": "Python Software Foundation / psf",
+        "format": "GitHub release archive",
+        "version": "v2.34.2, commit 6e83187b8feb273ed4c6cdab5efd8d54901dfab3",
+        "origin_url": "https://github.com/psf/requests/tree/v2.34.2",
+        "snapshot_file": "requests-v2.34.2.zip",
+        "sha256": "f552f594e029e3631ed886dc34b42e86bbaca0858b6d06ec55fe81385f3c8d46",
+        "license": "Apache License 2.0",
+        "license_url": "https://github.com/psf/requests/blob/v2.34.2/LICENSE",
+        "verified": true
+      },
+      "question": "What is Requests' default redirect ceiling, where is it set, and what happens when it is exceeded?",
+      "answer": "30 redirects. Session.max_redirects is initialized from DEFAULT_REDIRECT_LIMIT; resolve_redirects raises TooManyRedirects once response history reaches that ceiling.",
+      "before_problem": "The answer spans a constant, Session initialization, and runtime enforcement across a 74-file repository.",
+      "unit_count": 74,
       "units": [
         {
           "unit_id": "repo__000__tree",
-          "title": "Repository tree: orbit-sdk",
+          "title": "Repository tree: requests-2.34.2",
           "type": "code",
           "locator": "tree",
-          "content_sha256": "2bead5ab72698c295097df8e6a3f1910836b2f3e58cf769951cb2a2fa44730e3"
+          "content_sha256": "bf512570cf19844852bca7ed7f84a8b4ab2e2bb2e25a6316bc7c5d0a1f1876a3"
         },
         {
           "unit_id": "file__readme-md",
           "title": "README.md",
           "type": "code",
           "locator": "README.md",
-          "content_sha256": "95156158df9b0ae36842131c02ad7180a46e23fd6167cecfe764dcf4afe597c1"
+          "content_sha256": "e68af85792e76057af4b3b22a6020fcebf1587a802098ddb007c809b177ca26e"
         },
         {
-          "unit_id": "file__client-py",
-          "title": "client.py",
+          "unit_id": "file__tests--certs--readme-md",
+          "title": "tests/certs/README.md",
           "type": "code",
-          "locator": "client.py",
-          "content_sha256": "e1236453c1fba360a454a01577611c156318da9d946d5d922245fa83a5ae0479"
+          "locator": "tests/certs/README.md",
+          "content_sha256": "14a4434192b851c4dda032242d3c9b34e68c4ee74fdd20f73fdceec5a1c9a477"
+        },
+        {
+          "unit_id": "file__tests--certs--expired--readme-md",
+          "title": "tests/certs/expired/README.md",
+          "type": "code",
+          "locator": "tests/certs/expired/README.md",
+          "content_sha256": "bb70597b7451d264062b011ddcd04801d5664f39af00f0e0ccf335f0d2c40b16"
+        },
+        {
+          "unit_id": "file__tests--certs--mtls--readme-md",
+          "title": "tests/certs/mtls/README.md",
+          "type": "code",
+          "locator": "tests/certs/mtls/README.md",
+          "content_sha256": "d3b5535516f5349b4206e94b5f5c219bc82ec51cc68081e0de3ce79f50fa04f8"
+        },
+        {
+          "unit_id": "file__authors-rst",
+          "title": "AUTHORS.rst",
+          "type": "code",
+          "locator": "AUTHORS.rst",
+          "content_sha256": "cbb5b29b112f9e3f8cda78686a605c692c2077982917cb41049d3bf5e166e4ff"
+        },
+        {
+          "unit_id": "file__history-md",
+          "title": "HISTORY.md",
+          "type": "code",
+          "locator": "HISTORY.md",
+          "content_sha256": "d724cd1996e266ee9874e1fcc0e55a37fefa65de96c7c5c3b33aadd3b1c50992"
+        },
+        {
+          "unit_id": "file__license",
+          "title": "LICENSE",
+          "type": "code",
+          "locator": "LICENSE",
+          "content_sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+        },
+        {
+          "unit_id": "file__makefile",
+          "title": "Makefile",
+          "type": "code",
+          "locator": "Makefile",
+          "content_sha256": "c31f5628de71af324c7db9b61579e8a287caae87f76586d70994a7dc86964ec7"
+        },
+        {
+          "unit_id": "file__pyproject-toml",
+          "title": "pyproject.toml",
+          "type": "code",
+          "locator": "pyproject.toml",
+          "content_sha256": "249147c8688043884fd91b951a013c5bf0aef445894527ad75124a12a41225e1"
+        },
+        {
+          "unit_id": "file__requirements-dev-txt",
+          "title": "requirements-dev.txt",
+          "type": "code",
+          "locator": "requirements-dev.txt",
+          "content_sha256": "77db25b168a957031b9706e4915f413693ed16197f688ec77e1815f970efb291"
+        },
+        {
+          "unit_id": "file__setup-py",
+          "title": "setup.py",
+          "type": "code",
+          "locator": "setup.py",
+          "content_sha256": "1728c11af4134997015ab07547544852e2f7e103c79a5b0486a8486799f50e0a"
+        },
+        {
+          "unit_id": "file__tox-ini",
+          "title": "tox.ini",
+          "type": "code",
+          "locator": "tox.ini",
+          "content_sha256": "65aeb46c94fc5723a9764bb029fdb448539658fe47d3a39550a829b2383804fd"
+        },
+        {
+          "unit_id": "file__docs--makefile",
+          "title": "docs/Makefile",
+          "type": "code",
+          "locator": "docs/Makefile",
+          "content_sha256": "b7a917ab8a0f196950a8df8037672e5bed1b1b9f0618c82405f46fb5c1a1a591"
+        },
+        {
+          "unit_id": "file__docs--api-rst",
+          "title": "docs/api.rst",
+          "type": "code",
+          "locator": "docs/api.rst",
+          "content_sha256": "0004156ae3ce991e03be5bd5ce95cd6d19de088f09346bdeb45663bb83465c3f"
+        },
+        {
+          "unit_id": "file__docs--conf-py",
+          "title": "docs/conf.py",
+          "type": "code",
+          "locator": "docs/conf.py",
+          "content_sha256": "6ae03d28d23dcc0dbbaf18334a7208a07eb87268bc1ebb6f81ad6931f9f217af"
+        },
+        {
+          "unit_id": "file__docs--index-rst",
+          "title": "docs/index.rst",
+          "type": "code",
+          "locator": "docs/index.rst",
+          "content_sha256": "90df13cb326eea4b6bf12233ecdb5cd134a354096954d4a81ed816fe31bf3ed4"
+        },
+        {
+          "unit_id": "file__docs--requirements-txt",
+          "title": "docs/requirements.txt",
+          "type": "code",
+          "locator": "docs/requirements.txt",
+          "content_sha256": "054818d709f32450171a94583089806288ca0e0d876bf2dd78757eb1d1ac75fb"
+        },
+        {
+          "unit_id": "file__ext--license",
+          "title": "ext/LICENSE",
+          "type": "code",
+          "locator": "ext/LICENSE",
+          "content_sha256": "3172d399cbd8f10609e73fec73d0e0b33eecd3c572a68b0722229d8c7059f725"
+        },
+        {
+          "unit_id": "file__tests--init-py",
+          "title": "tests/__init__.py",
+          "type": "code",
+          "locator": "tests/__init__.py",
+          "content_sha256": "ac7f253daae0905f9b3dec647cae736bb3c090185aa373b30b3e851599e5342c"
+        },
+        {
+          "unit_id": "file__tests--compat-py",
+          "title": "tests/compat.py",
+          "type": "code",
+          "locator": "tests/compat.py",
+          "content_sha256": "d58ff5e3167de0140a667cc51427f809c552e485875c95b9dad43ce13ba15083"
+        },
+        {
+          "unit_id": "file__tests--conftest-py",
+          "title": "tests/conftest.py",
+          "type": "code",
+          "locator": "tests/conftest.py",
+          "content_sha256": "6d65ffb582519f80a66c5d1ef571e3c33395a199f9e67fcb500c6ad2d7800e0a"
+        },
+        {
+          "unit_id": "file__tests--test-adapters-py",
+          "title": "tests/test_adapters.py",
+          "type": "code",
+          "locator": "tests/test_adapters.py",
+          "content_sha256": "102494aa704f8505fb22fa476452f6aa3aae756da82fe2d5b2a2a3f366b38bf4"
+        },
+        {
+          "unit_id": "file__tests--test-help-py",
+          "title": "tests/test_help.py",
+          "type": "code",
+          "locator": "tests/test_help.py",
+          "content_sha256": "1c2ac8ca9f4986429717791df766122b23e1fe90aa621318380ccf1f8e83d0f6"
+        },
+        {
+          "unit_id": "file__tests--test-hooks-py",
+          "title": "tests/test_hooks.py",
+          "type": "code",
+          "locator": "tests/test_hooks.py",
+          "content_sha256": "a9e5163f538543a660be3b06650cd0b803ff0c503f5948f66b6fc50ede38109c"
+        },
+        {
+          "unit_id": "file__tests--test-lowlevel-py",
+          "title": "tests/test_lowlevel.py",
+          "type": "code",
+          "locator": "tests/test_lowlevel.py",
+          "content_sha256": "db5fac7340c49c49551e3e41679a8ee6e385c56054f84073932354a8da87df65"
+        },
+        {
+          "unit_id": "file__tests--test-packages-py",
+          "title": "tests/test_packages.py",
+          "type": "code",
+          "locator": "tests/test_packages.py",
+          "content_sha256": "90875423db059d65b39416d7b6d01b18938851b8071279877400beb506e08676"
+        },
+        {
+          "unit_id": "file__tests--test-requests-py",
+          "title": "tests/test_requests.py",
+          "type": "code",
+          "locator": "tests/test_requests.py",
+          "content_sha256": "95dd5c40741e00bb8062593e19a2853985f0a65d67eb9eb64046d05841832d87"
+        },
+        {
+          "unit_id": "file__tests--test-structures-py",
+          "title": "tests/test_structures.py",
+          "type": "code",
+          "locator": "tests/test_structures.py",
+          "content_sha256": "f984b7fc68fb2bd6ec82463b0cf5b6bd2ac773293cac6629fc3361f9f66947e9"
+        },
+        {
+          "unit_id": "file__tests--test-testserver-py",
+          "title": "tests/test_testserver.py",
+          "type": "code",
+          "locator": "tests/test_testserver.py",
+          "content_sha256": "90ac39d6cb9c0fbaa94c5aa59646bf6097829ae73e50ac284a41135188f95d33"
+        },
+        {
+          "unit_id": "file__tests--test-utils-py",
+          "title": "tests/test_utils.py",
+          "type": "code",
+          "locator": "tests/test_utils.py",
+          "content_sha256": "15b10329e0532841518a8989a75a3c2182686adfb89198662dc682c3ffec62ec"
+        },
+        {
+          "unit_id": "file__tests--utils-py",
+          "title": "tests/utils.py",
+          "type": "code",
+          "locator": "tests/utils.py",
+          "content_sha256": "cfaec86690eba62573c8c730a121332837809333fb2b1006a20e2e8f4d34d4de"
+        },
+        {
+          "unit_id": "file__docs--static--custom-css",
+          "title": "docs/_static/custom.css",
+          "type": "code",
+          "locator": "docs/_static/custom.css",
+          "content_sha256": "f07ee16edd645ce4ccf941c84febf1328dd0a5a638d232ec7f7901580fcce8f8"
+        },
+        {
+          "unit_id": "file__docs--themes--license",
+          "title": "docs/_themes/LICENSE",
+          "type": "code",
+          "locator": "docs/_themes/LICENSE",
+          "content_sha256": "6afc9d58f919ab52f4806a895a37aefe4d263f8e52278e6a1e87c5d7ec82299c"
+        },
+        {
+          "unit_id": "file__docs--themes--flask-theme-support-py",
+          "title": "docs/_themes/flask_theme_support.py",
+          "type": "code",
+          "locator": "docs/_themes/flask_theme_support.py",
+          "content_sha256": "bba3677c6eeb99f678e808e90142a025b798b7658bac1ab4632591df8441d209"
+        },
+        {
+          "unit_id": "file__docs--community--faq-rst",
+          "title": "docs/community/faq.rst",
+          "type": "code",
+          "locator": "docs/community/faq.rst",
+          "content_sha256": "5c2ee4cd1ddbd44a238d216069a9306b83d34aa8bdd97a0dea0b3992fd3a3e2b"
+        },
+        {
+          "unit_id": "file__docs--community--out-there-rst",
+          "title": "docs/community/out-there.rst",
+          "type": "code",
+          "locator": "docs/community/out-there.rst",
+          "content_sha256": "6f5d93846d50408926170871b1a393b2a5ff42d4716ed1b6bab7faea1ea96c01"
+        },
+        {
+          "unit_id": "file__docs--community--recommended-rst",
+          "title": "docs/community/recommended.rst",
+          "type": "code",
+          "locator": "docs/community/recommended.rst",
+          "content_sha256": "2ed6ca0082c9e2f5d8c935b5e4a6b0abbe287c6effe26956965039e163dca340"
+        },
+        {
+          "unit_id": "file__docs--community--release-process-rst",
+          "title": "docs/community/release-process.rst",
+          "type": "code",
+          "locator": "docs/community/release-process.rst",
+          "content_sha256": "c39d86fd7e3485b73bb969886d236e5d1e774f277c10ece901d2cf84316164ff"
+        },
+        {
+          "unit_id": "file__docs--community--support-rst",
+          "title": "docs/community/support.rst",
+          "type": "code",
+          "locator": "docs/community/support.rst",
+          "content_sha256": "7a74ee658b241996ffd003d3a661fc94acc864fc1b5522ac13e2c647ffba994e"
+        },
+        {
+          "unit_id": "file__docs--community--updates-rst",
+          "title": "docs/community/updates.rst",
+          "type": "code",
+          "locator": "docs/community/updates.rst",
+          "content_sha256": "fc3b6038009a9945f23e708e2b2c9793f99fbaf72f7f9831c717cc4f0a26f23d"
+        },
+        {
+          "unit_id": "file__docs--community--vulnerabilities-rst",
+          "title": "docs/community/vulnerabilities.rst",
+          "type": "code",
+          "locator": "docs/community/vulnerabilities.rst",
+          "content_sha256": "6e4713d4ac520c47582edfbac098ba43edc0ecc44a8a4e55be49f1d1d5e87301"
+        },
+        {
+          "unit_id": "file__docs--dev--authors-rst",
+          "title": "docs/dev/authors.rst",
+          "type": "code",
+          "locator": "docs/dev/authors.rst",
+          "content_sha256": "7b51282d67c2ac09a6a2b7b7d3a97e3e8651292b22c61b9c635ae4e805c8a766"
+        },
+        {
+          "unit_id": "file__docs--dev--contributing-rst",
+          "title": "docs/dev/contributing.rst",
+          "type": "code",
+          "locator": "docs/dev/contributing.rst",
+          "content_sha256": "0efbff93ca7e0d2e14a60f52f685dfab4739aa5881cc56663dfceb03e0357645"
+        },
+        {
+          "unit_id": "file__docs--user--advanced-rst",
+          "title": "docs/user/advanced.rst",
+          "type": "code",
+          "locator": "docs/user/advanced.rst",
+          "content_sha256": "3cb8ac63e7009f25c3e1fe1f68b811b2eb4b4c6beeed0a5fdd73e05fda90eeed"
+        },
+        {
+          "unit_id": "file__docs--user--authentication-rst",
+          "title": "docs/user/authentication.rst",
+          "type": "code",
+          "locator": "docs/user/authentication.rst",
+          "content_sha256": "eb5fcb3b308d31d90a66157109ccf06c279cf619bb60ac6db003e31e4ff16089"
+        },
+        {
+          "unit_id": "file__docs--user--install-rst",
+          "title": "docs/user/install.rst",
+          "type": "code",
+          "locator": "docs/user/install.rst",
+          "content_sha256": "1329fdec265f8c75316fd1c15c27de2d0ba68fc91d2815ef04cd53e04dc740d6"
+        },
+        {
+          "unit_id": "file__docs--user--quickstart-rst",
+          "title": "docs/user/quickstart.rst",
+          "type": "code",
+          "locator": "docs/user/quickstart.rst",
+          "content_sha256": "0c65d40d6d1cf008eeb66a235029d5da9fa66641bf5ce58599a3e0606138d9c1"
+        },
+        {
+          "unit_id": "file__src--requests--init-py",
+          "title": "src/requests/__init__.py",
+          "type": "code",
+          "locator": "src/requests/__init__.py",
+          "content_sha256": "311157e7fa4aa9166c827d5237e6fd694eeb5ca549ee40e2e90f89f21abcd56e"
+        },
+        {
+          "unit_id": "file__src--requests--version-py",
+          "title": "src/requests/__version__.py",
+          "type": "code",
+          "locator": "src/requests/__version__.py",
+          "content_sha256": "abba90670b0370a3dc40d97c2dea46a35d4bec941ff10d7c3cf3098ef04a17f9"
+        },
+        {
+          "unit_id": "file__src--requests--internal-utils-py",
+          "title": "src/requests/_internal_utils.py",
+          "type": "code",
+          "locator": "src/requests/_internal_utils.py",
+          "content_sha256": "4c7d8d132c9898fc7d715e473f3ac74785ddc4ab96d2c9240f87835dc6d981ff"
+        },
+        {
+          "unit_id": "file__src--requests--types-py",
+          "title": "src/requests/_types.py",
+          "type": "code",
+          "locator": "src/requests/_types.py",
+          "content_sha256": "d06df79f54a279c0cc3faec596c446246d5ad14edfd529eb328defbd62a44a89"
+        },
+        {
+          "unit_id": "file__src--requests--adapters-py",
+          "title": "src/requests/adapters.py",
+          "type": "code",
+          "locator": "src/requests/adapters.py",
+          "content_sha256": "3fc9389864861e99022aaf288a30a8b452894ff3999d8ab066190797ffa916e3"
+        },
+        {
+          "unit_id": "file__src--requests--api-py",
+          "title": "src/requests/api.py",
+          "type": "code",
+          "locator": "src/requests/api.py",
+          "content_sha256": "4d15480ac046f089209798e8650476ef4a28ebe6f81b400758f8ef42ec6b5509"
+        },
+        {
+          "unit_id": "file__src--requests--auth-py",
+          "title": "src/requests/auth.py",
+          "type": "code",
+          "locator": "src/requests/auth.py",
+          "content_sha256": "e93951a552d4c3c5fd9b84a5e1d49b03caaba4723c4ff112da6053600ec85a65"
+        },
+        {
+          "unit_id": "file__src--requests--certs-py",
+          "title": "src/requests/certs.py",
+          "type": "code",
+          "locator": "src/requests/certs.py",
+          "content_sha256": "fd9c6b83359cef90ff6c4eeeab8dcc2388da382ebca7d00a499b3c0b434a87e4"
+        },
+        {
+          "unit_id": "file__src--requests--compat-py",
+          "title": "src/requests/compat.py",
+          "type": "code",
+          "locator": "src/requests/compat.py",
+          "content_sha256": "5d79ba289690b5015044341a1f7bc7d24134fc13a2db3efcf852515bf9aa18b4"
+        },
+        {
+          "unit_id": "file__src--requests--cookies-py",
+          "title": "src/requests/cookies.py",
+          "type": "code",
+          "locator": "src/requests/cookies.py",
+          "content_sha256": "c9e4463656c1ff9655448607fe3190dfe93569babbb570a21a7fa0d0c3d46f9b"
+        },
+        {
+          "unit_id": "file__src--requests--exceptions-py",
+          "title": "src/requests/exceptions.py",
+          "type": "code",
+          "locator": "src/requests/exceptions.py",
+          "content_sha256": "c5e18f3352454968e337bb3056f0867df2f37c0a0d2c1a77dc05e7e0b3c0411b"
+        },
+        {
+          "unit_id": "file__src--requests--help-py",
+          "title": "src/requests/help.py",
+          "type": "code",
+          "locator": "src/requests/help.py",
+          "content_sha256": "723519bb1884da18d84f6b2fb78f7ebf7fb57f732070b6025ae071dac6a2d179"
+        },
+        {
+          "unit_id": "file__src--requests--hooks-py",
+          "title": "src/requests/hooks.py",
+          "type": "code",
+          "locator": "src/requests/hooks.py",
+          "content_sha256": "ebd8a02475d31a0e473a8f553e9501ff43645b9563885ad52844e7a63f0d76ab"
+        },
+        {
+          "unit_id": "file__src--requests--models-py",
+          "title": "src/requests/models.py",
+          "type": "code",
+          "locator": "src/requests/models.py",
+          "content_sha256": "95bc0e03bea32cc48ea37aaabbaa48c9f09f1b9138d3ca93d31aa60c3665dbd6"
+        },
+        {
+          "unit_id": "file__src--requests--packages-py",
+          "title": "src/requests/packages.py",
+          "type": "code",
+          "locator": "src/requests/packages.py",
+          "content_sha256": "fe0d2067af355320252874631fa91a9db6a8c71d9e01beaacdc5e2383c932287"
+        },
+        {
+          "unit_id": "file__src--requests--sessions-py",
+          "title": "src/requests/sessions.py",
+          "type": "code",
+          "locator": "src/requests/sessions.py",
+          "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a"
+        },
+        {
+          "unit_id": "file__src--requests--status-codes-py",
+          "title": "src/requests/status_codes.py",
+          "type": "code",
+          "locator": "src/requests/status_codes.py",
+          "content_sha256": "1950f47c89cf18019787e07d8ce48f66d6b38e622f7d94d70a90247fee6c040e"
+        },
+        {
+          "unit_id": "file__src--requests--structures-py",
+          "title": "src/requests/structures.py",
+          "type": "code",
+          "locator": "src/requests/structures.py",
+          "content_sha256": "ba9460c39078f25e6f1d2a24ac941ac6f8d2ee97197fa8c8d0c262d8a1e67a02"
+        },
+        {
+          "unit_id": "file__src--requests--utils-py",
+          "title": "src/requests/utils.py",
+          "type": "code",
+          "locator": "src/requests/utils.py",
+          "content_sha256": "2e5f79bd5d23c1f9488d10986524c144087067f2752ba003037f235c089cd459"
+        },
+        {
+          "unit_id": "file__tests--testserver--server-py",
+          "title": "tests/testserver/server.py",
+          "type": "code",
+          "locator": "tests/testserver/server.py",
+          "content_sha256": "15a9092cc5edb005af6732097555515c4b82093d9394f6463c966259f83068c3"
+        },
+        {
+          "unit_id": "file__tests--certs--expired--makefile",
+          "title": "tests/certs/expired/Makefile",
+          "type": "code",
+          "locator": "tests/certs/expired/Makefile",
+          "content_sha256": "a33636d6474f1e94a1de61c4e1fbd2efb5c55aa86061ab3ce2d2ad9fb5aeb457"
+        },
+        {
+          "unit_id": "file__tests--certs--mtls--makefile",
+          "title": "tests/certs/mtls/Makefile",
+          "type": "code",
+          "locator": "tests/certs/mtls/Makefile",
+          "content_sha256": "aa1f5be6bde49113304ba145736bc3a3d23d45dfaa81e0d977fd52378f30b314"
+        },
+        {
+          "unit_id": "file__tests--certs--expired--ca--makefile",
+          "title": "tests/certs/expired/ca/Makefile",
+          "type": "code",
+          "locator": "tests/certs/expired/ca/Makefile",
+          "content_sha256": "09ab0ff83129203660d5ad489618764524f6af7fa4d9586ca5bdb0f68d1ca822"
+        },
+        {
+          "unit_id": "file__tests--certs--expired--server--makefile",
+          "title": "tests/certs/expired/server/Makefile",
+          "type": "code",
+          "locator": "tests/certs/expired/server/Makefile",
+          "content_sha256": "1c8cf9d72554a803d3b267d9df9c5e54db2e05d2fbd6b16d745f140bfcf74a24"
+        },
+        {
+          "unit_id": "file__tests--certs--mtls--client--makefile",
+          "title": "tests/certs/mtls/client/Makefile",
+          "type": "code",
+          "locator": "tests/certs/mtls/client/Makefile",
+          "content_sha256": "ec153d8d19a0987a41977094bc8b01cbca1a8b5adc589f1bd8d9bec562bdb9d8"
+        },
+        {
+          "unit_id": "file__tests--certs--valid--server--makefile",
+          "title": "tests/certs/valid/server/Makefile",
+          "type": "code",
+          "locator": "tests/certs/valid/server/Makefile",
+          "content_sha256": "68541e2b167a72cf00a57c0978750b11ff830dc85bdda99eebe50f7791768a03"
         }
       ],
+      "preview": {
+        "kind": "code",
+        "files": [
+          {
+            "path": "src/requests/models.py",
+            "start_line": 98,
+            "code": "  98      codes.found,  # 302\n  99      codes.other,  # 303\n 100      codes.temporary_redirect,  # 307\n 101      codes.permanent_redirect,  # 308\n 102  )\n 103  \n 104  DEFAULT_REDIRECT_LIMIT: int = 30\n 105  CONTENT_CHUNK_SIZE: int = 10 * 1024\n 106  ITER_CHUNK_SIZE: int = 512\n 107  \n 108  "
+          },
+          {
+            "path": "src/requests/sessions.py",
+            "start_line": 480,
+            "code": " 480          #: SSL client certificate default, if String, path to ssl client\n 481          #: cert file (.pem). If Tuple, ('cert', 'key') pair.\n 482          self.cert = None\n 483  \n 484          #: Maximum number of redirects allowed. If the request exceeds this\n 485          #: limit, a :class:`TooManyRedirects` exception is raised.\n 486          #: This defaults to requests.models.DEFAULT_REDIRECT_LIMIT, which is\n 487          #: 30.\n 488          self.max_redirects = DEFAULT_REDIRECT_LIMIT\n 489  "
+          },
+          {
+            "path": "src/requests/sessions.py",
+            "start_line": 212,
+            "code": " 212                  resp.content  # Consume socket so it can be released\n 213              except (ChunkedEncodingError, ContentDecodingError, RuntimeError):\n 214                  resp.raw.read(decode_content=False)\n 215  \n 216              if len(resp.history) >= self.max_redirects:\n 217                  raise TooManyRedirects(\n 218                      f\"Exceeded {self.max_redirects} redirects.\", response=resp\n 219                  )\n 220  "
+          }
+        ]
+      },
       "query_result": {
-        "query": "OMEGA-7 timeout retries",
-        "unit_id": "file__client-py",
-        "title": "client.py",
-        "score": 2.946,
-        "evidence": "\"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport os\n\nRETRY_MODE = \"OMEGA-7\"\nDEFAULT_TIMEOUT_SECONDS = 12\nMAX_RETRIES = 5\n\n\ndef request(endpoint: str, retries: int = 3) -> dict:\n    \"\"\"Return a deterministic request description for the demo.",
-        "matched": [
-          "7",
-          "omega",
-          "retries",
-          "timeout"
+        "query": "DEFAULT_REDIRECT_LIMIT 30 max_redirects TooManyRedirects",
+        "rank": 1,
+        "unit_id": "file__src--requests--sessions-py",
+        "title": "src/requests/sessions.py",
+        "score": 19.052,
+        "evidence": "…cert = None\n\n        #: Maximum number of redirects allowed. If the request exceeds this\n        #: limit, a :class:`TooManyRedirects` exception is raised.\n        #: This defaults to requests.models.DEFAULT_REDIRECT_LIMIT, which is\n        #: 30.\n        self.max_redirects = DEFAULT_REDIRECT_LIMIT…",
+        "evidence_blocks": [
+          {
+            "kind": "pre",
+            "text": "…cert = None\n\n        #: Maximum number of redirects allowed. If the request exceeds this\n        #: limit, a :class:`TooManyRedirects` exception is raised.\n        #: This defaults to requests.models.DEFAULT_REDIRECT_LIMIT, which is\n        #: 30.\n        self.max_redirects = DEFAULT_REDIRECT_LIMIT…",
+            "matched": [
+              "30",
+              "default",
+              "limit",
+              "max",
+              "redirect",
+              "redirects",
+              "toomanyredirects"
+            ]
+          }
         ],
-        "locator": "client.py",
-        "content_sha256": "e1236453c1fba360a454a01577611c156318da9d946d5d922245fa83a5ae0479"
+        "matched": [
+          "30",
+          "default",
+          "limit",
+          "max",
+          "redirect",
+          "redirects",
+          "toomanyredirects"
+        ],
+        "locator": "src/requests/sessions.py",
+        "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a"
       },
       "interfaces": [
         "conversation",
@@ -280,54 +629,197 @@
         "search",
         "skill"
       ],
-      "cli_result": {
-        "cli": "cli/code_cli.py",
-        "info": "site_id: code\nseed_url: https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 3\nfrontier_count: 0",
-        "search": "3  file__readme-md  README.md\n      - Use retry mode `OMEGA-7` for idempotent requests. Authentication tokens must be\nread from the `ORBIT_TOKEN` en\n      - The client rejects more than five retries and uses a default timeout of 12\nseconds.\n   3  file__client-py  client.py\n      - \"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport o"
-      },
       "use_commands": {
-        "query": "agentic-anything query demos/packs/code \"OMEGA-7 timeout retries\" --json",
-        "cli": "python demos/packs/code/cli/code_cli.py search \"OMEGA-7 timeout retries\"",
-        "mcp": "agentic-anything mcp demos/packs/code"
+        "query": "agentic-anything query demos/packs/requests \"DEFAULT_REDIRECT_LIMIT 30 max_redirects TooManyRedirects\" --json",
+        "cli": "python demos/packs/requests/cli/requests_cli.py search \"DEFAULT_REDIRECT_LIMIT 30 max_redirects TooManyRedirects\"",
+        "mcp": "agentic-anything mcp demos/packs/requests"
+      },
+      "cli_result": {
+        "cli": "cli/requests_cli.py",
+        "info": "site_id: requests\nseed_url: https://github.com/psf/requests/tree/v2.34.2\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 74\nfrontier_count: 0",
+        "search": "7  file__src--requests--sessions-py  src/requests/sessions.py\n      - …r of redirects allowed. If the request exceeds this\n        #: limit, a :class:`TooManyRedirects` exception is raised.\n        #: This defaults to requests.models.DEFAULT_REDIRECT_LIMIT, which is\n        #: 30.\n        \n   6  file__tests--test-requests-py  tests/test_requests.py\n      - …istory) == 30\n        else:\n            pytest.fail(\"Expected redirect to raise TooManyRedirects but it did not\")\n\n    def test_HTTP_302_TOO_MANY_REDIRECTS_WITH_PARAMS(self, httpbin):\n        s = requests.session()\n    \n   4  file__src--requests--models-py  src/requests/models.py\n      - ….]] = (  # type: ignore[assignment]\n    codes.moved,  # 301\n    codes.found,  # 302\n    codes.other,  # 303\n    codes.temporary_redirect,  # 307\n    codes.permanent_redirect,  # 308\n)\n\nDEFAULT_REDIRECT_LIMIT: int = 30\nC\n   3  file__src--requests--exceptions-py  src/requests/exceptions.py\n      - …RequestException):\n    \"\"\"A valid URL is required to make a request.\"\"\"\n\n\nclass TooManyRedirects(RequestException):\n    \"\"\"Too many redirects.\"\"\"\n\n\nclass MissingSchema(RequestException, ValueError):\n    \"\"\"The URL schem\n   4  file__history-md  HISTORY.md\n      - **Security**\n- Versions of Requests between v2.3.0 and v2.30.0 are vulnerable to potential\n  forwarding of `Proxy-Authorization` headers to destination servers when\n  following HTTPS redirects.\n      - - Redirect resolution should now only occur when\n  `allow_redirects` is True. (#5492)\n      - - Fixed bug with unintended Authorization header stripping for\n  redirects using default ports (http/80, https/443).\n      - 2.33.1 (2026-03-30)\n-------------------"
       }
     },
     {
-      "id": "website",
-      "resource_type": "web",
-      "source_label": "Aurora status website",
-      "source_path": "sources/status-site/index.html",
-      "before_kind": "website",
-      "before_problem": "Runbook evidence, navigation and a subscription form are hidden behind the visual site.",
-      "agentify_command": "agentic-anything agentify https://status.example/ -o demos/packs/website --no-llm",
-      "unit_count": 2,
+      "id": "alice",
+      "resource_type": "book",
+      "source": {
+        "title": "Alice's Adventures in Wonderland",
+        "publisher": "Project Gutenberg",
+        "format": "EPUB3",
+        "version": "eBook #11, updated 2025-06-26",
+        "origin_url": "https://www.gutenberg.org/ebooks/11",
+        "snapshot_file": "alice-project-gutenberg-11.epub",
+        "sha256": "4ac9fc092435338fdb28e96b02989a46bbe075ec310f1789db87a653761cce92",
+        "license": "Public domain in the USA; Project Gutenberg terms apply",
+        "license_url": "https://www.gutenberg.org/policy/permission.html",
+        "verified": true
+      },
+      "question": "Does the Hatter ever answer 'Why is a raven like a writing-desk?'",
+      "answer": "No. When Alice asks for the answer, the Hatter says he has not the slightest idea; Alice later calls it a riddle with no answer.",
+      "before_problem": "A reader must remember the scene and navigate a fourteen-chapter EPUB to verify the exchange.",
+      "unit_count": 14,
       "units": [
         {
-          "unit_id": "index",
-          "title": "Aurora Service Status",
-          "type": "content",
-          "locator": "/index.html",
-          "content_sha256": "e1b12674f9e15e7a7d951790fd114210f504a929782039ef13a5a2351cb2cfc6"
+          "unit_id": "alice-project-gutenberg-11__002__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 2",
+          "content_sha256": "a7e9e2e3a63fde496dec8f3ab032706c76f041eb4d6c8462e33d508790465e44"
         },
         {
-          "unit_id": "runbook",
-          "title": "Aurora Public Runbook",
-          "type": "content",
-          "locator": "/runbook.html",
-          "content_sha256": "a1b5659ce96f538beb0eaaf6d0e35fd8eb297b8c8fc6f77d157edab1d0e37071"
+          "unit_id": "alice-project-gutenberg-11__003__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 3",
+          "content_sha256": "7ca9a80c727b782fb37280434d30affd80d71b821cf1e370a3332483d43b4532"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__004__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 4",
+          "content_sha256": "f4b81760ee7dd697b95bb149f811f1ef96ff936b8f71f94e0d2587bd6d0ea11f"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__005__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 5",
+          "content_sha256": "f0a94c9778921b72b01d2e4fdc1db79beae83ee8e20a385ab6502881299dd478"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__006__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 6",
+          "content_sha256": "caabaec0d749f8375c240345f07e052c995d0d3da8e1f3a8e2c5426681af8f05"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__007__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 7",
+          "content_sha256": "8c5ac2e70618b3252dbcbe006fc5c6e98ef95ea230a4462b0d05e4c7fd9125b1"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__008__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 8",
+          "content_sha256": "2e57d328d7d33493acb06995ccbfb0300096d5f678d7f780b57d7cd6994319e6"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__009__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 9",
+          "content_sha256": "d43b646af034f3d62c81df6105a868d2fb3abc62694d08f033297fa5867c27f4"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__010__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 10",
+          "content_sha256": "cde8f05c12b527e9a0778c4aec82ab45825f1285cb659acef4434f97f92cebaf"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__011__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 11",
+          "content_sha256": "bb2c392eeb542691422ddb796c6b9f47bc92dc0d89e939af61c2487367b035ef"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__012__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 12",
+          "content_sha256": "cd8faee42b3dfee99f363e47311d193b0f5965de820ecd22f065d769804395db"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__013__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 13",
+          "content_sha256": "85eaa01ba7eaf329e05ca902eb77408a7e4d0c68d46aff0f5677df11d6d44716"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__014__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 14",
+          "content_sha256": "919b9858bab69f8be7d9ec78afdcfe63a255cb972f5697c401282dfdda603464"
+        },
+        {
+          "unit_id": "alice-project-gutenberg-11__015__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "type": "chapter",
+          "locator": "chapter 15",
+          "content_sha256": "d907a43f341ee75de0f872a9223dfed65e84040ef20c74d686c3ac0155a5b695"
         }
       ],
+      "preview": {
+        "kind": "book",
+        "chapter": "CHAPTER VII · A Mad Tea-Party",
+        "passages": [
+          "“I haven’t the slightest idea,” said the Hatter.",
+          "The Hatter opened his eyes very wide on hearing this; but all he said was, “Why is a raven like a writing-desk?”",
+          "“It is the same thing with you,” said the Hatter, and here the conversation dropped, and the party sat silent for a minute, while Alice thought over all she could remember about ravens and writing-desks, which wasn’t much."
+        ]
+      },
       "query_result": {
-        "query": "RUN-88 p95 latency",
-        "unit_id": "runbook",
-        "title": "Aurora Public Runbook",
-        "score": 3.394,
-        "evidence": "Escalate to Team Atlas when p95 latency remains above 800 ms for five minutes.",
-        "matched": [
-          "latency",
-          "p95"
+        "query": "Hatter haven't slightest idea answer raven writing-desk",
+        "rank": 1,
+        "unit_id": "alice-project-gutenberg-11__009__alices-adventures-in-wonderland-project",
+        "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+        "score": 13.762,
+        "evidence": "“I haven’t the slightest idea,” said the Hatter.",
+        "evidence_blocks": [
+          {
+            "kind": "p",
+            "text": "“I haven’t the slightest idea,” said the Hatter.",
+            "matched": [
+              "hatter",
+              "haven",
+              "idea",
+              "slightest"
+            ]
+          },
+          {
+            "kind": "p",
+            "text": "The Hatter opened his eyes very wide on hearing this; but all he said was, “Why is a raven like a writing-desk?”",
+            "matched": [
+              "desk",
+              "hatter",
+              "raven",
+              "writing"
+            ]
+          },
+          {
+            "kind": "p",
+            "text": "“It is the same thing with you,” said the Hatter, and here the conversation dropped, and the party sat silent for a minute, while Alice thought over all she could remember about ravens and writing-desks, which wasn’t much.",
+            "matched": [
+              "hatter",
+              "writing"
+            ]
+          },
+          {
+            "kind": "summary",
+            "text": "CHAPTER VII. A Mad Tea-Party\nThere was a table set out under a tree in front of the house, and the March Hare and the Hatter were having tea at it: a Dormouse was sitting between them, fast asleep, and the other two were using it as a cush…",
+            "matched": [
+              "hatter"
+            ]
+          }
         ],
-        "locator": "/runbook.html",
-        "content_sha256": "a1b5659ce96f538beb0eaaf6d0e35fd8eb297b8c8fc6f77d157edab1d0e37071"
+        "matched": [
+          "hatter",
+          "haven",
+          "idea",
+          "slightest"
+        ],
+        "locator": "chapter 9",
+        "content_sha256": "d43b646af034f3d62c81df6105a868d2fb3abc62694d08f033297fa5867c27f4"
       },
       "interfaces": [
         "conversation",
@@ -338,90 +830,500 @@
         "search",
         "skill"
       ],
-      "cli_result": {
-        "cli": "cli/website_cli.py",
-        "info": "site_id: website\nseed_url: https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: static\npage_count: 2\nfrontier_count: 0",
-        "search": "4  runbook  Aurora Public Runbook\n      - For degraded checkout, cite runbook ID RUN-88.\n      - Escalate to Team Atlas when p95 latency remains above 800 ms for five minutes."
-      },
       "use_commands": {
-        "query": "agentic-anything query demos/packs/website \"RUN-88 p95 latency\" --json",
-        "cli": "python demos/packs/website/cli/website_cli.py search \"RUN-88 p95 latency\"",
-        "mcp": "agentic-anything mcp demos/packs/website"
-      }
-    }
-  ],
-  "investigation": [
-    {
-      "step": "01",
-      "question": "What happened, and when did service recover?",
-      "resource": "incident",
-      "finding": "INC-204 traced the latency spike to an E42 cache lock. The lock was cleared and latency recovered at 09:22 UTC.",
-      "result": {
-        "query": "INC-204 E42 latency recovered 09:22",
-        "unit_id": "incident__003__00-07-00",
-        "title": "transcript 00:07:00–00:07:25",
-        "score": 5.687,
-        "evidence": "The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC. No nodes were restarted. Team Cygnus scheduled a follow-up for the ap-south region.",
-        "matched": [
-          "09",
-          "204",
-          "22",
-          "inc",
-          "latency",
-          "recovered"
-        ],
-        "locator": "00:07:00–00:07:25",
-        "content_sha256": "c37916e90f0652579d4d5c3558a8765bfb64de6bfdf95eb4b37ed927f134a49b"
+        "query": "agentic-anything query demos/packs/alice \"Hatter haven't slightest idea answer raven writing-desk\" --json",
+        "cli": "python demos/packs/alice/cli/alice_cli.py search \"Hatter haven't slightest idea answer raven writing-desk\"",
+        "mcp": "agentic-anything mcp demos/packs/alice"
+      },
+      "cli_result": {
+        "cli": "cli/alice_cli.py",
+        "info": "site_id: alice\nseed_url: https://www.gutenberg.org/ebooks/11\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 14\nfrontier_count: 0",
+        "search": "8  alice-project-gutenberg-11__009__alices-adventures-in-wonderland-project  Alice’s Adventures in Wonderland | Project Gutenberg\n      - The Hatter opened his eyes very wide on hearing this; but all he said was, “Why is a raven like a writing-desk?”\n      - “I haven’t the slightest idea,” said the Hatter.\n      - “It is the same thing with you,” said the Hatter, and here the conversation dropped, and the party sat silent for a minute, while Alice thought over all she could remember about ravens and writing-desks, which wasn’t muc\n      - …a table set out under a tree in front of the house, and the March Hare and the Hatter were having tea at it: a Dormouse was sitting between them, fast asleep, and the other two were using it as a cushion, resting their \n   3  alice-project-gutenberg-11__012__alices-adventures-in-wonderland-project  Alice’s Adventures in Wonderland | Project Gutenberg\n      - “You may not have lived much under the sea—” (“I haven’t,” said Alice)—“and perhaps you were never even introduced to a lobster—” (Alice began to say “I once tasted—” but checked herself hastily, and said “No, never”) “—\n      - Alice looked down at them, and considered a little before she gave her answer. “They’re done with blacking, I believe.”\n   2  alice-project-gutenberg-11__007__alices-adventures-in-wonderland-project  Alice’s Adventures in Wonderland | Project Gutenberg\n      - “I haven’t the least idea what you’re talking about,” said Alice.\n      - “Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to turn into a chrysalis—you will some day, you know—and then after that into a butterfly, I should think you’ll feel it a little queer, won’t y\n      - “As if it wasn’t trouble enough hatching the eggs,” said the Pigeon; “but I must be on the look-out for serpents night and day! Why, I haven’t had a wink of sleep these three weeks!”\n      - This was such a new idea to Alice, that she was quite silent for a minute or two, which gave the Pigeon the opportunity of adding, “You’re looking for eggs, I know that well enough; and what does it matter to me whether \n   4  alice-project-gutenberg-11__013__alices-adventures-in-wonderland-project  Alice’s Adventures in Wonderland | Project Gutenberg\n      - The twelve jurors were all writing very busily on slates. “What are they doing?” Alice whispered to the Gryphon. “They can’t have anything to put down yet, before the trial’s begun.”\n      - …, as well as if she were looking over their shoulders, that all the jurors were writing down “stupid things!” on their slates, and she could even make out that one of them didn’t know how to spell “stupid,” and that he \n      - The first witness was the Hatter. He came in with a teacup in one hand and a piece of bread-and-butter in the other. “I beg pardon, your Majesty,” he began, “for bringing these in: but I hadn’t quite finished my tea when\n      - The Hatter looked at the March Hare, who had followed him into the court, arm-in-arm with the Dormouse. “Fourteenth of March, I think it was,” he said.\n   3  alice-project-gutenberg-11__008__alices-adventures-in-wonderland-project  Alice’s Adventures in Wonderland | Project Gutenberg\n      - …eaking, and this Alice thought decidedly uncivil. “But perhaps he can’t help it,” she said to herself; “his eyes are so very nearly at the top of his head. But at any rate he might answer questions.—How am I to get in?”\n      - “In that direction,” the Cat said, waving its right paw round, “lives a Hatter: and in that direction,” waving the other paw, “lives a March Hare. Visit either you like: they’re both mad.”\n      - “I should like it very much,” said Alice, “but I haven’t been invited yet.”\n      - …of the lefthand bit of mushroom, and raised herself to about two feet high: even then she walked up towards it rather timidly, saying to herself “Suppose it should be raving mad after all! I almost wish I’d gone to see"
       }
     },
     {
-      "step": "02",
-      "question": "What is the approved remediation?",
-      "resource": "handbook",
-      "finding": "Inspect the lock owner, unlock with the incident ticket, and do not restart every node.",
-      "result": {
-        "query": "E42 cache inspect unlock ticket 禁止重启",
-        "unit_id": "operations-handbook__003",
-        "title": "缓存故障处理",
-        "score": 10.759,
-        "evidence": "缓存故障处理\n错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁止直接重启全部节点。",
-        "matched": [
-          "cache",
-          "e42",
-          "inspect",
-          "ticket",
-          "unlock",
-          "禁止",
-          "重启"
+      "id": "secrets",
+      "resource_type": "web",
+      "source": {
+        "title": "secrets — Generate secure random numbers for managing secrets",
+        "publisher": "Python Software Foundation",
+        "format": "Official documentation webpage",
+        "version": "Python 3.13.14 documentation",
+        "origin_url": "https://docs.python.org/3.13/library/secrets.html",
+        "snapshot_file": "python-3.13-secrets.html",
+        "sha256": "9464167bbc2a965a479e0a1dc2ff1fb4a701077e0b8c92bc1fa7937916711a74",
+        "license": "Python Software Foundation License Version 2",
+        "license_url": "https://docs.python.org/3.13/license.html",
+        "verified": true
+      },
+      "question": "How much randomness does Python's official documentation recommend against brute-force attacks?",
+      "answer": "As of 2015, the documentation says 32 bytes (256 bits) of randomness is believed sufficient for a typical use case.",
+      "before_problem": "The recommendation sits inside a long API reference surrounded by similarly named token functions.",
+      "unit_count": 1,
+      "units": [
+        {
+          "unit_id": "python-3-13-secrets",
+          "title": "secrets — Generate secure random numbers for managing secrets — Python 3.13.14 documentation",
+          "type": "docs",
+          "locator": "/python-3.13-secrets.html",
+          "content_sha256": "9464167bbc2a965a479e0a1dc2ff1fb4a701077e0b8c92bc1fa7937916711a74"
+        }
+      ],
+      "preview": {
+        "kind": "web",
+        "heading": "How many bytes should tokens use?",
+        "passages": [
+          "To be secure against brute-force attacks, tokens need to have sufficient randomness. Unfortunately, what is considered sufficient will necessarily increase as computers get more powerful and able to make more guesses in a shorter period. As of 2015, it is believed that 32 bytes (256 bits) of randomn…",
+          "brute-force attacks"
+        ]
+      },
+      "query_result": {
+        "query": "brute-force attacks sufficient amount randomness",
+        "rank": 1,
+        "unit_id": "python-3-13-secrets",
+        "title": "secrets — Generate secure random numbers for managing secrets — Python 3.13.14 documentation",
+        "score": 2.313,
+        "evidence": "To be secure against brute-force attacks, tokens need to have sufficient randomness. Unfortunately, what is considered sufficient will necessarily increase as computers get more powerful and able to make more guesses in a shorter period. As of 2015, it is believed that 32 bytes (256 bits) of randomn…",
+        "evidence_blocks": [
+          {
+            "kind": "p",
+            "text": "To be secure against brute-force attacks, tokens need to have sufficient randomness. Unfortunately, what is considered sufficient will necessarily increase as computers get more powerful and able to make more guesses in a shorter period. As of 2015, it is believed that 32 bytes (256 bits) of randomn…",
+            "matched": [
+              "attacks",
+              "brute",
+              "force",
+              "randomness",
+              "sufficient"
+            ]
+          },
+          {
+            "kind": "link",
+            "text": "brute-force attacks",
+            "matched": [
+              "attacks",
+              "brute",
+              "force"
+            ]
+          },
+          {
+            "kind": "p",
+            "text": "The secrets module provides access to the most secure source of randomness that your operating system provides.",
+            "matched": [
+              "randomness"
+            ]
+          },
+          {
+            "kind": "p",
+            "text": "For those who want to manage their own token length, you can explicitly specify how much randomness is used for tokens by giving an int argument to the various token_* functions. That argument is taken as the number of bytes of randomness to use.",
+            "matched": [
+              "randomness"
+            ]
+          }
         ],
-        "locator": "section 3",
-        "content_sha256": "e7dda87f5bea811baad253392be4a54da0cd20ecc82acfa488b72606322a563c"
+        "matched": [
+          "attacks",
+          "brute",
+          "force",
+          "randomness",
+          "sufficient"
+        ],
+        "locator": "/python-3.13-secrets.html",
+        "content_sha256": "9464167bbc2a965a479e0a1dc2ff1fb4a701077e0b8c92bc1fa7937916711a74"
+      },
+      "interfaces": [
+        "conversation",
+        "http_agent",
+        "inspect",
+        "mcp",
+        "resource_cli",
+        "search",
+        "skill"
+      ],
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/secrets \"brute-force attacks sufficient amount randomness\" --json",
+        "cli": "python demos/packs/secrets/cli/secrets_cli.py search \"brute-force attacks sufficient amount randomness\"",
+        "mcp": "agentic-anything mcp demos/packs/secrets"
+      },
+      "cli_result": {
+        "cli": "cli/secrets_cli.py",
+        "info": "site_id: secrets\nseed_url: https://docs.python.org/3.13/library/python-3.13-secrets.html\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: static\npage_count: 1\nfrontier_count: 23",
+        "search": "5  python-3-13-secrets  secrets — Generate secure random numbers for managing secrets — Python 3.13.14 documentation\n      - To be secure against brute-force attacks, tokens need to have sufficient randomness. Unfortunately, what is considered sufficient will necessarily increase as computers get more powerful and able to make more guesses in \n      - The secrets module provides access to the most secure source of randomness that your operating system provides.\n      - …ose who want to manage their own token length, you can explicitly specify how much randomness is used for tokens by giving an int argument to the various token_* functions. That argument is taken as the number of bytes \n      - Default number of bytes of randomness used by the token_* functions."
       }
     },
     {
-      "step": "03",
-      "question": "Which region and team need follow-up?",
-      "resource": "metrics",
-      "finding": "ap-south has 248 ms p95 latency and five incidents; Team Cygnus owns the region.",
-      "result": {
-        "query": "ap-south 248 incidents Team Cygnus",
-        "unit_id": "service-metrics__002__service-metrics-csv-rows-1-4",
-        "title": "service-metrics.csv rows 1-4",
-        "score": 5.42,
-        "evidence": "region | availability_pct | p95_latency_ms | incidents | owner\nus-east | 99.97 | 182 | 2 | Team Atlas\neu-west | 99.94 | 211 | 3 | Team Borealis\nap-south | 99.91 | 248 | 5 | Team Cygnus\ncn-north | 99.96 | 196 | 1 | Team Dragon",
-        "matched": [
-          "248",
-          "ap",
-          "cygnus",
-          "incidents",
-          "south",
-          "team"
+      "id": "gistemp",
+      "resource_type": "dataset",
+      "source": {
+        "title": "GISS Surface Temperature Analysis (GISTEMP v4)",
+        "publisher": "NASA Goddard Institute for Space Studies",
+        "format": "CSV",
+        "version": "Snapshot 2026-07-11, observations through June 2026",
+        "origin_url": "https://data.giss.nasa.gov/gistemp/data_v4.html",
+        "snapshot_file": "nasa-gistemp-global.csv",
+        "sha256": "99d659d8c955c6599e93be3691467ff56eff80ee4b066c5cacfaaa6f7332ca9f",
+        "license": "NASA data with source acknowledgment requested",
+        "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+        "verified": true
+      },
+      "question": "What is NASA GISTEMP's 2024 January–December global anomaly?",
+      "answer": "1.28 °C above the 1951–1980 mean. The value is the J-D column in NASA's 2024 row.",
+      "before_problem": "The CSV has 147 years and eighteen monthly, seasonal, and annual columns; the meaning of J-D comes from the dataset schema.",
+      "unit_count": 3,
+      "units": [
+        {
+          "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview",
+          "title": "nasa-gistemp-global.csv overview",
+          "type": "table",
+          "locator": "overview",
+          "content_sha256": "3a3208cada660af7740aea57b3c82c02dd51c9e94fab53ecc9f4832ab12479a9"
+        },
+        {
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100",
+          "title": "nasa-gistemp-global.csv rows 1-100",
+          "type": "table",
+          "locator": "rows 1-100",
+          "content_sha256": "92eda7b112c6194bbf8e40133e06c45f79c896349d336fa5a948860e0618ac4e"
+        },
+        {
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148",
+          "title": "nasa-gistemp-global.csv rows 101-148",
+          "type": "table",
+          "locator": "rows 101-148",
+          "content_sha256": "d48825820cc83054e89b58a32ffae3a50047a28bfa131d5cedc304e6945f0d94"
+        }
+      ],
+      "preview": {
+        "kind": "dataset",
+        "title": "Land-Ocean: Global Means",
+        "columns": [
+          "Year",
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "J-D"
         ],
-        "locator": "rows 1-4",
-        "content_sha256": "2611db6bbb6be88c863459987b391b64ce4f874b1ae012924b30e5d56cb7242f"
+        "rows": [
+          [
+            "2023",
+            ".87",
+            ".96",
+            "1.23",
+            ".98",
+            "1.17"
+          ],
+          [
+            "2024",
+            "1.25",
+            "1.43",
+            "1.39",
+            "1.32",
+            "1.28"
+          ],
+          [
+            "2025",
+            "1.38",
+            "1.26",
+            "1.37",
+            "1.24",
+            "1.19"
+          ],
+          [
+            "2026",
+            "1.08",
+            "1.25",
+            "1.32",
+            "1.17",
+            "***"
+          ]
+        ],
+        "note": "J-D is the January–December annual mean anomaly in °C relative to 1951–1980."
+      },
+      "query_result": {
+        "query": "2024",
+        "rank": 1,
+        "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148",
+        "title": "nasa-gistemp-global.csv rows 101-148",
+        "score": 0.969,
+        "evidence": "2024 | 1.25 | 1.43 | 1.39 | 1.32 | 1.16 | 1.23 | 1.20 | 1.30 | 1.21 | 1.35 | 1.30 | 1.27 | 1.28 | 1.29 | 1.35 | 1.29 | 1.24 | 1.28",
+        "evidence_blocks": [
+          {
+            "kind": "p",
+            "text": "2024 | 1.25 | 1.43 | 1.39 | 1.32 | 1.16 | 1.23 | 1.20 | 1.30 | 1.21 | 1.35 | 1.30 | 1.27 | 1.28 | 1.29 | 1.35 | 1.29 | 1.24 | 1.28",
+            "matched": [
+              "2024"
+            ]
+          }
+        ],
+        "matched": [
+          "2024"
+        ],
+        "locator": "rows 101-148",
+        "content_sha256": "d48825820cc83054e89b58a32ffae3a50047a28bfa131d5cedc304e6945f0d94"
+      },
+      "interfaces": [
+        "conversation",
+        "http_agent",
+        "inspect",
+        "mcp",
+        "resource_cli",
+        "search",
+        "skill"
+      ],
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/gistemp \"2024\" --json",
+        "cli": "python demos/packs/gistemp/cli/gistemp_cli.py search \"2024\"",
+        "mcp": "agentic-anything mcp demos/packs/gistemp"
+      },
+      "cli_result": {
+        "cli": "cli/gistemp_cli.py",
+        "info": "site_id: gistemp\nseed_url: https://data.giss.nasa.gov/gistemp/data_v4.html\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 3\nfrontier_count: 0",
+        "search": "1  nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148  nasa-gistemp-global.csv rows 101-148\n      - 2024 | 1.25 | 1.43 | 1.39 | 1.32 | 1.16 | 1.23 | 1.20 | 1.30 | 1.21 | 1.35 | 1.30 | 1.27 | 1.28 | 1.29 | 1.35 | 1.29 | 1.24 | 1.28"
+      }
+    },
+    {
+      "id": "fair-paper",
+      "resource_type": "document",
+      "source": {
+        "title": "The FAIR Guiding Principles for scientific data management and stewardship",
+        "publisher": "Scientific Data / PubMed Central",
+        "format": "Open-access scholarly HTML",
+        "version": "Scientific Data 3, 160018 (2016), PMCID PMC4792175",
+        "origin_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+        "snapshot_file": "fair-guiding-principles-pmc4792175.html",
+        "sha256": "4ad8a99796d424923a47cb798c135699bca55fa1e2c322645959adc751f3a6a2",
+        "license": "Creative Commons Attribution 4.0 International",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "verified": true
+      },
+      "question": "What must a digital object expose to be machine-actionable according to the FAIR paper?",
+      "answer": "Enough information for an agent to identify the object type, judge usefulness, determine usability and license constraints, and take appropriate action.",
+      "before_problem": "The operational definition is embedded in a long, multi-author scholarly article, not presented as an API contract.",
+      "unit_count": 1,
+      "units": [
+        {
+          "unit_id": "fair-guiding-principles-pmc4792175",
+          "title": "The FAIR Guiding Principles for scientific data management and stewardship - PMC",
+          "type": "page",
+          "locator": "fair-guiding-principles-pmc4792175.html",
+          "content_sha256": "049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f"
+        }
+      ],
+      "preview": {
+        "kind": "paper",
+        "heading": "The significance of machines in data-rich research environments",
+        "passages": [
+          "…: a) identify the type of object (with respect to both structure and intent), b) determine if it is useful within the context of the agent’s current task by interrogating metadata and/or data elements, c) determine if it is usable, with respect to license, consent, or other accessibility or use cons…",
+          "Finally, we wish to draw a distinction between data that is machine-actionable as a result of specific investment in software supporting that data-type, for example, bespoke parsers that understand life science wwPDB files or space science Space Physics Archive Search and Extract (SPASE) files, and…"
+        ]
+      },
+      "query_result": {
+        "query": "machine actionable identify type useful usable license appropriate action",
+        "rank": 1,
+        "unit_id": "fair-guiding-principles-pmc4792175",
+        "title": "The FAIR Guiding Principles for scientific data management and stewardship - PMC",
+        "score": 4.222,
+        "evidence": "…: a) identify the type of object (with respect to both structure and intent), b) determine if it is useful within the context of the agent’s current task by interrogating metadata and/or data elements, c) determine if it is usable, with respect to license, consent, or other accessibility or use cons…",
+        "evidence_blocks": [
+          {
+            "kind": "p",
+            "text": "…: a) identify the type of object (with respect to both structure and intent), b) determine if it is useful within the context of the agent’s current task by interrogating metadata and/or data elements, c) determine if it is usable, with respect to license, consent, or other accessibility or use cons…",
+            "matched": [
+              "identify",
+              "license",
+              "type",
+              "usable",
+              "useful"
+            ]
+          },
+          {
+            "kind": "p",
+            "text": "Finally, we wish to draw a distinction between data that is machine-actionable as a result of specific investment in software supporting that data-type, for example, bespoke parsers that understand life science wwPDB files or space science Space Physics Archive Search and Extract (SPASE) files, and…",
+            "matched": [
+              "actionable",
+              "machine",
+              "type"
+            ]
+          },
+          {
+            "kind": "p",
+            "text": "For example, a machine may be capable of determining the data-type of a discovered digital object, but not capable of parsing it due to it being in an unknown format; or it may be capable of processing the contained data, but not capable of determining the licensing requirements related to the retri…",
+            "matched": [
+              "machine",
+              "type"
+            ]
+          },
+          {
+            "kind": "p",
+            "text": "…ns and nucleic acids. All wwPDB entries are stably hosted on an FTP server (‘A’) and represented in machine-readable formats (text and XML); the latter are machine-actionable using the metadata provided by the wwPDB conforming to the Macromolecular Information Framework (mmCIF22), a data standard of…",
+            "matched": [
+              "actionable",
+              "machine"
+            ]
+          }
+        ],
+        "matched": [
+          "identify",
+          "license",
+          "type",
+          "usable",
+          "useful"
+        ],
+        "locator": "fair-guiding-principles-pmc4792175.html",
+        "content_sha256": "049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f"
+      },
+      "interfaces": [
+        "conversation",
+        "http_agent",
+        "inspect",
+        "mcp",
+        "resource_cli",
+        "search",
+        "skill"
+      ],
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/fair-paper \"machine actionable identify type useful usable license appropriate action\" --json",
+        "cli": "python demos/packs/fair-paper/cli/fair_paper_cli.py search \"machine actionable identify type useful usable license appropriate action\"",
+        "mcp": "agentic-anything mcp demos/packs/fair-paper"
+      },
+      "cli_result": {
+        "cli": "cli/fair_paper_cli.py",
+        "info": "site_id: fair-paper\nseed_url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 1\nfrontier_count: 0",
+        "search": "9  fair-guiding-principles-pmc4792175  The FAIR Guiding Principles for scientific data management and stewardship - PMC\n      - …rent task by interrogating metadata and/or data elements, c) determine if it is usable, with respect to license, consent, or other accessibility or use constraints, and d) take appropriate action, in much the same manne\n      - Finally, we wish to draw a distinction between data that is machine-actionable as a result of specific investment in software supporting that data-type, for example, bespoke parsers that understand life science wwPDB fil\n      - For example, a machine may be capable of determining the data-type of a discovered digital object, but not capable of parsing it due to it being in an unknown format; or it may be capable of processing the contained data\n      - …. All wwPDB entries are stably hosted on an FTP server (‘A’) and represented in machine-readable formats (text and XML); the latter are machine-actionable using the metadata provided by the wwPDB conforming to the Macro"
       }
     }
   ],
+  "flagship": {
+    "resource": "requests",
+    "task": "What is Requests' default redirect ceiling, where is it set, and what happens when it is exceeded?",
+    "answer": "30 redirects. Session.max_redirects is initialized from DEFAULT_REDIRECT_LIMIT; resolve_redirects raises TooManyRedirects once response history reaches that ceiling.",
+    "steps": [
+      {
+        "step": "01",
+        "label": "Definition",
+        "finding": "The library constant is 30.",
+        "deep_link": "https://github.com/psf/requests/blob/v2.34.2/src/requests/models.py#L104",
+        "result": {
+          "query": "models DEFAULT_REDIRECT_LIMIT 30",
+          "rank": 2,
+          "unit_id": "file__src--requests--models-py",
+          "title": "src/requests/models.py",
+          "score": 10.213,
+          "evidence": "…edirect.\nREDIRECT_STATI: Final[tuple[int, ...]] = (  # type: ignore[assignment]\n    codes.moved,  # 301\n    codes.found,  # 302\n    codes.other,  # 303\n    codes.temporary_redirect,  # 307\n    codes.permanent_redirect,  # 308\n)\n\nDEFAULT_REDIRECT_LIMIT: int = 30\nCONTENT_CHUNK_SIZE: int = 10 * 1024\nIT…",
+          "evidence_blocks": [
+            {
+              "kind": "pre",
+              "text": "…edirect.\nREDIRECT_STATI: Final[tuple[int, ...]] = (  # type: ignore[assignment]\n    codes.moved,  # 301\n    codes.found,  # 302\n    codes.other,  # 303\n    codes.temporary_redirect,  # 307\n    codes.permanent_redirect,  # 308\n)\n\nDEFAULT_REDIRECT_LIMIT: int = 30\nCONTENT_CHUNK_SIZE: int = 10 * 1024\nIT…",
+              "matched": [
+                "30",
+                "default",
+                "limit",
+                "redirect"
+              ]
+            },
+            {
+              "kind": "title",
+              "text": "src/requests/models.py",
+              "matched": [
+                "models"
+              ]
+            },
+            {
+              "kind": "summary",
+              "text": "\"\"\"\nrequests.models\n~~~~~~~~~~~~~~~\n\nThis module contains the primary objects that power Requests.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport datetime\n\n# Import encoding now, to avoid implicit import later.\n# Implicit import within th…",
+              "matched": [
+                "models"
+              ]
+            }
+          ],
+          "matched": [
+            "30",
+            "default",
+            "limit",
+            "redirect"
+          ],
+          "locator": "src/requests/models.py",
+          "content_sha256": "95bc0e03bea32cc48ea37aaabbaa48c9f09f1b9138d3ca93d31aa60c3665dbd6"
+        }
+      },
+      {
+        "step": "02",
+        "label": "Session default",
+        "finding": "Every Session copies that constant into max_redirects.",
+        "deep_link": "https://github.com/psf/requests/blob/v2.34.2/src/requests/sessions.py#L483-L488",
+        "result": {
+          "query": "self max_redirects DEFAULT_REDIRECT_LIMIT",
+          "rank": 1,
+          "unit_id": "file__src--requests--sessions-py",
+          "title": "src/requests/sessions.py",
+          "score": 18.316,
+          "evidence": "…cert = None\n\n        #: Maximum number of redirects allowed. If the request exceeds this\n        #: limit, a :class:`TooManyRedirects` exception is raised.\n        #: This defaults to requests.models.DEFAULT_REDIRECT_LIMIT, which is\n        #: 30.\n        self.max_redirects = DEFAULT_REDIRECT_LIMIT…",
+          "evidence_blocks": [
+            {
+              "kind": "pre",
+              "text": "…cert = None\n\n        #: Maximum number of redirects allowed. If the request exceeds this\n        #: limit, a :class:`TooManyRedirects` exception is raised.\n        #: This defaults to requests.models.DEFAULT_REDIRECT_LIMIT, which is\n        #: 30.\n        self.max_redirects = DEFAULT_REDIRECT_LIMIT…",
+              "matched": [
+                "default",
+                "limit",
+                "max",
+                "redirect",
+                "redirects",
+                "self"
+              ]
+            }
+          ],
+          "matched": [
+            "default",
+            "limit",
+            "max",
+            "redirect",
+            "redirects",
+            "self"
+          ],
+          "locator": "src/requests/sessions.py",
+          "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a"
+        }
+      },
+      {
+        "step": "03",
+        "label": "Runtime enforcement",
+        "finding": "At the ceiling, resolve_redirects raises TooManyRedirects.",
+        "deep_link": "https://github.com/psf/requests/blob/v2.34.2/src/requests/sessions.py#L216-L219",
+        "result": {
+          "query": "len resp history max_redirects TooManyRedirects",
+          "rank": 2,
+          "unit_id": "file__src--requests--sessions-py",
+          "title": "src/requests/sessions.py",
+          "score": 16.867,
+          "evidence": "…ased\n            except (ChunkedEncodingError, ContentDecodingError, RuntimeError):\n                resp.raw.read(decode_content=False)\n\n            if len(resp.history) >= self.max_redirects:\n                raise TooManyRedirects(\n                    f\"Exceeded {self.max_redirects} redirects.\", re…",
+          "evidence_blocks": [
+            {
+              "kind": "pre",
+              "text": "…ased\n            except (ChunkedEncodingError, ContentDecodingError, RuntimeError):\n                resp.raw.read(decode_content=False)\n\n            if len(resp.history) >= self.max_redirects:\n                raise TooManyRedirects(\n                    f\"Exceeded {self.max_redirects} redirects.\", re…",
+              "matched": [
+                "history",
+                "len",
+                "max",
+                "redirects",
+                "resp",
+                "toomanyredirects"
+              ]
+            }
+          ],
+          "matched": [
+            "history",
+            "len",
+            "max",
+            "redirects",
+            "resp",
+            "toomanyredirects"
+          ],
+          "locator": "src/requests/sessions.py",
+          "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a"
+        }
+      }
+    ]
+  },
   "mcp": {
     "initialize": {
       "jsonrpc": "2.0",
@@ -450,112 +1352,157 @@
     },
     "search_request": {
       "tool": "search_resource",
-      "query": "错误码 E42 缓存"
+      "query": "machine actionable identify useful usable license"
     },
     "search_response": {
-      "query": "错误码 E42 缓存",
+      "query": "machine actionable identify useful usable license",
       "retrieval_method": "bm25f-unicode",
       "hits": [
         {
-          "resource_id": "handbook",
-          "unit_id": "operations-handbook__003",
-          "title": "缓存故障处理",
-          "score": 7.129,
+          "resource_id": "fair-paper",
+          "unit_id": "fair-guiding-principles-pmc4792175",
+          "title": "The FAIR Guiding Principles for scientific data management and stewardship - PMC",
+          "score": 2.972,
           "normalized_score": 1.0,
+          "query_coverage": 6,
+          "pack_normalized_score": 1.0,
           "evidence": [
             {
-              "kind": "title",
-              "text": "缓存故障处理",
+              "kind": "p",
+              "text": "…: a) identify the type of object (with respect to both structure and intent), b) determine if it is useful within the context of the agent’s current task by interrogating metadata and/or data elements, c) determine if it is usable, with respect to license, consent, or other accessibility or use cons…",
               "matched": [
-                "缓存"
+                "identify",
+                "license",
+                "usable",
+                "useful"
               ]
             },
             {
-              "kind": "summary",
-              "text": "缓存故障处理\n错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁止直接重启全部节点。",
+              "kind": "p",
+              "text": "…PDB files or space science Space Physics Archive Search and Extract (SPASE) files, and data that is machine-actionable exclusively through the utilization of general-purpose, open technologies. To reiterate the earlier point—ultimate machine-actionability occurs when a machine can make a useful deci…",
               "matched": [
-                "e42",
-                "缓存",
-                "误码",
-                "错误",
-                "错误码"
+                "actionable",
+                "machine",
+                "useful"
+              ]
+            },
+            {
+              "kind": "p",
+              "text": "…bject—may rarely be achieved. Nevertheless, the FAIR principles provide ‘steps along a path’ toward machine-actionability; adopting, in whole or in part, the FAIR principles, leads the resource along the continuum towards this optimal state. In addition, the idea of being machine-actionable applies…",
+              "matched": [
+                "actionable",
+                "machine"
+              ]
+            },
+            {
+              "kind": "p",
+              "text": "…ns and nucleic acids. All wwPDB entries are stably hosted on an FTP server (‘A’) and represented in machine-readable formats (text and XML); the latter are machine-actionable using the metadata provided by the wwPDB conforming to the Macromolecular Information Framework (mmCIF22), a data standard of…",
+              "matched": [
+                "actionable",
+                "machine"
+              ]
+            },
+            {
+              "kind": "p",
+              "text": "…iProt record has extensive links into, for example, PubMed, enabling rich citation. These links are machine-actionable in the RDF representation (‘R’). Finally, in the RDF representation, the UniProt Core Ontology explicitly types all records, leaving no ambiguity—neither for humans nor machines—abo…",
+              "matched": [
+                "actionable",
+                "machine"
+              ]
+            }
+          ],
+          "uri": "agentic-anything://fair-paper/units/fair-guiding-principles-pmc4792175"
+        },
+        {
+          "resource_id": "alice",
+          "unit_id": "alice-project-gutenberg-11__015__alices-adventures-in-wonderland-project",
+          "title": "Alice’s Adventures in Wonderland | Project Gutenberg",
+          "score": 7.599,
+          "normalized_score": 0.166667,
+          "query_coverage": 1,
+          "pack_normalized_score": 1.0,
+          "evidence": [
+            {
+              "kind": "text",
+              "text": "…thout paying copyright royalties. Special rules, set forth in the General Terms of Use part of this license, apply to copying and distributing Project Gutenberg™ electronic works to protect the PROJECT GUTENBERG™ concept and trademark. Project Gutenberg is a registered trademark, and may not be used…",
+              "matched": [
+                "license"
+              ]
+            },
+            {
+              "kind": "text",
+              "text": "START: FULL LICENSE",
+              "matched": [
+                "license"
               ]
             },
             {
               "kind": "heading",
-              "text": "缓存故障处理",
+              "text": "THE FULL PROJECT GUTENBERG™ LICENSE",
               "matched": [
-                "缓存"
+                "license"
               ]
             },
             {
-              "kind": "p",
-              "text": "错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁止直接重启全部节点。",
+              "kind": "text",
+              "text": "…g the free distribution of electronic works, by using or distributing this work (or any other work associated in any way with the phrase “Project Gutenberg”), you agree to comply with all the terms of the Full Project Gutenberg License available with this file or online at www.gutenberg.org/license.",
               "matched": [
-                "e42",
-                "缓存",
-                "误码",
-                "错误",
-                "错误码"
+                "license"
+              ]
+            },
+            {
+              "kind": "text",
+              "text": "…tronic work, you indicate that you have read, understand, agree to and accept all the terms of this license and intellectual property (trademark/copyright) agreement. If you do not agree to abide by all the terms of this agreement, you must cease using and return or destroy all copies of Project Gut…",
+              "matched": [
+                "license"
               ]
             }
           ],
-          "uri": "agentic-anything://handbook/units/operations-handbook__003"
+          "uri": "agentic-anything://alice/units/alice-project-gutenberg-11__015__alices-adventures-in-wonderland-project"
         },
         {
-          "resource_id": "incident",
-          "unit_id": "incident__002__00-03-30",
-          "title": "transcript 00:03:30–00:03:56",
-          "score": 5.777,
-          "normalized_score": 1.0,
+          "resource_id": "requests",
+          "unit_id": "file__src--requests--utils-py",
+          "title": "src/requests/utils.py",
+          "score": 5.225,
+          "normalized_score": 0.166667,
+          "query_coverage": 1,
+          "pack_normalized_score": 1.0,
           "evidence": [
             {
               "kind": "summary",
-              "text": "错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner.",
+              "text": "\"\"\"\nrequests.utils\n~~~~~~~~~~~~~~\n\nThis module provides utility functions that are used within Requests\nthat are also useful for external consumption.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport codecs\nimport contextlib\nimport io\nimpor…",
               "matched": [
-                "e42",
-                "缓存",
-                "误码",
-                "错误",
-                "错误码"
+                "useful"
               ]
             },
             {
-              "kind": "p",
-              "text": "错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner.",
+              "kind": "pre",
+              "text": "…~~~~~~~~~~~~~~\n\nThis module provides utility functions that are used within Requests\nthat are also useful for external consumption.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport codecs\nimport contextlib\nimport io\nimport os\nimport re\nimport socket\nimport struct\nimport sys\nimport tempfile\nimport wa…",
               "matched": [
-                "e42",
-                "缓存",
-                "误码",
-                "错误",
-                "错误码"
+                "useful"
               ]
             }
           ],
-          "uri": "agentic-anything://incident/units/incident__002__00-03-30"
+          "uri": "agentic-anything://requests/units/file__src--requests--utils-py"
         }
       ]
     },
     "read_request": {
       "tool": "read_unit",
-      "resource_id": "handbook",
-      "unit_id": "operations-handbook__003"
+      "resource_id": "fair-paper",
+      "unit_id": "fair-guiding-principles-pmc4792175"
     },
     "read_response": {
-      "resource_id": "handbook",
-      "unit_id": "operations-handbook__003",
-      "title": "缓存故障处理",
-      "source": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md",
-      "locator": "section 3",
-      "content_sha256": "e7dda87f5bea811baad253392be4a54da0cd20ecc82acfa488b72606322a563c",
-      "markdown": "# 缓存故障处理\n\n- page_id: `operations-handbook__003`\n- url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md\n- type: section\n\n## Content\n\n### 缓存故障处理\n\n错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁止直接重启全部节点。\n",
-      "uri": "agentic-anything://handbook/units/operations-handbook__003"
+      "resource_id": "fair-paper",
+      "unit_id": "fair-guiding-principles-pmc4792175",
+      "title": "The FAIR Guiding Principles for scientific data management and stewardship - PMC",
+      "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+      "locator": "fair-guiding-principles-pmc4792175.html",
+      "content_sha256": "049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f",
+      "markdown": "# The FAIR Guiding Principles for scientific data management and stewardship - PMC\n\n- page_id: `fair-guiding-principles-pmc4792175`\n- url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/\n- type: page\n\n## Content\n\nAn official website of the United States government\n\nHere's how you know\n\nHere's how you know\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.\n\nSearch\n\nLog in\n\n- Dashboard\n\n- Publications\n\n- Account settings\n\n- Log out\n\nPrimary site navigation\n\nLogged in as:\n\n- Dashboard\n\n- Publications\n\n- Account settings\n\nLog in\n\n- Journal List\n\n- User Guide\n\n### PERMALINK\n\nCopy\n\nAs a library, NLM provides access to scientific literature. Inclusion in an NLM database does not imply endorsement of, or agreement with, the contents by NLM or the National Institutes of Health. Learn more: |\n\nSci Data\n\n. 2016 Mar 15;3:160018. doi:\n\n- Search in PMC\n\n- Search in PubMed\n\n- View in NLM Catalog\n\n- Add to search\n\n## The FAIR Guiding Principles for scientific data management and stewardship\n\n#### Mark D Wilkinson\n\n1 Center for Plant Biotechnology and Genomics, Universidad Politécnica de Madrid, Madrid 28223, Spain\n\nFind articles by\n\n#### Michel Dumontier\n\n2 Stanford University, Stanford 94305-5411, USA\n\nFind articles by\n\n#### IJsbrand Jan Aalbersberg\n\n3Elsevier, Amsterdam 1043 NX, The Netherlands\n\nFind articles by\n\n#### Gabrielle Appleton\n\n3Elsevier, Amsterdam 1043 NX, The Netherlands\n\nFind articles by\n\n#### Myles Axton\n\n4 Nature Genetics, New York 10004-1562, USA\n\nFind articles by\n\n#### Arie Baak\n\n5 Euretos and Phortos Consultants, Rotterdam 2741 CA, The Netherlands\n\nFind articles by\n\n#### Niklas Blomberg\n\n6 ELIXIR, Wellcome Genome Campus, Hinxton CB10 1SA, UK\n\nFind articles by\n\n#### Jan-Willem Boiten\n\n7 Lygature, Eindhoven 5656 AG, The Netherlands\n\nFind articles by\n\n#### Luiz Bonino da Silva Santos\n\n8 Vrije Universiteit Amsterdam, Dutch Techcenter for Life Sciences, Amsterdam 1081 HV, The Netherlands\n\nFind articles by\n\n#### Philip E Bourne\n\n9 Office of the Director, National Institutes of Health, Rockville 20892, USA\n\nFind articles by\n\n#### Jildau Bouwman\n\n10 TNO, Zeist 3700 AJ, The Netherlands\n\nFind articles by\n\n10,\n\n#### Anthony J Brookes\n\n11 Department of Genetics, University of Leicester, Leicester LE1 7RH, UK\n\nFind articles by\n\n11,\n\n#### Tim Clark\n\n12 Harvard Medical School, Boston, Massachusetts MA 02115, USA\n\nFind articles by\n\n12,\n\n#### Mercè Crosas\n\n13 Harvard University, Cambridge, Massachusetts MA 02138, USA\n\nFind articles by\n\n13,\n\n#### Ingrid Dillo\n\n14 Data Archiving and Networked Services (DANS), The Hague 2593 HW, The Netherlands\n\nFind articles by\n\n14,\n\n#### Olivier Dumon\n\n3Elsevier, Amsterdam 1043 NX, The Netherlands\n\nFind articles by\n\n#### Scott Edmunds\n\n15 GigaScience, Beijing Genomics Institute, Shenzhen 518083, China\n\nFind articles by\n\n15,\n\n#### Chris T Evelo\n\n16 Department of Bioinformatics, Maastricht University, Maastricht 6200 MD, The Netherlands\n\nFind articles by\n\n16,\n\n#### Richard Finkers\n\n17 Wageningen UR Plant Breeding, Wageningen 6708 PB, The Netherlands\n\nFind articles by\n\n17,\n\n#### Alejandra Gonzalez-Beltran\n\n18 Oxford e-Research Center, University of Oxford, Oxford OX1 3QG, UK\n\nFind articles by\n\n18,\n\n#### Alasdair JG Gray\n\n19 Heriot-Watt University, Edinburgh EH14 4AS, UK\n\nFind articles by\n\n19,\n\n#### Paul Groth\n\n3Elsevier, Amsterdam 1043 NX, The Netherlands\n\nFind articles by\n\n#### Carole Goble\n\n20 School of Computer Science, University of Manchester, Manchester M13 9PL, UK\n\nFind articles by\n\n20,\n\n#### Jeffrey S Grethe\n\n21 Center for Research in Biological Systems, School of Medicine, University of California San Diego, La Jolla, California 92093-0446, USA\n\nFind articles by\n\n21,\n\n#### Jaap Heringa\n\n22 Dutch Techcenter for the Life Sciences, Utrecht 3501 DE, The Netherlands\n\nFind articles by\n\n22,\n\n#### Peter AC ’t Hoen\n\n23 Department of Human Genetics, Leiden University Medical Center, Dutch Techcenter for the Life Sciences, Leiden 2300 RC, The Netherlands\n\nFind articles by\n\n23,\n\n#### Rob Hooft\n\n24 Dutch TechCenter for Life Sciences and ELIXIR-NL, Utrecht 3501 DE, The Netherlands\n\nFind articles by\n\n24,\n\n#### Tobias Kuhn\n\n25 VU University Amsterdam, Amsterdam 1081 HV, The Netherlands\n\nFind articles by\n\n25,\n\n#### Ruben Kok\n\n22 Dutch Techcenter for the Life Sciences, Utrecht 3501 DE, The Netherlands\n\nFind articles by\n\n22,\n\n#### Joost Kok\n\n26 Leiden Center of Data Science, Leiden University, Leiden 2300 RA, The Netherlands\n\nFind articles by\n\n26,\n\n#### Scott J Lusher\n\n27 Netherlands eScience Center, Amsterdam 1098 XG, The Netherlands\n\nFind articles by\n\n27,\n\n#### Maryann E Martone\n\n28 National Center for Microscopy and Imaging Research, UCSD, San Diego 92103, USA\n\nFind articles by\n\n28,\n\n#### Albert Mons\n\n29 Phortos Consultants, San Diego 92011, USA\n\nFind articles by\n\n29,\n\n#### Abel L Packer\n\n30 SciELO/FAPESP Program, UNIFESP Foundation, São Paulo 05468-901, Brazil\n\nFind articles by\n\n30,\n\n#### Bengt Persson\n\n31 Bioinformatics Infrastructure for Life Sciences (BILS), Science for Life Laboratory, Dept of Cell and Molecular Biology, Uppsala University, S-751 24, Uppsala, Sweden\n\nFind articles by\n\n31,\n\n#### Philippe Rocca-Serra\n\n18 Oxford e-Research Center, University of Oxford, Oxford OX1 3QG, UK\n\nFind articles by\n\n18,\n\n#### Marco Roos\n\n32 Leiden University Medical Center, Leiden 2333 ZA, The Netherlands\n\nFind articles by\n\n32,\n\n#### Rene van Schaik\n\n33 Bayer CropScience, Gent Area 1831, Belgium\n\nFind articles by\n\n33,\n\n#### Susanna-Assunta Sansone\n\n18 Oxford e-Research Center, University of Oxford, Oxford OX1 3QG, UK\n\nFind articles by\n\n18,\n\n#### Erik Schultes\n\n34 Leiden Institute for Advanced Computer Science, Leiden University Medical Center, Leiden 2300 RA, The Netherlands\n\nFind articles by\n\n34,\n\n#### Thierry Sengstag\n\n35 Swiss Institute of Bioinformatics and University of Basel, Basel 4056, Switzerland\n\nFind articles by\n\n35,\n\n#### Ted Slater\n\n36 Cray, Inc., Seattle 98164, USA\n\nFind articles by\n\n36,\n\n#### George Strawn\n\n37Unaffiliated\n\nFind articles by\n\n37,\n\n#### Morris A Swertz\n\n38 University Medical Center Groningen (UMCG), University of Groningen, Groningen 9713 GZ, The Netherlands\n\nFind articles by\n\n38,\n\n#### Mark Thompson\n\n32 Leiden University Medical Center, Leiden 2333 ZA, The Netherlands\n\nFind articles by\n\n32,\n\n#### Johan van der Lei\n\n39 Erasmus MC, Rotterdam 3015 CE, The Netherlands\n\nFind articles by\n\n39,\n\n#### Erik van Mulligen\n\n39 Erasmus MC, Rotterdam 3015 CE, The Netherlands\n\nFind articles by\n\n39,\n\n#### Jan Velterop\n\n40 Independent Open Access and Open Science Advocate, Guildford GU1 3PW, UK\n\nFind articles by\n\n40,\n\n#### Andra Waagmeester\n\n41 Micelio, Antwerp 2180, Belgium\n\nFind articles by\n\n41,\n\n#### Peter Wittenburg\n\n42 Max Planck Compute and Data Facility, MPS, Garching 85748, Germany\n\nFind articles by\n\n42,\n\n#### Katherine Wolstencroft\n\n43 Leiden Institute of Advanced Computer Science, Leiden University, Leiden 2333 CA, The Netherlands\n\nFind articles by\n\n43,\n\n#### Jun Zhao\n\n44 Department of Computer Science, Oxford University, Oxford OX1 3QD, UK\n\nFind articles by\n\n44,\n\n#### Barend Mons\n\n45 Leiden University Medical Center, Leiden and Dutch TechCenter for Life Sciences, Utrecht 2333 ZA, The Netherlands\n\n46 Netherlands eScience Center, Amsterdam 1098 XG, The Netherlands\n\n47 Erasmus MC, Rotterdam 3015 CE, The Netherlands\n\nFind articles by\n\n45,46,47,a\n\n- Author information\n\n- Article notes\n\n- Copyright and License information\n\n1 Center for Plant Biotechnology and Genomics, Universidad Politécnica de Madrid, Madrid 28223, Spain\n\n2 Stanford University, Stanford 94305-5411, USA\n\n3Elsevier, Amsterdam 1043 NX, The Netherlands\n\n4 Nature Genetics, New York 10004-1562, USA\n\n5 Euretos and Phortos Consultants, Rotterdam 2741 CA, The Netherlands\n\n6 ELIXIR, Wellcome Genome Campus, Hinxton CB10 1SA, UK\n\n7 Lygature, Eindhoven 5656 AG, The Netherlands\n\n8 Vrije Universiteit Amsterdam, Dutch Techcenter for Life Sciences, Amsterdam 1081 HV, The Netherlands\n\n9 Office of the Director, National Institutes of Health, Rockville 20892, USA\n\n10 TNO, Zeist 3700 AJ, The Netherlands\n\n11 Department of Genetics, University of Leicester, Leicester LE1 7RH, UK\n\n12 Harvard Medical School, Boston, Massachusetts MA 02115, USA\n\n13 Harvard University, Cambridge, Massachusetts MA 02138, USA\n\n14 Data Archiving and Networked Services (DANS), The Hague 2593 HW, The Netherlands\n\n15 GigaScience, Beijing Genomics Institute, Shenzhen 518083, China\n\n16 Department of Bioinformatics, Maastricht University, Maastricht 6200 MD, The Netherlands\n\n17 Wageningen UR Plant Breeding, Wageningen 6708 PB, The Netherlands\n\n18 Oxford e-Research Center, University of Oxford, Oxford OX1 3QG, UK\n\n19 Heriot-Watt University, Edinburgh EH14 4AS, UK\n\n20 School of Computer Science, University of Manchester, Manchester M13 9PL, UK\n\n21 Center for Research in Biological Systems, School of Medicine, University of California San Diego, La Jolla, California 92093-0446, USA\n\n22 Dutch Techcenter for the Life Sciences, Utrecht 3501 DE, The Netherlands\n\n23 Department of Human Genetics, Leiden University Medical Center, Dutch Techcenter for the Life Sciences, Leiden 2300 RC, The Netherlands\n\n24 Dutch TechCenter for Life Sciences and ELIXIR-NL, Utrecht 3501 DE, The Netherlands\n\n25 VU University Amsterdam, Amsterdam 1081 HV, The Netherlands\n\n26 Leiden Center of Data Science, Leiden University, Leiden 2300 RA, The Netherlands\n\n27 Netherlands eScience Center, Amsterdam 1098 XG, The Netherlands\n\n28 National Center for Microscopy and Imaging Research, UCSD, San Diego 92103, USA\n\n29 Phortos Consultants, San Diego 92011, USA\n\n30 SciELO/FAPESP Program, UNIFESP Foundation, São Paulo 05468-901, Brazil\n\n31 Bioinformatics Infrastructure for Life Sciences (BILS), Science for Life Laboratory, Dept of Cell and Molecular Biology, Uppsala University, S-751 24, Uppsala, Sweden\n\n32 Leiden University Medical Center, Leiden 2333 ZA, The Netherlands\n\n33 Bayer CropScience, Gent Area 1831, Belgium\n\n34 Leiden Institute for Advanced Computer Science, Leiden University Medical Center, Leiden 2300 RA, The Netherlands\n\n35 Swiss Institute of Bioinformatics and University of Basel, Basel 4056, Switzerland\n\n36 Cray, Inc., Seattle 98164, USA\n\n37Unaffiliated\n\n38 University Medical Center Groningen (UMCG), University of Groningen, Groningen 9713 GZ, The Netherlands\n\n39 Erasmus MC, Rotterdam 3015 CE, The Netherlands\n\n40 Independent Open Access and Open Science Advocate, Guildford GU1 3PW, UK\n\n41 Micelio, Antwerp 2180, Belgium\n\n42 Max Planck Compute and Data Facility, MPS, Garching 85748, Germany\n\n43 Leiden Institute of Advanced Computer Science, Leiden University, Leiden 2333 CA, The Netherlands\n\n44 Department of Computer Science, Oxford University, Oxford OX1 3QD, UK\n\n45 Leiden University Medical Center, Leiden and Dutch TechCenter for Life Sciences, Utrecht 2333 ZA, The Netherlands\n\n46 Netherlands eScience Center, Amsterdam 1098 XG, The Netherlands\n\n47 Erasmus MC, Rotterdam 3015 CE, The Netherlands\n\nB.M. (email: barend.mons@dtls.nl)\n\nM.W. was the primary author of the manuscript, and participated extensively in the drafting and editing of the FAIR Principles. M.D. was significantly involved in the drafting of the FAIR Principles. B.M. conceived of the FAIR Data Initiative, contributed extensively to the drafting of the principles, and to this manuscript text. All other authors are listed alphabetically, and contributed to the manuscript either by their participation in the initial workshop and/or by editing or commenting on the manuscript text.\n\nReceived 2015 Dec 10; Accepted 2016 Feb 12; Collection date 2016.\n\nCopyright © 2016, Macmillan Publishers Limited\n\nThis work is licensed under a Creative Commons Attribution 4.0 International License. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in the credit line; if the material is not included under the Creative Commons license, users will need to obtain permission from the license holder to reproduce the material. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0 Metadata associated with this Data Descriptor is available at http://www.nature.com/sdata/ and is released under the CC0 waiver to maximize reuse.\n\nPMCID: PMC4792175 PMID:\n\nSee the addendum \"\" in volume 6, 6.\n\n### Abstract\n\nThere is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders—representing academia, industry, funding agencies, and scholarly publishers—have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the FAIR Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the FAIR Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the FAIR Principles, and includes the rationale behind them, and some exemplar implementations in the community.\n\nSubject terms: Research data, Publication characteristics\n\n### Comment\n\n#### Supporting discovery through good data management\n\nGood data management is not a goal in itself, but rather is the key conduit leading to knowledge discovery and innovation, and to subsequent data and knowledge integration and reuse by the community after the data publication process. Unfortunately, the existing digital ecosystem surrounding scholarly data publication prevents us from extracting maximum benefit from our research investments (e.g., ref. 1). Partially in response to this, science funders, publishers and governmental agencies are beginning to require data management and stewardship plans for data generated in publicly funded experiments. Beyond proper collection, annotation, and archival, data stewardship includes the notion of ‘long-term care’ of valuable digital assets, with the goal that they should be discovered and re-used for downstream investigations, either alone, or in combination with newly generated data. The outcomes from good data management and stewardship, therefore, are high quality digital publications that facilitate and simplify this ongoing process of discovery, evaluation, and reuse in downstream studies. What constitutes ‘good data management’ is, however, largely undefined, and is generally left as a decision for the data or repository owner. Therefore, bringing some clarity around the goals and desiderata of good data management and stewardship, and defining simple guideposts to inform those who publish and/or preserve scholarly data, would be of great utility.\n\nThis article describes four foundational principles—Findability, Accessibility, Interoperability, and Reusability—that serve to guide data producers and publishers as they navigate around these obstacles, thereby helping to maximize the added-value gained by contemporary, formal scholarly digital publishing. Importantly, it is our intent that the principles apply not only to ‘data’ in the conventional sense, but also to the algorithms, tools, and workflows that led to that data. All scholarly digital research objects2—from data to analytical pipelines—benefit from application of these principles, since all components of the research process must be available to ensure transparency, reproducibility, and reusability.\n\nThere are numerous and diverse stakeholders who stand to benefit from overcoming these obstacles: researchers wanting to share, get credit, and reuse each other’s data and interpretations; professional data publishers offering their services; software and tool-builders providing data analysis and processing services such as reusable workflows; funding agencies (private and public) increasingly concerned with long-term data stewardship; and a data science community mining, integrating and analysing new and existing data to advance discovery. To facilitate the reading of this manuscript by these diverse stakeholders, we provide definitions for common abbreviations in Box 1. Humans, however, are not the only critical stakeholders in the milieu of scientific data. Similar problems are encountered by the applications and computational agents that we task to undertake data retrieval and analysis on our behalf. These ‘computational stakeholders’ are increasingly relevant, and demand as much, or more, attention as their importance grows. One of the grand challenges of data-intensive science, therefore, is to improve knowledge discovery through assisting both humans, and their computational agents, in the discovery of, access to, and integration and analysis of, task-appropriate scientific data and other scholarly digital objects.\n\n##### Terms and Abbreviations.\n\nBD2K—Big Data 2 Knowledge, is a trans-NIH initiative established to enable biomedical research as a digital research enterprise, to facilitate discovery and support new knowledge, and to maximise community engagement.\n\nDOI—Digital Object Identifier; a code used to permanently and stably identify (usually digital) objects. DOIs provide a standard mechanism for retrieval of metadata about the object, and generally a means to access the data object itself.\n\nFAIR—Findable, Accessible, Interoperable, Reusable.\n\nFORCE11—The Future of Research Communications and e-Scholarship; a community of scholars, librarians, archivists, publishers and research funders that has arisen organically to help facilitate the change toward improved knowledge creation and sharing, initiated in 2011.\n\nInteroperability—the ability of data or tools from non-cooperating resources to integrate or work together with minimal effort.\n\nJDDCP—Joint Declaration of Data Citation Principles; Acknowledging data as a first-class research output, and to support good research practices around data re-use, JDDCP proposes a set of guiding principles for citation of data within scholarly literature, another dataset, or any other research object.\n\nRDF—Resource Description Framework; a globally-accepted framework for data and knowledge representation that is intended to be read and interpreted by machines.\n\nFor certain types of important digital objects, there are well-curated, deeply-integrated, special-purpose repositories such as Genbank3, Worldwide Protein Data Bank (wwPDB4), and UniProt5 in the life sciences; Space Physics Data Facility (SPDF; http://spdf.gsfc.nasa.gov/) and Set of Identifications, Measurements and Bibliography for Astronomical Data (SIMBAD6) in the space sciences. These foundational and critical core resources are continuously curating and capturing high-value reference datasets and fine-tuning them to enhance scholarly output, provide support for both human and mechanical users, and provide extensive tooling to access their content in rich, dynamic ways. However, not all datasets or even data types can be captured by, or submitted to, these repositories. Many important datasets emerging from traditional, low-throughput bench science don’t fit in the data models of these special-purpose repositories, yet these datasets are no less important with respect to integrative research, reproducibility, and reuse in general. Apparently in response to this, we see the emergence of numerous general-purpose data repositories, at scales ranging from institutional (for example, a single university), to open globally-scoped repositories such as Dataverse7, FigShare (http://figshare.com), Dryad8, Mendeley Data (https://data.mendeley.com/), Zenodo (http://zenodo.org/), DataHub (http://datahub.io), DANS (http://www.dans.knaw.nl/), and EUDat9. Such repositories accept a wide range of data types in a wide variety of formats, generally do not attempt to integrate or harmonize the deposited data, and place few restrictions (or requirements) on the descriptors of the data deposition. The resulting data ecosystem, therefore, appears to be moving away from centralization, is becoming more diverse, and less integrated, thereby exacerbating the discovery and re-usability problem for both human and computational stakeholders.\n\nA specific example of these obstacles could be imagined in the domain of gene regulation and expression analysis. Suppose a researcher has generated a dataset of differentially-selected polyadenylation sites in a non-model pathogenic organism grown under a variety of environmental conditions that stimulate its pathogenic state. The researcher is interested in comparing the alternatively-polyadenylated genes in this local dataset, to other examples of alternative-polyadenylation, and the expression levels of these genes—both in this organism and related model organisms—during the infection process. Given that there is no special-purpose archive for differential polyadenylation data, and no model organism database for this pathogen, where does the researcher begin?\n\nWe will consider the current approach to this problem from a variety of data discovery and integration perspectives. If the desired datasets existed, where might they have been published, and how would one begin to search for them, using what search tools? The desired search would need to filter based on specific species, specific tissues, specific types of data (Poly-A, microarray, NGS), specific conditions (infection), and specific genes—is that information (‘metadata’) captured by the repositories, and if so, what formats is it in, is it searchable, and how? Once the data is discovered, can it be downloaded? In what format(s)? Can that format be easily integrated with private in-house data (the local dataset of alternative polyadenylation sites) as well as other data publications from third-parties and with the community’s core gene/protein data repositories? Can this integration be done automatically to save time and avoid copy/paste errors? Does the researcher have permission to use the data from these third-party researchers, under what license conditions, and who should be cited if a data-point is re-used?\n\nQuestions such as these highlight some of the barriers to data discovery and reuse, not only for humans, but even more so for machines; yet it is precisely these kinds of deeply and broadly integrative analyses that constitute the bulk of contemporary e-Science. The reason that we often need several weeks (or months) of specialist technical effort to gather the data necessary to answer such research questions is not the lack of appropriate technology; the reason is, that we do not pay our valuable digital objects the careful attention they deserve when we create and preserve them. Overcoming these barriers, therefore, necessitates that all stakeholders—including researchers, special-purpose, and general-purpose repositories—evolve to meet the emergent challenges described above. The goal is for scholarly digital objects of all kinds to become ‘first class citizens’ in the scientific publication ecosystem, where the quality of the publication—and more importantly, the impact of the publication—is a function of its ability to be accurately and appropriately found, re-used, and cited over time, by all stakeholders, both human and mechanical.\n\nWith this goal in-mind, a workshop was held in Leiden, Netherlands, in 2014, named ‘Jointly Designing a Data Fairport’. This workshop brought together a wide group of academic and private stakeholders all of whom had an interest in overcoming data discovery and reuse obstacles. From the deliberations at the workshop the notion emerged that, through the definition of, and widespread support for, a minimal set of community-agreed guiding principles and practices, all stakeholders could more easily discover, access, appropriately integrate and re-use, and adequately cite, the vast quantities of information being generated by contemporary data-intensive science. The meeting concluded with a draft formulation of a set of foundational principles that were subsequently elaborated in greater detail—namely, that all research objects should be Findable, Accessible, Interoperable and Reusable (FAIR) both for machines and for people. These are now referred to as the FAIR Guiding Principles. Subsequently, a dedicated FAIR working group, established by several members of the FORCE11 community10 fine-tuned and improved the Principles. The results of these efforts are reported here.\n\n#### The significance of machines in data-rich research environments\n\nThe emphasis placed on FAIRness being applied to both human-driven and machine-driven activities, is a specific focus of the FAIR Guiding Principles that distinguishes them from many peer initiatives (discussed in the subsequent section). Humans and machines often face distinct barriers when attempting to find and process data on the Web. Humans have an intuitive sense of ‘semantics’ (the meaning or intent of a digital object) because we are capable of identifying and interpreting a wide variety of contextual cues, whether those take the form of structural/visual/iconic cues in the layout of a Web page, or the content of narrative notes. As such, we are less likely to make errors in the selection of appropriate data or other digital objects, although humans will face similar difficulties if sufficient contextual metadata is lacking. The primary limitation of humans, however, is that we are unable to operate at the scope, scale, and speed necessitated by the scale of contemporary scientific data and complexity of e-Science. It is for this reason that humans increasingly rely on computational agents to undertake discovery and integration tasks on their behalf. This necessitates machines to be capable of autonomously and appropriately acting when faced with the wide range of types, formats, and access-mechanisms/protocols that will be encountered during their self-guided exploration of the global data ecosystem. It also necessitates that the machines keep an exquisite record of provenance such that the data they are collecting can be accurately and adequately cited. Assisting these agents, therefore, is a critical consideration for all participants in the data management and stewardship process—from researchers and data producers to data repository hosts.\n\nThroughout this paper, we use the phrase ‘machine actionable’ to indicate a continuum of possible states wherein a digital object provides increasingly more detailed information to an autonomously-acting, computational data explorer. This information enables the agent—to a degree dependent on the amount of detail provided—to have the capacity, when faced with a digital object never encountered before, to: a) identify the type of object (with respect to both structure and intent), b) determine if it is useful within the context of the agent’s current task by interrogating metadata and/or data elements, c) determine if it is usable, with respect to license, consent, or other accessibility or use constraints, and d) take appropriate action, in much the same manner that a human would.\n\nFor example, a machine may be capable of determining the data-type of a discovered digital object, but not capable of parsing it due to it being in an unknown format; or it may be capable of processing the contained data, but not capable of determining the licensing requirements related to the retrieval and/or use of that data. The optimal state—where machines fully ‘understand’ and can autonomously and correctly operate-on a digital object—may rarely be achieved. Nevertheless, the FAIR principles provide ‘steps along a path’ toward machine-actionability; adopting, in whole or in part, the FAIR principles, leads the resource along the continuum towards this optimal state. In addition, the idea of being machine-actionable applies in two contexts—first, when referring to the contextual metadata surrounding a digital object (‘what is it?’), and second, when referring to the content of the digital object itself (‘how do I process it/integrate it?’). Either, or both of these may be machine-actionable, and each forms its own continuum of actionability.\n\nFinally, we wish to draw a distinction between data that is machine-actionable as a result of specific investment in software supporting that data-type, for example, bespoke parsers that understand life science wwPDB files or space science Space Physics Archive Search and Extract (SPASE) files, and data that is machine-actionable exclusively through the utilization of general-purpose, open technologies. To reiterate the earlier point—ultimate machine-actionability occurs when a machine can make a useful decision regarding data that it has not encountered before. This distinction is important when considering both (a) the rapidly growing and evolving data environment, with new technologies and new, more complex data-types continuously being developed, and (b) the growth of general-purpose repositories, where the data-types likely to be encountered by an agent are unpredictable. Creating bespoke parsers, in all computer languages, for all data-types and all analytical tools that require those data-types, is not a sustainable activity. As such, the focus on assisting machines in their discovery and exploration of data through application of more generalized interoperability technologies and standards at the data/repository level, becomes a first-priority for good data stewardship.\n\n#### The FAIR Guiding Principles in detail\n\nRepresentatives of the interested stakeholder-groups, discussed above, coalesced around four core desiderata—the FAIR Guiding Principles—and limited elaboration of these, which have been refined (Box 2) from the meeting’s original draft, available at (https://www.force11.org/node/6062). A separate document that dynamically addresses community discussion relating to clarifications and explanations of the principles, and detailed guidelines for and examples of FAIR implementations, is currently being constructed (http://datafairport.org/fair-principles-living-document-menu). The FAIR Guiding Principles describe distinct considerations for contemporary data publishing environments with respect to supporting both manual and automated deposition, exploration, sharing, and reuse. While there have been a number of recent, often domain-focused publications advocating for specific improvements in practices relating to data management and archival1,11,12, FAIR differs in that it describes concise, domain-independent, high-level principles that can be applied to a wide range of scholarly outputs. Throughout the Principles, we use the phrase ‘(meta)data’ in cases where the Principle should be applied to both metadata and data.\n\n##### The FAIR Guiding Principles.\n\nTo be Findable:\n\nF1. (meta)data are assigned a globally unique and persistent identifier\n\nF2. data are described with rich metadata (defined by R1 below)\n\nF3. metadata clearly and explicitly include the identifier of the data it describes\n\nF4. (meta)data are registered or indexed in a searchable resource\n\nTo be Accessible:\n\nA1. (meta)data are retrievable by their identifier using a standardized communications protocol\n\nA1.1 the protocol is open, free, and universally implementable\n\nA1.2 the protocol allows for an authentication and authorization procedure, where necessary\n\nA2. metadata are accessible, even when the data are no longer available\n\nTo be Interoperable:\n\nI1. (meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation.\n\nI2. (meta)data use vocabularies that follow FAIR principles\n\nI3. (meta)data include qualified references to other (meta)data\n\nTo be Reusable:\n\nR1. meta(data) are richly described with a plurality of accurate and relevant attributes\n\nR1.1. (meta)data are released with a clear and accessible data usage license\n\nR1.2. (meta)data are associated with detailed provenance\n\nR1.3. (meta)data meet domain-relevant community standards\n\nThe elements of the FAIR Principles are related, but independent and separable. The Principles define characteristics that contemporary data resources, tools, vocabularies and infrastructures should exhibit to assist discovery and reuse by third-parties. By minimally defining each guiding principle, the barrier-to-entry for data producers, publishers and stewards who wish to make their data holdings FAIR is purposely maintained as low as possible. The Principles may be adhered to in any combination and incrementally, as data providers’ publishing environments evolve to increasing degrees of ‘FAIRness’. Moreover, the modularity of the Principles, and their distinction between data and metadata, explicitly support a wide range of special circumstances. One such example is highly sensitive or personally-identifiable data, where publication of rich metadata to facilitate discovery, including clear rules regarding the process for accessing the data, provides a high degree of ‘FAIRness’ even in the absence of FAIR publication of the data itself. A second example involves the publication of non-data research objects. Analytical workflows, for example, are a critical component of the scholarly ecosystem, and their formal publication is necessary to achieve both transparency and scientific reproducibility. The FAIR principles can equally be applied to these non-data assets, which need to be identified, described, discovered, and reused in much the same manner as data.\n\nSpecific exemplar efforts that provide varying levels of FAIRness are detailed later in this document. Additional issues, however, remain to be addressed. First, when community-endorsed vocabularies or other (meta)data standards do not include the attributes necessary to achieve rich annotation, there are two possible solutions: either publish an extension of an existing, closely related vocabulary, or—in the extreme case—create and explicitly publish a new vocabulary resource, following FAIR principles (‘I2’). Second, to explicitly identify the standard chosen when more than one vocabulary or other (meta)data standard is available, and given that for instance in the life sciences there are over 600 content standards, the BioSharing registry (https://biosharing.org/) can be of use as it describes the standards in detail, including versions where applicable.\n\n#### The Principles precede implementation\n\nThese high-level FAIR Guiding Principles precede implementation choices, and do not suggest any specific technology, standard, or implementation-solution; moreover, the Principles are not, themselves, a standard or a specification. They act as a guide to data publishers and stewards to assist them in evaluating whether their particular implementation choices are rendering their digital research artefacts Findable, Accessible, Interoperable, and Reusable. We anticipate that these high level principles will enable a broad range of integrative and exploratory behaviours, based on a wide range of technology choices and implementations. Indeed, many repositories are already implementing various aspects of FAIR using a variety of technology choices and several examples are detailed in the next section; examples include Scientific Data itself and how narrative data articles are anchored to a progressively FAIR structured metadata.\n\n#### Examples of FAIRness, and the resulting value-added\n\nDataverse7: Dataverse is an open-source data repository software installed in dozens of institutions globally to support public community repositories or institutional research data repositories. Harvard Dataverse, with more than 60,000 datasets, is the largest of the current Dataverse repositories, and is open to all researchers from all research fields. Dataverse generates a formal citation for each deposit, following the standard defined by Altman and King13. Dataverse makes the Digital Object Identifier (DOI), or other persistent identifiers (Handles), public when the dataset is published (‘F’). This resolves to a landing page, providing access to metadata, data files, dataset terms, waivers or licenses, and version information, all of which is indexed and searchable (‘F’, ‘A’, and ‘R’). Deposits include metadata, data files, and any complementary files (such as documentation or code) needed to understand the data and analysis (‘R’). Metadata is always public, even if the data are restricted or removed for privacy issues (‘F’, ‘A’). This metadata is offered at three levels, extensively supporting the ‘I’ and ‘R’ FAIR principles: 1) data citation metadata, which maps to DataCite schema or Dublin Core Terms, 2) domain-specific metadata, which when possible maps to metadata standards used within a scientific domain, and 3) file-level metadata, which can be deep and extensive for tabular data files (including column-level metadata). Finally, Dataverse provides public machine-accessible interfaces to search the data, access the metadata and download the data files, using a token to grant access when data files are restricted (‘A’).\n\nFAIRDOM (http://fair-dom.org/about): integrates the SEEK14 and openBIS15 platforms to produce a FAIR data and model management facility for Systems Biology. Individual research assets (or aggregates of data and models) are identified with unique and persistent HTTP URLs, which can be registered with DOIs for publication (‘F’). Assets can be accessed over the Web in a variety of formats appropriate for individuals and/or their computers (RDF, XML) (‘I’). Research assets are annotated with rich metadata, using community standards, formats and ontologies (‘I’). The metadata is stored as RDF to enable interoperability and assets can be downloaded for reuse (‘R’).\n\nISA16: is a community-driven metadata tracking framework to facilitate standards-compliant collection, curation, management and reuse of life science datasets. ISA provides progressively FAIR structured metadata to Nature Scientific Data’s Data Descriptor articles, and many GigaScience data papers, and underpins the EBI MetaboLights database among other data resources. At the heart is a general-purpose, extensible ISA model, originally only available as a tabular representation but subsequently enhanced as an RDF-based representation17, and JSON serializations to enable the ‘I’ and ‘R’, becoming ‘FAIR’ when published as linked data (http://elixir-uk.org/node-events/201cisa-as-a-fair-research-object201d-hack-the-spec-event-1) and complementing other research objects18.\n\nOpen PHACTS19: Open PHACTS is a data integration platform for information pertaining to drug discovery. Access to the platform is mediated through a machine-accessible interface20 which provides multiple representations that are both human (HTML) and machine readable (RDF, JSON, XML, CSV, etc), providing the ‘A’ facet of FAIRness. The interface allows multiple URLs to be used to access information about a particular entity through a mappings service (‘F’ and ‘A’). Thus, a user can provide a ChEMBL URL to retrieve information sourced from, for example, Chemspider or DrugBank. Each call provides a canonical URL in its response (‘A’ and ‘I’). All data sources used are described using standardized dataset descriptions, following the global VoID standard, with rich provenance (‘R’ and ‘I’). All interface features are described using RDF following the Linked Data API specification (‘A’). Finally, a majority of the datasets are described using community agreed upon ontologies (‘I’).\n\nwwPDB4,21: wwPDB is a special-purpose, intensively-curated data archive that hosts information about experimentally-determined 3D structures of proteins and nucleic acids. All wwPDB entries are stably hosted on an FTP server (‘A’) and represented in machine-readable formats (text and XML); the latter are machine-actionable using the metadata provided by the wwPDB conforming to the Macromolecular Information Framework (mmCIF22), a data standard of the International Union of Crystallography (IUCr) (‘F’,‘I’ for humans, ‘F’,‘I’ for IUCr-aware machines). The wwPDB metadata contains cross-references to common identifiers such as PubMed and NCBI Taxonomy, and their wwPDB metadata are described in data dictionaries and schema documents (http://mmcif.wwpdb.org and http://pdbml.wwpdb.org) which conform to the IUCr data standard for the chemical and structural biology domains (‘R’). A variety of software tools are available to interpret both wwPDB data and meta-data (‘I’,‘R’ for humans, ‘I’,‘R’ for machines with this software). Each entry is represented by a DOI (‘F’, ‘A’ for humans and machines). The DOI resolves to a zipped file which requires special software for further interrogation/interpretation. Other wwPDB access points23–25 provide access to wwPDB records through URLs that are likely to be stable in the long-term (‘F’), and all data and metadata is searchable through one or more of the wwPDB-affiliated websites (‘F’)\n\nUniProt26: UniProt is a comprehensive resource for protein sequence and annotation data. All entries are uniquely identified by a stable URL, that provides access to the record in a variety of formats including a web page, plain-text, and RDF (‘F’ and ‘A’). The record contains rich metadata (‘F’) that is both human-readable (HTML) and machine-readable (text and RDF), where the RDF formatted response utilizes shared vocabularies and ontologies such as UniProt Core, FALDO, and ECO (‘I’). Interlinking with more than 150 different databases, every UniProt record has extensive links into, for example, PubMed, enabling rich citation. These links are machine-actionable in the RDF representation (‘R’). Finally, in the RDF representation, the UniProt Core Ontology explicitly types all records, leaving no ambiguity—neither for humans nor machines—about what the data represents (‘R’), enabling fully-automated retrieval of records and cross-referencing information.\n\nIn addition to, and in support of, communities and resources that are already pursuing FAIR objectives, the Data Citation Implementation Group of Force11 has published specific technical recommendations for how to implement many of the principles27, with a particular focus on identifiers and their resolution, persistence, and metadata accessibility especially related to citation. In addition, the ‘Skunkworks’ group that emerged from the Lorentz Workshop has been creating software supporting infrastructures28 that are, end-to-end, compatible with FAIR principles, and can be implemented over existing repositories. These code modules have a particular focus on metadata publication and searchability, compatibility in cases of strict privacy considerations, and the extremely difficult problem of data and metadata interoperability (manuscript in preparation). Finally, there are several emergent projects, some listed in Box 3, for which FAIR is a key objective. These projects may provide valuable advice and guidance for those wishing to become more FAIR.\n\n##### Emergent community/collaborative initiatives with FAIR as a core focus or activity.\n\nbioCADDIE (https://biocaddie.org): The NIH BD2K biomedical and healthCAre Data Discovery Index Ecosystem (bioCADDIE) consortium works to develop a Data Discovery Index (DDI) prototype, which is set to be as transformative and impactful for data as PubMed for the biomedical literature30. The DDI focuses on finding (‘F’) and accessing (‘A’) the datasets stored across different sources, and progressively works to identify relevant metadata31 (‘I’) and maps them to community standards (‘R’), linking to BioSharing.\n\nCEDAR32: The Center for Expanded Data Annotation and Retrieval (CEDAR) is an NIH BD2K funded center of excellence to develop tools and technologies that reduce the burden of authoring and enhancing metadata that meet community-based standards. CEDAR will enable the creation of metadata templates that implement community based standards for experimental metadata, from BioSharing (https://biosharing.org), and that will be uniquely identifiable and retrievable with HTTP URIs, and annotated with vocabularies and ontologies drawn from BioPortal (http://bioportal.bioontology.org) (‘F’,‘A’,‘I’,‘R’). These templates will guide users to create rich metadata with unique and stable HTTP identifiers (‘F’) that can be retrieved using HTTP (‘A’) and accessible in a variety of formats (JSON-LD, TURTLE, RDF/XML, CSV, etc) (‘I’). These metadata will use community standards, as defined by the template, and include provenance and data usage (‘R’).\n\nThese two projects, among others, provide tools and or collaborative opportunities for those who wish to improve the FAIRness of their data.\n\n#### FAIRness is a prerequisite for proper data management and data stewardship\n\nThe ideas within the FAIR Guiding Principles reflect, combine, build upon and extend previous work by both the Concept Web Alliance (https://conceptweblog.wordpress.com/) partners, who focused on machine-actionability and harmonization of data structures and semantics, and by the scientific and scholarly organizations that developed the Joint Declaration of Data Citation Principles (JDDCP29), who focused on primary scholarly data being made citable, discoverable and available for reuse, so as to be capable of supporting more rigorous scholarship. An attempt to define the similarities and overlaps between the FAIR Principles and the JDDCP is provided at (https://www.force11.org/node/6062). The FAIR Principles are also complementary to the ‘Data Seal of Approval’ (DSA) (http://datasealofapproval.org/media/filer_public/2013/09/27/guidelines_2014-2015.pdf) in that they share the general aim to render data re-usable for users other than those who originally generated them. While the DSA focuses primarily on the responsibilities and conduct of data producers and repositories, FAIR focuses primarily on the data itself. Clearly, the broader community of stakeholders is coalescing around a set of common, dovetailed visions spanning all facets of the scholarly data publishing ecosystem.\n\nThe end result, when implemented, will be more rigorous management and stewardship of these valuable digital resources, to the benefit of the entire academic community. As stated at the outset, good data management and stewardship is not a goal in itself, but rather a pre-condition supporting knowledge discovery and innovation. Contemporary e-Science requires data to be Findable, Accessible, Interoperable, and Reusable in the long-term, and these objectives are rapidly becoming expectations of agencies and publishers. We demonstrate, therefore, that the FAIR Data Principles provide a set of mileposts for data producers and publishers. They guide the implementation of the most basic levels of good Data Management and Stewardship practice, thus helping researchers adhere to the expectations and requirements of their funding agencies. We call on all data producers and publishers to examine and implement these principles, and actively participate with the FAIR initiative by joining the Force11 working group. By working together towards shared, common goals, the valuable data produced by our community will gradually achieve the critical goals of FAIRness.\n\n### Additional Information\n\nHow to cite this article: Wilkinson, M. D. et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci. Data 3:160018 doi: 10.1038/sdata.2016.18 (2016).\n\n### Acknowledgments\n\nThe original Lorentz Workshop ‘Jointly Designing a Data FAIRport’ was organized by Barend Mons in collaboration with and co-sponsored by the Lorentz center, The Dutch Techcenter for the Life Sciences and the Netherlands eScience Center. The principles and themes described in this manuscript represent the significant voluntary contributions and participation of the authors at, and/or subsequent to, this workshop and from the wider Force11, BD2K and ELIXIR communities. We also acknowledge and thank the organizers and backers of the NBDC/DBCLS BioHackathon 2015, where several of the authors made significant revisions to the FAIR Principles.\n\n### Footnotes\n\nM.A. is the Nature Genetics’ Editor in Chief; S.A.S. is Scientific Data’s Honorary Academic Editor and consultant.\n\n### References\n\n- Roche D. G., Kruuk L. E. B., Lanfear R. & Binning S. A. Public Data Archiving in Ecology and Evolution: How Well Are We Doing? PLOS Biol. 13, e1002295 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Bechhofer S. et al. Research Objects: Towards Exchange and Reuse of Digital Knowledge. Nat. Preced. 10.1038/npre.2010.4626.1 (2010). [DOI] [Google Scholar]\n\n- Benson D. A. et al. GenBank. Nucleic Acids Res. 41, D36–D42 (2013). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Berman H., Henrick K. & Nakamura H. Announcing the worldwide Protein Data Bank. Nat. Struct. Biol. 10, 980–980 (2003). [DOI] [PubMed] [Google Scholar]\n\n- The Uniprot Consortium. UniProt: a hub for protein information. Nucleic Acids Res. 43, D204–D212 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Wenger M. et al. The SIMBAD astronomical database-The CDS reference database for astronomical objects. Astron. Astrophys. Suppl. Ser. 143, 9–22 (2000). [Google Scholar]\n\n- Crosas M. \"The Dataverse Network®: An Open-Source Application for Sharing, Discovering and Preserving Data\". D-Lib Mag 17 (1), p2 (2011). [Google Scholar]\n\n- White H. C., Carrier S., Thompson A., Greenberg J. & Scherle R. The Dryad data repository: A Singapore framework metadata architecture in a DSpace environment. Univ. Göttingen, p157 (2008). [Google Scholar]\n\n- Lecarpentier D. et al. EUDAT: A New Cross-Disciplinary Data Infrastructure for Science. Int. J. Digit. Curation 8, 279–287 (2013). [Google Scholar]\n\n- Martone M. E. FORCE11: Building the Future for Research Communications and e-Scholarship. Bioscience 65, 635 (2015). [Google Scholar]\n\n- White E. et al. Nine simple ways to make it easier to (re)use your data. Ideas Ecol. Evol. 6 (2013). [Google Scholar]\n\n- Sandve G. K., Nekrutenko A., Taylor J. & Hovig E. Ten Simple Rules for Reproducible Computational Research. PLoS Comput. Biol. 9, e1003285 (2013). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Altman M. & King G. in D-Lib Magazine 13, no. 3/4 (2007). [Google Scholar]\n\n- Wolstencroft K. et al. SEEK: a systems biology data and model management platform. BMC Syst. Biol. 9, 33 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Bauch A. et al. openBIS: a flexible framework for managing and analyzing complex data in biology research. BMC Bioinformatics 12, 468 (2011). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Sansone S.-A. et al. Toward interoperable bioscience data. Nat. Genet. 44, 121–126 (2012). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- González-Beltrán A., Maguire E., Sansone S.-A. & Rocca-Serra P. linkedISA: semantic representation of ISA-Tab experimental metadata. BMC Bioinformatics 15, S4 (2014). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- González-Beltrán A. et al. From Peer-Reviewed to Peer-Reproduced in Scholarly Publishing: The Complementary Roles of Data Models and Workflows in Bioinformatics. PLoS ONE 10, e0127612 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Harland L. Open PHACTS: A Semantic Knowledge Infrastructure for Public and Commercial Drug Discovery Research. Knowl. Eng. Knowl. Manag. Lect. Notes Comput. Sci. 7603/2012, 1–7 (2012). [Google Scholar]\n\n- Groth P. et al. API-centric Linked Data integration: The Open PHACTS Discovery Platform case study. Web Semant. Sci. Serv. Agents World Wide Web 29, 12–18 (2014). [Google Scholar]\n\n- Berman H. M. et al. The Protein Data Bank. Nucleic Acids Res. 28, 235–242 (2000). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Bourne P. E., Berman H. M., Watenpaugh K., Westbrook J. D. & Fitzgerald P. M. D. The macromolecular crystallographic information file (mmCIF). Meth. Enzym 277, 571–590 (1997). [DOI] [PubMed] [Google Scholar]\n\n- Rose P. W. et al. The RCSB Protein Data Bank: views of structural biology for basic and applied research and education. Nucleic Acids Res. 43, D345–D356 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Kinjo A. R. et al. Protein Data Bank Japan (PDBj): maintaining a structural data archive and resource description framework format. Nucleic Acids Res. 40, D453–D460 (2012). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Gutmanas A. et al. PDBe: Protein Data Bank in Europe. Nucleic Acids Res. 42, D285–D291 (2014). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- UniProt Consortium. UniProt: a hub for protein information. Nucleic Acids Res. 43, D204–D212 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Starr J. et al. Achieving human and machine accessibility of cited data in scholarly publications. PeerJ Comput. Sci. 1, e1 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\n- Wilkinson M., Dumontier M. & Durbin P. DataFairPort: The Perl libraries version 0.231 10.5281/zenodo.33584 (2015). [DOI]\n\n- Data Citation Synthesis Group: Joint Declaration of Data Citation Principles. San Diego CA: FORCE11 https://www.force11.org/datacitation (2014).\n\n- Ohno-machado L. et al. NIH BD2K bioCADDIE white paper—Data Discovery Index. http://dx.doi.org/10.6084/m9.figshare.1362572 (2015).\n\n- NIH BD2K bioCADDIE WG3 Members. WG3-MetadataSpecifications: NIH BD2K bioCADDIE Data Discovery Index WG3 Metadata Specification v1 doi: 10.5281/zenodo.28019 (2015). [DOI]\n\n- Musen M. A. et al. The center for expanded data annotation and retrieval. J. Am. Med. Informatics Assoc. 22, 1148–1152 (2015). [DOI] [PMC free article] [PubMed] [Google Scholar]\n\nArticles from Scientific Data are provided here courtesy of Nature Publishing Group\n\n### ACTIONS\n\n- View on publisher site\n\n- PDF (189.1 KB)\n\n- Cite\n\n- Collections\n\n- Permalink\n\n### PERMALINK\n\nCopy\n\n### RESOURCES\n\n#### Similar articles\n\n#### Cited by other articles\n\n#### Links to NCBI Databases\n\n### Cite\n\n- Copy\n\n- Download .nbib .nbib\n\n### Add to Collections\n\nUnable to load your collection due to an error\n\nFollow NCBI\n\nConnect with NLM\n\nNational Library of Medicine 8600 Rockville Pike Bethesda, MD 20894\n\n- Web Policies\n\n- FOIA\n\n- HHS Vulnerability Disclosure\n\n- Help\n\n- Accessibility\n\n- Careers\n\n- NLM\n\n- NIH\n\n- HHS\n\n- USA.gov\n",
+      "uri": "agentic-anything://fair-paper/units/fair-guiding-principles-pmc4792175"
     }
   },
-  "generated_cli": {
-    "cli": "cli/handbook_cli.py",
-    "info": "site_id: handbook\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 4\nfrontier_count: 0",
-    "search": "3  operations-handbook__002__release-procedure  Release procedure\n      - The emergency rollback command is `aurora rollback --release CURRENT`.\nRollback approval code **ORBIT-17** is"
-  },
-  "scope": "Demonstrates deterministic capture, evidence retrieval, generated resource CLIs, and MCP access. It does not measure generative answer quality or human productivity."
+  "scope": "Demonstrates deterministic capture and evidence retrieval over pinned real resources. It does not measure generative answer quality or authorize actions against upstream systems."
 }

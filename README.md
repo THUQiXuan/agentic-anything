@@ -87,8 +87,10 @@ Requires Python 3.10+. The core installation uses only the standard library.
 
 Want to see real outputs before installing? The
 [interactive demo gallery](https://thuqixuan.github.io/agentic-anything/)
-shows document, video, CSV, code, website, generated-CLI, and MCP examples;
-every displayed result is backed by committed JSON and can be rebuilt locally.
+uses five hash-pinned resources from Project Gutenberg, the PSF Requests
+repository, Python's official documentation, NASA GISTEMP, and PubMed Central.
+It shows the real source before conversion, the generated pack, and actual
+search/CLI/MCP results; every claim links back to a locator and content hash.
 
 ```bash
 # 1. Turn ANY resource into an agent-native pack + resource-agent interfaces

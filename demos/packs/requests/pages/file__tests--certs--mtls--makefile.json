@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--certs--mtls--makefile",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/mtls/Makefile",
+  "url_path": "tests/certs/mtls/Makefile",
+  "title": "tests/certs/mtls/Makefile",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/certs/mtls/Makefile",
+  "summary": ".PHONY: all clean\n\nall:\n\tmake -C client all\n\nclean:\n\tmake -C client clean",
+  "content": [
+    {
+      "kind": "pre",
+      "text": ".PHONY: all clean\n\nall:\n\tmake -C client all\n\nclean:\n\tmake -C client clean\n"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/mtls/Makefile",
+    "capture_mode": "ingest",
+    "content_sha256": "aa1f5be6bde49113304ba145736bc3a3d23d45dfaa81e0d977fd52378f30b314"
+  }
+}

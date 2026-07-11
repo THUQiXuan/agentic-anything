@@ -1,6 +1,6 @@
 $ python demos/build_demos.py
-✓ agentified 5 resources into 14 evidence units
-✓ 7/7 showcase assertions passed
-✓ generated resource CLI answered: rollback ORBIT-17
-✓ MCP searched across five resource agents for: 错误码 E42 缓存
-✓ model calls: 0
+✓ verified 5 authentic source snapshots from 5 publishers
+✓ agentified 93 evidence units across 5 resource types
+✓ 11/11 quality assertions passed
+✓ generated CLIs and cross-resource MCP search executed
+✓ synthetic source lines: 0; model calls: 0

@@ -1,0 +1,658 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--user--quickstart-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/user/quickstart.rst",
+  "url_path": "docs/user/quickstart.rst",
+  "title": "docs/user/quickstart.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/user/quickstart.rst",
+  "summary": ".. _quickstart:\nQuickstart\n==========\n.. module:: requests.models\nEager to get started? This page gives a good introduction in how to get started\nwith Requests.\nFirst, make sure that:\n* Requests is :ref:`installed <install>`\n* Requests is…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _quickstart:"
+    },
+    {
+      "kind": "p",
+      "text": "Quickstart\n=========="
+    },
+    {
+      "kind": "p",
+      "text": ".. module:: requests.models"
+    },
+    {
+      "kind": "p",
+      "text": "Eager to get started? This page gives a good introduction in how to get started\nwith Requests."
+    },
+    {
+      "kind": "p",
+      "text": "First, make sure that:"
+    },
+    {
+      "kind": "p",
+      "text": "* Requests is :ref:`installed <install>`\n* Requests is :ref:`up-to-date <updates>`"
+    },
+    {
+      "kind": "p",
+      "text": "Let's get started with some simple examples."
+    },
+    {
+      "kind": "p",
+      "text": "Make a Request\n--------------"
+    },
+    {
+      "kind": "p",
+      "text": "Making a request with Requests is very simple."
+    },
+    {
+      "kind": "p",
+      "text": "Begin by importing the Requests module::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> import requests"
+    },
+    {
+      "kind": "p",
+      "text": "Now, let's try to get a webpage. For this example, let's get GitHub's public\ntimeline::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://api.github.com/events')"
+    },
+    {
+      "kind": "p",
+      "text": "Now, we have a :class:`Response <requests.Response>` object called ``r``. We can\nget all the information we need from this object."
+    },
+    {
+      "kind": "p",
+      "text": "Requests' simple API means that all forms of HTTP request are as obvious. For\nexample, this is how you make an HTTP POST request::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.post('https://httpbin.org/post', data={'key': 'value'})"
+    },
+    {
+      "kind": "p",
+      "text": "Nice, right? What about the other HTTP request types: PUT, DELETE, HEAD and\nOPTIONS? These are all just as simple::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.put('https://httpbin.org/put', data={'key': 'value'})\n    >>> r = requests.delete('https://httpbin.org/delete')\n    >>> r = requests.head('https://httpbin.org/get')\n    >>> r = requests.options('https://httpbin.org/get')"
+    },
+    {
+      "kind": "p",
+      "text": "That's all well and good, but it's also only the start of what Requests can\ndo."
+    },
+    {
+      "kind": "p",
+      "text": "Passing Parameters In URLs\n--------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "You often want to send some sort of data in the URL's query string. If\nyou were constructing the URL by hand, this data would be given as key/value\npairs in the URL after a question mark, e.g. ``httpbin.org/get?key=val``.\nRequests allows you to provide these arguments as a dictionary of strings,\nusing the ``params`` keyword argument. As an example, if you wanted to pass\n``key1=value1`` and ``key2=value2`` to ``httpbin.org/get``, you would use the\nfollowing code::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> payload = {'key1': 'value1', 'key2': 'value2'}\n    >>> r = requests.get('https://httpbin.org/get', params=payload)"
+    },
+    {
+      "kind": "p",
+      "text": "You can see that the URL has been correctly encoded by printing the URL::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> print(r.url)\n    https://httpbin.org/get?key2=value2&key1=value1"
+    },
+    {
+      "kind": "p",
+      "text": "Note that any dictionary key whose value is ``None`` will not be added to the\nURL's query string."
+    },
+    {
+      "kind": "p",
+      "text": "You can also pass a list of items as a value::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> payload = {'key1': 'value1', 'key2': ['value2', 'value3']}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://httpbin.org/get', params=payload)\n    >>> print(r.url)\n    https://httpbin.org/get?key1=value1&key2=value2&key2=value3"
+    },
+    {
+      "kind": "p",
+      "text": "Response Content\n----------------"
+    },
+    {
+      "kind": "p",
+      "text": "We can read the content of the server's response. Consider the GitHub timeline\nagain::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> import requests"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://api.github.com/events')\n    >>> r.text\n    '[{\"repository\":{\"open_issues\":0,\"url\":\"https://github.com/..."
+    },
+    {
+      "kind": "p",
+      "text": "Requests will automatically decode content from the server. Most unicode\ncharsets are seamlessly decoded."
+    },
+    {
+      "kind": "p",
+      "text": "When you make a request, Requests makes educated guesses about the encoding of\nthe response based on the HTTP headers. The text encoding guessed by Requests\nis used when you access ``r.text``. You can find out what encoding Requests is\nusing, and change it, using the ``r.encoding`` property::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.encoding\n    'utf-8'\n    >>> r.encoding = 'ISO-8859-1'"
+    },
+    {
+      "kind": "p",
+      "text": "If you change the encoding, Requests will use the new value of ``r.encoding``\nwhenever you call ``r.text``. You might want to do this in any situation where\nyou can apply special logic to work out what the encoding of the content will\nbe. For example, HTML and XML have the ability to specify their encoding in\ntheir body. In situations like this, you should use ``r.content`` to find the\nencoding, and then set ``r.encoding``. This will let you use ``r.text`` with\nthe correct encoding."
+    },
+    {
+      "kind": "p",
+      "text": "Requests will also use custom encodings in the event that you need them. If\nyou have created your own encoding and registered it with the ``codecs``\nmodule, you can simply use the codec name as the value of ``r.encoding`` and\nRequests will handle the decoding for you."
+    },
+    {
+      "kind": "p",
+      "text": "Binary Response Content\n-----------------------"
+    },
+    {
+      "kind": "p",
+      "text": "You can also access the response body as bytes, for non-text requests::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.content\n    b'[{\"repository\":{\"open_issues\":0,\"url\":\"https://github.com/..."
+    },
+    {
+      "kind": "p",
+      "text": "The ``gzip`` and ``deflate`` transfer-encodings are automatically decoded for you."
+    },
+    {
+      "kind": "p",
+      "text": "The ``br``  transfer-encoding is automatically decoded for you if a Brotli library\nlike `brotli <https://pypi.org/project/brotli>`_ or `brotlicffi <https://pypi.org/project/brotlicffi>`_ is installed."
+    },
+    {
+      "kind": "p",
+      "text": "For example, to create an image from binary data returned by a request, you can\nuse the following code::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> from PIL import Image\n    >>> from io import BytesIO"
+    },
+    {
+      "kind": "p",
+      "text": ">>> i = Image.open(BytesIO(r.content))"
+    },
+    {
+      "kind": "p",
+      "text": "JSON Response Content\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "There's also a builtin JSON decoder, in case you're dealing with JSON data::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> import requests"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://api.github.com/events')\n    >>> r.json()\n    [{'repository': {'open_issues': 0, 'url': 'https://github.com/..."
+    },
+    {
+      "kind": "p",
+      "text": "In case the JSON decoding fails, ``r.json()`` raises an exception. For example, if\nthe response gets a 204 (No Content), or if the response contains invalid JSON,\nattempting ``r.json()`` raises ``requests.exceptions.JSONDecodeError``. This wrapper exception\nprovides interoperability for multiple exceptions that may be thrown by different\npython versions and json serialization libraries."
+    },
+    {
+      "kind": "p",
+      "text": "It should be noted that the success of the call to ``r.json()`` does **not**\nindicate the success of the response. Some servers may return a JSON object in a\nfailed response (e.g. error details with HTTP 500). Such JSON will be decoded\nand returned. To check that a request is successful, use\n``r.raise_for_status()`` or check ``r.status_code`` is what you expect."
+    },
+    {
+      "kind": "p",
+      "text": "Raw Response Content\n--------------------"
+    },
+    {
+      "kind": "p",
+      "text": "In the rare case that you'd like to get the raw socket response from the\nserver, you can access ``r.raw``. If you want to do this, make sure you set\n``stream=True`` in your initial request. Once you do, you can do this::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://api.github.com/events', stream=True)"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.raw\n    <urllib3.response.HTTPResponse object at 0x101194810>"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.raw.read(10)\n    b'\\x1f\\x8b\\x08\\x00\\x00\\x00\\x00\\x00\\x00\\x03'"
+    },
+    {
+      "kind": "p",
+      "text": "In general, however, you should use a pattern like this to save what is being\nstreamed to a file::"
+    },
+    {
+      "kind": "p",
+      "text": "with open(filename, 'wb') as fd:\n        for chunk in r.iter_content(chunk_size=128):\n            fd.write(chunk)"
+    },
+    {
+      "kind": "p",
+      "text": "Using ``Response.iter_content`` will handle a lot of what you would otherwise\nhave to handle when using ``Response.raw`` directly. When streaming a\ndownload, the above is the preferred and recommended way to retrieve the\ncontent. Note that ``chunk_size`` can be freely adjusted to a number that\nmay better fit your use cases."
+    },
+    {
+      "kind": "p",
+      "text": ".. note::"
+    },
+    {
+      "kind": "p",
+      "text": "An important note about using ``Response.iter_content`` versus ``Response.raw``.\n   ``Response.iter_content`` will automatically decode the ``gzip`` and ``deflate``\n   transfer-encodings.  ``Response.raw`` is a raw stream of bytes -- it does not\n   transform the response content.  If you really need access to the bytes as they\n   were returned, use ``Response.raw``."
+    },
+    {
+      "kind": "p",
+      "text": ".. _custom-headers:"
+    },
+    {
+      "kind": "p",
+      "text": "Custom Headers\n--------------"
+    },
+    {
+      "kind": "p",
+      "text": "If you'd like to add HTTP headers to a request, simply pass in a ``dict`` to the\n``headers`` parameter."
+    },
+    {
+      "kind": "p",
+      "text": "For example, we didn't specify our user-agent in the previous example::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://api.github.com/some/endpoint'\n    >>> headers = {'user-agent': 'my-app/0.0.1'}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get(url, headers=headers)"
+    },
+    {
+      "kind": "p",
+      "text": "Note: Custom headers are given less precedence than more specific sources of information. For instance:"
+    },
+    {
+      "kind": "p",
+      "text": "* Authorization headers set with `headers=` will be overridden if credentials\n  are specified in ``.netrc``, which in turn will be overridden by the  ``auth=``\n  parameter. Requests will search for the netrc file at `~/.netrc`, `~/_netrc`,\n  or at the path specified by the `NETRC` environment variable.\n  Check details in :ref:`netrc authentication <authentication>`.\n* Authorization headers will be removed if you get redirected off-host.\n* Proxy-Authorization headers will be overridden by proxy credentials provided in the URL.\n* Content-Length headers will be overridden when we can determine the length of the content."
+    },
+    {
+      "kind": "p",
+      "text": "Furthermore, Requests does not change its behavior at all based on which custom headers are specified. The headers are simply passed on into the final request."
+    },
+    {
+      "kind": "p",
+      "text": "Note: All header values must be a ``string``, bytestring, or unicode. While permitted, it's advised to avoid passing unicode header values."
+    },
+    {
+      "kind": "p",
+      "text": "More complicated POST requests\n------------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Typically, you want to send some form-encoded data — much like an HTML form.\nTo do this, simply pass a dictionary to the ``data`` argument. Your\ndictionary of data will automatically be form-encoded when the request is made::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> payload = {'key1': 'value1', 'key2': 'value2'}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.post('https://httpbin.org/post', data=payload)\n    >>> print(r.text)\n    {\n      ...\n      \"form\": {\n        \"key2\": \"value2\",\n        \"key1\": \"value1\"\n      },\n      ...\n    }"
+    },
+    {
+      "kind": "p",
+      "text": "The ``data`` argument can also have multiple values for each key. This can be\ndone by making ``data`` either a list of tuples or a dictionary with lists\nas values. This is particularly useful when the form has multiple elements that\nuse the same key::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> payload_tuples = [('key1', 'value1'), ('key1', 'value2')]\n    >>> r1 = requests.post('https://httpbin.org/post', data=payload_tuples)\n    >>> payload_dict = {'key1': ['value1', 'value2']}\n    >>> r2 = requests.post('https://httpbin.org/post', data=payload_dict)\n    >>> print(r1.text)\n    {\n      ...\n      \"form\": {\n        \"key1\": [\n          \"value1\",\n          \"value2\"\n        ]\n      },\n      ...\n    }\n    >>> # httpbin may embed non-deterministic metadata,\n    >>> # so we only compare our submitted data here.\n    >>> r1.json()['form'] == r2.json()['form']\n    True"
+    },
+    {
+      "kind": "p",
+      "text": "There are times that you may want to send data that is not form-encoded. If\nyou pass in a ``string`` instead of a ``dict``, that data will be posted directly."
+    },
+    {
+      "kind": "p",
+      "text": "For example, the GitHub API v3 accepts JSON-Encoded POST/PATCH data::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> import json"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://api.github.com/some/endpoint'\n    >>> payload = {'some': 'data'}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.post(url, data=json.dumps(payload))"
+    },
+    {
+      "kind": "p",
+      "text": "Please note that the above code will NOT add the ``Content-Type`` header\n(so in particular it will NOT set it to ``application/json``)."
+    },
+    {
+      "kind": "p",
+      "text": "If you need that header set and you don't want to encode the ``dict`` yourself,\nyou can also pass it directly using the ``json`` parameter (added in version 2.4.2)\nand it will be encoded automatically:"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://api.github.com/some/endpoint'\n    >>> payload = {'some': 'data'}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.post(url, json=payload)"
+    },
+    {
+      "kind": "p",
+      "text": "Note, the ``json`` parameter is ignored if either ``data`` or ``files`` is passed."
+    },
+    {
+      "kind": "p",
+      "text": "POST a Multipart-Encoded File\n-----------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests makes it simple to upload Multipart-encoded files::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://httpbin.org/post'\n    >>> files = {'file': open('report.xls', 'rb')}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.post(url, files=files)\n    >>> r.text\n    {\n      ...\n      \"files\": {\n        \"file\": \"<censored...binary...data>\"\n      },\n      ...\n    }"
+    },
+    {
+      "kind": "p",
+      "text": "You can set the filename, content_type and headers explicitly::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://httpbin.org/post'\n    >>> files = {'file': ('report.xls', open('report.xls', 'rb'), 'application/vnd.ms-excel', {'Expires': '0'})}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.post(url, files=files)\n    >>> r.text\n    {\n      ...\n      \"files\": {\n        \"file\": \"<censored...binary...data>\"\n      },\n      ...\n    }"
+    },
+    {
+      "kind": "p",
+      "text": "If you want, you can send strings to be received as files::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://httpbin.org/post'\n    >>> files = {'file': ('report.csv', 'some,data,to,send\\nanother,row,to,send\\n')}"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.post(url, files=files)\n    >>> r.text\n    {\n      ...\n      \"files\": {\n        \"file\": \"some,data,to,send\\\\nanother,row,to,send\\\\n\"\n      },\n      ...\n    }"
+    },
+    {
+      "kind": "p",
+      "text": "In the event you are posting a very large file as a ``multipart/form-data``\nrequest, you may want to stream the request. By default, ``requests`` does not\nsupport this, but there is a separate package which does -\n``requests-toolbelt``. You should read `the toolbelt's documentation\n<https://toolbelt.readthedocs.io>`_ for more details about how to use it."
+    },
+    {
+      "kind": "p",
+      "text": "For sending multiple files in one request refer to the :ref:`advanced <advanced>`\nsection."
+    },
+    {
+      "kind": "p",
+      "text": ".. warning:: It is strongly recommended that you open files in :ref:`binary\n             mode <tut-files>`. This is because Requests may attempt to provide\n             the ``Content-Length`` header for you, and if it does this value\n             will be set to the number of *bytes* in the file. Errors may occur\n             if you open the file in *text mode*."
+    },
+    {
+      "kind": "p",
+      "text": "Response Status Codes\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "We can check the response status code::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://httpbin.org/get')\n    >>> r.status_code\n    200"
+    },
+    {
+      "kind": "p",
+      "text": "Requests also comes with a built-in status code lookup object for easy\nreference::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.status_code == requests.codes.ok\n    True"
+    },
+    {
+      "kind": "p",
+      "text": "If we made a bad request (a 4XX client error or 5XX server error response), we\ncan raise it with\n:meth:`Response.raise_for_status() <requests.Response.raise_for_status>`::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> bad_r = requests.get('https://httpbin.org/status/404')\n    >>> bad_r.status_code\n    404"
+    },
+    {
+      "kind": "p",
+      "text": ">>> bad_r.raise_for_status()\n    Traceback (most recent call last):\n      File \"requests/models.py\", line 832, in raise_for_status\n        raise http_error\n    requests.exceptions.HTTPError: 404 Client Error"
+    },
+    {
+      "kind": "p",
+      "text": "But, since our ``status_code`` for ``r`` was ``200``, when we call\n``raise_for_status()`` we get::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.raise_for_status()\n    None"
+    },
+    {
+      "kind": "p",
+      "text": "All is well."
+    },
+    {
+      "kind": "p",
+      "text": "Response Headers\n----------------"
+    },
+    {
+      "kind": "p",
+      "text": "We can view the server's response headers using a Python dictionary::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.headers\n    {\n        'content-encoding': 'gzip',\n        'transfer-encoding': 'chunked',\n        'connection': 'close',\n        'server': 'nginx/1.0.4',\n        'x-runtime': '148ms',\n        'etag': '\"e1ca502697e5c9317743dc078f67693f\"',\n        'content-type': 'application/json'\n    }"
+    },
+    {
+      "kind": "p",
+      "text": "The dictionary is special, though: it's made just for HTTP headers. According to\n`RFC 7230 <https://tools.ietf.org/html/rfc7230#section-3.2>`_, HTTP Header names\nare case-insensitive."
+    },
+    {
+      "kind": "p",
+      "text": "So, we can access the headers using any capitalization we want::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.headers['Content-Type']\n    'application/json'"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.headers.get('content-type')\n    'application/json'"
+    },
+    {
+      "kind": "p",
+      "text": "It is also special in that the server could have sent the same header multiple\ntimes with different values, but requests combines them so they can be\nrepresented in the dictionary within a single mapping, as per\n`RFC 7230 <https://tools.ietf.org/html/rfc7230#section-3.2>`_:"
+    },
+    {
+      "kind": "p",
+      "text": "A recipient MAY combine multiple header fields with the same field name\n    into one \"field-name: field-value\" pair, without changing the semantics\n    of the message, by appending each subsequent field value to the combined\n    field value in order, separated by a comma."
+    },
+    {
+      "kind": "p",
+      "text": "Cookies\n-------"
+    },
+    {
+      "kind": "p",
+      "text": "If a response contains some Cookies, you can quickly access them::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'http://example.com/some/cookie/setting/url'\n    >>> r = requests.get(url)"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.cookies['example_cookie_name']\n    'example_cookie_value'"
+    },
+    {
+      "kind": "p",
+      "text": "To send your own cookies to the server, you can use the ``cookies``\nparameter::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> url = 'https://httpbin.org/cookies'\n    >>> cookies = dict(cookies_are='working')"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get(url, cookies=cookies)\n    >>> r.text\n    '{\"cookies\": {\"cookies_are\": \"working\"}}'"
+    },
+    {
+      "kind": "p",
+      "text": "Cookies are returned in a :class:`~requests.cookies.RequestsCookieJar`,\nwhich acts like a ``dict`` but also offers a more complete interface,\nsuitable for use over multiple domains or paths.  Cookie jars can\nalso be passed in to requests::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> jar = requests.cookies.RequestsCookieJar()\n    >>> jar.set('tasty_cookie', 'yum', domain='httpbin.org', path='/cookies')\n    >>> jar.set('gross_cookie', 'blech', domain='httpbin.org', path='/elsewhere')\n    >>> url = 'https://httpbin.org/cookies'\n    >>> r = requests.get(url, cookies=jar)\n    >>> r.text\n    '{\"cookies\": {\"tasty_cookie\": \"yum\"}}'"
+    },
+    {
+      "kind": "p",
+      "text": "Redirection and History\n-----------------------"
+    },
+    {
+      "kind": "p",
+      "text": "By default Requests will perform location redirection for all verbs except\nHEAD."
+    },
+    {
+      "kind": "p",
+      "text": "We can use the ``history`` property of the Response object to track redirection."
+    },
+    {
+      "kind": "p",
+      "text": "The :attr:`Response.history <requests.Response.history>` list contains the\n:class:`Response <requests.Response>` objects that were created in order to\ncomplete the request. The list is sorted from the oldest to the most recent\nresponse."
+    },
+    {
+      "kind": "p",
+      "text": "For example, GitHub redirects all HTTP requests to HTTPS::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('http://github.com/')"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.url\n    'https://github.com/'"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.status_code\n    200"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.history\n    [<Response [301]>]"
+    },
+    {
+      "kind": "p",
+      "text": "If you're using GET, OPTIONS, POST, PUT, PATCH or DELETE, you can disable\nredirection handling with the ``allow_redirects`` parameter::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('http://github.com/', allow_redirects=False)"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.status_code\n    301"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.history\n    []"
+    },
+    {
+      "kind": "p",
+      "text": "If you're using HEAD, you can enable redirection as well::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.head('http://github.com/', allow_redirects=True)"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.url\n    'https://github.com/'"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r.history\n    [<Response [301]>]"
+    },
+    {
+      "kind": "p",
+      "text": "Timeouts\n--------"
+    },
+    {
+      "kind": "p",
+      "text": "You can tell Requests to stop waiting for a response after a given number of\nseconds with the ``timeout`` parameter. Nearly all production code should use\nthis parameter in nearly all requests. Failure to do so can cause your program\nto hang indefinitely::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> requests.get('https://github.com/', timeout=0.001)\n    Traceback (most recent call last):\n      File \"<stdin>\", line 1, in <module>\n    requests.exceptions.Timeout: HTTPConnectionPool(host='github.com', port=80): Request timed out. (timeout=0.001)"
+    },
+    {
+      "kind": "p",
+      "text": ".. admonition:: Note"
+    },
+    {
+      "kind": "p",
+      "text": "``timeout`` is not a time limit on the entire response download;\n    rather, an exception is raised if the server has not issued a\n    response for ``timeout`` seconds (more precisely, if no bytes have been\n    received on the underlying socket for ``timeout`` seconds). If no timeout is specified explicitly, requests do\n    not time out."
+    },
+    {
+      "kind": "p",
+      "text": "Errors and Exceptions\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "In the event of a network problem (e.g. DNS failure, refused connection, etc),\nRequests will raise a :exc:`~requests.exceptions.ConnectionError` exception."
+    },
+    {
+      "kind": "p",
+      "text": ":meth:`Response.raise_for_status() <requests.Response.raise_for_status>` will\nraise an :exc:`~requests.exceptions.HTTPError` if the HTTP request\nreturned an unsuccessful status code."
+    },
+    {
+      "kind": "p",
+      "text": "If a request times out, a :exc:`~requests.exceptions.Timeout` exception is\nraised."
+    },
+    {
+      "kind": "p",
+      "text": "If a request exceeds the configured number of maximum redirections, a\n:exc:`~requests.exceptions.TooManyRedirects` exception is raised."
+    },
+    {
+      "kind": "p",
+      "text": "All exceptions that Requests explicitly raises inherit from\n:exc:`requests.exceptions.RequestException`."
+    },
+    {
+      "kind": "p",
+      "text": "-----------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Ready for more? Check out the :ref:`advanced <advanced>` section."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/user/quickstart.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "0c65d40d6d1cf008eeb66a235029d5da9fa66641bf5ce58599a3e0606138d9c1"
+  }
+}

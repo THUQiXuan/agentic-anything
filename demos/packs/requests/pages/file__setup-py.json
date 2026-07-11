@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__setup-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/setup.py",
+  "url_path": "setup.py",
+  "title": "setup.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "setup.py",
+  "summary": "import sys\n\nif sys.version_info < (3, 10):  # noqa: UP036\n    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n    sys.exit(1)\n\nfrom setuptools import setup\n\nsetup()",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import sys\n\nif sys.version_info < (3, 10):  # noqa: UP036\n    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n    sys.exit(1)\n\nfrom setuptools import setup\n\nsetup()\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/setup.py",
+    "capture_mode": "ingest",
+    "content_sha256": "1728c11af4134997015ab07547544852e2f7e103c79a5b0486a8486799f50e0a"
+  }
+}

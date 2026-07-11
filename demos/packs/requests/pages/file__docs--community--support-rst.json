@@ -1,0 +1,58 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--community--support-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/community/support.rst",
+  "url_path": "docs/community/support.rst",
+  "title": "docs/community/support.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/community/support.rst",
+  "summary": ".. _support:\nSupport\n=======\nIf you have questions or issues about Requests, there are several options:\nStack Overflow\n--------------\nIf your question does not contain sensitive (possibly proprietary)\ninformation or can be properly anonymi…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _support:"
+    },
+    {
+      "kind": "p",
+      "text": "Support\n======="
+    },
+    {
+      "kind": "p",
+      "text": "If you have questions or issues about Requests, there are several options:"
+    },
+    {
+      "kind": "p",
+      "text": "Stack Overflow\n--------------"
+    },
+    {
+      "kind": "p",
+      "text": "If your question does not contain sensitive (possibly proprietary)\ninformation or can be properly anonymized, please ask a question on\n`Stack Overflow <https://stackoverflow.com/questions/tagged/python-requests>`_\nand use the tag ``python-requests``."
+    },
+    {
+      "kind": "p",
+      "text": "File an Issue\n-------------"
+    },
+    {
+      "kind": "p",
+      "text": "If you notice some unexpected behaviour in Requests, or want to see support\nfor a new feature,\n`file an issue on GitHub <https://github.com/psf/requests/issues>`_."
+    },
+    {
+      "kind": "p",
+      "text": "Send a Tweet\n------------"
+    },
+    {
+      "kind": "p",
+      "text": "If your question is less than 280 characters, feel free to send a tweet to\n`@nateprewitt <https://twitter.com/nateprewitt>`_,\n`@sethmlarson <https://twitter.com/sethmlarson>`_, or\n`@sigmavirus24 <https://twitter.com/sigmavirus24>`_."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/community/support.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "7a74ee658b241996ffd003d3a661fc94acc864fc1b5522ac13e2c647ffba994e"
+  }
+}

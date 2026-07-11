@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview",
+  "source_url": "https://data.giss.nasa.gov/gistemp/data_v4.html",
+  "url_path": "overview",
+  "title": "nasa-gistemp-global.csv overview",
+  "page_type": "table",
+  "unit_kind": "table",
+  "locator": "overview",
+  "summary": "Table: nasa-gistemp-global.csv\n148 data rows, 1 columns.\nColumns: Land-Ocean: Global Means",
+  "content": [
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Table: nasa-gistemp-global.csv"
+    },
+    {
+      "kind": "p",
+      "text": "148 data rows, 1 columns."
+    },
+    {
+      "kind": "p",
+      "text": "Columns: Land-Ocean: Global Means"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://data.giss.nasa.gov/gistemp/data_v4.html",
+    "capture_mode": "ingest",
+    "content_sha256": "3a3208cada660af7740aea57b3c82c02dd51c9e94fab53ecc9f4832ab12479a9"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__ext--license",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/ext/LICENSE",
+  "url_path": "ext/LICENSE",
+  "title": "ext/LICENSE",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "ext/LICENSE",
+  "summary": "Copyright 2019 Kenneth Reitz. All rights reserved.",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "Copyright 2019 Kenneth Reitz. All rights reserved.\n"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/ext/LICENSE",
+    "capture_mode": "ingest",
+    "content_sha256": "3172d399cbd8f10609e73fec73d0e0b33eecd3c572a68b0722229d8c7059f725"
+  }
+}

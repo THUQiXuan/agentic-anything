@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__makefile",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/Makefile",
+  "url_path": "Makefile",
+  "title": "Makefile",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "Makefile",
+  "summary": ".PHONY: docs\ninit:\n\tpython -m pip install -r requirements-dev.txt\ntest:\n\tpython -m pytest tests\n\nci:\n\tpython -m pytest tests --junitxml=report.xml\n\ntest-readme:\n\tpython setup.py check --restructuredtext --strict && ([ $$? -eq 0 ] && echo \"…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": ".PHONY: docs\ninit:\n\tpython -m pip install -r requirements-dev.txt\ntest:\n\tpython -m pytest tests\n\nci:\n\tpython -m pytest tests --junitxml=report.xml\n\ntest-readme:\n\tpython setup.py check --restructuredtext --strict && ([ $$? -eq 0 ] && echo \"README.rst and HISTORY.rst ok\") || echo \"Invalid markup in README.rst or HISTORY.rst!\"\n\ncoverage:\n\tpython -m pytest --cov-config .coveragerc --verbose --cov-report term --cov-report xml --cov=src/requests tests\n\n.publishenv:\n\tpython -m venv .publishenv\n\t.publishenv/bin/pip install 'twine>=1.5.0' build\n\npublish: .publishenv\n\t.publishenv/bin/python -m build\n\t.publishenv/bin/python -m twine upload --skip-existing dist/*\n\trm -fr build dist .egg requests.egg-info\n\ndocs:\n\tcd docs && make html\n\t@echo \"\\033[95m\\n\\nBuild successful! View the docs homepage at docs/_build/html/index.html.\\n\\033[0m\"\n"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/Makefile",
+    "capture_mode": "ingest",
+    "content_sha256": "c31f5628de71af324c7db9b61579e8a287caae87f76586d70994a7dc86964ec7"
+  }
+}

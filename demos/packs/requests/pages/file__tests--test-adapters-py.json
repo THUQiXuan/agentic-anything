@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--test-adapters-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/test_adapters.py",
+  "url_path": "tests/test_adapters.py",
+  "title": "tests/test_adapters.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/test_adapters.py",
+  "summary": "import requests.adapters\n\n\ndef test_request_url_handles_leading_path_separators():\n    \"\"\"See also https://github.com/psf/requests/issues/6643.\"\"\"\n    a = requests.adapters.HTTPAdapter()\n    p = requests.Request(method=\"GET\", url=\"http://1…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import requests.adapters\n\n\ndef test_request_url_handles_leading_path_separators():\n    \"\"\"See also https://github.com/psf/requests/issues/6643.\"\"\"\n    a = requests.adapters.HTTPAdapter()\n    p = requests.Request(method=\"GET\", url=\"http://127.0.0.1:10000//v:h\").prepare()\n    assert \"//v:h\" == a.request_url(p, {})\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/test_adapters.py",
+    "capture_mode": "ingest",
+    "content_sha256": "102494aa704f8505fb22fa476452f6aa3aae756da82fe2d5b2a2a3f366b38bf4"
+  }
+}

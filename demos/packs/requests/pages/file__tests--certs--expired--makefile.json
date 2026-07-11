@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--certs--expired--makefile",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/expired/Makefile",
+  "url_path": "tests/certs/expired/Makefile",
+  "title": "tests/certs/expired/Makefile",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/certs/expired/Makefile",
+  "summary": ".PHONY: all clean ca server\n\nca:\n\tmake -C $@ all\n\nserver:\n\tmake -C $@ all\n\nall: ca server\n\nclean:\n\tmake -C ca clean\n\tmake -C server clean",
+  "content": [
+    {
+      "kind": "pre",
+      "text": ".PHONY: all clean ca server\n\nca:\n\tmake -C $@ all\n\nserver:\n\tmake -C $@ all\n\nall: ca server\n\nclean:\n\tmake -C ca clean\n\tmake -C server clean\n"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/expired/Makefile",
+    "capture_mode": "ingest",
+    "content_sha256": "a33636d6474f1e94a1de61c4e1fbd2efb5c55aa86061ab3ce2d2ad9fb5aeb457"
+  }
+}

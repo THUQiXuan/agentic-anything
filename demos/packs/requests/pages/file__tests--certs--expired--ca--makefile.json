@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--certs--expired--ca--makefile",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/expired/ca/Makefile",
+  "url_path": "tests/certs/expired/ca/Makefile",
+  "title": "tests/certs/expired/ca/Makefile",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/certs/expired/ca/Makefile",
+  "summary": ".PHONY: all clean\n\nroot_files = ca-private.key ca.crt\n\nca-private.key:\n\topenssl genrsa -out ca-private.key 2048\n\nall: ca-private.key\n\topenssl req -x509 -sha256 -days 7300 -key ca-private.key -out ca.crt -config ca.cnf\n\tln -s ca.crt cacert.…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": ".PHONY: all clean\n\nroot_files = ca-private.key ca.crt\n\nca-private.key:\n\topenssl genrsa -out ca-private.key 2048\n\nall: ca-private.key\n\topenssl req -x509 -sha256 -days 7300 -key ca-private.key -out ca.crt -config ca.cnf\n\tln -s ca.crt cacert.pem\n\nclean:\n\trm -f cacert.pem ca.crt ca-private.key *.csr\n"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/expired/ca/Makefile",
+    "capture_mode": "ingest",
+    "content_sha256": "09ab0ff83129203660d5ad489618764524f6af7fa4d9586ca5bdb0f68d1ca822"
+  }
+}

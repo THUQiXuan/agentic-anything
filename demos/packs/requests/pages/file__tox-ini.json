@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tox-ini",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tox.ini",
+  "url_path": "tox.ini",
+  "title": "tox.ini",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tox.ini",
+  "summary": "[tox]\nenvlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}\n\n[testenv]\ndeps = -rrequirements-dev.txt\nextras =\n    security\n    socks\ncommands =\n    pytest {posargs:tests}\n\n[testenv:default]\n\n[testenv:use_chardet_on_py3]\nextras =…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "[tox]\nenvlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}\n\n[testenv]\ndeps = -rrequirements-dev.txt\nextras =\n    security\n    socks\ncommands =\n    pytest {posargs:tests}\n\n[testenv:default]\n\n[testenv:use_chardet_on_py3]\nextras =\n    security\n    socks\n    use_chardet_on_py3\n",
+      "lang": "ini"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tox.ini",
+    "capture_mode": "ingest",
+    "content_sha256": "65aeb46c94fc5723a9764bb029fdb448539658fe47d3a39550a829b2383804fd"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--test-packages-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/test_packages.py",
+  "url_path": "tests/test_packages.py",
+  "title": "tests/test_packages.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/test_packages.py",
+  "summary": "import requests\n\n\ndef test_can_access_urllib3_attribute():\n    requests.packages.urllib3\n\n\ndef test_can_access_idna_attribute():\n    requests.packages.idna\n\n\ndef test_can_access_chardet_attribute():\n    requests.packages.chardet",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import requests\n\n\ndef test_can_access_urllib3_attribute():\n    requests.packages.urllib3\n\n\ndef test_can_access_idna_attribute():\n    requests.packages.idna\n\n\ndef test_can_access_chardet_attribute():\n    requests.packages.chardet\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/test_packages.py",
+    "capture_mode": "ingest",
+    "content_sha256": "90875423db059d65b39416d7b6d01b18938851b8071279877400beb506e08676"
+  }
+}

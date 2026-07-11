@@ -1,0 +1,106 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--community--recommended-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/community/recommended.rst",
+  "url_path": "docs/community/recommended.rst",
+  "title": "docs/community/recommended.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/community/recommended.rst",
+  "summary": ".. _recommended:\nRecommended Packages and Extensions\n===================================\nRequests has a great variety of powerful and useful third-party extensions.\nThis page provides an overview of some of the best of them.\nCertifi CA Bun…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _recommended:"
+    },
+    {
+      "kind": "p",
+      "text": "Recommended Packages and Extensions\n==================================="
+    },
+    {
+      "kind": "p",
+      "text": "Requests has a great variety of powerful and useful third-party extensions.\nThis page provides an overview of some of the best of them."
+    },
+    {
+      "kind": "p",
+      "text": "Certifi CA Bundle\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "`Certifi`_ is a carefully curated collection of Root Certificates for\nvalidating the trustworthiness of SSL certificates while verifying the\nidentity of TLS hosts. It has been extracted from the Requests project."
+    },
+    {
+      "kind": "p",
+      "text": ".. _Certifi: https://github.com/certifi/python-certifi"
+    },
+    {
+      "kind": "p",
+      "text": "CacheControl\n------------"
+    },
+    {
+      "kind": "p",
+      "text": "`CacheControl`_ is an extension that adds a full HTTP cache to Requests. This\nmakes your web requests substantially more efficient, and should be used\nwhenever you're making a lot of web requests."
+    },
+    {
+      "kind": "p",
+      "text": ".. _CacheControl: https://cachecontrol.readthedocs.io/en/latest/"
+    },
+    {
+      "kind": "p",
+      "text": "Requests-Toolbelt\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "`Requests-Toolbelt`_ is a collection of utilities that some users of Requests may desire,\nbut do not belong in Requests proper. This library is actively maintained\nby members of the Requests core team, and reflects the functionality most\nrequested by users within the community."
+    },
+    {
+      "kind": "p",
+      "text": ".. _Requests-Toolbelt: https://toolbelt.readthedocs.io/en/latest/index.html"
+    },
+    {
+      "kind": "p",
+      "text": "Requests-Threads\n----------------"
+    },
+    {
+      "kind": "p",
+      "text": "`Requests-Threads`_ is a Requests session that returns the amazing Twisted's awaitable Deferreds instead of Response objects. This allows the use of ``async``/``await`` keyword usage on Python 3, or Twisted's style of programming, if desired."
+    },
+    {
+      "kind": "p",
+      "text": ".. _Requests-Threads: https://github.com/requests/requests-threads"
+    },
+    {
+      "kind": "p",
+      "text": "Requests-OAuthlib\n-----------------"
+    },
+    {
+      "kind": "p",
+      "text": "`requests-oauthlib`_ makes it possible to do the OAuth dance from Requests\nautomatically. This is useful for the large number of websites that use OAuth\nto provide authentication. It also provides a lot of tweaks that handle ways\nthat specific OAuth providers differ from the standard specifications."
+    },
+    {
+      "kind": "p",
+      "text": ".. _requests-oauthlib: https://requests-oauthlib.readthedocs.io/en/latest/"
+    },
+    {
+      "kind": "p",
+      "text": "Betamax\n-------"
+    },
+    {
+      "kind": "p",
+      "text": "`Betamax`_ records your HTTP interactions so the NSA does not have to.\nA VCR imitation designed only for Python-Requests."
+    },
+    {
+      "kind": "p",
+      "text": ".. _betamax: https://github.com/betamaxpy/betamax"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/community/recommended.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "2ed6ca0082c9e2f5d8c935b5e4a6b0abbe287c6effe26956965039e163dca340"
+  }
+}

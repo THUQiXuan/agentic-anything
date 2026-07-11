@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__requirements-dev-txt",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/requirements-dev.txt",
+  "url_path": "requirements-dev.txt",
+  "title": "requirements-dev.txt",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "requirements-dev.txt",
+  "summary": "-e .[socks]\npytest>=2.8.0,<10\npytest-cov\npytest-httpbin==2.1.0\nhttpbin~=0.10.0\ntrustme\nwheel",
+  "content": [
+    {
+      "kind": "p",
+      "text": "-e .[socks]\npytest>=2.8.0,<10\npytest-cov\npytest-httpbin==2.1.0\nhttpbin~=0.10.0\ntrustme\nwheel"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/requirements-dev.txt",
+    "capture_mode": "ingest",
+    "content_sha256": "77db25b168a957031b9706e4915f413693ed16197f688ec77e1815f970efb291"
+  }
+}

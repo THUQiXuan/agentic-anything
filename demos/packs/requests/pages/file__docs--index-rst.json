@@ -1,0 +1,170 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--index-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/index.rst",
+  "url_path": "docs/index.rst",
+  "title": "docs/index.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/index.rst",
+  "summary": ".. Requests documentation master file, created by\n   sphinx-quickstart on Sun Feb 13 23:54:25 2011.\n   You can adapt this file completely to your liking, but it should at least\n   contain the root `toctree` directive.\nRequests: HTTP for Hu…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. Requests documentation master file, created by\n   sphinx-quickstart on Sun Feb 13 23:54:25 2011.\n   You can adapt this file completely to your liking, but it should at least\n   contain the root `toctree` directive."
+    },
+    {
+      "kind": "p",
+      "text": "Requests: HTTP for Humans™\n=========================="
+    },
+    {
+      "kind": "p",
+      "text": "Release v\\ |version|. (:ref:`Installation <install>`)"
+    },
+    {
+      "kind": "p",
+      "text": ".. image:: https://img.shields.io/pypi/v/requests.svg?maxAge=86400\n    :target: https://pypi.org/project/requests/\n    :alt: PyPI Version Badge"
+    },
+    {
+      "kind": "p",
+      "text": ".. image:: https://img.shields.io/pypi/pyversions/requests.svg\n    :target: https://pypi.org/project/requests/\n    :alt: Supported Versions Badge"
+    },
+    {
+      "kind": "p",
+      "text": ".. image:: https://static.pepy.tech/badge/requests/month\n    :target: https://pepy.tech/project/requests\n    :alt: Downloads Per Month Badge"
+    },
+    {
+      "kind": "p",
+      "text": ".. image:: https://img.shields.io/github/contributors/psf/requests.svg\n    :target: https://github.com/psf/requests/graphs/contributors\n    :alt: Contributors Badge"
+    },
+    {
+      "kind": "p",
+      "text": ".. image:: https://readthedocs.org/projects/requests/badge/?version=latest\n    :target: https://requests.readthedocs.io\n    :alt: Documentation Badge"
+    },
+    {
+      "kind": "p",
+      "text": "**Requests** is an elegant and simple HTTP library for Python, built for human beings."
+    },
+    {
+      "kind": "p",
+      "text": "-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Behold, the power of Requests**::"
+    },
+    {
+      "kind": "p",
+      "text": ">>> r = requests.get('https://api.github.com/user', auth=('user', 'pass'))\n    >>> r.status_code\n    200\n    >>> r.headers['content-type']\n    'application/json; charset=utf8'\n    >>> r.encoding\n    'utf-8'\n    >>> r.text\n    '{\"type\":\"User\"...'\n    >>> r.json()\n    {'private_gists': 419, 'total_private_repos': 77, ...}"
+    },
+    {
+      "kind": "p",
+      "text": "See `similar code, sans Requests <https://gist.github.com/973705>`_."
+    },
+    {
+      "kind": "p",
+      "text": "**Requests** allows you to send HTTP/1.1 requests extremely easily. \nThere's no need to manually add query strings to your\nURLs, or to form-encode your POST data. Keep-alive and HTTP connection pooling\nare 100% automatic, thanks to `urllib3 <https://github.com/urllib3/urllib3>`_."
+    },
+    {
+      "kind": "p",
+      "text": "Beloved Features\n----------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests is ready for today's web."
+    },
+    {
+      "kind": "p",
+      "text": "- Keep-Alive & Connection Pooling\n- International Domains and URLs\n- Sessions with Cookie Persistence\n- Browser-style SSL Verification\n- Automatic Content Decoding\n- Basic/Digest Authentication\n- Elegant Key/Value Cookies\n- Automatic Decompression\n- Unicode Response Bodies\n- HTTP(S) Proxy Support\n- Multipart File Uploads\n- Streaming Downloads\n- Connection Timeouts\n- Chunked Requests\n- ``.netrc`` Support"
+    },
+    {
+      "kind": "p",
+      "text": "Requests officially supports Python 3.10+, and runs great on PyPy."
+    },
+    {
+      "kind": "p",
+      "text": "The User Guide\n--------------"
+    },
+    {
+      "kind": "p",
+      "text": "This part of the documentation, which is mostly prose, begins with some\nbackground information about Requests, then focuses on step-by-step\ninstructions for getting the most out of Requests."
+    },
+    {
+      "kind": "p",
+      "text": ".. toctree::\n   :maxdepth: 2"
+    },
+    {
+      "kind": "p",
+      "text": "user/install\n   user/quickstart\n   user/advanced\n   user/authentication"
+    },
+    {
+      "kind": "p",
+      "text": "The Community Guide\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "This part of the documentation, which is mostly prose, details the\nRequests ecosystem and community."
+    },
+    {
+      "kind": "p",
+      "text": ".. toctree::\n   :maxdepth: 2"
+    },
+    {
+      "kind": "p",
+      "text": "community/recommended\n   community/faq\n   community/out-there\n   community/support\n   community/vulnerabilities\n   community/release-process"
+    },
+    {
+      "kind": "p",
+      "text": ".. toctree::\n   :maxdepth: 1"
+    },
+    {
+      "kind": "p",
+      "text": "community/updates"
+    },
+    {
+      "kind": "p",
+      "text": "The API Documentation / Guide\n-----------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "If you are looking for information on a specific function, class, or method,\nthis part of the documentation is for you."
+    },
+    {
+      "kind": "p",
+      "text": ".. toctree::\n   :maxdepth: 2"
+    },
+    {
+      "kind": "p",
+      "text": "api"
+    },
+    {
+      "kind": "p",
+      "text": "The Contributor Guide\n---------------------"
+    },
+    {
+      "kind": "p",
+      "text": "If you want to contribute to the project, this part of the documentation is for\nyou."
+    },
+    {
+      "kind": "p",
+      "text": ".. toctree::\n   :maxdepth: 3"
+    },
+    {
+      "kind": "p",
+      "text": "dev/contributing\n   dev/authors"
+    },
+    {
+      "kind": "p",
+      "text": "There are no more guides. You are now guideless.\nGood luck."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/index.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "90df13cb326eea4b6bf12233ecdb5cd134a354096954d4a81ed816fe31bf3ed4"
+  }
+}

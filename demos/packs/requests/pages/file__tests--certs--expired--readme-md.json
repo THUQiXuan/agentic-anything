@@ -1,0 +1,38 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--certs--expired--readme-md",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/expired/README.md",
+  "url_path": "tests/certs/expired/README.md",
+  "title": "tests/certs/expired/README.md",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/certs/expired/README.md",
+  "summary": "# Expired Certificates and Configuration for Testing\nThis has a valid certificate authority in [ca](./ca) and an invalid server\ncertificate in [server](./server).\nThis can all be regenerated with:\n```\nmake clean\nmake all\n```",
+  "content": [
+    {
+      "kind": "p",
+      "text": "# Expired Certificates and Configuration for Testing"
+    },
+    {
+      "kind": "p",
+      "text": "This has a valid certificate authority in [ca](./ca) and an invalid server\ncertificate in [server](./server)."
+    },
+    {
+      "kind": "p",
+      "text": "This can all be regenerated with:"
+    },
+    {
+      "kind": "p",
+      "text": "```\nmake clean\nmake all\n```"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/expired/README.md",
+    "capture_mode": "ingest",
+    "content_sha256": "bb70597b7451d264062b011ddcd04801d5664f39af00f0e0ccf335f0d2c40b16"
+  }
+}

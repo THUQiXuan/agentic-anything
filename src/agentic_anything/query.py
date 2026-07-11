@@ -185,18 +185,22 @@ def _hybrid_search_pack(reader: PackReader, query: str, top: int = 5) -> list[di
 
 def _evidence(manifest: dict, query: str) -> list[dict]:
     query_tokens = set(analyze(query))
-    evidence: list[dict] = []
+    candidates: list[tuple[int, int, dict]] = []
+    order = 0
 
     def add(kind: str, text: str) -> None:
-        if not text or len(evidence) >= 5:
+        nonlocal order
+        if not text:
             return
-        matched = query_tokens.intersection(analyze(text))
+        snippet = _focused_snippet(text, query_tokens)
+        matched = query_tokens.intersection(analyze(snippet))
         if matched:
-            evidence.append({
+            candidates.append((-len(matched), order, {
                 "kind": kind,
-                "text": text[:300],
+                "text": snippet,
                 "matched": sorted({token.split(":", 1)[-1] for token in matched}),
-            })
+            }))
+        order += 1
 
     add("title", manifest.get("title", ""))
     add("summary", manifest.get("summary", ""))
@@ -210,7 +214,56 @@ def _evidence(manifest: dict, query: str) -> list[dict]:
             + [f"{field.get('name', '')} {field.get('label', '')}"
                for field in form.get("fields", [])]
         ))
-    return evidence
+    candidates.sort(key=lambda item: (item[0], item[1]))
+    return [item[2] for item in candidates[:5]]
+
+
+def _focused_snippet(text: str, query_tokens: set[str], limit: int = 300) -> str:
+    """Return a short window that actually contains the strongest query match.
+
+    Evidence blocks from PDFs, code files, and tables can contain thousands of
+    characters. Taking their first 300 characters hides a match near the end and
+    produces a citation that looks unrelated to the query. Candidate windows are
+    therefore centered around query terms and ranked by distinct token coverage.
+    """
+    if len(text) <= limit:
+        return text
+
+    normalized = text.casefold()
+    positions: list[int] = []
+    for token in query_tokens:
+        term = token.split(":", 1)[-1]
+        if not term:
+            continue
+        start = 0
+        while len(positions) < 200:
+            found = normalized.find(term, start)
+            if found < 0:
+                break
+            positions.append(found)
+            start = found + max(1, len(term))
+
+    if not positions:
+        return text[:limit].rstrip() + "…"
+
+    best: tuple[int, int, int] | None = None
+    for position in positions:
+        start = max(0, min(len(text) - limit, position - limit // 3))
+        window = text[start:start + limit]
+        coverage = len(query_tokens.intersection(analyze(window)))
+        # Prefer broader query coverage, then the earliest equally good window.
+        candidate = (coverage, -start, start)
+        if best is None or candidate > best:
+            best = candidate
+
+    assert best is not None
+    start = best[2]
+    snippet = text[start:start + limit].strip()
+    if start:
+        snippet = "…" + snippet
+    if start + limit < len(text):
+        snippet += "…"
+    return snippet
 
 
 def search_pack(

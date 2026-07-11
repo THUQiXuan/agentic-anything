@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--utils-py",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/utils.py",
+  "url_path": "tests/utils.py",
+  "title": "tests/utils.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/utils.py",
+  "summary": "import contextlib\nimport os\n\n\n@contextlib.contextmanager\ndef override_environ(**kwargs):\n    save_env = dict(os.environ)\n    for key, value in kwargs.items():\n        if value is None:\n            del os.environ[key]\n        else:…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import contextlib\nimport os\n\n\n@contextlib.contextmanager\ndef override_environ(**kwargs):\n    save_env = dict(os.environ)\n    for key, value in kwargs.items():\n        if value is None:\n            del os.environ[key]\n        else:\n            os.environ[key] = value\n    try:\n        yield\n    finally:\n        os.environ.clear()\n        os.environ.update(save_env)\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/utils.py",
+    "capture_mode": "ingest",
+    "content_sha256": "cfaec86690eba62573c8c730a121332837809333fb2b1006a20e2e8f4d34d4de"
+  }
+}

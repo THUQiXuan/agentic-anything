@@ -1,0 +1,782 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__history-md",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/HISTORY.md",
+  "url_path": "HISTORY.md",
+  "title": "HISTORY.md",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "HISTORY.md",
+  "summary": "Release History\n===============\ndev\n---\n- \\[Short description of non-trivial change.\\]\n2.34.2 (2026-05-14)\n-------------------\n- Moved `headers` input type back to `Mapping` to avoid invariance issues\n  with `MutableMapping` and inferred d…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Release History\n==============="
+    },
+    {
+      "kind": "p",
+      "text": "dev\n---"
+    },
+    {
+      "kind": "p",
+      "text": "- \\[Short description of non-trivial change.\\]"
+    },
+    {
+      "kind": "p",
+      "text": "2.34.2 (2026-05-14)\n-------------------\n- Moved `headers` input type back to `Mapping` to avoid invariance issues\n  with `MutableMapping` and inferred dict types. Users calling\n  `Request.headers.update()` may need to narrow typing in their code. (#7441)"
+    },
+    {
+      "kind": "p",
+      "text": "2.34.1 (2026-05-13)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**\n- Widened `json` input type from `dict` and `list` to `Mapping`\n  and `Sequence`. (#7436)\n- Changed `headers` input type to MutableMapping and removed `None` from\n  `Request.headers` typing to improve handling for users. (#7431)\n- `Response.reason` moved from `str | None` to `str` to improve handling\n  for users. (#7437)\n- Fixed a bug where some bodies with custom `__getattr__` implementations\n  weren't being properly detected as Iterables. (#7433)"
+    },
+    {
+      "kind": "p",
+      "text": "2.34.0 (2026-05-11)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Announcements**\n- Requests 2.34.0 introduces inline types, replacing those provided by\n  typeshed. Public API types should be fully compatible with mypy, pyright,\n  and ty. We believe types are comprehensive but if you find issues, please\n  report them to the pinned tracking issue."
+    },
+    {
+      "kind": "p",
+      "text": "Special thanks to @bastimeyer, @cthoyt, @edgarrmondragon, and @srittau for\n  helping review and test the types ahead of the release. (#7272)"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**\n- Digest Auth hashing algorithms have added `usedforsecurity=False` to clarify\n  security considerations. (#7310)\n- Requests added support for Python 3.15 based on beta1. Downstream projects\n  should be able to start testing prior to its release in October. (#7422)\n- Requests added support for Python 3.14t. (#7419)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**\n- ``Response.history`` no longer contains a reference to itself, preventing\n  accidental looping when traversing the history list. (#7328)\n- Requests no longer performs greedy matching on no_proxy domains. The\n  proxy_bypass implementation has been updated with CPython's fix from\n  bpo-39057. (#7427)\n- Requests no longer incorrectly strips duplicate leading slashes in\n  URI paths. This should address user issues with specific presigned\n  URLs. Note the full fix requires urllib3 2.7.0+. (#7315)"
+    },
+    {
+      "kind": "p",
+      "text": "2.33.1 (2026-03-30)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**\n- Fixed test cleanup for CVE-2026-25645 to avoid leaving unnecessary\n  files in the tmp directory. (#7305)\n- Fixed Content-Type header parsing for malformed values. (#7309)\n- Improved error consistency for malformed header values. (#7308)"
+    },
+    {
+      "kind": "p",
+      "text": "2.33.0 (2026-03-25)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Announcements**\n- 📣 Requests is adding inline types. If you have a typed code base that\nuses Requests, please take a look at #7271. Give it a try, and report\nany gaps or feedback you may have in the issue. 📣"
+    },
+    {
+      "kind": "p",
+      "text": "**Security**\n- CVE-2026-25645 ``requests.utils.extract_zipped_paths`` now extracts\n  contents to a non-deterministic location to prevent malicious file\n  replacement. This does not affect default usage of Requests, only\n  applications calling the utility function directly."
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**\n- Migrated to a PEP 517 build system using setuptools. (#7012)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**\n- Fixed an issue where an empty netrc entry could cause\n  malformed authentication to be applied to Requests on\n  Python 3.11+. (#7205)"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**\n- Dropped support for Python 3.9 following its end of support. (#7196)"
+    },
+    {
+      "kind": "p",
+      "text": "**Documentation**\n- Various typo fixes and doc improvements."
+    },
+    {
+      "kind": "p",
+      "text": "2.32.5 (2025-08-18)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- The SSLContext caching feature originally introduced in 2.32.0 has created\n  a new class of issues in Requests that have had negative impact across a number\n  of use cases. The Requests team has decided to revert this feature as long term\n  maintenance of it is proving to be unsustainable in its current iteration."
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**\n- Added support for Python 3.14.\n- Dropped support for Python 3.8 following its end of support."
+    },
+    {
+      "kind": "p",
+      "text": "2.32.4 (2025-06-10)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Security**\n- CVE-2024-47081 Fixed an issue where a maliciously crafted URL and trusted\n  environment will retrieve credentials for the wrong hostname/machine from a\n  netrc file."
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**\n- Numerous documentation improvements"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**\n- Added support for pypy 3.11 for Linux and macOS.\n- Dropped support for pypy 3.9 following its end of support."
+    },
+    {
+      "kind": "p",
+      "text": "2.32.3 (2024-05-29)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**\n- Fixed bug breaking the ability to specify custom SSLContexts in sub-classes of\n  HTTPAdapter. (#6716)\n- Fixed issue where Requests started failing to run on Python versions compiled\n  without the `ssl` module. (#6724)"
+    },
+    {
+      "kind": "p",
+      "text": "2.32.2 (2024-05-21)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**\n- To provide a more stable migration for custom HTTPAdapters impacted\n  by the CVE changes in 2.32.0, we've renamed `_get_connection` to\n  a new public API, `get_connection_with_tls_context`. Existing custom\n  HTTPAdapters will need to migrate their code to use this new API.\n  `get_connection` is considered deprecated in all versions of Requests>=2.32.0."
+    },
+    {
+      "kind": "p",
+      "text": "A minimal (2-line) example has been provided in the linked PR to ease\n  migration, but we strongly urge users to evaluate if their custom adapter\n  is subject to the same issue described in CVE-2024-35195. (#6710)"
+    },
+    {
+      "kind": "p",
+      "text": "2.32.1 (2024-05-20)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**\n- Add missing test certs to the sdist distributed on PyPI."
+    },
+    {
+      "kind": "p",
+      "text": "2.32.0 (2024-05-20)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Security**\n- Fixed an issue where setting `verify=False` on the first request from a\n  Session will cause subsequent requests to the _same origin_ to also ignore\n  cert verification, regardless of the value of `verify`.\n  (https://github.com/psf/requests/security/advisories/GHSA-9wx4-h78v-vm56)"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**\n- `verify=True` now reuses a global SSLContext which should improve\n  request time variance between first and subsequent requests. It should\n  also minimize certificate load time on Windows systems when using a Python\n  version built with OpenSSL 3.x. (#6667)\n- Requests now supports optional use of character detection\n  (`chardet` or `charset_normalizer`) when repackaged or vendored.\n  This enables `pip` and other projects to minimize their vendoring\n  surface area. The `Response.text()` and `apparent_encoding` APIs\n  will default to `utf-8` if neither library is present. (#6702)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**\n- Fixed bug in length detection where emoji length was incorrectly\n  calculated in the request content-length. (#6589)\n- Fixed deserialization bug in JSONDecodeError. (#6629)\n- Fixed bug where an extra leading `/` (path separator) could lead\n  urllib3 to unnecessarily reparse the request URI. (#6644)"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests has officially added support for CPython 3.12 (#6503)\n- Requests has officially added support for PyPy 3.9 and 3.10 (#6641)\n- Requests has officially dropped support for CPython 3.7 (#6642)\n- Requests has officially dropped support for PyPy 3.7 and 3.8 (#6641)"
+    },
+    {
+      "kind": "p",
+      "text": "**Documentation**\n- Various typo fixes and doc improvements."
+    },
+    {
+      "kind": "p",
+      "text": "**Packaging**\n- Requests has started adopting some modern packaging practices.\n  The source files for the projects (formerly `requests`) is now located\n  in `src/requests` in the Requests sdist. (#6506)\n- Starting in Requests 2.33.0, Requests will migrate to a PEP 517 build system\n  using `hatchling`. This should not impact the average user, but extremely old\n  versions of packaging utilities may have issues with the new packaging format."
+    },
+    {
+      "kind": "p",
+      "text": "2.31.0 (2023-05-22)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Security**\n- Versions of Requests between v2.3.0 and v2.30.0 are vulnerable to potential\n  forwarding of `Proxy-Authorization` headers to destination servers when\n  following HTTPS redirects."
+    },
+    {
+      "kind": "p",
+      "text": "When proxies are defined with user info (`https://user:pass@proxy:8080`), Requests\n  will construct a `Proxy-Authorization` header that is attached to the request to\n  authenticate with the proxy."
+    },
+    {
+      "kind": "p",
+      "text": "In cases where Requests receives a redirect response, it previously reattached\n  the `Proxy-Authorization` header incorrectly, resulting in the value being\n  sent through the tunneled connection to the destination server. Users who rely on\n  defining their proxy credentials in the URL are *strongly* encouraged to upgrade\n  to Requests 2.31.0+ to prevent unintentional leakage and rotate their proxy\n  credentials once the change has been fully deployed."
+    },
+    {
+      "kind": "p",
+      "text": "Users who do not use a proxy or do not supply their proxy credentials through\n  the user information portion of their proxy URL are not subject to this\n  vulnerability."
+    },
+    {
+      "kind": "p",
+      "text": "Full details can be read in our [Github Security Advisory](https://github.com/psf/requests/security/advisories/GHSA-j8r2-6x86-q33q)\n  and [CVE-2023-32681](https://nvd.nist.gov/vuln/detail/CVE-2023-32681)."
+    },
+    {
+      "kind": "p",
+      "text": "2.30.0 (2023-05-03)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**\n- ⚠️ Added support for urllib3 2.0. ⚠️"
+    },
+    {
+      "kind": "p",
+      "text": "This may contain minor breaking changes so we advise careful testing and\n  reviewing https://urllib3.readthedocs.io/en/latest/v2-migration-guide.html\n  prior to upgrading."
+    },
+    {
+      "kind": "p",
+      "text": "Users who wish to stay on urllib3 1.x can pin to `urllib3<2`."
+    },
+    {
+      "kind": "p",
+      "text": "2.29.0 (2023-04-26)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now defers chunked requests to the urllib3 implementation to improve\n  standardization. (#6226)\n- Requests relaxes header component requirements to support bytes/str subclasses. (#6356)"
+    },
+    {
+      "kind": "p",
+      "text": "2.28.2 (2023-01-12)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports charset\\_normalizer 3.x. (#6261)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Updated MissingSchema exception to suggest https scheme rather than http. (#6188)"
+    },
+    {
+      "kind": "p",
+      "text": "2.28.1 (2022-06-29)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- Speed optimization in `iter_content` with transition to `yield from`. (#6170)"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Added support for chardet 5.0.0 (#6179)\n- Added support for charset-normalizer 2.1.0 (#6169)"
+    },
+    {
+      "kind": "p",
+      "text": "2.28.0 (2022-06-09)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**"
+    },
+    {
+      "kind": "p",
+      "text": "- ⚠️ Requests has officially dropped support for Python 2.7. ⚠️ (#6091)\n- Requests has officially dropped support for Python 3.6 (including pypy3.6). (#6091)"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- Wrap JSON parsing issues in Request's JSONDecodeError for payloads without\n  an encoding to make `json()` API consistent. (#6097)\n- Parse header components consistently, raising an InvalidHeader error in\n  all invalid cases. (#6154)\n- Added provisional 3.11 support with current beta build. (#6155)\n- Requests got a makeover and we decided to paint it black. (#6095)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed bug where setting `CURL_CA_BUNDLE` to an empty string would disable\n  cert verification. All Requests 2.x versions before 2.28.0 are affected. (#6074)\n- Fixed urllib3 exception leak, wrapping `urllib3.exceptions.SSLError` with\n  `requests.exceptions.SSLError` for `content` and `iter_content`. (#6057)\n- Fixed issue where invalid Windows registry entries caused proxy resolution\n  to raise an exception rather than ignoring the entry. (#6149)\n- Fixed issue where entire payload could be included in the error message for\n  JSONDecodeError. (#6036)"
+    },
+    {
+      "kind": "p",
+      "text": "2.27.1 (2022-01-05)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed parsing issue that resulted in the `auth` component being\n  dropped from proxy URLs. (#6028)"
+    },
+    {
+      "kind": "p",
+      "text": "2.27.0 (2022-01-03)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- Officially added support for Python 3.10. (#5928)"
+    },
+    {
+      "kind": "p",
+      "text": "- Added a `requests.exceptions.JSONDecodeError` to unify JSON exceptions between\n  Python 2 and 3. This gets raised in the `response.json()` method, and is\n  backwards compatible as it inherits from previously thrown exceptions.\n  Can be caught from `requests.exceptions.RequestException` as well. (#5856)"
+    },
+    {
+      "kind": "p",
+      "text": "- Improved error text for misnamed `InvalidSchema` and `MissingSchema`\n  exceptions. This is a temporary fix until exceptions can be renamed\n  (Schema->Scheme). (#6017)"
+    },
+    {
+      "kind": "p",
+      "text": "- Improved proxy parsing for proxy URLs missing a scheme. This will address\n  recent changes to `urlparse` in Python 3.9+. (#5917)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed defect in `extract_zipped_paths` which could result in an infinite loop\n  for some paths. (#5851)"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed handling for `AttributeError` when calculating length of files obtained\n  by `Tarfile.extractfile()`. (#5239)"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed urllib3 exception leak, wrapping `urllib3.exceptions.InvalidHeader` with\n  `requests.exceptions.InvalidHeader`. (#5914)"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed bug where two Host headers were sent for chunked requests. (#5391)"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed regression in Requests 2.26.0 where `Proxy-Authorization` was\n  incorrectly stripped from all requests sent with `Session.send`. (#5924)"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed performance regression in 2.26.0 for hosts with a large number of\n  proxies available in the environment. (#5924)"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed idna exception leak, wrapping `UnicodeError` with\n  `requests.exceptions.InvalidURL` for URLs with a leading dot (.) in the\n  domain. (#5414)"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests support for Python 2.7 and 3.6 will be ending in 2022. While we\n  don't have exact dates, Requests 2.27.x is likely to be the last release\n  series providing support."
+    },
+    {
+      "kind": "p",
+      "text": "2.26.0 (2021-07-13)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports Brotli compression, if either the `brotli` or\n  `brotlicffi` package is installed. (#5783)"
+    },
+    {
+      "kind": "p",
+      "text": "- `Session.send` now correctly resolves proxy configurations from both\n  the Session and Request. Behavior now matches `Session.request`. (#5681)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed a race condition in zip extraction when using Requests in parallel\n  from zip archive. (#5707)"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3\n  to remove license ambiguity for projects bundling requests. If `chardet`\n  is already installed on your machine it will be used instead of `charset_normalizer`\n  to keep backwards compatibility. (#5797)"
+    },
+    {
+      "kind": "p",
+      "text": "You can also install `chardet` while installing requests by\n  specifying `[use_chardet_on_py3]` extra as follows:"
+    },
+    {
+      "kind": "p",
+      "text": "```shell\n    pip install \"requests[use_chardet_on_py3]\"\n    ```"
+    },
+    {
+      "kind": "p",
+      "text": "Python2 still depends upon the `chardet` module."
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports `idna` 3.x on Python 3. `idna` 2.x will continue to\n  be used on Python 2 installations. (#5711)"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**"
+    },
+    {
+      "kind": "p",
+      "text": "- The `requests[security]` extra has been converted to a no-op install.\n  PyOpenSSL is no longer the recommended secure option for Requests. (#5867)"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests has officially dropped support for Python 3.5. (#5867)"
+    },
+    {
+      "kind": "p",
+      "text": "2.25.1 (2020-12-16)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now treats `application/json` as `utf8` by default. Resolving\n  inconsistencies between `r.text` and `r.json` output. (#5673)"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports chardet v4.x."
+    },
+    {
+      "kind": "p",
+      "text": "2.25.0 (2020-11-11)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- Added support for NETRC environment variable. (#5643)"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports urllib3 v1.26."
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests v2.25.x will be the last release series with support for Python 3.5.\n- The `requests[security]` extra is officially deprecated and will be removed\n  in Requests v2.26.0."
+    },
+    {
+      "kind": "p",
+      "text": "2.24.0 (2020-06-17)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- pyOpenSSL TLS implementation is now only used if Python\n  either doesn't have an `ssl` module or doesn't support\n  SNI. Previously pyOpenSSL was unconditionally used if available.\n  This applies even if pyOpenSSL is installed via the\n  `requests[security]` extra (#5443)"
+    },
+    {
+      "kind": "p",
+      "text": "- Redirect resolution should now only occur when\n  `allow_redirects` is True. (#5492)"
+    },
+    {
+      "kind": "p",
+      "text": "- No longer perform unnecessary Content-Length calculation for\n  requests that won't use it. (#5496)"
+    },
+    {
+      "kind": "p",
+      "text": "2.23.0 (2020-02-19)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "- Remove defunct reference to `prefetch` in Session `__attrs__` (#5110)"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests no longer outputs password in basic auth usage warning. (#5099)"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Pinning for `chardet` and `idna` now uses major version instead of minor.\n  This hopefully reduces the need for releases every time a dependency is updated."
+    },
+    {
+      "kind": "p",
+      "text": "2.22.0 (2019-05-15)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports urllib3 v1.25.2.\n  (note: 1.25.0 and 1.25.1 are incompatible)"
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests has officially stopped support for Python 3.4."
+    },
+    {
+      "kind": "p",
+      "text": "2.21.0 (2018-12-10)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports idna v2.8."
+    },
+    {
+      "kind": "p",
+      "text": "2.20.1 (2018-11-08)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "- Fixed bug with unintended Authorization header stripping for\n  redirects using default ports (http/80, https/443)."
+    },
+    {
+      "kind": "p",
+      "text": "2.20.0 (2018-10-18)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Content-Type header parsing is now case-insensitive (e.g.\n    charset=utf8 v Charset=utf8).\n-   Fixed exception leak where certain redirect urls would raise\n    uncaught urllib3 exceptions.\n-   Requests removes Authorization header from requests redirected\n    from https to http on the same hostname. (CVE-2018-18074)\n-   `should_bypass_proxies` now handles URIs without hostnames (e.g.\n    files)."
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests now supports urllib3 v1.24."
+    },
+    {
+      "kind": "p",
+      "text": "**Deprecations**"
+    },
+    {
+      "kind": "p",
+      "text": "- Requests has officially stopped support for Python 2.6."
+    },
+    {
+      "kind": "p",
+      "text": "2.19.1 (2018-06-14)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Fixed issue where status\\_codes.py's `init` function failed trying\n    to append to a `__doc__` value of `None`."
+    },
+    {
+      "kind": "p",
+      "text": "2.19.0 (2018-06-12)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Warn user about possible slowdown when using cryptography version\n    &lt; 1.3.4\n-   Check for invalid host in proxy URL, before forwarding request to\n    adapter.\n-   Fragments are now properly maintained across redirects. (RFC7231\n    7.1.2)\n-   Removed use of cgi module to expedite library load time.\n-   Added support for SHA-256 and SHA-512 digest auth algorithms.\n-   Minor performance improvement to `Request.content`.\n-   Migrate to using collections.abc for 3.7 compatibility."
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Parsing empty `Link` headers with `parse_header_links()` no longer\n    return one bogus entry.\n-   Fixed issue where loading the default certificate bundle from a zip\n    archive would raise an `IOError`.\n-   Fixed issue with unexpected `ImportError` on windows system which do\n    not support `winreg` module.\n-   DNS resolution in proxy bypass no longer includes the username and\n    password in the request. This also fixes the issue of DNS queries\n    failing on macOS.\n-   Properly normalize adapter prefixes for url comparison.\n-   Passing `None` as a file pointer to the `files` param no longer\n    raises an exception.\n-   Calling `copy` on a `RequestsCookieJar` will now preserve the cookie\n    policy correctly."
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "-   We now support idna v2.7.\n-   We now support urllib3 v1.23."
+    },
+    {
+      "kind": "p",
+      "text": "2.18.4 (2017-08-15)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Error messages for invalid headers now include the header name for\n    easier debugging"
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "-   We now support idna v2.6."
+    },
+    {
+      "kind": "p",
+      "text": "2.18.3 (2017-08-02)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Running `$ python -m requests.help` now includes the installed\n    version of idna."
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Fixed issue where Requests would raise `ConnectionError` instead of\n    `SSLError` when encountering SSL problems when using urllib3 v1.22."
+    },
+    {
+      "kind": "p",
+      "text": "2.18.2 (2017-07-25)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "-   `requests.help` no longer fails on Python 2.6 due to the absence of\n    `ssl.OPENSSL_VERSION_NUMBER`."
+    },
+    {
+      "kind": "p",
+      "text": "**Dependencies**"
+    },
+    {
+      "kind": "p",
+      "text": "-   We now support urllib3 v1.22."
+    },
+    {
+      "kind": "p",
+      "text": "2.18.1 (2017-06-14)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Fix an error in the packaging whereby the `*.whl` contained\n    incorrect data that regressed the fix in v2.17.3."
+    },
+    {
+      "kind": "p",
+      "text": "2.18.0 (2017-06-14)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "-   `Response` is now a context manager, so can be used directly in a\n    `with` statement without first having to be wrapped by\n    `contextlib.closing()`."
+    },
+    {
+      "kind": "p",
+      "text": "**Bugfixes**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Resolve installation failure if multiprocessing is not available\n-   Resolve tests crash if multiprocessing is not able to determine the\n    number of CPU cores\n-   Resolve error swallowing in utils set\\_environ generator"
+    },
+    {
+      "kind": "p",
+      "text": "2.17.3 (2017-05-29)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Improved `packages` namespace identity support, for monkeypatching\n    libraries."
+    },
+    {
+      "kind": "p",
+      "text": "2.17.2 (2017-05-29)\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "**Improvements**"
+    },
+    {
+      "kind": "p",
+      "text": "-   Improved `packages` namespace identity support, for monkeypatching\n    libraries."
+    },
+    {
+      "kind": "p",
+      "text": "2.17.1 (2017-05-2"
+    },
+    {
+      "kind": "p",
+      "text": "(truncated at 20000 chars)"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/HISTORY.md",
+    "capture_mode": "ingest",
+    "content_sha256": "d724cd1996e266ee9874e1fcc0e55a37fefa65de96c7c5c3b33aadd3b1c50992"
+  }
+}

@@ -65,6 +65,8 @@ def test_search(cli_pack):
     proc = _run(script, "--json", "search", "team", "plan")
     results = json.loads(proc.stdout)
     assert results and results[0]["page_id"] == "pricing"
+    evidence = " ".join(item["text"] for item in results[0]["evidence"])
+    assert "Team plan" in evidence or "$79/month" in evidence
 
 
 def test_apis_and_forms(cli_pack):

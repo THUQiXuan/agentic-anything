@@ -114,6 +114,34 @@ def test_mcp_tool_errors_are_structured(chinese_pack):
     assert "unknown unit_id" in response["result"]["content"][0]["text"]
 
 
+def test_cross_resource_search_ranks_query_coverage_before_raw_pack_score(tmp_path):
+    distractor_source = tmp_path / "license.md"
+    distractor_source.write_text(
+        "# License archive\n\nLicense terms and license history.\n", encoding="utf-8"
+    )
+    target_source = tmp_path / "machine.md"
+    target_source.write_text(
+        "# Machine-actionable objects\n\n"
+        "An agent can identify the type, judge whether it is useful and usable, "
+        "inspect its license, and take appropriate action.\n",
+        encoding="utf-8",
+    )
+    distractor = tmp_path / "distractor"
+    target = tmp_path / "target"
+    build_pack_from_source(str(distractor_source), distractor, site_id="distractor")
+    build_pack_from_source(str(target_source), target, site_id="target")
+    server = ResourceMCPServer([distractor, target])
+    result = server.handle(_request(1, "tools/call", {
+        "name": "search_resource",
+        "arguments": {
+            "query": "machine actionable identify useful usable license action",
+            "top_k": 2,
+        },
+    }))["result"]["structuredContent"]
+    assert result["hits"][0]["resource_id"] == "target"
+    assert result["hits"][0]["query_coverage"] > result["hits"][1]["query_coverage"]
+
+
 def test_mcp_stdio_is_newline_delimited_json_only(chinese_pack):
     env = os.environ.copy()
     src = str(Path(__file__).resolve().parents[1] / "src")

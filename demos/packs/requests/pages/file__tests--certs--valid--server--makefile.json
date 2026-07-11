@@ -1,0 +1,26 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__tests--certs--valid--server--makefile",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/valid/server/Makefile",
+  "url_path": "tests/certs/valid/server/Makefile",
+  "title": "tests/certs/valid/server/Makefile",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/certs/valid/server/Makefile",
+  "summary": ".PHONY: all clean\n\nserver.key:\n\topenssl genrsa -out $@ 2048\n\nserver.csr: server.key\n\topenssl req -key $< -config cert.cnf -new -out $@\n\nserver.pem: server.csr\n\topenssl x509 -req -CA ../ca/ca.crt -CAkey ../ca/ca-private.key -in server.csr -…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": ".PHONY: all clean\n\nserver.key:\n\topenssl genrsa -out $@ 2048\n\nserver.csr: server.key\n\topenssl req -key $< -config cert.cnf -new -out $@\n\nserver.pem: server.csr\n\topenssl x509 -req -CA ../ca/ca.crt -CAkey ../ca/ca-private.key -in server.csr -outform PEM -out server.pem -extfile cert.cnf -extensions v3_ca -days 7200 -CAcreateserial\n\topenssl x509 -in ../ca/ca.crt -outform PEM >> $@\n\nall: server.pem\n\nclean:\n\trm -f server.*\n"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/tests/certs/valid/server/Makefile",
+    "capture_mode": "ingest",
+    "content_sha256": "68541e2b167a72cf00a57c0978750b11ff830dc85bdda99eebe50f7791768a03"
+  }
+}

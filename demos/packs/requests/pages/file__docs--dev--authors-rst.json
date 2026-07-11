@@ -1,0 +1,30 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--dev--authors-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/dev/authors.rst",
+  "url_path": "docs/dev/authors.rst",
+  "title": "docs/dev/authors.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/dev/authors.rst",
+  "summary": "Authors\n=======\n.. include:: ../../AUTHORS.rst",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Authors\n======="
+    },
+    {
+      "kind": "p",
+      "text": ".. include:: ../../AUTHORS.rst"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/dev/authors.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "7b51282d67c2ac09a6a2b7b7d3a97e3e8651292b22c61b9c635ae4e805c8a766"
+  }
+}

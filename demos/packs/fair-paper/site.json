@@ -1,0 +1,32 @@
+{
+  "spec_version": "0.2",
+  "generator": "agentic-anything/0.4.1",
+  "site_id": "fair-paper",
+  "resource_type": "document",
+  "seed_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+  "captured_at": "2026-07-11T00:00:00Z",
+  "finished_at": "2026-07-11T00:00:00Z",
+  "capture_mode": "ingest",
+  "respect_robots": null,
+  "same_origin_only": null,
+  "max_pages": null,
+  "page_count": 1,
+  "pages": [
+    {
+      "page_id": "fair-guiding-principles-pmc4792175",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+      "url_path": "fair-guiding-principles-pmc4792175.html",
+      "title": "The FAIR Guiding Principles for scientific data management and stewardship - PMC",
+      "page_type": "page",
+      "summary": "An official website of the United States government\nHere's how you know\nHere's how you know\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\nSecure .gov websites use HTTPS A loc…",
+      "outgoing_page_ids": [],
+      "form_count": 0,
+      "discovered_via": "ingest",
+      "depth": 0,
+      "rendered": false,
+      "has_screenshot": false
+    }
+  ],
+  "frontier": [],
+  "notes": []
+}

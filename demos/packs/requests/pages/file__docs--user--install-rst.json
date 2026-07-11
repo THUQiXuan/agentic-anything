@@ -1,0 +1,78 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__docs--user--install-rst",
+  "source_url": "https://github.com/psf/requests/tree/v2.34.2/docs/user/install.rst",
+  "url_path": "docs/user/install.rst",
+  "title": "docs/user/install.rst",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "docs/user/install.rst",
+  "summary": ".. _install:\nInstallation of Requests\n========================\nThis part of the documentation covers the installation of Requests.\nThe first step to using any software package is getting it properly installed.\n$ python -m pip install reque…",
+  "content": [
+    {
+      "kind": "p",
+      "text": ".. _install:"
+    },
+    {
+      "kind": "p",
+      "text": "Installation of Requests\n========================"
+    },
+    {
+      "kind": "p",
+      "text": "This part of the documentation covers the installation of Requests.\nThe first step to using any software package is getting it properly installed."
+    },
+    {
+      "kind": "p",
+      "text": "$ python -m pip install requests\n--------------------------------"
+    },
+    {
+      "kind": "p",
+      "text": "To install Requests, simply run this simple command in your terminal of choice::"
+    },
+    {
+      "kind": "p",
+      "text": "$ python -m pip install requests"
+    },
+    {
+      "kind": "p",
+      "text": "Get the Source Code\n-------------------"
+    },
+    {
+      "kind": "p",
+      "text": "Requests is actively developed on GitHub, where the code is\n`always available <https://github.com/psf/requests>`_."
+    },
+    {
+      "kind": "p",
+      "text": "You can either clone the public repository::"
+    },
+    {
+      "kind": "p",
+      "text": "$ git clone https://github.com/psf/requests.git"
+    },
+    {
+      "kind": "p",
+      "text": "Or, download the `tarball <https://github.com/psf/requests/tarball/main>`_::"
+    },
+    {
+      "kind": "p",
+      "text": "$ curl -OL https://github.com/psf/requests/tarball/main\n    # optionally, zipball is also available (for Windows users)."
+    },
+    {
+      "kind": "p",
+      "text": "Once you have a copy of the source, you can embed it in your own Python\npackage, or install it into your site-packages easily::"
+    },
+    {
+      "kind": "p",
+      "text": "$ cd requests\n    $ python -m pip install ."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/psf/requests/tree/v2.34.2/docs/user/install.rst",
+    "capture_mode": "ingest",
+    "content_sha256": "1329fdec265f8c75316fd1c15c27de2d0ba68fc91d2815ef04cd53e04dc740d6"
+  }
+}
