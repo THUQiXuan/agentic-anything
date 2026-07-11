@@ -19,8 +19,8 @@ def test_deterministic_skill(built_pack, tmp_path):
     path = generate_skill(pack, llm_config=None, use_llm=False)
     content = path.read_text(encoding="utf-8")
     assert content.startswith("---\nname: demo\n")
-    for section in ("## Overview", "## Site map", "## Reading the pack",
-                    "## APIs and forms", "## Common workflows",
+    for section in ("## Overview", "## Resource map", "## Reading the pack",
+                    "## Interfaces and actions", "## Common workflows",
                     "## For AI Agents", "## Caveats"):
         assert section in content
     # grounded in actual pack data

@@ -1,5 +1,14 @@
 {
   "date": "2026-07-10",
+  "agentify_contract": {
+    "date": "2026-07-11",
+    "resource_cases": 7,
+    "successful_agentifications": 7,
+    "assertions_passed": 77,
+    "assertions_total": 77,
+    "model_calls": 0,
+    "scope": "deterministic system contract; not ingestion fidelity or answer quality"
+  },
   "beir": {
     "primary_metric": "nDCG@10",
     "paired_bootstrap_samples": 2000,

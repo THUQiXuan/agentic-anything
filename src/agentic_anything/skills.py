@@ -96,27 +96,28 @@ def build_context_document(reader: PackReader) -> str:
 
 
 _SYSTEM_PROMPT = """\
-You write SKILL.md files that teach AI agents how to use a specific website
-through its "site pack" (a structured, non-visual capture of the site made by
-the open-source tool `agentic-anything`).
+You write SKILL.md files that teach AI agents how to use a specific resource
+through its Agentic Anything pack. The resource may be a website, document,
+book, video transcript, dataset, software tool, or code repository. The pack is
+a structured, non-visual, evidence-preserving representation.
 
 A SKILL.md must be plain Markdown with YAML frontmatter and EXACTLY these
 sections, in order:
 
 ---
-name: <site-id>
-description: <one sentence: what the site offers and what an agent can do with it>
+name: <resource-id>
+description: <one sentence: what the resource contains and what an agent can do with it>
 ---
 
-# <Site name>
+# <Resource name>
 
 ## Overview
-2-4 sentences: what this site is, what it contains, what tasks an agent can
+2-4 sentences: what this resource is, what it contains, what tasks an agent can
 accomplish with it.
 
-## Site map
-A short table of the most important captured pages: page_id | type | what it contains.
-Mention notable uncaptured URLs (frontier) if any matter.
+## Resource map
+A short table of the most important captured units: page_id | type | what it contains.
+Mention notable uncaptured items (frontier) if any matter.
 
 ## Reading the pack
 Explain the concrete file layout the agent should read:
@@ -125,25 +126,24 @@ Explain the concrete file layout the agent should read:
 - `api/apis.json` (API surface), `html/`, `snapshots/` if present
 Include 1-2 example shell commands (cat / python -m json.tool).
 
-## APIs and forms
-Document every usable interface found: forms (method, action URL, fields with
-types and required flags), API endpoints, feeds, OpenAPI specs. For each, show
-a concrete example call (curl for GET endpoints; for forms, a curl with the
-right -d fields). If none exist, say so explicitly and point to page content.
+## Interfaces and actions
+Document every usable interface found. For websites this may include forms,
+API endpoints, feeds, or OpenAPI specs; for software and code it may include
+commands or files. If none exist, say so and point to evidence units.
 
 ## Common workflows
-2-4 realistic agent tasks on this site, each as a short numbered recipe that
+2-4 realistic agent tasks on this resource, each as a short numbered recipe that
 references concrete page_ids / endpoints / files from THIS pack.
 
 ## For AI Agents
 A bullet contract: prefer pages/*.md for reading; use pages/*.json when you
-need structure; verify claims against html/ evidence when stakes are high;
-never invent endpoints not listed in api/apis.json; respect robots/ToS;
-screenshots in snapshots/ are optional visual evidence.
+  need structure; verify claims against provenance when stakes are high;
+never invent actions not represented in the pack; respect access policy and
+licenses; screenshots in snapshots/ are optional visual evidence.
 
 ## Caveats
-Honest limits of this capture: pages not captured, dynamic content, auth
-walls, staleness (include the capture date).
+Honest limits of this capture: units not captured, unsupported native
+structure/actions, dynamic content, auth walls, and staleness.
 
 Rules:
 - Ground EVERY claim in the provided pack data. Never invent pages, fields, or
@@ -185,7 +185,7 @@ def generate_skill(
 
 def _llm_skill(context: str, llm_config: LLMConfig, language: str) -> str:
     user = (
-        f"Write the SKILL.md in {language} for the following site pack. "
+        f"Write the SKILL.md in {language} for the following resource pack. "
         f"Frontmatter keys and section headings stay in English; body text in {language}.\n\n"
         f"{context}"
     )
@@ -222,20 +222,21 @@ def deterministic_skill(reader: PackReader) -> str:
     lines += [
         "---",
         f"name: {site_id}",
-        f"description: Agent-native site pack for {site.get('seed_url', site_id)} "
-        f"({len(pages)} pages captured; generated without LLM).",
+        f"description: Agent-native resource pack for {site.get('seed_url', site_id)} "
+        f"({len(pages)} units captured; generated without LLM).",
         "---",
         "",
         f"# {site_name}",
         "",
         "## Overview",
         "",
-        f"This pack is a structured capture of {site.get('seed_url')} made on "
+        f"This `{site.get('resource_type', 'resource')}` pack is a structured capture of "
+        f"{site.get('seed_url')} made on "
         f"{site.get('captured_at')} in `{site.get('capture_mode')}` mode. "
-        f"It contains {len(pages)} page(s), an API surface inventory, and markdown "
+        f"It contains {len(pages)} evidence unit(s), an interface inventory, and markdown "
         "views an agent can read directly.",
         "",
-        "## Site map",
+        "## Resource map",
         "",
         "| page_id | type | title |",
         "|---|---|---|",
@@ -264,7 +265,7 @@ def deterministic_skill(reader: PackReader) -> str:
         "- `html/<page_id>.html` — captured HTML evidence" if "html_evidence" in reader.discovery.get("capabilities", []) else "",
         "- `snapshots/<page_id>.png` — full-page screenshots" if "visual_snapshots" in reader.discovery.get("capabilities", []) else "",
         "",
-        "## APIs and forms",
+        "## Interfaces and actions",
         "",
     ]
     forms = apis.get("forms", [])

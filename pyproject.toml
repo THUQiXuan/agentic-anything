@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "agentic-anything"
 dynamic = ["version"]
-description = "Turn any resource into an evidence-preserving agent interface with MCP, grounded search, chat, and HTTP APIs."
+description = "Turn any resource into an agent-native representation and a practical resource agent."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

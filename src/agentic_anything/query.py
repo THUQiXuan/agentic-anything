@@ -1,8 +1,8 @@
-"""Deterministic read/query layer over a built site pack.
+"""Deterministic read/query layer over an agent-native resource pack.
 
-``PackReader`` gives programmatic access; ``search_pack`` is a lightweight
-keyword search (TF scoring with field weights) that returns pages with the
-matching evidence blocks — no LLM, no network.
+``PackReader`` gives programmatic access; ``search_pack`` returns ranked units
+and matching evidence blocks through structured Unicode BM25F (or the retained
+legacy scorer) — no LLM and no network.
 """
 
 from __future__ import annotations
@@ -25,8 +25,9 @@ class PackReader:
         self.pack_dir = Path(pack_dir).resolve()
         if not (self.pack_dir / "agent-pack.json").exists():
             raise PackNotFound(
-                f"{self.pack_dir} is not a site pack (missing agent-pack.json). "
-                "Build one with: agentic-anything build <url> -o <dir>"
+                f"{self.pack_dir} is not an Agentic Anything pack "
+                "(missing agent-pack.json). Build one with: "
+                "agentic-anything agentify <source> -o <dir>"
             )
         self._discovery: dict | None = None
         self._site: dict | None = None
@@ -77,6 +78,7 @@ class PackReader:
         site = self.site
         return {
             "site_id": site.get("site_id"),
+            "resource_type": site.get("resource_type") or self.discovery.get("resource_type"),
             "seed_url": site.get("seed_url"),
             "captured_at": site.get("captured_at"),
             "capture_mode": site.get("capture_mode"),

@@ -1,6 +1,7 @@
 """The `agentic-anything` command-line interface (alias: `aany`).
 
 Subcommands:
+  agentify SOURCE   one-shot: resource -> agent-native pack -> resource agent
   build  SOURCE     capture a website / file / folder into a pack
   chat   PACK_DIR   talk to the pack as a conversational agent
   serve  PACK...    host packs as agents over HTTP (A2A capable)
@@ -8,7 +9,7 @@ Subcommands:
   mcp-config PACK... print Codex or Claude Code MCP configuration
   skill  PACK_DIR   generate skills/SKILL.md for a pack (LLM or --no-llm)
   clify  PACK_DIR   generate a zero-dependency site CLI for a pack
-  pack   SOURCE     one-shot: build + skill + clify
+  pack   SOURCE     backward-compatible alias for agentify
   query  PACK_DIR Q keyword search over a pack
   page   PACK_DIR ID  print one page (md or json)
   apis   PACK_DIR   show the discovered API surface
@@ -34,6 +35,7 @@ from .ingest import (
     classify_url,
     detect_source_kind,
 )
+from .interface import generate_agent_interface
 from .packer import build_pack
 from .query import PackNotFound, PackReader, search_pack
 from .sitecli import generate_site_cli
@@ -74,8 +76,9 @@ def _add_build_options(parser: argparse.ArgumentParser) -> None:
                              ".mp4 .zip ...); a folder or repo; or cli:<tool> for "
                              "installed software")
     parser.add_argument("-o", "--output", default=None,
-                        help="pack directory (default: packs/<site-slug>)")
-    parser.add_argument("--site-id", default=None, help="override the site id/slug")
+                        help="pack directory (default: packs/<resource-slug>)")
+    parser.add_argument("--site-id", default=None,
+                        help="override the resource id/slug (legacy option name)")
     parser.add_argument("--max-pages", type=int, default=20)
     parser.add_argument("--render", action="store_true",
                         help="render pages with Chromium (requires the [render] extra)")
@@ -206,16 +209,17 @@ def cmd_clify(args) -> int:
     if args.json:
         _print_json({"cli_path": str(path)})
     else:
-        print(f"site CLI written: {path}")
+        print(f"resource CLI written: {path}")
         print(f"try: python {path} pages")
     return 0
 
 
-def cmd_pack(args) -> int:
+def cmd_agentify(args) -> int:
     rc, build_payload = _run_build(args)
     if rc != 0:
         if args.json:
-            _print_json({"build": build_payload, "skill": None, "cli": None})
+            _print_json({"build": build_payload, "skill": None, "cli": None,
+                         "agent": None})
         else:
             for warning in build_payload["warnings"]:
                 print(f"warning: {warning}", file=sys.stderr)
@@ -224,19 +228,32 @@ def cmd_pack(args) -> int:
     args.pack_dir = str(out)
     skill_payload = _run_skill(args)
     cli_path = generate_site_cli(args.pack_dir)
+    agent_path = generate_agent_interface(args.pack_dir, resource_cli=cli_path)
     if args.json:
         _print_json({"build": build_payload, "skill": skill_payload,
-                     "cli": {"cli_path": str(cli_path)}})
+                     "cli": {"cli_path": str(cli_path)},
+                     "agent": {"interface_path": str(agent_path),
+                               "guide_path": str(out.resolve() / "AGENT.md")}})
     else:
         print(f"pack: {build_payload['pack_dir']}")
         print(f"pages captured: {build_payload['page_count']}   "
               f"frontier: {build_payload['frontier_count']}   "
               f"api surface entries: {build_payload['api_count']}")
         print(f"skill written: {skill_payload['skill_path']}")
-        print(f"site CLI written: {cli_path}")
-        print(f"\ndone. explore the pack:\n  agentic-anything info {out}\n"
-              f"  cat {out}/skills/SKILL.md")
+        print(f"resource CLI written: {cli_path}")
+        print(f"agent interface written: {agent_path}")
+        print(f"\nresource agent ready:\n"
+              f"  agentic-anything chat {out}\n"
+              f"  agentic-anything mcp {out}\n"
+              f"  agentic-anything serve {out}\n"
+              f"  cat {out}/AGENT.md")
     return 0
+
+
+def cmd_pack(args) -> int:
+    """Backward-compatible alias for the preferred ``agentify`` command."""
+
+    return cmd_agentify(args)
 
 
 def cmd_query(args) -> int:
@@ -383,12 +400,22 @@ def cmd_mcp_config(args) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="agentic-anything",
-        description="Turn any resource into an evidence-preserving agent interface.",
+        description=("Turn any resource into an agent-native representation "
+                     "and a practical resource agent."),
     )
     parser.add_argument("--version", action="version", version=f"agentic-anything {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p = sub.add_parser("build", help="capture a website / file / folder into a pack")
+    p = sub.add_parser(
+        "agentify",
+        help="turn one resource into an agent-native pack and resource-agent interfaces",
+    )
+    _add_build_options(p)
+    _add_llm_options(p)
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_agentify)
+
+    p = sub.add_parser("build", help="capture any supported resource into an agent-native pack")
     _add_build_options(p)
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_build)
@@ -404,7 +431,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_chat)
 
-    p = sub.add_parser("serve", help="host packs as chatable agents over HTTP")
+    p = sub.add_parser("serve", help="host packs as conversational resource agents over HTTP")
     p.add_argument("pack_dirs", nargs="+", metavar="PACK_DIR")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=8373)
@@ -431,12 +458,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_skill)
 
-    p = sub.add_parser("clify", help="generate a site-specific CLI for a pack")
+    p = sub.add_parser("clify", help="generate a resource-specific CLI for a pack")
     p.add_argument("pack_dir")
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_clify)
 
-    p = sub.add_parser("pack", help="one-shot: build + skill + clify")
+    p = sub.add_parser("pack", help="backward-compatible alias for agentify")
     _add_build_options(p)
     _add_llm_options(p)
     p.add_argument("--json", action="store_true")

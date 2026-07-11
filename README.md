@@ -4,11 +4,11 @@
 
 # Agentic Anything
 
-**Turn anything — websites, papers, books, videos, data, software — into an evidence-preserving resource agent.**
+**Turn any resource into an agent-native representation — and into a resource agent you can talk to or call.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-168%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-170%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
@@ -16,19 +16,35 @@
 
 ---
 
-Resources are built for human consumption. Agents deserve better: structured data instead of pixel-parsing, documented interfaces instead of guesswork, and — above all — **a conversation** instead of a scraping session.
+Resources are built for human consumption. Agents deserve better: structured
+evidence instead of pixel-parsing, explicit operations instead of interface
+guesswork, and a direct agent interface instead of first learning how every
+website, book, video, program, or repository is organized.
 
-**Agentic Anything** turns any resource into an agent:
+**Agentic Anything** has two inseparable goals:
+
+1. Turn heterogeneous resources into **agent-native representations** that
+   preserve their structure, evidence, provenance, actions, and capture limits.
+2. Turn each representation into a **resource agent** that humans and agents can
+   talk to, inspect, call through standard protocols, or use programmatically.
 
 ```
-  website ─┐                       ┌─ mcp    native tools/resources for Codex, Claude Code, …
-  book ────┤                       ├─ chat   grounded answers + verifiable unit citations
-  video ───┼──▶ build ──▶ PACK ──▶ ├─ serve  HTTP agent, A2A & OpenAI-compatible API
-  docs ────┤     capture &         ├─ skill  SKILL.md usage guide for agents
-  folder ──┘     distill           └─ clify  zero-dependency per-resource CLI
+  website · PDF · book · video · data · software · repository · folder
+                              │
+                         agentify
+                              ▼
+       AGENT-NATIVE PACK                 RESOURCE AGENT
+  units · structure · actions      chat · MCP · HTTP/OpenAI · A2A
+  locators · hashes · frontier     SKILL.md · resource CLI · query/read
 ```
 
-- **`build`** — captures ANY source into a structured *pack*:
+- **`agentify`** is the preferred one-shot path. It captures any supported
+  source, writes the agent-native pack, generates `SKILL.md` and a specialized
+  CLI, then adds `agent-interface.json` plus `AGENT.md` as stable machine and
+  human entry points. `build` remains available when you only need the
+  representation layer.
+
+- **Heterogeneous ingestion** covers:
 
   | Kind | Sources |
   |---|---|
@@ -39,12 +55,14 @@ Resources are built for human consumption. Agents deserve better: structured dat
   | Software & code | **installed CLI tools** (`build cli:git` — help/subcommands/man introspection) · **GitHub repos by URL** · local source trees |
   | Everything else | folders · zip/tar archives · RSS/Atom feeds & podcasts · email (.eml/.mbox) |
 
-- **`mcp`** — exposes one or more packs as a read-only Model Context Protocol server: discoverable resources, evidence search/open tools, and a grounded-use prompt. Codex and Claude Code can use the same pack directly, without an LLM call inside Agentic Anything.
-- **`chat`** — the pack becomes a conversational agent: retrieval-grounded answers with unit citations (`[page_id]`), honest "not in my resource" refusals, multi-turn history — in your terminal or one-shot with `--ask`.
-- **`serve`** — hosts packs as agents over HTTP: an `/agents` directory with agent cards, `POST /agents/<id>/ask`, and an **OpenAI-compatible `/v1/chat/completions`** where each agent is a "model" — so any agent framework can talk to your resources, and **agents can consult each other** (`--enable-a2a`, or `chat --peer id=url` across servers).
-- **`skill`** / **`clify`** — generate a SKILL.md usage guide and a zero-dependency per-resource CLI (see below).
+- **Resource-agent interfaces** include grounded terminal conversation
+  (`chat`), read-only MCP for Codex/Claude Code and other hosts (`mcp`), an HTTP
+  agent with OpenAI-compatible and optional A2A access (`serve`), deterministic
+  query/read operations, `SKILL.md`, and a zero-dependency resource CLI.
 
-The result: an agent (or you) can *chat* with a website, *interview* a book, *query* a lecture video — and resource-agents can answer each other's questions over an API.
+The result: you can *chat with a website*, *interview a book*, *ask a video for
+the relevant moment*, or *hand a software/repository agent directly to another
+agent*—without first reverse-engineering the resource's native interface.
 
 ## Installation
 
@@ -65,16 +83,18 @@ Requires Python 3.10+. The core installation uses only the standard library.
 ## Quick start
 
 ```bash
-# 1. Agentify ANY resource (no API key needed for capture)
-agentic-anything build https://quotes.toscrape.com/  -o packs/quotes   # website
-agentic-anything build arxiv:1706.03762              -o packs/paper    # arXiv paper
-agentic-anything build report.docx                   -o packs/report   # Word / PDF / EPUB
-agentic-anything build metrics.xlsx                  -o packs/metrics  # spreadsheet / CSV / SQLite
-agentic-anything build "https://youtu.be/VIDEO_ID"   -o packs/talk     # online video (yt-dlp)
-agentic-anything build lecture.mp4                   -o packs/lect     # local media (ffmpeg/whisper)
-agentic-anything build https://github.com/psf/requests -o packs/req    # GitHub repo
-agentic-anything build cli:git                       -o packs/git      # installed software
-agentic-anything build ./my-notes/                   -o packs/notes    # folder / archive / repo
+# 1. Turn ANY resource into an agent-native pack + resource-agent interfaces
+agentic-anything agentify https://quotes.toscrape.com/  -o packs/quotes
+agentic-anything agentify arxiv:1706.03762              -o packs/paper
+agentic-anything agentify report.pdf                    -o packs/report
+agentic-anything agentify "https://youtu.be/VIDEO_ID"   -o packs/talk
+agentic-anything agentify https://github.com/psf/requests -o packs/req
+agentic-anything agentify cli:git                       -o packs/git
+agentic-anything agentify ./my-notes/                   -o packs/notes
+
+# Every result explains how humans and agents can use it
+cat packs/report/AGENT.md
+cat packs/report/agent-interface.json
 
 # 2. Give the resource directly to Codex or Claude Code (no API key)
 agentic-anything mcp-config packs/alice --client codex    # paste into .codex/config.toml
@@ -99,10 +119,11 @@ curl -X POST localhost:8373/agents/alice/ask \
 curl -X POST localhost:8373/v1/chat/completions \
      -d '{"model": "lecture", "messages": [{"role":"user","content":"Summarize the video"}]}'
 
-# 5. Classic toolkit layers still apply to every pack
+# 5. Lower-level layers remain available independently
+agentic-anything build report.pdf -o packs/report-only   # representation only
 agentic-anything skill packs/quotes --language both   # SKILL.md + SKILL_ZH.md
-agentic-anything clify packs/quotes                   # zero-dependency site CLI
-agentic-anything pack  https://books.toscrape.com/    # build+skill+clify in one shot
+agentic-anything clify packs/quotes                   # zero-dependency resource CLI
+agentic-anything pack https://books.toscrape.com/     # legacy alias for agentify
 ```
 
 For JavaScript-heavy sites, add rendering and visual snapshots:
@@ -114,11 +135,13 @@ agentic-anything build https://quotes.toscrape.com/js/ -o packs/quotes-js \
 
 Rendered mode also **sniffs the network**: every XHR/fetch API call the page makes is recorded into the pack's API surface — real endpoints, observed, not guessed.
 
-## What a site pack looks like
+## What an agentified resource looks like
 
 ```
 packs/quotes/
 ├── agent-pack.json          # discovery document: what's in this pack
+├── agent-interface.json     # machine-readable ways to talk to/call this resource agent
+├── AGENT.md                 # entry guide; no pack-layout knowledge required
 ├── site.json                # page index + crawl frontier (what was NOT captured, and why)
 ├── pages/
 │   ├── index.json           # structured manifest: content, links, forms, provenance
@@ -127,7 +150,7 @@ packs/quotes/
 ├── snapshots/index.png      # full-page screenshots (rendered mode, optional)
 ├── api/apis.json            # forms · JS endpoints · OpenAPI · feeds · observed network calls
 ├── skills/SKILL.md          # generated usage guide for agents (+ SKILL_ZH.md)
-└── cli/quotes_..._cli.py    # generated zero-dependency site CLI
+└── cli/quotes_..._cli.py    # generated zero-dependency resource CLI
 ```
 
 Design principles (inherited from the projects that inspired this one — see
@@ -144,14 +167,15 @@ Design principles (inherited from the projects that inspired this one — see
 
 | Command | What it does |
 |---|---|
-| `build SOURCE -o DIR` | Agentify a source: website / video / repo / arXiv / feed URL; local file (`.pdf .docx .pptx .xlsx .epub .md .csv .json .ipynb .sqlite .eml .srt .mp4 .zip` …); folder / repo; `cli:<tool>`. Web options: `--max-pages`, `--render`, `--screenshots`, `--allow-cross-origin`, `--ignore-robots`, `--no-html`, `--no-probe`, `--seed URL`, `--timeout` |
+| `agentify SOURCE -o DIR` | Preferred one-shot: build the agent-native pack, SKILL, resource CLI, `agent-interface.json`, and `AGENT.md` |
+| `build SOURCE -o DIR` | Build only the representation layer from a website / video / repo / arXiv / feed URL; local file; folder/repo; or `cli:<tool>` |
 | `chat PACK [--ask Q]` | Converse with the pack (REPL or one-shot). Options: `--top-k`, `--model`, `--base-url`, `--peer ID=URL` (consult remote agents), `--json` |
 | `serve PACK... ` | Host packs as HTTP agents. Options: `--host`, `--port`, `--enable-a2a`, `--model`, `--top-k` |
 | `mcp PACK...` | Expose packs as a read-only stdio MCP server (resources + tools + prompts; no API key) |
 | `mcp-config PACK...` | Print a Codex TOML or Claude Code JSON configuration (`--client codex\|claude`) |
 | `skill PACK` | Generate `skills/SKILL.md`. Options: `--model`, `--base-url`, `--language en\|zh\|both`, `--no-llm` |
 | `clify PACK` | Generate `cli/<site>_cli.py` + its README |
-| `pack SOURCE -o DIR` | One-shot: build + skill + clify |
+| `pack SOURCE -o DIR` | Backward-compatible alias for `agentify` |
 | `query PACK "question"` | Keyword search across the pack with evidence blocks |
 | `page PACK PAGE_ID [--format md\|json]` | Print one captured unit |
 | `apis PACK` | Show the discovered API surface (websites) |
@@ -232,7 +256,7 @@ Capture (`build`), search (`query`) and the generated CLIs run **without any API
 ```python
 from agentic_anything import (
     ResourceAgent, ResourceMCPServer, build_pack, build_pack_from_source,
-    generate_skill, generate_site_cli, search_pack,
+    generate_agent_interface, generate_skill, generate_site_cli, search_pack,
 )
 from agentic_anything.config import BuildConfig, LLMConfig
 
@@ -241,6 +265,7 @@ build_pack("https://quotes.toscrape.com/", "packs/quotes",
            config=BuildConfig(max_pages=10))
 # ... or anything else
 build_pack_from_source("alice.txt", "packs/alice")
+generate_agent_interface("packs/alice")  # agent-interface.json + AGENT.md
 
 # chat with it
 agent = ResourceAgent("packs/alice", LLMConfig.from_env())
@@ -262,10 +287,15 @@ print(mcp.handle({"jsonrpc": "2.0", "id": 1, "method": "tools/list"}))
 
 ```bash
 pip install -e '.[dev]'
-python -m pytest tests -q        # 168 tests; rendered-mode tests auto-skip without Playwright
+python -m pytest tests -q        # 170 tests; rendered-mode tests auto-skip without Playwright
 ```
 
-The suite covers the HTML parser, crawler policies, API discovery, non-web ingestion, pack building, Unicode/BM25F retrieval, MCP lifecycle/resources/tools/prompts and stdout purity, the chat agent, the HTTP agent server, skill generation, the generated site CLI, and the LLM client. No unit test calls an external service or model. Reproducible retrieval and host-compatibility evaluations live in [`benchmarks/`](benchmarks/).
+The suite covers heterogeneous ingestion, pack construction, the generated
+resource-agent interface contract, Unicode/BM25F retrieval, MCP
+lifecycle/resources/tools/prompts and stdout purity, conversational and HTTP
+agents, skills, resource CLIs, and the LLM client. No unit test calls an
+external service or model. Reproducible retrieval and host-compatibility
+evaluations live in [`benchmarks/`](benchmarks/).
 
 ## Responsible use
 

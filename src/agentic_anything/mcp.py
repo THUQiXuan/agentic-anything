@@ -91,7 +91,7 @@ class ResourceMCPServer:
             },
             "serverInfo": {
                 "name": "agentic-anything",
-                "title": "Agentic Anything Resource Packs",
+                "title": "Agentic Anything Resource Agents",
                 "version": __version__,
             },
             "instructions": _INSTRUCTIONS,
@@ -303,7 +303,7 @@ class ResourceMCPServer:
     def _prompts(self) -> list[dict]:
         return [{
             "name": "use_resource",
-            "title": "Answer from a resource pack",
+            "title": "Use an Agentic Anything resource agent",
             "description": "Workflow prompt for evidence-grounded resource use.",
             "arguments": [
                 {"name": "question", "description": "Question or task", "required": True},

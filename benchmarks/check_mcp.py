@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Protocol and installed-host smoke checks for the ResourcePack MCP server."""
+"""Protocol and installed-host smoke checks for Agentic Anything MCP."""
 
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ def main() -> int:
         request(1, "initialize", {
             "protocolVersion": "2025-11-25",
             "capabilities": {},
-            "clientInfo": {"name": "resourcepack-check", "version": "1"},
+            "clientInfo": {"name": "agentic-anything-check", "version": "1"},
         }),
         {"jsonrpc": "2.0", "method": "notifications/initialized"},
         request(2, "ping"),
@@ -105,7 +105,7 @@ def main() -> int:
         codex_env = env | {"CODEX_HOME": str(codex_home)}
         hosts["codex_version"] = command(codex, "--version", env=codex_env)
         hosts["codex_add"] = command(
-            codex, "mcp", "add", "--env", f"PYTHONPATH={SRC}", "resourcepack", "--",
+            codex, "mcp", "add", "--env", f"PYTHONPATH={SRC}", "agentic-anything", "--",
             sys.executable, "-m", "agentic_anything", "mcp", str(pack), env=codex_env,
         )
         hosts["codex_list"] = command(codex, "mcp", "list", env=codex_env)
@@ -120,7 +120,7 @@ def main() -> int:
         hosts["claude_version"] = command(claude, "--version", env=claude_env)
         hosts["claude_add"] = command(
             claude, "mcp", "add", "--scope", "user", "--transport", "stdio",
-            "resourcepack", "-e", f"PYTHONPATH={SRC}", "--", sys.executable, "-m",
+            "agentic-anything", "-e", f"PYTHONPATH={SRC}", "--", sys.executable, "-m",
             "agentic_anything", "mcp", str(pack), env=claude_env,
         )
         hosts["claude_list"] = command(claude, "mcp", "list", env=claude_env, timeout=45)
@@ -130,7 +130,7 @@ def main() -> int:
         )
 
     payload = {
-        "experiment": "ResourcePack MCP conformance and installed-host smoke test",
+        "experiment": "Agentic Anything MCP conformance and installed-host smoke test",
         "assertions": assertions,
         "passed": sum(assertions.values()),
         "total": len(assertions),

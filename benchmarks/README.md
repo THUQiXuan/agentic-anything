@@ -1,9 +1,26 @@
 # Reproducible evaluations
 
 These scripts evaluate retrieval and protocol compatibility without calling an
-LLM or paid API. The compact summary below was produced on 2026-07-10; raw
+LLM or paid API. The compact summary below was updated on 2026-07-11; raw
 per-query results, dataset hashes, logs, and timing records are retained by the
 research run and are not bundled into the package.
+
+## Heterogeneous resource-to-agent contract
+
+`check_agentify.py` validates the full Agentic Anything main line rather than
+one transport. It runs the same model-free `agentify` command on a website,
+Markdown document, subtitle transcript, CSV table, code repository, real PDF,
+and installed CLI help. The final registered run passes all 77 representation,
+interface, offline-query, credential-absence, and generated-CLI assertions over
+7/7 cases. This is a deterministic system check, not a measure of ingestion
+fidelity or generative answer quality.
+
+```bash
+python benchmarks/check_agentify.py \
+  --work-dir /tmp/aany-agentify \
+  --pdf /path/to/a-real-paper.pdf \
+  --output /tmp/aany-agentify.json
+```
 
 ## BEIR retrieval
 
