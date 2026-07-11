@@ -1,0 +1,30 @@
+{
+  "spec_version": "0.1",
+  "kind": "agentic-anything-pack",
+  "site_id": "website",
+  "site_name": "Aurora Service Status",
+  "resource_type": "web",
+  "seed_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html",
+  "generated_at": "2026-07-11T09:08:19Z",
+  "generator": "agentic-anything/0.4.1",
+  "capabilities": [
+    "site_snapshot",
+    "page_index",
+    "page_manifests",
+    "markdown_views",
+    "api_surface",
+    "html_evidence",
+    "resource_agent_interface"
+  ],
+  "contents": {
+    "site_snapshot": "site.json",
+    "page_manifests": "pages/*.json",
+    "markdown_views": "pages/*.md",
+    "html_evidence": "html/*.html",
+    "api_surface": "api/apis.json",
+    "skill": "skills/SKILL.md",
+    "site_cli": "cli/website_cli.py",
+    "agent_interface": "agent-interface.json",
+    "agent_guide": "AGENT.md"
+  }
+}

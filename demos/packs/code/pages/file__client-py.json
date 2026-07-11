@@ -1,0 +1,27 @@
+{
+  "spec_version": "0.2",
+  "page_id": "file__client-py",
+  "source_url": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk/client.py",
+  "url_path": "client.py",
+  "title": "client.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "client.py",
+  "summary": "\"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport os\n\nRETRY_MODE = \"OMEGA-7\"\nDEFAULT_TIMEOUT_SECONDS = 12\nMAX_RETRIES = 5\n\n\ndef request(endpoint: str, retries: int = 3) -> dict:…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "\"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport os\n\nRETRY_MODE = \"OMEGA-7\"\nDEFAULT_TIMEOUT_SECONDS = 12\nMAX_RETRIES = 5\n\n\ndef request(endpoint: str, retries: int = 3) -> dict:\n    \"\"\"Return a deterministic request description for the demo.\"\"\"\n    if retries > MAX_RETRIES:\n        raise ValueError(f\"retries must be <= {MAX_RETRIES}\")\n    token_present = bool(os.environ.get(\"ORBIT_TOKEN\"))\n    return {\n        \"endpoint\": endpoint,\n        \"retry_mode\": RETRY_MODE,\n        \"timeout_seconds\": DEFAULT_TIMEOUT_SECONDS,\n        \"retries\": retries,\n        \"token_present\": token_present,\n    }\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk/client.py",
+    "capture_mode": "ingest",
+    "content_sha256": "e1236453c1fba360a454a01577611c156318da9d946d5d922245fa83a5ae0479"
+  }
+}

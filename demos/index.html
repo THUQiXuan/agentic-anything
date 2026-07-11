@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive, evidence-backed demos for Agentic Anything">
+  <meta name="theme-color" content="#09111f">
+  <title>Agentic Anything — Live Demo Gallery</title>
+  <style>
+    :root {
+      --ink: #eaf2ff;
+      --muted: #9fb0ca;
+      --bg: #070b14;
+      --panel: rgba(16, 25, 42, .82);
+      --line: rgba(158, 184, 224, .17);
+      --cyan: #55e6d5;
+      --blue: #6da8ff;
+      --amber: #ffd166;
+      --pink: #ff7eb6;
+      --shadow: 0 24px 80px rgba(0, 0, 0, .36);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 10%, rgba(85, 230, 213, .12), transparent 28rem),
+        radial-gradient(circle at 92% 5%, rgba(109, 168, 255, .15), transparent 30rem),
+        radial-gradient(circle at 60% 70%, rgba(255, 126, 182, .07), transparent 30rem),
+        var(--bg);
+      min-height: 100vh;
+    }
+    a { color: inherit; }
+    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .shell { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 11, 20, .78);
+      backdrop-filter: blur(18px);
+    }
+    nav .shell { height: 66px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 760; text-decoration: none; }
+    .mark {
+      width: 31px; height: 31px; border: 1px solid rgba(85, 230, 213, .6); border-radius: 9px;
+      display: grid; place-items: center; color: var(--cyan); background: rgba(85, 230, 213, .08);
+    }
+    .nav-links { display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 14px; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--ink); }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 15px; border: 1px solid var(--line); border-radius: 10px;
+      color: var(--ink); background: rgba(255,255,255,.035); text-decoration: none; cursor: pointer;
+    }
+    .button:hover { border-color: rgba(85,230,213,.55); background: rgba(85,230,213,.08); }
+    .button.primary { color: #041514; background: var(--cyan); border-color: var(--cyan); font-weight: 750; }
+    .hero { padding: 94px 0 52px; }
+    .eyebrow { color: var(--cyan); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; font-weight: 750; }
+    h1 { margin: 18px 0; max-width: 890px; font-size: clamp(48px, 8vw, 94px); line-height: .98; letter-spacing: -.055em; }
+    h1 span { color: transparent; background: linear-gradient(90deg, var(--cyan), var(--blue)); background-clip: text; }
+    .lede { max-width: 760px; margin: 0; color: var(--muted); font-size: clamp(18px, 2.4vw, 23px); line-height: 1.55; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
+    .proof-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 52px 0 0; }
+    .metric { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); box-shadow: var(--shadow); }
+    .metric strong { display: block; font-size: 30px; letter-spacing: -.04em; }
+    .metric span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
+    section { padding: 64px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+    h2 { margin: 0; font-size: clamp(31px, 4vw, 48px); letter-spacing: -.04em; }
+    .section-head p { max-width: 540px; margin: 0; color: var(--muted); line-height: 1.65; }
+    .pipeline {
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 15px; align-items: center;
+      padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: var(--panel);
+    }
+    .pipeline-card { min-height: 150px; padding: 22px; border-radius: 15px; background: rgba(255,255,255,.035); }
+    .pipeline-card b { display: block; margin-bottom: 12px; color: var(--cyan); }
+    .pipeline-card p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .arrow { color: var(--cyan); font-size: 25px; }
+    .gallery { border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--panel); box-shadow: var(--shadow); }
+    .tabs { display: flex; overflow-x: auto; border-bottom: 1px solid var(--line); }
+    .tab {
+      flex: 1 0 145px; padding: 17px 14px; border: 0; border-right: 1px solid var(--line);
+      background: transparent; color: var(--muted); cursor: pointer; font: inherit;
+    }
+    .tab:last-child { border-right: 0; }
+    .tab.active { color: var(--ink); background: rgba(85,230,213,.08); box-shadow: inset 0 -2px var(--cyan); }
+    .demo-body { display: grid; grid-template-columns: .8fr 1.2fr; min-height: 430px; }
+    .demo-meta { padding: 28px; border-right: 1px solid var(--line); }
+    .demo-meta h3 { margin: 7px 0 10px; font-size: 29px; }
+    .demo-meta p { color: var(--muted); line-height: 1.6; }
+    .type-pill, .chip {
+      display: inline-flex; padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line);
+      color: var(--cyan); background: rgba(85,230,213,.06); font-size: 12px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 20px 0; }
+    .chip { color: var(--muted); background: rgba(255,255,255,.025); }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .links a { font-size: 13px; }
+    .evidence { padding: 28px; background: rgba(4, 8, 15, .38); }
+    .query-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .14em; }
+    .query { margin: 9px 0 20px; font-size: 22px; line-height: 1.45; }
+    .result { border-left: 3px solid var(--cyan); padding: 3px 0 3px 18px; }
+    .result-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; }
+    .result-head strong { font-size: 19px; }
+    .score { color: var(--amber); font-size: 13px; }
+    .unit { color: var(--muted); font-size: 12px; }
+    .quote { margin-top: 17px; padding: 19px; white-space: pre-wrap; color: #d8e7fb; line-height: 1.65; background: rgba(109,168,255,.06); border-radius: 12px; }
+    .matched { margin-top: 12px; color: var(--muted); font-size: 13px; }
+    .modes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .mode { padding: 22px; border: 1px solid var(--line); border-radius: 17px; background: var(--panel); }
+    .mode .icon { font-size: 24px; }
+    .mode h3 { margin: 17px 0 8px; }
+    .mode p { color: var(--muted); line-height: 1.55; font-size: 14px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .terminal, .protocol {
+      border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #050912; box-shadow: var(--shadow);
+    }
+    .window-bar { display: flex; align-items: center; gap: 7px; padding: 12px 15px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #ff6b6b; }
+    .dot:nth-child(2) { background: var(--amber); }
+    .dot:nth-child(3) { background: var(--cyan); margin-right: 8px; }
+    pre { margin: 0; padding: 20px; color: #cfe2ff; font-size: 13px; line-height: 1.75; overflow: auto; }
+    .protocol pre { max-height: 360px; }
+    .honesty { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .honesty > div { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+    .honesty h3 { margin-top: 0; }
+    .honesty ul { margin-bottom: 0; padding-left: 19px; color: var(--muted); line-height: 1.8; }
+    footer { padding: 45px 0 70px; border-top: 1px solid var(--line); color: var(--muted); }
+    footer .shell { display: flex; justify-content: space-between; gap: 20px; }
+    .status { color: var(--cyan); }
+    .error { color: #ff9b9b; }
+    @media (max-width: 850px) {
+      .proof-strip, .modes { grid-template-columns: repeat(2, 1fr); }
+      .pipeline { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); justify-self: center; }
+      .demo-body, .split, .honesty { grid-template-columns: 1fr; }
+      .demo-meta { border-right: 0; border-bottom: 1px solid var(--line); }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 560px) {
+      .nav-links a:not(.button) { display: none; }
+      .proof-strip, .modes { grid-template-columns: 1fr; }
+      .hero { padding-top: 62px; }
+      .shell { width: min(100% - 24px, 1180px); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="shell">
+      <a class="brand" href="#top"><span class="mark">A</span> Agentic Anything</a>
+      <div class="nav-links">
+        <a href="#gallery">Demos</a><a href="#interfaces">Interfaces</a><a href="#evidence">Evidence</a>
+        <a class="button" href="https://github.com/THUQiXuan/agentic-anything">GitHub ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero shell">
+      <div class="eyebrow">real outputs · inspectable evidence · zero model calls</div>
+      <h1>Turn a resource into something an <span>agent can use.</span></h1>
+      <p class="lede">把 Markdown、字幕、CSV、代码仓库和网站转换成统一的证据单元，再从 CLI、MCP、skill 或程序接口直接检索和读取。下面展示的是仓库当前代码真实生成的结果。</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#gallery">Explore 5 live examples</a>
+        <a class="button" href="results/showcase.json">Inspect raw JSON</a>
+        <button class="button" id="copy-build">Copy rebuild command</button>
+      </div>
+      <div class="proof-strip" aria-label="demo summary">
+        <div class="metric"><strong id="metric-types">—</strong><span>resource types / 资源类型</span></div>
+        <div class="metric"><strong id="metric-units">—</strong><span>evidence units / 证据单元</span></div>
+        <div class="metric"><strong id="metric-assertions">—</strong><span>showcase checks / 展示检查</span></div>
+        <div class="metric"><strong id="metric-models">—</strong><span>model calls / 模型调用</span></div>
+      </div>
+    </header>
+
+    <section class="shell">
+      <div class="section-head">
+        <h2>One path, two outcomes</h2>
+        <p>Agentification produces both a structured, provenance-carrying representation and stable ways for humans or agents to use it.</p>
+      </div>
+      <div class="pipeline">
+        <div class="pipeline-card"><b>① Any supported source</b><p>Web page · document · video transcript · dataset · code repository · installed software</p></div>
+        <div class="arrow">→</div>
+        <div class="pipeline-card"><b>② Agent-native pack</b><p>Typed units · structure · locators · content hashes · captured evidence · explicit frontier</p></div>
+        <div class="arrow">→</div>
+        <div class="pipeline-card"><b>③ Resource agent</b><p>Offline search/read · generated CLI · SKILL.md · MCP · grounded conversation · HTTP/A2A</p></div>
+      </div>
+    </section>
+
+    <section class="shell" id="gallery">
+      <div class="section-head">
+        <h2>Five resources, same contract</h2>
+        <p>Choose a source type. Each card shows the exact query, top unit, score and evidence returned by the current Unicode BM25F implementation.</p>
+      </div>
+      <div class="gallery">
+        <div class="tabs" id="tabs" role="tablist"></div>
+        <div class="demo-body">
+          <div class="demo-meta">
+            <span class="type-pill" id="demo-type">loading</span>
+            <h3 id="demo-title">Loading demo data…</h3>
+            <p id="demo-count"></p>
+            <div class="chips" id="demo-interfaces"></div>
+            <div class="links" id="demo-links"></div>
+          </div>
+          <div class="evidence">
+            <div class="query-label">Exact query / 实际查询</div>
+            <div class="query" id="demo-query">—</div>
+            <div class="result">
+              <div class="result-head"><strong id="result-title">—</strong><span class="score" id="result-score"></span><span class="unit" id="result-unit"></span></div>
+              <div class="quote" id="result-evidence">—</div>
+              <div class="matched" id="result-matched"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" id="interfaces">
+      <div class="section-head">
+        <h2>More than a search box</h2>
+        <p>The same captured units can move between deterministic commands, host protocols, generated guidance, and conversational applications.</p>
+      </div>
+      <div class="modes">
+        <article class="mode"><div class="icon">⌕</div><h3>Offline search</h3><p>Unicode BM25F ranks title, heading, summary, body and locator fields. Results include matched evidence, not only scores.</p></article>
+        <article class="mode"><div class="icon">⌘</div><h3>Generated CLI</h3><p>Every pack gets a zero-dependency Python CLI for info, pages, read, search, APIs and forms—with JSON output.</p></article>
+        <article class="mode"><div class="icon">◇</div><h3>Read-only MCP</h3><p>Codex, Claude Code and compatible hosts can inspect, search and read the same units through MCP resources, tools and prompts.</p></article>
+        <article class="mode"><div class="icon">↗</div><h3>Agent interfaces</h3><p>The interface manifest advertises conversation, HTTP/OpenAI, A2A, skill and CLI entry points without storing credentials.</p></article>
+      </div>
+    </section>
+
+    <section class="shell" id="evidence">
+      <div class="section-head">
+        <h2>See the machinery work</h2>
+        <p>Both panes are generated from executable repository code. The MCP example searches across all five resource agents and then reads the strongest unit.</p>
+      </div>
+      <div class="split">
+        <div class="terminal">
+          <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>deterministic build</div>
+          <pre id="terminal-output">Loading terminal transcript…</pre>
+        </div>
+        <div class="protocol">
+          <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>MCP search_resource → read_unit</div>
+          <pre id="mcp-output">Loading MCP transcript…</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="section-head">
+        <h2>Honest quality boundary</h2>
+        <p>This page separates what the deterministic demo directly proves from what still needs an LLM or a user study.</p>
+      </div>
+      <div class="honesty">
+        <div><h3 class="status">Demonstrated here</h3><ul><li>Five heterogeneous sources produce valid packs.</li><li>Queries return inspectable units and evidence.</li><li>Generated resource CLI executes successfully.</li><li>MCP searches and reads across multiple packs.</li><li>No credentials or model calls are required.</li></ul></div>
+        <div><h3>Not claimed by this demo</h3><ul><li>Perfect ingestion of every possible resource.</li><li>Generative answer quality or hallucination rate.</li><li>Human productivity improvement.</li><li>Recovery of every native website/software action.</li><li>Compatibility with every agent host.</li></ul></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="shell"><span>Agentic Anything demo snapshot · v0.4.1</span><span id="load-state">Loading evidence…</span></div></footer>
+
+  <script>
+    const labels = {handbook: "Handbook", incident: "Timeline", metrics: "Metrics", code: "Code", website: "Website"};
+    const sources = {
+      handbook: "sources/operations-handbook.md", incident: "sources/incident.srt",
+      metrics: "sources/service-metrics.csv", code: "sources/orbit-sdk/README.md",
+      website: "sources/status-site/index.html"
+    };
+    let showcase;
+
+    function link(label, href) {
+      const a = document.createElement("a"); a.className = "button"; a.textContent = label; a.href = href; return a;
+    }
+    function renderDemo(index) {
+      const demo = showcase.demos[index];
+      document.querySelectorAll(".tab").forEach((node, i) => node.classList.toggle("active", i === index));
+      document.getElementById("demo-type").textContent = demo.resource_type;
+      document.getElementById("demo-title").textContent = demo.source_label;
+      document.getElementById("demo-count").textContent = `${demo.unit_count} structured evidence unit${demo.unit_count === 1 ? "" : "s"}, each with a stable locator and provenance.`;
+      const chips = document.getElementById("demo-interfaces"); chips.replaceChildren(...demo.interfaces.map(name => { const el = document.createElement("span"); el.className = "chip"; el.textContent = name; return el; }));
+      const links = document.getElementById("demo-links");
+      links.replaceChildren(link("Source ↗", sources[demo.id]), link("AGENT.md ↗", `packs/${demo.id}/AGENT.md`), link("Manifest ↗", `packs/${demo.id}/agent-interface.json`), link("Skill ↗", `packs/${demo.id}/skills/SKILL.md`));
+      const result = demo.query_result;
+      document.getElementById("demo-query").textContent = result.query;
+      document.getElementById("result-title").textContent = result.title;
+      document.getElementById("result-score").textContent = `score ${result.score}`;
+      document.getElementById("result-unit").textContent = result.unit_id;
+      document.getElementById("result-evidence").textContent = result.evidence;
+      document.getElementById("result-matched").textContent = `matched features: ${result.matched.join(", ") || "—"}`;
+    }
+    async function load() {
+      try {
+        const response = await fetch("results/showcase.json");
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        showcase = await response.json();
+        const summary = showcase.summary;
+        document.getElementById("metric-types").textContent = summary.resource_types;
+        document.getElementById("metric-units").textContent = summary.units;
+        document.getElementById("metric-assertions").textContent = `${summary.assertions_passed}/${summary.assertions_total}`;
+        document.getElementById("metric-models").textContent = showcase.model_calls;
+        const tabs = document.getElementById("tabs");
+        showcase.demos.forEach((demo, index) => {
+          const button = document.createElement("button"); button.className = "tab"; button.textContent = labels[demo.id] || demo.id; button.onclick = () => renderDemo(index); tabs.appendChild(button);
+        });
+        renderDemo(0);
+        document.getElementById("terminal-output").textContent = await (await fetch("results/terminal-session.txt")).text();
+        const mcp = showcase.mcp;
+        document.getElementById("mcp-output").textContent = JSON.stringify({request: mcp.search_request, top_hits: mcp.search_response.hits.map(hit => ({resource_id: hit.resource_id, unit_id: hit.unit_id, title: hit.title, evidence: hit.evidence[0]?.text})), read: {resource_id: mcp.read_response.resource_id, unit_id: mcp.read_response.unit_id, locator: mcp.read_response.locator, content_sha256: mcp.read_response.content_sha256}}, null, 2);
+        const state = document.getElementById("load-state"); state.textContent = "✓ raw evidence loaded"; state.className = "status";
+      } catch (error) {
+        document.getElementById("load-state").textContent = `Could not load demo data: ${error.message}`;
+        document.getElementById("load-state").className = "error";
+        document.getElementById("demo-title").textContent = "Serve this folder over HTTP to load the generated JSON.";
+      }
+    }
+    document.getElementById("copy-build").addEventListener("click", async event => {
+      await navigator.clipboard.writeText("python demos/build_demos.py && python demos/verify_demos.py");
+      event.currentTarget.textContent = "Copied ✓";
+    });
+    load();
+  </script>
+</body>
+</html>

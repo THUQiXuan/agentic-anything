@@ -24,6 +24,8 @@ reports/
 
 # Generated site packs (build artifacts, not source)
 packs/
+!demos/packs/
+!demos/packs/**
 
 # OS / editor
 .DS_Store

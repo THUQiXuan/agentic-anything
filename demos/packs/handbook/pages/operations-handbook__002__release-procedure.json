@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "operations-handbook__002__release-procedure",
+  "source_url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md",
+  "url_path": "section 2",
+  "title": "Release procedure",
+  "page_type": "section",
+  "unit_kind": "section",
+  "locator": "section 2",
+  "summary": "Release procedure\nProduction releases happen on Tuesdays at 14:00 UTC. The release owner must\nverify the canary dashboard for ten minutes before promoting traffic.\nThe emergency rollback command is `aurora rollback --release CURRENT`.\nRoll…",
+  "content": [
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Release procedure"
+    },
+    {
+      "kind": "p",
+      "text": "Production releases happen on Tuesdays at 14:00 UTC. The release owner must\nverify the canary dashboard for ten minutes before promoting traffic."
+    },
+    {
+      "kind": "p",
+      "text": "The emergency rollback command is `aurora rollback --release CURRENT`.\nRollback approval code **ORBIT-17** is required in the incident record."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md",
+    "capture_mode": "ingest",
+    "content_sha256": "d04824b42fc0219e4fe2697b60ca5a737f9d8a03cd5daa5ab07ec49741cedec1"
+  }
+}

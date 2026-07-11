@@ -12,6 +12,9 @@
 
 [English](README.md) | [中文](README_ZH.md)
 
+[**Live Demo Gallery**](https://thuqixuan.github.io/agentic-anything/) ·
+[reproducible demo sources and outputs](demos/)
+
 </div>
 
 ---
@@ -81,6 +84,11 @@ cookies on datacenter IPs (a yt-dlp/YouTube constraint).
 Requires Python 3.10+. The core installation uses only the standard library.
 
 ## Quick start
+
+Want to see real outputs before installing? The
+[interactive demo gallery](https://thuqixuan.github.io/agentic-anything/)
+shows document, video, CSV, code, website, generated-CLI, and MCP examples;
+every displayed result is backed by committed JSON and can be rebuilt locally.
 
 ```bash
 # 1. Turn ANY resource into an agent-native pack + resource-agent interfaces

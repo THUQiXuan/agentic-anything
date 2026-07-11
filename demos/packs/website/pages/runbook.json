@@ -1,0 +1,57 @@
+{
+  "spec_version": "0.1",
+  "page_id": "runbook",
+  "source_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/runbook.html",
+  "url_path": "/runbook.html",
+  "title": "Aurora Public Runbook",
+  "lang": "en",
+  "meta_description": "",
+  "page_type": "content",
+  "summary": "Public Runbook — For degraded checkout, cite runbook ID RUN-88.",
+  "content": [
+    {
+      "kind": "heading",
+      "level": 1,
+      "text": "Public Runbook"
+    },
+    {
+      "kind": "p",
+      "text": "For degraded checkout, cite runbook ID RUN-88."
+    },
+    {
+      "kind": "p",
+      "text": "Escalate to Team Atlas when p95 latency remains above 800 ms for five minutes."
+    }
+  ],
+  "links": [
+    {
+      "text": "Status",
+      "url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html",
+      "target_page_id": "index",
+      "is_nav": true
+    },
+    {
+      "text": "Runbook",
+      "url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/runbook.html",
+      "target_page_id": "runbook",
+      "is_nav": true
+    }
+  ],
+  "outgoing_page_ids": [
+    "index"
+  ],
+  "forms": [],
+  "images": [],
+  "json_ld_types": [],
+  "provenance": {
+    "requested_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/runbook.html",
+    "final_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/runbook.html",
+    "http_status": 200,
+    "redirect_chain": [],
+    "capture_mode": "static",
+    "discovered_via": "nav_link",
+    "depth": 1,
+    "content_sha256": "a1b5659ce96f538beb0eaaf6d0e35fd8eb297b8c8fc6f77d157edab1d0e37071",
+    "html_path": "html/runbook.html"
+  }
+}

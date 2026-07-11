@@ -1,0 +1,42 @@
+{
+  "spec_version": "0.2",
+  "page_id": "service-metrics__002__service-metrics-csv-rows-1-4",
+  "source_url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv",
+  "url_path": "rows 1-4",
+  "title": "service-metrics.csv rows 1-4",
+  "page_type": "table",
+  "unit_kind": "table",
+  "locator": "rows 1-4",
+  "summary": "region | availability_pct | p95_latency_ms | incidents | owner\nus-east | 99.97 | 182 | 2 | Team Atlas\neu-west | 99.94 | 211 | 3 | Team Borealis\nap-south | 99.91 | 248 | 5 | Team Cygnus\ncn-north | 99.96 | 196 | 1 | Team Dragon",
+  "content": [
+    {
+      "kind": "p",
+      "text": "region | availability_pct | p95_latency_ms | incidents | owner"
+    },
+    {
+      "kind": "p",
+      "text": "us-east | 99.97 | 182 | 2 | Team Atlas"
+    },
+    {
+      "kind": "p",
+      "text": "eu-west | 99.94 | 211 | 3 | Team Borealis"
+    },
+    {
+      "kind": "p",
+      "text": "ap-south | 99.91 | 248 | 5 | Team Cygnus"
+    },
+    {
+      "kind": "p",
+      "text": "cn-north | 99.96 | 196 | 1 | Team Dragon"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv",
+    "capture_mode": "ingest",
+    "content_sha256": "2611db6bbb6be88c863459987b391b64ce4f874b1ae012924b30e5d56cb7242f"
+  }
+}

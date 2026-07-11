@@ -1,0 +1,82 @@
+{
+  "spec_version": "0.1",
+  "page_id": "index",
+  "source_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html",
+  "url_path": "/index.html",
+  "title": "Aurora Service Status",
+  "lang": "en",
+  "meta_description": "Synthetic status site for the Agentic Anything demo",
+  "page_type": "content",
+  "summary": "Aurora Service Status — Current state: all systems operational.",
+  "content": [
+    {
+      "kind": "heading",
+      "level": 1,
+      "text": "Aurora Service Status"
+    },
+    {
+      "kind": "p",
+      "text": "Current state: all systems operational."
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Next maintenance"
+    },
+    {
+      "kind": "p",
+      "text": "The next maintenance window is 2026-08-18 from 02:00 to 02:30 UTC."
+    }
+  ],
+  "links": [
+    {
+      "text": "Status",
+      "url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html",
+      "target_page_id": "index",
+      "is_nav": true
+    },
+    {
+      "text": "Runbook",
+      "url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/runbook.html",
+      "target_page_id": "runbook",
+      "is_nav": true
+    }
+  ],
+  "outgoing_page_ids": [
+    "runbook"
+  ],
+  "forms": [
+    {
+      "form_id": "form-1",
+      "method": "POST",
+      "action": "/subscribe",
+      "action_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/subscribe",
+      "fields": [
+        {
+          "name": "email",
+          "input_type": "email",
+          "label": "",
+          "required": false,
+          "placeholder": "",
+          "options": []
+        }
+      ],
+      "submit_labels": [
+        "Subscribe"
+      ]
+    }
+  ],
+  "images": [],
+  "json_ld_types": [],
+  "provenance": {
+    "requested_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html",
+    "final_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html",
+    "http_status": 200,
+    "redirect_chain": [],
+    "capture_mode": "static",
+    "discovered_via": "seed",
+    "depth": 0,
+    "content_sha256": "e1b12674f9e15e7a7d951790fd114210f504a929782039ef13a5a2351cb2cfc6",
+    "html_path": "html/index.html"
+  }
+}

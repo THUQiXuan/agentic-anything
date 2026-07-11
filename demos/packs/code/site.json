@@ -1,0 +1,60 @@
+{
+  "spec_version": "0.2",
+  "generator": "agentic-anything/0.4.1",
+  "site_id": "code",
+  "resource_type": "code",
+  "seed_url": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk",
+  "captured_at": "2026-07-11T09:08:18Z",
+  "finished_at": "2026-07-11T09:08:18Z",
+  "capture_mode": "ingest",
+  "respect_robots": null,
+  "same_origin_only": null,
+  "max_pages": null,
+  "page_count": 3,
+  "pages": [
+    {
+      "page_id": "repo__000__tree",
+      "url": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk",
+      "url_path": "tree",
+      "title": "Repository tree: orbit-sdk",
+      "page_type": "code",
+      "summary": "Repository: orbit-sdk\n2 files.\nREADME.md\nclient.py",
+      "outgoing_page_ids": [],
+      "form_count": 0,
+      "discovered_via": "ingest",
+      "depth": 0,
+      "rendered": false,
+      "has_screenshot": false
+    },
+    {
+      "page_id": "file__readme-md",
+      "url": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk/README.md",
+      "url_path": "README.md",
+      "title": "README.md",
+      "page_type": "code",
+      "summary": "# Orbit SDK\nOrbit is a tiny synthetic SDK used to demonstrate code-repository ingestion.\nUse retry mode `OMEGA-7` for idempotent requests. Authentication tokens must be\nread from the `ORBIT_TOKEN` environment variable and must never be com…",
+      "outgoing_page_ids": [],
+      "form_count": 0,
+      "discovered_via": "ingest",
+      "depth": 0,
+      "rendered": false,
+      "has_screenshot": false
+    },
+    {
+      "page_id": "file__client-py",
+      "url": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk/client.py",
+      "url_path": "client.py",
+      "title": "client.py",
+      "page_type": "code",
+      "summary": "\"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport os\n\nRETRY_MODE = \"OMEGA-7\"\nDEFAULT_TIMEOUT_SECONDS = 12\nMAX_RETRIES = 5\n\n\ndef request(endpoint: str, retries: int = 3) -> dict:…",
+      "outgoing_page_ids": [],
+      "form_count": 0,
+      "discovered_via": "ingest",
+      "depth": 0,
+      "rendered": false,
+      "has_screenshot": false
+    }
+  ],
+  "frontier": [],
+  "notes": []
+}

@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "repo__000__tree",
+  "source_url": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk",
+  "url_path": "tree",
+  "title": "Repository tree: orbit-sdk",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tree",
+  "summary": "Repository: orbit-sdk\n2 files.\nREADME.md\nclient.py",
+  "content": [
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Repository: orbit-sdk"
+    },
+    {
+      "kind": "p",
+      "text": "2 files."
+    },
+    {
+      "kind": "pre",
+      "text": "README.md\nclient.py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk",
+    "capture_mode": "ingest",
+    "content_sha256": "2bead5ab72698c295097df8e6a3f1910836b2f3e58cf769951cb2a2fa44730e3"
+  }
+}

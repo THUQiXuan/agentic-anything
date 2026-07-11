@@ -1,0 +1,5 @@
+region,availability_pct,p95_latency_ms,incidents,owner
+us-east,99.97,182,2,Team Atlas
+eu-west,99.94,211,3,Team Borealis
+ap-south,99.91,248,5,Team Cygnus
+cn-north,99.96,196,1,Team Dragon

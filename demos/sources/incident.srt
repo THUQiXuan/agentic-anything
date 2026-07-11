@@ -1,0 +1,15 @@
+1
+00:00:01,000 --> 00:00:06,000
+At 09:14 UTC, checkout latency crossed 900 milliseconds.
+
+2
+00:00:07,000 --> 00:00:13,000
+错误码 E42 表示缓存写锁未释放，影响了三个工作节点。
+
+3
+00:00:14,000 --> 00:00:21,000
+The operator ran aurora cache inspect and identified worker-7 as the lock owner.
+
+4
+00:00:22,000 --> 00:00:29,000
+The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC.

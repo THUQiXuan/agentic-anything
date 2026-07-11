@@ -1,0 +1,31 @@
+{
+  "spec_version": "0.2",
+  "page_id": "operations-handbook__001__aurora-operations-handbook",
+  "source_url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md",
+  "url_path": "section 1",
+  "title": "Aurora Operations Handbook",
+  "page_type": "section",
+  "unit_kind": "section",
+  "locator": "section 1",
+  "summary": "Aurora Operations Handbook\nThis compact handbook is a synthetic demo resource for Agentic Anything.",
+  "content": [
+    {
+      "kind": "heading",
+      "level": 1,
+      "text": "Aurora Operations Handbook"
+    },
+    {
+      "kind": "p",
+      "text": "This compact handbook is a synthetic demo resource for Agentic Anything."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md",
+    "capture_mode": "ingest",
+    "content_sha256": "c9473e37610fc52dd3346b7dd43f1d8c5e695fc7fe2db1dfe435dd3eb8508c75"
+  }
+}

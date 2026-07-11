@@ -1,0 +1,46 @@
+{
+  "spec_version": "0.2",
+  "generator": "agentic-anything/0.4.1",
+  "site_id": "metrics",
+  "resource_type": "dataset",
+  "seed_url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv",
+  "captured_at": "2026-07-11T09:08:17Z",
+  "finished_at": "2026-07-11T09:08:17Z",
+  "capture_mode": "ingest",
+  "respect_robots": null,
+  "same_origin_only": null,
+  "max_pages": null,
+  "page_count": 2,
+  "pages": [
+    {
+      "page_id": "service-metrics__001__service-metrics-csv-overview",
+      "url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv",
+      "url_path": "overview",
+      "title": "service-metrics.csv overview",
+      "page_type": "table",
+      "summary": "Table: service-metrics.csv\n4 data rows, 5 columns.\nColumns: region, availability_pct, p95_latency_ms, incidents, owner",
+      "outgoing_page_ids": [],
+      "form_count": 0,
+      "discovered_via": "ingest",
+      "depth": 0,
+      "rendered": false,
+      "has_screenshot": false
+    },
+    {
+      "page_id": "service-metrics__002__service-metrics-csv-rows-1-4",
+      "url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv",
+      "url_path": "rows 1-4",
+      "title": "service-metrics.csv rows 1-4",
+      "page_type": "table",
+      "summary": "region | availability_pct | p95_latency_ms | incidents | owner\nus-east | 99.97 | 182 | 2 | Team Atlas\neu-west | 99.94 | 211 | 3 | Team Borealis\nap-south | 99.91 | 248 | 5 | Team Cygnus\ncn-north | 99.96 | 196 | 1 | Team Dragon",
+      "outgoing_page_ids": [],
+      "form_count": 0,
+      "discovered_via": "ingest",
+      "depth": 0,
+      "rendered": false,
+      "has_screenshot": false
+    }
+  ],
+  "frontier": [],
+  "notes": []
+}

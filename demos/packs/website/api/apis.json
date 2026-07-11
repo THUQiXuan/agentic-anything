@@ -1,0 +1,29 @@
+{
+  "endpoints": [],
+  "forms": [
+    {
+      "form_id": "form-1",
+      "page_id": "index",
+      "method": "POST",
+      "action_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/subscribe",
+      "fields": [
+        {
+          "name": "email",
+          "type": "email",
+          "label": "",
+          "required": false,
+          "options": []
+        }
+      ],
+      "submit_labels": [
+        "Subscribe"
+      ],
+      "source": "html_form"
+    }
+  ],
+  "openapi": [],
+  "well_known": [],
+  "feeds": [],
+  "sitemaps": [],
+  "observed_network": []
+}
