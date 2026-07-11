@@ -5,7 +5,7 @@
   "summary": {
     "resource_types": 5,
     "resource_cases": 5,
-    "units": 12,
+    "units": 14,
     "assertions_passed": 7,
     "assertions_total": 7
   },
@@ -22,17 +22,57 @@
     {
       "id": "handbook",
       "resource_type": "document",
-      "source_label": "Markdown handbook",
+      "source_label": "Bilingual operations handbook",
+      "source_path": "sources/operations-handbook.md",
+      "before_kind": "document",
+      "before_problem": "A reader must scan headings and switch languages to find the approved E42 procedure.",
+      "agentify_command": "agentic-anything agentify demos/sources/operations-handbook.md -o demos/packs/handbook --no-llm",
       "unit_count": 4,
+      "units": [
+        {
+          "unit_id": "operations-handbook__001__aurora-operations-handbook",
+          "title": "Aurora Operations Handbook",
+          "type": "section",
+          "locator": "section 1",
+          "content_sha256": "c9473e37610fc52dd3346b7dd43f1d8c5e695fc7fe2db1dfe435dd3eb8508c75"
+        },
+        {
+          "unit_id": "operations-handbook__002__release-procedure",
+          "title": "Release procedure",
+          "type": "section",
+          "locator": "section 2",
+          "content_sha256": "d04824b42fc0219e4fe2697b60ca5a737f9d8a03cd5daa5ab07ec49741cedec1"
+        },
+        {
+          "unit_id": "operations-handbook__003",
+          "title": "缓存故障处理",
+          "type": "section",
+          "locator": "section 3",
+          "content_sha256": "e7dda87f5bea811baad253392be4a54da0cd20ecc82acfa488b72606322a563c"
+        },
+        {
+          "unit_id": "operations-handbook__004__support-policy",
+          "title": "Support policy",
+          "type": "section",
+          "locator": "section 4",
+          "content_sha256": "1beb1e59585a16f13f3f746c4d3424061ac0c531c8aaea16095cb1ab52c53410"
+        }
+      ],
       "query_result": {
         "query": "错误码 E42 如何处理？",
         "unit_id": "operations-handbook__003",
         "title": "缓存故障处理",
         "score": 7.129,
-        "evidence": "缓存故障处理",
+        "evidence": "缓存故障处理\n错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁止直接重启全部节点。",
         "matched": [
-          "处理"
-        ]
+          "e42",
+          "处理",
+          "误码",
+          "错误",
+          "错误码"
+        ],
+        "locator": "section 3",
+        "content_sha256": "e7dda87f5bea811baad253392be4a54da0cd20ecc82acfa488b72606322a563c"
       },
       "interfaces": [
         "conversation",
@@ -42,22 +82,66 @@
         "resource_cli",
         "search",
         "skill"
-      ]
+      ],
+      "cli_result": {
+        "cli": "cli/handbook_cli.py",
+        "info": "site_id: handbook\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 4\nfrontier_count: 0",
+        "search": "1  operations-handbook__003  缓存故障处理\n      - 错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁"
+      },
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/handbook \"错误码 E42 如何处理？\" --json",
+        "cli": "python demos/packs/handbook/cli/handbook_cli.py search \"错误码 E42 如何处理？\"",
+        "mcp": "agentic-anything mcp demos/packs/handbook"
+      }
     },
     {
       "id": "incident",
       "resource_type": "video",
-      "source_label": "SRT incident timeline",
-      "unit_count": 1,
+      "source_label": "Eight-minute incident transcript",
+      "source_path": "sources/incident.srt",
+      "before_kind": "timeline",
+      "before_problem": "The cause and recovery time live at different timestamps in a linear transcript.",
+      "agentify_command": "agentic-anything agentify demos/sources/incident.srt -o demos/packs/incident --no-llm",
+      "unit_count": 3,
+      "units": [
+        {
+          "unit_id": "incident__001__00-00-01",
+          "title": "transcript 00:00:01–00:00:18",
+          "type": "segment",
+          "locator": "00:00:01–00:00:18",
+          "content_sha256": "05e4b0d28e7f06d4ad9a530926dd3d260e605d360a9fce8c3d684469dc59e115"
+        },
+        {
+          "unit_id": "incident__002__00-03-30",
+          "title": "transcript 00:03:30–00:03:56",
+          "type": "segment",
+          "locator": "00:03:30–00:03:56",
+          "content_sha256": "08b1ae25a8c2d846edfa4eae401a1f7c7e13d3dd5a0a4db165e6fe98750eb860"
+        },
+        {
+          "unit_id": "incident__003__00-07-00",
+          "title": "transcript 00:07:00–00:07:25",
+          "type": "segment",
+          "locator": "00:07:00–00:07:25",
+          "content_sha256": "c37916e90f0652579d4d5c3558a8765bfb64de6bfdf95eb4b37ed927f134a49b"
+        }
+      ],
       "query_result": {
-        "query": "E42 在什么时候恢复？",
-        "unit_id": "incident__001__00-00-01",
-        "title": "transcript 00:00:01–00:00:29",
-        "score": 0.428,
-        "evidence": "At 09:14 UTC, checkout latency crossed 900 milliseconds. 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner. The lock was cleared under incident INC-204, and latency recovered by 09…",
+        "query": "INC-204 E42 latency recovered 09:22",
+        "unit_id": "incident__003__00-07-00",
+        "title": "transcript 00:07:00–00:07:25",
+        "score": 5.687,
+        "evidence": "The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC. No nodes were restarted. Team Cygnus scheduled a follow-up for the ap-south region.",
         "matched": [
-          "e42"
-        ]
+          "09",
+          "204",
+          "22",
+          "inc",
+          "latency",
+          "recovered"
+        ],
+        "locator": "00:07:00–00:07:25",
+        "content_sha256": "c37916e90f0652579d4d5c3558a8765bfb64de6bfdf95eb4b37ed927f134a49b"
       },
       "interfaces": [
         "conversation",
@@ -67,13 +151,43 @@
         "resource_cli",
         "search",
         "skill"
-      ]
+      ],
+      "cli_result": {
+        "cli": "cli/incident_cli.py",
+        "info": "site_id: incident\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 3\nfrontier_count: 0",
+        "search": "6  incident__003__00-07-00  transcript 00:07:00–00:07:25\n      - The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC. No nodes were restarted. Team\n   4  incident__001__00-00-01  transcript 00:00:01–00:00:18\n      - At 09:14 UTC, checkout latency crossed 900 milliseconds. The first alert pointed to ap-south and incident comm\n   1  incident__002__00-03-30  transcript 00:03:30–00:03:56\n      - 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner."
+      },
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/incident \"INC-204 E42 latency recovered 09:22\" --json",
+        "cli": "python demos/packs/incident/cli/incident_cli.py search \"INC-204 E42 latency recovered 09:22\"",
+        "mcp": "agentic-anything mcp demos/packs/incident"
+      }
     },
     {
       "id": "metrics",
       "resource_type": "dataset",
-      "source_label": "CSV service metrics",
+      "source_label": "Regional service metrics",
+      "source_path": "sources/service-metrics.csv",
+      "before_kind": "table",
+      "before_problem": "The operator must know the schema and compare rows before finding the owner and outlier.",
+      "agentify_command": "agentic-anything agentify demos/sources/service-metrics.csv -o demos/packs/metrics --no-llm",
       "unit_count": 2,
+      "units": [
+        {
+          "unit_id": "service-metrics__001__service-metrics-csv-overview",
+          "title": "service-metrics.csv overview",
+          "type": "table",
+          "locator": "overview",
+          "content_sha256": "22dc1162f272a47458fea4645b7082a6b8cdacd5665c2d73da2c418eee6531ea"
+        },
+        {
+          "unit_id": "service-metrics__002__service-metrics-csv-rows-1-4",
+          "title": "service-metrics.csv rows 1-4",
+          "type": "table",
+          "locator": "rows 1-4",
+          "content_sha256": "2611db6bbb6be88c863459987b391b64ce4f874b1ae012924b30e5d56cb7242f"
+        }
+      ],
       "query_result": {
         "query": "ap-south p95 latency incidents",
         "unit_id": "service-metrics__002__service-metrics-csv-rows-1-4",
@@ -86,7 +200,9 @@
           "latency",
           "p95",
           "south"
-        ]
+        ],
+        "locator": "rows 1-4",
+        "content_sha256": "2611db6bbb6be88c863459987b391b64ce4f874b1ae012924b30e5d56cb7242f"
       },
       "interfaces": [
         "conversation",
@@ -96,25 +212,64 @@
         "resource_cli",
         "search",
         "skill"
-      ]
+      ],
+      "cli_result": {
+        "cli": "cli/metrics_cli.py",
+        "info": "site_id: metrics\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 2\nfrontier_count: 0",
+        "search": "5  service-metrics__002__service-metrics-csv-rows-1-4  service-metrics.csv rows 1-4\n      - region | availability_pct | p95_latency_ms | incidents | owner\n      - ap-south | 99.91 | 248 | 5 | Team Cygnus\n   3  service-metrics__001__service-metrics-csv-overview  service-metrics.csv overview\n      - Columns: region, availability_pct, p95_latency_ms, incidents, owner"
+      },
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/metrics \"ap-south p95 latency incidents\" --json",
+        "cli": "python demos/packs/metrics/cli/metrics_cli.py search \"ap-south p95 latency incidents\"",
+        "mcp": "agentic-anything mcp demos/packs/metrics"
+      }
     },
     {
       "id": "code",
       "resource_type": "code",
-      "source_label": "Python code repository",
+      "source_label": "Orbit SDK repository",
+      "source_path": "sources/orbit-sdk/client.py",
+      "before_kind": "code",
+      "before_problem": "Usage constraints are split between a README, constants and implementation details.",
+      "agentify_command": "agentic-anything agentify demos/sources/orbit-sdk -o demos/packs/code --no-llm",
       "unit_count": 3,
+      "units": [
+        {
+          "unit_id": "repo__000__tree",
+          "title": "Repository tree: orbit-sdk",
+          "type": "code",
+          "locator": "tree",
+          "content_sha256": "2bead5ab72698c295097df8e6a3f1910836b2f3e58cf769951cb2a2fa44730e3"
+        },
+        {
+          "unit_id": "file__readme-md",
+          "title": "README.md",
+          "type": "code",
+          "locator": "README.md",
+          "content_sha256": "95156158df9b0ae36842131c02ad7180a46e23fd6167cecfe764dcf4afe597c1"
+        },
+        {
+          "unit_id": "file__client-py",
+          "title": "client.py",
+          "type": "code",
+          "locator": "client.py",
+          "content_sha256": "e1236453c1fba360a454a01577611c156318da9d946d5d922245fa83a5ae0479"
+        }
+      ],
       "query_result": {
         "query": "OMEGA-7 timeout retries",
         "unit_id": "file__client-py",
         "title": "client.py",
         "score": 2.946,
-        "evidence": "\"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport os\n\nRETRY_MODE = \"OMEGA-7\"\nDEFAULT_TIMEOUT_SECONDS = 12\nMAX_RETRIES = 5\n\n\ndef request(endpoint: str, retries: int = 3) -> dict:…",
+        "evidence": "\"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport os\n\nRETRY_MODE = \"OMEGA-7\"\nDEFAULT_TIMEOUT_SECONDS = 12\nMAX_RETRIES = 5\n\n\ndef request(endpoint: str, retries: int = 3) -> dict:\n    \"\"\"Return a deterministic request description for the demo.",
         "matched": [
           "7",
           "omega",
           "retries",
           "timeout"
-        ]
+        ],
+        "locator": "client.py",
+        "content_sha256": "e1236453c1fba360a454a01577611c156318da9d946d5d922245fa83a5ae0479"
       },
       "interfaces": [
         "conversation",
@@ -124,23 +279,55 @@
         "resource_cli",
         "search",
         "skill"
-      ]
+      ],
+      "cli_result": {
+        "cli": "cli/code_cli.py",
+        "info": "site_id: code\nseed_url: https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 3\nfrontier_count: 0",
+        "search": "3  file__readme-md  README.md\n      - Use retry mode `OMEGA-7` for idempotent requests. Authentication tokens must be\nread from the `ORBIT_TOKEN` en\n      - The client rejects more than five retries and uses a default timeout of 12\nseconds.\n   3  file__client-py  client.py\n      - \"\"\"Small synthetic client used by the Agentic Anything demos.\"\"\"\n\nfrom __future__ import annotations\n\nimport o"
+      },
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/code \"OMEGA-7 timeout retries\" --json",
+        "cli": "python demos/packs/code/cli/code_cli.py search \"OMEGA-7 timeout retries\"",
+        "mcp": "agentic-anything mcp demos/packs/code"
+      }
     },
     {
       "id": "website",
       "resource_type": "web",
-      "source_label": "Two-page status website",
+      "source_label": "Aurora status website",
+      "source_path": "sources/status-site/index.html",
+      "before_kind": "website",
+      "before_problem": "Runbook evidence, navigation and a subscription form are hidden behind the visual site.",
+      "agentify_command": "agentic-anything agentify https://status.example/ -o demos/packs/website --no-llm",
       "unit_count": 2,
+      "units": [
+        {
+          "unit_id": "index",
+          "title": "Aurora Service Status",
+          "type": "content",
+          "locator": "/index.html",
+          "content_sha256": "e1b12674f9e15e7a7d951790fd114210f504a929782039ef13a5a2351cb2cfc6"
+        },
+        {
+          "unit_id": "runbook",
+          "title": "Aurora Public Runbook",
+          "type": "content",
+          "locator": "/runbook.html",
+          "content_sha256": "a1b5659ce96f538beb0eaaf6d0e35fd8eb297b8c8fc6f77d157edab1d0e37071"
+        }
+      ],
       "query_result": {
         "query": "RUN-88 p95 latency",
         "unit_id": "runbook",
         "title": "Aurora Public Runbook",
         "score": 3.394,
-        "evidence": "Public Runbook — For degraded checkout, cite runbook ID RUN-88.",
+        "evidence": "Escalate to Team Atlas when p95 latency remains above 800 ms for five minutes.",
         "matched": [
-          "88",
-          "run"
-        ]
+          "latency",
+          "p95"
+        ],
+        "locator": "/runbook.html",
+        "content_sha256": "a1b5659ce96f538beb0eaaf6d0e35fd8eb297b8c8fc6f77d157edab1d0e37071"
       },
       "interfaces": [
         "conversation",
@@ -150,7 +337,89 @@
         "resource_cli",
         "search",
         "skill"
-      ]
+      ],
+      "cli_result": {
+        "cli": "cli/website_cli.py",
+        "info": "site_id: website\nseed_url: https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: static\npage_count: 2\nfrontier_count: 0",
+        "search": "4  runbook  Aurora Public Runbook\n      - For degraded checkout, cite runbook ID RUN-88.\n      - Escalate to Team Atlas when p95 latency remains above 800 ms for five minutes."
+      },
+      "use_commands": {
+        "query": "agentic-anything query demos/packs/website \"RUN-88 p95 latency\" --json",
+        "cli": "python demos/packs/website/cli/website_cli.py search \"RUN-88 p95 latency\"",
+        "mcp": "agentic-anything mcp demos/packs/website"
+      }
+    }
+  ],
+  "investigation": [
+    {
+      "step": "01",
+      "question": "What happened, and when did service recover?",
+      "resource": "incident",
+      "finding": "INC-204 traced the latency spike to an E42 cache lock. The lock was cleared and latency recovered at 09:22 UTC.",
+      "result": {
+        "query": "INC-204 E42 latency recovered 09:22",
+        "unit_id": "incident__003__00-07-00",
+        "title": "transcript 00:07:00–00:07:25",
+        "score": 5.687,
+        "evidence": "The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC. No nodes were restarted. Team Cygnus scheduled a follow-up for the ap-south region.",
+        "matched": [
+          "09",
+          "204",
+          "22",
+          "inc",
+          "latency",
+          "recovered"
+        ],
+        "locator": "00:07:00–00:07:25",
+        "content_sha256": "c37916e90f0652579d4d5c3558a8765bfb64de6bfdf95eb4b37ed927f134a49b"
+      }
+    },
+    {
+      "step": "02",
+      "question": "What is the approved remediation?",
+      "resource": "handbook",
+      "finding": "Inspect the lock owner, unlock with the incident ticket, and do not restart every node.",
+      "result": {
+        "query": "E42 cache inspect unlock ticket 禁止重启",
+        "unit_id": "operations-handbook__003",
+        "title": "缓存故障处理",
+        "score": 10.759,
+        "evidence": "缓存故障处理\n错误码 **E42** 表示缓存写锁未释放。处理步骤是先运行\n`aurora cache inspect`，确认锁的持有者；再运行\n`aurora cache unlock --ticket INCIDENT_ID`。禁止直接重启全部节点。",
+        "matched": [
+          "cache",
+          "e42",
+          "inspect",
+          "ticket",
+          "unlock",
+          "禁止",
+          "重启"
+        ],
+        "locator": "section 3",
+        "content_sha256": "e7dda87f5bea811baad253392be4a54da0cd20ecc82acfa488b72606322a563c"
+      }
+    },
+    {
+      "step": "03",
+      "question": "Which region and team need follow-up?",
+      "resource": "metrics",
+      "finding": "ap-south has 248 ms p95 latency and five incidents; Team Cygnus owns the region.",
+      "result": {
+        "query": "ap-south 248 incidents Team Cygnus",
+        "unit_id": "service-metrics__002__service-metrics-csv-rows-1-4",
+        "title": "service-metrics.csv rows 1-4",
+        "score": 5.42,
+        "evidence": "region | availability_pct | p95_latency_ms | incidents | owner\nus-east | 99.97 | 182 | 2 | Team Atlas\neu-west | 99.94 | 211 | 3 | Team Borealis\nap-south | 99.91 | 248 | 5 | Team Cygnus\ncn-north | 99.96 | 196 | 1 | Team Dragon",
+        "matched": [
+          "248",
+          "ap",
+          "cygnus",
+          "incidents",
+          "south",
+          "team"
+        ],
+        "locator": "rows 1-4",
+        "content_sha256": "2611db6bbb6be88c863459987b391b64ce4f874b1ae012924b30e5d56cb7242f"
+      }
     }
   ],
   "mcp": {
@@ -235,14 +504,14 @@
         },
         {
           "resource_id": "incident",
-          "unit_id": "incident__001__00-00-01",
-          "title": "transcript 00:00:01–00:00:29",
-          "score": 1.753,
+          "unit_id": "incident__002__00-03-30",
+          "title": "transcript 00:03:30–00:03:56",
+          "score": 5.777,
           "normalized_score": 1.0,
           "evidence": [
             {
               "kind": "summary",
-              "text": "At 09:14 UTC, checkout latency crossed 900 milliseconds. 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner. The lock was cleared under incident INC-204, and latency recovered by 09…",
+              "text": "错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner.",
               "matched": [
                 "e42",
                 "缓存",
@@ -253,7 +522,7 @@
             },
             {
               "kind": "p",
-              "text": "At 09:14 UTC, checkout latency crossed 900 milliseconds. 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner. The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC.",
+              "text": "错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner.",
               "matched": [
                 "e42",
                 "缓存",
@@ -263,7 +532,7 @@
               ]
             }
           ],
-          "uri": "agentic-anything://incident/units/incident__001__00-00-01"
+          "uri": "agentic-anything://incident/units/incident__002__00-03-30"
         }
       ]
     },
@@ -285,7 +554,7 @@
   },
   "generated_cli": {
     "cli": "cli/handbook_cli.py",
-    "info": "site_id: handbook\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md\ncaptured_at: 2026-07-11T09:08:15Z\ncapture_mode: ingest\npage_count: 4\nfrontier_count: 0",
+    "info": "site_id: handbook\nseed_url: https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 4\nfrontier_count: 0",
     "search": "3  operations-handbook__002__release-procedure  Release procedure\n      - The emergency rollback command is `aurora rollback --release CURRENT`.\nRollback approval code **ORBIT-17** is"
   },
   "scope": "Demonstrates deterministic capture, evidence retrieval, generated resource CLIs, and MCP access. It does not measure generative answer quality or human productivity."

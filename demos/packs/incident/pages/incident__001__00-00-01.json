@@ -2,16 +2,16 @@
   "spec_version": "0.2",
   "page_id": "incident__001__00-00-01",
   "source_url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt",
-  "url_path": "00:00:01–00:00:29",
-  "title": "transcript 00:00:01–00:00:29",
+  "url_path": "00:00:01–00:00:18",
+  "title": "transcript 00:00:01–00:00:18",
   "page_type": "segment",
   "unit_kind": "segment",
-  "locator": "00:00:01–00:00:29",
-  "summary": "At 09:14 UTC, checkout latency crossed 900 milliseconds. 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner. The lock was cleared under incident INC-204, and latency recovered by 09…",
+  "locator": "00:00:01–00:00:18",
+  "summary": "At 09:14 UTC, checkout latency crossed 900 milliseconds. The first alert pointed to ap-south and incident commander opened INC-204.",
   "content": [
     {
       "kind": "p",
-      "text": "At 09:14 UTC, checkout latency crossed 900 milliseconds. 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner. The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC."
+      "text": "At 09:14 UTC, checkout latency crossed 900 milliseconds. The first alert pointed to ap-south and incident commander opened INC-204."
     }
   ],
   "links": [],
@@ -21,8 +21,8 @@
   "provenance": {
     "source_path": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt",
     "capture_mode": "ingest",
-    "content_sha256": "d396ed6f1daf13f4e4a4af19a8e282a0c8d4240d32aec119029770d5c1682a01",
+    "content_sha256": "05e4b0d28e7f06d4ad9a530926dd3d260e605d360a9fce8c3d684469dc59e115",
     "start_seconds": 1.0,
-    "end_seconds": 29.0
+    "end_seconds": 18.0
   }
 }

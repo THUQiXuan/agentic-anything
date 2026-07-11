@@ -1,19 +1,21 @@
 ---
 name: incident
-description: Agent-native resource pack for https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt (1 units captured; generated without LLM).
+description: Agent-native resource pack for https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt (3 units captured; generated without LLM).
 ---
 
-# transcript 00:00:01–00:00:29
+# incident
 
 ## Overview
 
-This `video` pack is a structured capture of https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt made on 2026-07-11T09:08:16Z in `ingest` mode. It contains 1 evidence unit(s), an interface inventory, and markdown views an agent can read directly.
+This `video` pack is a structured capture of https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt made on 2026-07-11T00:00:00Z in `ingest` mode. It contains 3 evidence unit(s), an interface inventory, and markdown views an agent can read directly.
 
 ## Resource map
 
 | page_id | type | title |
 |---|---|---|
-| `incident__001__00-00-01` | segment | transcript 00:00:01–00:00:29 |
+| `incident__001__00-00-01` | segment | transcript 00:00:01–00:00:18 |
+| `incident__002__00-03-30` | segment | transcript 00:03:30–00:03:56 |
+| `incident__003__00-07-00` | segment | transcript 00:07:00–00:07:25 |
 
 ## Reading the pack
 
@@ -49,6 +51,6 @@ No machine interfaces were discovered; use page content in `pages/`.
 
 ## Caveats
 
-- Captured 2026-07-11T09:08:16Z; content may have changed since.
+- Captured 2026-07-11T00:00:00Z; content may have changed since.
 - Page budget was None; 0 known URL(s) were left uncaptured.
 - Generated without an LLM (deterministic mode): descriptions are terse; regenerate with an OPENROUTER_API_KEY for richer guidance.

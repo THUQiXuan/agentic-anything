@@ -5,7 +5,7 @@
   "site_name": "handbook",
   "resource_type": "document",
   "seed_url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/operations-handbook.md",
-  "generated_at": "2026-07-11T09:08:15Z",
+  "generated_at": "2026-07-11T00:00:00Z",
   "generator": "agentic-anything/0.4.1",
   "capabilities": [
     "site_snapshot",

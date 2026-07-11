@@ -4,8 +4,21 @@
 [inspect the raw results](results/showcase.json) ·
 [read the main project documentation](../README.md)
 
-This directory is a checked-in, reproducible snapshot of what the current
-Agentic Anything code can do without an LLM or API key.
+This directory is a checked-in, reproducible product walkthrough of what the
+current Agentic Anything code can do without an LLM or API key. The page is
+organized around one concrete question: what changes between the native
+resource, the generated agent-native pack, and the way a person or agent uses
+that pack afterward?
+
+## What to try first
+
+1. Follow the flagship incident across a transcript, handbook, and CSV. Each
+   claim exposes the exact source locator and content hash behind it.
+2. In the transformation lab, switch among all five resource types and compare
+   the native rendering with the real generated unit inventory.
+3. Use the same transformed pack through evidence search, its generated CLI,
+   or the MCP interface. The result panels are loaded from checked-in build
+   output rather than illustrative placeholder text.
 
 ## Included demos
 
@@ -35,8 +48,9 @@ python demos/verify_demos.py
 ```
 
 The builder removes `OPENROUTER_API_KEY` and `AGENTIC_API_KEY` from its child
-processes. No credential, paid request, or model output is needed. To view the
-page locally:
+processes and normalizes capture timestamps to a fixed demo snapshot, so a
+rebuild is stable. No credential, paid request, or model output is needed. To
+view the page locally:
 
 ```bash
 python -m http.server 8000 --directory demos

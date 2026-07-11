@@ -2,10 +2,10 @@
   "spec_version": "0.2",
   "kind": "agentic-anything-pack",
   "site_id": "incident",
-  "site_name": "transcript 00:00:01–00:00:29",
+  "site_name": "incident",
   "resource_type": "video",
   "seed_url": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt",
-  "generated_at": "2026-07-11T09:08:16Z",
+  "generated_at": "2026-07-11T00:00:00Z",
   "generator": "agentic-anything/0.4.1",
   "capabilities": [
     "site_snapshot",

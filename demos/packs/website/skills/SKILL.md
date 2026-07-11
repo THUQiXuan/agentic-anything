@@ -7,7 +7,7 @@ description: Agent-native resource pack for https://thuqixuan.github.io/agentic-
 
 ## Overview
 
-This `web` pack is a structured capture of https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html made on 2026-07-11T09:08:19Z in `static` mode. It contains 2 evidence unit(s), an interface inventory, and markdown views an agent can read directly.
+This `web` pack is a structured capture of https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html made on 2026-07-11T00:00:00Z in `static` mode. It contains 2 evidence unit(s), an interface inventory, and markdown views an agent can read directly.
 
 ## Resource map
 
@@ -50,7 +50,7 @@ cat api/apis.json                   # every discovered interface
 
 ## Caveats
 
-- Captured 2026-07-11T09:08:19Z; content may have changed since.
+- Captured 2026-07-11T00:00:00Z; content may have changed since.
 - Page budget was 4; 0 known URL(s) were left uncaptured.
 - Generated without an LLM (deterministic mode): descriptions are terse; regenerate with an OPENROUTER_API_KEY for richer guidance.
 - Static capture: JavaScript-rendered content may be missing (rebuild with `--render`).

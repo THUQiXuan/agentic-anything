@@ -80,14 +80,14 @@
       },
       {
         "resource_id": "incident",
-        "unit_id": "incident__001__00-00-01",
-        "title": "transcript 00:00:01–00:00:29",
-        "score": 1.753,
+        "unit_id": "incident__002__00-03-30",
+        "title": "transcript 00:03:30–00:03:56",
+        "score": 5.777,
         "normalized_score": 1.0,
         "evidence": [
           {
             "kind": "summary",
-            "text": "At 09:14 UTC, checkout latency crossed 900 milliseconds. 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner. The lock was cleared under incident INC-204, and latency recovered by 09…",
+            "text": "错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner.",
             "matched": [
               "e42",
               "缓存",
@@ -98,7 +98,7 @@
           },
           {
             "kind": "p",
-            "text": "At 09:14 UTC, checkout latency crossed 900 milliseconds. 错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner. The lock was cleared under incident INC-204, and latency recovered by 09:22 UTC.",
+            "text": "错误码 E42 表示缓存写锁未释放，影响了三个工作节点。 The operator ran aurora cache inspect and identified worker-7 as the lock owner.",
             "matched": [
               "e42",
               "缓存",
@@ -108,7 +108,7 @@
             ]
           }
         ],
-        "uri": "agentic-anything://incident/units/incident__001__00-00-01"
+        "uri": "agentic-anything://incident/units/incident__002__00-03-30"
       }
     ]
   },

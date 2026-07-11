@@ -5,7 +5,7 @@
   "site_name": "Aurora Service Status",
   "resource_type": "web",
   "seed_url": "https://thuqixuan.github.io/agentic-anything/sources/status-site/index.html",
-  "generated_at": "2026-07-11T09:08:19Z",
+  "generated_at": "2026-07-11T00:00:00Z",
   "generator": "agentic-anything/0.4.1",
   "capabilities": [
     "site_snapshot",

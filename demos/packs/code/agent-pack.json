@@ -5,7 +5,7 @@
   "site_name": "code",
   "resource_type": "code",
   "seed_url": "https://github.com/THUQiXuan/agentic-anything/tree/main/demos/sources/orbit-sdk",
-  "generated_at": "2026-07-11T09:08:18Z",
+  "generated_at": "2026-07-11T00:00:00Z",
   "generator": "agentic-anything/0.4.1",
   "capabilities": [
     "site_snapshot",

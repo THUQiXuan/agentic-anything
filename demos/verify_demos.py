@@ -25,6 +25,11 @@ def main() -> int:
     payload = json.loads(result_path.read_text(encoding="utf-8"))
     ids = {item["id"] for item in payload["demos"]}
     check(ids == EXPECTED, "all five demo resources are present")
+    check(payload["summary"]["units"] == 14, "showcase contains fourteen evidence units")
+    check(len(payload["investigation"]) == 3, "flagship incident has a three-source evidence chain")
+    check(all(step["result"]["locator"] and step["result"]["content_sha256"]
+              for step in payload["investigation"]),
+          "each flagship finding has an exact locator and content hash")
     check(all(payload["assertions"].values()), "all generated showcase assertions pass")
     check(payload["model_calls"] == 0, "demo uses zero model calls")
 
@@ -53,8 +58,15 @@ def main() -> int:
     check(not leaks, "published artifacts exclude local paths and credential-shaped markers")
 
     html = (DEMO / "index.html").read_text(encoding="utf-8")
-    check("results/showcase.json" in html and "Honest quality boundary" in html,
-          "HTML gallery loads raw evidence and states its limits")
+    required_story = (
+        "results/showcase.json",
+        "Before · native resource",
+        "After · agent-native pack",
+        "Now use the transformed resource",
+        "Boundary of this demo",
+    )
+    check(all(marker in html for marker in required_story),
+          "HTML presents before, after, usage, raw evidence, and scope limits")
     print("\nDemo verification complete.")
     return 0
 

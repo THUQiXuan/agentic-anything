@@ -8,7 +8,7 @@
     "name": "metrics",
     "type": "dataset",
     "source": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv",
-    "captured_at": "2026-07-11T09:08:17Z",
+    "captured_at": "2026-07-11T00:00:00Z",
     "unit_count": 2
   },
   "agent_native_representation": {

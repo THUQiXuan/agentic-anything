@@ -7,7 +7,7 @@ description: Agent-native resource pack for https://github.com/THUQiXuan/agentic
 
 ## Overview
 
-This `dataset` pack is a structured capture of https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv made on 2026-07-11T09:08:17Z in `ingest` mode. It contains 2 evidence unit(s), an interface inventory, and markdown views an agent can read directly.
+This `dataset` pack is a structured capture of https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/service-metrics.csv made on 2026-07-11T00:00:00Z in `ingest` mode. It contains 2 evidence unit(s), an interface inventory, and markdown views an agent can read directly.
 
 ## Resource map
 
@@ -50,6 +50,6 @@ No machine interfaces were discovered; use page content in `pages/`.
 
 ## Caveats
 
-- Captured 2026-07-11T09:08:17Z; content may have changed since.
+- Captured 2026-07-11T00:00:00Z; content may have changed since.
 - Page budget was None; 0 known URL(s) were left uncaptured.
 - Generated without an LLM (deterministic mode): descriptions are terse; regenerate with an OPENROUTER_API_KEY for richer guidance.

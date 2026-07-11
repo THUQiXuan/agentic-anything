@@ -5,11 +5,11 @@
   "generator": "agentic-anything/0.4.1",
   "resource": {
     "id": "incident",
-    "name": "transcript 00:00:01–00:00:29",
+    "name": "incident",
     "type": "video",
     "source": "https://github.com/THUQiXuan/agentic-anything/blob/main/demos/sources/incident.srt",
-    "captured_at": "2026-07-11T09:08:16Z",
-    "unit_count": 1
+    "captured_at": "2026-07-11T00:00:00Z",
+    "unit_count": 3
   },
   "agent_native_representation": {
     "root": ".",

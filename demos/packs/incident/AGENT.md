@@ -1,7 +1,7 @@
-# transcript 00:00:01–00:00:29 — Resource Agent
+# incident — Resource Agent
 
 This **Agentic Anything** resource agent wraps a `video` source as an
-agent-native pack with 1 captured evidence units.
+agent-native pack with 3 captured evidence units.
 You do not need to learn the pack's internal layout before using it.
 
 Run the commands below from this pack directory (`cd <PACK_DIR>`). All paths in
