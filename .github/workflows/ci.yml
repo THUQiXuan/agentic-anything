@@ -34,3 +34,16 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Run full suite including rendered capture
         run: python -m pytest tests -q
+      - name: Rebuild and verify checked-in demos without model calls
+        env:
+          OPENROUTER_API_KEY: ""
+          AGENTIC_API_KEY: ""
+          PYTHONPATH: src
+        run: |
+          unset OPENROUTER_API_KEY AGENTIC_API_KEY
+          python demos/build_demos.py
+          python demos/review_recorded_llm_run.py
+          python demos/build_agent_runs.py
+          python demos/verify_demos.py
+          git diff --exit-code -- demos/packs demos/results demos/runs
+          test -z "$(git status --porcelain --untracked-files=all -- demos/packs demos/results demos/runs)"

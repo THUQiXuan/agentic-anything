@@ -13,21 +13,39 @@ enough evidence for another process to check the work?
 
 | Run | Controller | Horizon | Output | Checks |
 |---|---|---:|---|---:|
-| Requests redirect impact | Real `openai/gpt-4.1-mini` tool loop over stdio MCP | 21 visible steps | reviewed maintainer brief + claim ledger | 9/9 |
+| Requests redirect impact | Real `openai/gpt-4.1-mini` tool loop over stdio MCP + deterministic offline reviewer | 19 recorded model/MCP steps + 2 offline steps | raw accepted draft + reviewed maintainer brief + claim ledger | 9/9 |
 | NASA GISTEMP + FAIR audit | Deterministic evidence agent over two packs | 16 steps | computed climate brief + 15-principle audit | 23/23 |
 | Requests redirect impact | Deterministic evidence agent | 14 steps | reproducible change-impact report | 20/20 |
 
 The real model run starts with no repository context. It makes 19 tool calls,
 including five searches and eleven reads. Its first submission is rejected for
-missing search/documentation coverage. A later offline semantic review catches
-a second, more subtle problem: the model attributed `max_redirects` to a docs
-unit that never says it. The raw transcript keeps the original draft; the final
-artifact removes that unsupported claim.
+missing search/documentation coverage. Recorded model/MCP activity ends at step
+19. Steps 20–21 are explicitly labeled deterministic offline review/publish
+operations: they catch a subtler problem where the model attributed
+`max_redirects` to a docs unit that never says it.
+
+[`raw-transcript.json`](runs/requests-redirect-impact-llm/raw-transcript.json)
+contains only the recorded model messages/tool calls and MCP exchanges behind
+steps 1–19; it is not a transcript of the two offline steps. The reviewer
+extracts the last accepted `submit_deliverable.artifact_markdown` verbatim into
+[`accepted-model-draft.md`](runs/requests-redirect-impact-llm/accepted-model-draft.md),
+then applies five named, exact-once replacements to regenerate the reviewed
+artifact. A previously edited artifact is never a review input.
+
+Every final LLM citation was read before publication, but not every read was
+search-discovered. In particular, `quickstart.rst` did not occur in the prior
+ranked search results: the first rejected submission's evidence gate explicitly
+required that unit, after which the model read it directly. The run and verifier
+label this path `evidence-gate-directed-read` instead of implying a universal
+search→read→cite sequence.
 
 The deterministic runs are not presented as LLM reasoning. They are explicit,
 task-specific agent policies that drive fresh `agentic-anything mcp` subprocesses,
 parse returned evidence, compute results, and reject citations to units that were
 not searched and read first. They can be rebuilt byte-for-byte without a key.
+In the FAIR table, runtime claims such as “searchable through this local MCP
+run” use separate `RUN-*` references to exact run steps and raw exchanges;
+GISTEMP/FAIR pack citations are not presented as proof of runtime behavior.
 
 ## What is checked in
 
@@ -39,13 +57,14 @@ demos/
 │   ├── requests-redirect-impact-llm/
 │   │   ├── run.json               # public step timeline and checked claims
 │   │   ├── raw-transcript.json    # model messages + full MCP JSON-RPC
+│   │   ├── accepted-model-draft.md # verbatim last accepted raw model draft
 │   │   └── maintainer-impact-brief.md
 │   ├── gistemp-fair-audit/        # run, artifact, raw events, verification
 │   └── requests-redirect-impact/  # run, artifact, raw events, verification
 ├── build_demos.py                 # rebuild authentic packs (zero model calls)
 ├── build_agent_runs.py            # replay deterministic agents
 ├── record_llm_run.py              # optional paid one-time recorder
-├── review_recorded_llm_run.py     # offline semantic review
+├── review_recorded_llm_run.py     # raw-draft extraction + deterministic review transform
 └── verify_demos.py                # publishability and lineage checks
 ```
 
@@ -64,9 +83,9 @@ PYTHONPATH=src python demos/build_agent_runs.py
 PYTHONPATH=src python demos/verify_demos.py
 ```
 
-This rebuilds five packs, replays both deterministic runs through real stdio MCP
-processes, verifies the already-recorded model run, and checks 52 long-run
-assertions. It makes no paid calls.
+This rebuilds five packs, regenerates the accepted draft and reviewed artifact
+from the raw recording, replays both deterministic runs through real stdio MCP
+processes, and checks 52 long-run assertions. It makes no paid calls.
 
 To record a fresh model trajectory instead:
 
@@ -90,6 +109,8 @@ python -m http.server 8000 --directory demos
 ## Scope
 
 - “Replay” animates committed events; GitHub Pages does not run an agent server.
+- The raw model/MCP transcript covers steps 1–19 only; steps 20–21 are
+  deterministic offline review/publish records in `run.json`.
 - The recorded model output is not accepted merely because it sounds plausible.
 - Deterministic agents demonstrate long tool use and computation, not hidden
   model reasoning.

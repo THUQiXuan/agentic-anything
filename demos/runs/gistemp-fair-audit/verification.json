@@ -1,5 +1,5 @@
 {
-  "artifact_sha256": "a52319de85041fa70c5dd903dbb54b09fa7c6fcbe834b9bfe603e82708a8d109",
+  "artifact_sha256": "31c7d54118e05ac02c911a8057c6eb9989c6c5197afc31107663a7b4c8e3dae6",
   "assertions": [
     {
       "detail": "deterministic-evidence-agent",
@@ -92,7 +92,7 @@
       "passed": true
     },
     {
-      "detail": "markers=['F1', 'G1', 'G2', 'G3']",
+      "detail": "pack_markers=['F1', 'G1', 'G2', 'G3']; run_markers=['RUN-C1', 'RUN-R4', 'RUN-S3']",
       "id": "artifact_citation_set_complete",
       "passed": true
     },

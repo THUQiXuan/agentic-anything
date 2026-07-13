@@ -217,11 +217,15 @@
     .step-name { display: block; padding-top: 1px; font-size: 12px; font-weight: 720; line-height: 1.35; }
     .step-meta { display: block; margin-top: 4px; color: var(--muted); font: 10px/1.3 "SFMono-Regular", monospace; }
     .step-button.rejected .step-meta { color: var(--red); }
+    .step-origin { display: block; margin-top: 4px; color: var(--accent); font: 9px/1.3 "SFMono-Regular", monospace; text-transform: uppercase; }
+    .step-origin.offline { color: var(--amber); }
 
     .step-detail { min-width: 0; padding: 30px; }
     .detail-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
     .phase-badge { padding: 4px 7px; border-radius: 5px; color: var(--accent); background: var(--accent-soft); font-size: 10px; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
     .phase-badge.rejected { color: var(--red); background: var(--red-soft); }
+    .origin-badge { margin-right: auto; padding: 4px 7px; border-radius: 5px; color: var(--accent); background: var(--accent-soft); font-size: 9px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+    .origin-badge.offline { color: var(--amber); background: var(--amber-soft); }
     .call-id { color: var(--muted); font: 10px/1 "SFMono-Regular", monospace; overflow: hidden; text-overflow: ellipsis; }
     .step-detail h3 { margin: 18px 0 8px; font-size: 26px; line-height: 1.18; letter-spacing: -.03em; }
     .observation { max-width: 760px; margin: 0; color: #4e5966; }
@@ -270,6 +274,8 @@
     .claim-row:last-child { border: 0; }
     .claim-row p { margin: 0; font-size: 13px; }
     .claim-source { color: var(--muted); font: 10px/1.5 "SFMono-Regular", monospace; overflow-wrap: anywhere; }
+    .claim-source a { color: var(--accent); font-weight: 750; text-decoration: none; }
+    .claim-source a:hover { text-decoration: underline; }
 
     .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .why-card { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
@@ -327,7 +333,7 @@
       .section-head p { margin-top: 12px; }
       .status-badge { display: inline-block; margin-top: 16px; }
       .step-detail { padding: 22px 16px; }
-      .artifact { padding: 22px 17px 28px; }
+      .artifact { max-height: none; overflow: visible; padding: 22px 17px 28px; }
       .claim-row { grid-template-columns: 1fr; gap: 7px; }
       footer .shell { display: block; }
       footer span { display: block; margin-top: 4px; }
@@ -354,7 +360,7 @@
           <div class="hero-copy">
             <div class="kicker"><span class="pulse"></span>Recorded runs over authentic resources</div>
             <h1>Watch the work, not a one-line answer.</h1>
-            <p>Real tasks that take many steps: inspect a pack, search, read exact units, revise after rejection, compute, write a useful file, and verify every claim.</p>
+            <p>Agentic Anything turns repositories, datasets, papers, and other native resources into agent-readable packs, then lets agents use those packs across many steps to search, read exact units, revise, compute, produce useful files, and verify every claim.</p>
             <div class="hero-actions">
               <a class="button primary" href="#runs" id="hero-replay">Replay a real model run</a>
               <a class="button" href="#artifact-section">See the finished work</a>
@@ -381,7 +387,7 @@
       <div class="shell">
         <div class="section-head">
           <div><div class="eyebrow">Choose a run</div><h2>Long enough to show<br>the pack doing real work.</h2></div>
-          <p>One run uses an actual model through OpenRouter. Two use explicit deterministic agent policies so every calculation and citation can be rebuilt byte-for-byte.</p>
+          <p>One run contains 19 recorded model/MCP steps followed by 2 deterministic offline review steps. Two use explicit deterministic agent policies so every calculation and citation can be rebuilt byte-for-byte.</p>
         </div>
         <div class="run-picker" id="run-picker"></div>
         <article class="task-card">
@@ -401,7 +407,7 @@
             <div class="step-list" id="step-list"></div>
           </aside>
           <article class="step-detail">
-            <div class="detail-top"><span class="phase-badge" id="detail-phase">—</span><span class="call-id" id="detail-call"></span></div>
+            <div class="detail-top"><span class="phase-badge" id="detail-phase">—</span><span class="origin-badge" id="detail-origin">—</span><span class="call-id" id="detail-call"></span></div>
             <h3 id="detail-title">Select a step</h3>
             <p class="observation" id="detail-observation"></p>
             <div class="decision-note" id="detail-note"></div>
@@ -439,12 +445,12 @@
     <section class="section">
       <div class="shell">
         <div class="section-head">
-          <div><div class="eyebrow">Why the pack mattered</div><h2>Less context hunting.<br>More verifiable work.</h2></div>
+          <div><div class="eyebrow">Why the pack mattered</div><h2>One interface across<br>three native formats.</h2></div>
         </div>
         <div class="why-grid">
-          <article class="why-card"><span>BEFORE</span><h3>Native resource</h3><p>A 74-file repository, a 147-year table, or a long paper has its own structure. An agent must first discover where evidence lives.</p></article>
-          <article class="why-card"><span>AGENT PACK</span><h3>One stable contract</h3><p><code>resource_info</code>, <code>search_resource</code>, and <code>read_unit</code> work across every format and return locators plus hashes.</p></article>
-          <article class="why-card"><span>AFTER</span><h3>Auditable outcome</h3><p>The agent can carry a task across many calls, and each final claim can be checked against a unit it actually read.</p></article>
+          <article class="why-card"><span>BEFORE</span><h3>Three incompatible inputs</h3><p>Requests arrives as a 74-file repository, GISTEMP as a 147-year CSV table, and FAIR as a long scholarly paper. Their native structures do not match.</p></article>
+          <article class="why-card"><span>AGENT PACK</span><h3>The same three tools</h3><p><code>resource_info</code>, <code>search_resource</code>, and <code>read_unit</code> served the repository, CSV, and paper in these runs, returning stable unit IDs, locators, and hashes.</p></article>
+          <article class="why-card"><span>AFTER</span><h3>Three checked deliverables</h3><p>Those calls fed a 21-step model run, a cross-pack climate/FAIR audit, and a deterministic code-impact trace; every published claim points back to a unit the agent read.</p></article>
         </div>
       </div>
     </section>
@@ -512,6 +518,7 @@
         id: "requests-redirect-impact-llm",
         run: "runs/requests-redirect-impact-llm/run.json",
         artifact: "runs/requests-redirect-impact-llm/maintainer-impact-brief.md",
+        draft: "runs/requests-redirect-impact-llm/accepted-model-draft.md",
         raw: "runs/requests-redirect-impact-llm/raw-transcript.json",
         short: "Real model · code impact",
         description: "A model searches, reads, submits too early, then repairs the evidence gap.",
@@ -604,21 +611,35 @@
 
     function isLLM(run) { return String(run.mode || "").includes("llm"); }
 
+    function isOfflineReviewStep(step) {
+      return ["semantic_claim_audit", "publish_reviewed_artifact"].includes(step?.tool?.name);
+    }
+
+    function rejectedDecisionNote(step) {
+      if (step.public_action_note && step.public_action_note.length <= 360) return step.public_action_note;
+      return "Publication was blocked by the evidence gate. The next model turn must close the search, read, and citation gaps listed above; the full rejected draft remains in the raw 19-step model/MCP recording below.";
+    }
+
     function normalizedSteps(run) {
       if (isLLM(run)) {
-        return run.steps.map(step => ({
-          number: step.seq,
-          phase: step.phase,
-          status: step.status,
-          label: step.label,
-          tool: step.tool.name,
-          callId: step.tool.call_id,
-          input: step.tool.arguments,
-          output: step.tool.result_excerpt,
-          summary: step.observation,
-          note: step.public_action_note || (step.status === "rejected" ? "The evidence gate forces another search/read cycle before delivery." : "The observed result is available to the next model turn."),
-          units: (step.selected_unit_ids || []).map(unit_id => ({resource_id: "requests", unit_id})),
-        }));
+        return run.steps.map(step => {
+          const offlineReview = isOfflineReviewStep(step);
+          return {
+            number: step.seq,
+            phase: step.phase,
+            status: step.status,
+            label: step.label,
+            tool: step.tool.name,
+            callId: step.tool.call_id,
+            input: step.tool.arguments,
+            output: step.tool.result_excerpt,
+            summary: step.observation,
+            note: step.status === "rejected" ? rejectedDecisionNote(step) : (step.public_action_note || "The observed result is available to the next model turn."),
+            origin: offlineReview ? "deterministic offline review" : "recorded model/MCP",
+            offlineReview,
+            units: (step.selected_unit_ids || []).map(unit_id => ({resource_id: "requests", unit_id})),
+          };
+        });
       }
       return run.steps.map(step => ({
         number: step.step,
@@ -631,6 +652,8 @@
         output: step.output_summary,
         summary: step.output_summary,
         note: step.next_step_reason,
+        origin: "deterministic policy",
+        offlineReview: true,
         units: step.units || [],
       }));
     }
@@ -638,8 +661,11 @@
     function runStats(item) {
       const run = item.data;
       if (isLLM(run)) {
+        const offlineReviewSteps = run.steps.filter(isOfflineReviewStep).length;
         return {
           steps: run.steps.length,
+          modelSteps: run.steps.length - offlineReviewSteps,
+          offlineReviewSteps,
           searches: run.recording.search_calls,
           reads: run.recording.read_calls,
           units: run.recording.unique_units_read,
@@ -681,7 +707,9 @@
       const host = document.getElementById("run-picker");
       host.innerHTML = runs.map((item, index) => {
         const stats = runStats(item);
-        return `<button class="run-option ${index === selectedRun ? "active" : ""}" data-run="${index}" type="button"><span class="run-kind ${isLLM(item.data) ? "" : "deterministic"}">${isLLM(item.data) ? "Actual LLM + MCP" : "Deterministic agent"}</span><h3>${esc(item.spec.short)}</h3><p>${esc(item.spec.description)}</p><span class="run-mini">${stats.steps} steps · ${stats.searches} search · ${stats.reads} read · ${stats.checks}/${stats.checkTotal} checks</span></button>`;
+        const kind = isLLM(item.data) ? `${stats.modelSteps} recorded model/MCP steps + ${stats.offlineReviewSteps} deterministic offline review` : "Deterministic agent";
+        const horizon = isLLM(item.data) ? `${stats.steps} visible steps` : `${stats.steps} steps`;
+        return `<button class="run-option ${index === selectedRun ? "active" : ""}" data-run="${index}" type="button"><span class="run-kind ${isLLM(item.data) ? "" : "deterministic"}">${esc(kind)}</span><h3>${esc(item.spec.short)}</h3><p>${esc(item.spec.description)}</p><span class="run-mini">${horizon} · ${stats.searches} search · ${stats.reads} read · ${stats.checks}/${stats.checkTotal} checks</span></button>`;
       }).join("");
       host.querySelectorAll("[data-run]").forEach(button => button.addEventListener("click", () => selectRun(Number(button.dataset.run))));
     }
@@ -695,7 +723,12 @@
       document.getElementById("run-status").textContent = `${stats.checks}/${stats.checkTotal} checks passed`;
       const facts = [];
       facts.push(isLLM(run) ? `model ${run.recording.model}` : "policy deterministic-evidence-agent");
-      facts.push(`${stats.steps} visible steps`);
+      if (isLLM(run)) {
+        facts.push(`${stats.modelSteps} recorded model/MCP steps`);
+        facts.push(`${stats.offlineReviewSteps} deterministic offline review steps`);
+      } else {
+        facts.push(`${stats.steps} visible steps`);
+      }
       facts.push(`${stats.searches} searches · ${stats.reads} reads`);
       facts.push(`${stats.units} unique cited/read units`);
       if (isLLM(run)) {
@@ -710,7 +743,7 @@
 
     function renderStepList() {
       const steps = normalizedSteps(runs[selectedRun].data);
-      document.getElementById("step-list").innerHTML = steps.map((step, index) => `<button class="step-button ${index === selectedStep ? "active" : ""} ${step.status === "rejected" ? "rejected" : ""}" data-step="${index}" type="button"><span class="step-index">${String(step.number).padStart(2, "0")}</span><span><span class="step-name">${esc(step.label)}</span><span class="step-meta">${esc(step.tool)} · ${esc(step.status)}</span></span></button>`).join("");
+      document.getElementById("step-list").innerHTML = steps.map((step, index) => `<button class="step-button ${index === selectedStep ? "active" : ""} ${step.status === "rejected" ? "rejected" : ""}" data-step="${index}" type="button"><span class="step-index">${String(step.number).padStart(2, "0")}</span><span><span class="step-name">${esc(step.label)}</span><span class="step-meta">${esc(step.tool)} · ${esc(step.status)}</span><span class="step-origin ${step.offlineReview ? "offline" : ""}">${esc(step.origin)}</span></span></button>`).join("");
       document.querySelectorAll("[data-step]").forEach(button => button.addEventListener("click", () => selectStep(Number(button.dataset.step))));
       document.getElementById("step-counter").textContent = `${selectedStep + 1} / ${steps.length}`;
     }
@@ -722,6 +755,9 @@
       const phase = document.getElementById("detail-phase");
       phase.textContent = `${step.phase} · ${step.status}`;
       phase.className = `phase-badge ${step.status === "rejected" ? "rejected" : ""}`;
+      const origin = document.getElementById("detail-origin");
+      origin.textContent = step.origin;
+      origin.className = `origin-badge ${step.offlineReview ? "offline" : ""}`;
       document.getElementById("detail-call").textContent = step.callId || "";
       document.getElementById("detail-title").textContent = step.label;
       document.getElementById("detail-observation").textContent = step.summary;
@@ -738,7 +774,9 @@
       }).join("") : '<span class="unit-pill">no unit selected in this step</span>';
       const raw = item.spec.raw;
       const packLinks = (item.data.packs || []).map(pack => typeof pack === "string" ? pack : pack.resource_id).map(id => `<a class="text-link" href="packs/${encodeURIComponent(id)}/agent-pack.json" target="_blank">${esc(id)} manifest ↗</a>`).join("");
-      document.getElementById("raw-links").innerHTML = `<a class="text-link" href="${esc(raw)}" target="_blank">open complete recorded transcript ↗</a>${packLinks}`;
+      const rawLabel = isLLM(item.data) ? "open raw 19-step model/MCP recording ↗" : "open deterministic MCP event log ↗";
+      const modelDraftLink = item.spec.draft ? `<a class="text-link" href="${esc(item.spec.draft)}" target="_blank">open extracted accepted model draft ↗</a>` : "";
+      document.getElementById("raw-links").innerHTML = `<a class="text-link" href="${esc(raw)}" target="_blank">${rawLabel}</a>${modelDraftLink}${packLinks}`;
     }
 
     function checksFor(item) {
@@ -770,7 +808,12 @@
       document.getElementById("artifact-hash").textContent = `sha256 ${shortHash(artifactHash)}…`;
       document.getElementById("verification-title").textContent = `${checks.filter(check => check.passed).length}/${checks.length} checks passing`;
       document.getElementById("checks").innerHTML = checks.map(check => `<div class="check-row"><span class="check-icon">✓</span><span><b>${esc(check.id.replaceAll("_", " "))}</b><span>${esc(check.detail || "passed")}</span></span></div>`).join("");
-      document.getElementById("claim-list").innerHTML = `<div class="panel-head"><strong>Claim → evidence ledger</strong><span>${citations.length} linked claims</span></div>${citations.map(claim => `<div class="claim-row"><p>${esc(claim.text)}</p><div class="claim-source">${esc(claim.support.resource_id)}/${esc(claim.support.unit_id)}<br>${esc(claim.support.locator || "")}<br>sha256 ${esc(shortHash(claim.support.captured_unit_sha256 || claim.support.content_sha256))}…</div></div>`).join("")}`;
+      document.getElementById("claim-list").innerHTML = `<div class="panel-head"><strong>Claim → evidence ledger</strong><span>${citations.length} linked claims</span></div>${citations.map(claim => {
+        const resourceId = claim.support.resource_id;
+        const unitId = claim.support.unit_id;
+        const unitHref = `packs/${encodeURIComponent(resourceId)}/pages/${encodeURIComponent(unitId)}.json`;
+        return `<div class="claim-row"><p>${esc(claim.text)}</p><div class="claim-source"><a href="${unitHref}" target="_blank" rel="noreferrer">${esc(resourceId)}/${esc(unitId)} ↗</a><br>${esc(claim.support.locator || "")}<br>sha256 ${esc(shortHash(claim.support.captured_unit_sha256 || claim.support.content_sha256))}…</div></div>`;
+      }).join("")}`;
     }
 
     function renderSources() {
@@ -787,8 +830,19 @@
       selectedStep = index;
       renderStepList();
       renderStepDetail();
-      const active = document.querySelector(".step-button.active");
-      active?.scrollIntoView({block: "nearest", behavior: "smooth"});
+      const list = document.getElementById("step-list");
+      const active = list.querySelector(".step-button.active");
+      if (!active) return;
+      const listRect = list.getBoundingClientRect();
+      const activeRect = active.getBoundingClientRect();
+      const activeTop = activeRect.top - listRect.top + list.scrollTop;
+      const activeBottom = activeTop + activeRect.height;
+      const margin = 8;
+      if (activeTop < list.scrollTop + margin) {
+        list.scrollTop = Math.max(0, activeTop - margin);
+      } else if (activeBottom > list.scrollTop + list.clientHeight - margin) {
+        list.scrollTop = activeBottom - list.clientHeight + margin;
+      }
     }
 
     function selectRun(index) {

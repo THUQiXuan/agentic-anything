@@ -33,7 +33,9 @@
     "read_calls": 11,
     "unique_units_read": 6,
     "model_tool_calls": 19,
-    "offline_review_steps": 2
+    "offline_review_steps": 2,
+    "recorded_model_mcp_steps": 19,
+    "visible_timeline_steps": 21
   },
   "packs": [
     {
@@ -63,7 +65,8 @@
         "result_excerpt": "{\"site_id\": \"requests\", \"resource_type\": \"code\", \"seed_url\": \"https://github.com/psf/requests/tree/v2.34.2\", \"captured_at\": \"2026-07-11T00:00:00Z\", \"capture_mode\": \"ingest\", \"page_count\": 74, \"frontier_count\": 0, \"capabilities\": [\"site_snapshot\", \"page_index\", \"page_manifests\", \"markdown_views\", \"api_surface\", \"resource_agent_interface\"], \"api_surface\": {\"endpoints\": 0, \"forms\": 0, \"openapi\": 0, \"well_known\": 0, \"feeds\": 0, \"sitemaps\": 0, \"observed_network\": 0}, \"has_skill\": true, \"pack_dir\": \"./demos/packs/requests\", \"resource_id\": \"requests\", \"unit_ids\": [\"repo__000__tree\", \"file__readme-md\", \"file__tests--certs--readme-md\", \"file__tests--certs--expired--readme-md\", \"file__tests--certs--mtls--readme-md\", \"file__authors-rst\", \"file__history-md\", \"file__license\", \"file__makefile\", \"file__pyproject-toml\", \"file__requirements-dev-txt\", \"file__setup-py\", \"file__tox-ini\", \"file__docs--makefile\", \"file__docs--api-rst\", \"file__docs--conf-py\", \"file__docs--index-rst\", \"file__docs--requirements-txt\", \"file__ext--license\", \"file__tests--init-py\", \"file__tests--compat-py\", \"file__tests--conftest-py\", \"file__tests--test-adapters-py\", \"file__tests--test-help-py\", \"file__tests--test-hooks-py\", \"file__tests--test-lowlevel-py\", \"file__tests--test-packages-py\", \"file__tests--test-requests-py\", \"file__tests--test-structures-py"
       },
       "observation": "code pack; 74 units; 0 frontier entries.",
-      "selected_unit_ids": []
+      "selected_unit_ids": [],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 2,
@@ -90,7 +93,8 @@
         "file__tests--test-lowlevel-py",
         "file__src--requests--status-codes-py",
         "file__src--requests--models-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 3,
@@ -112,7 +116,8 @@
       "observation": "Read src/requests/sessions.py; captured unit hash 37132aa52850…",
       "selected_unit_ids": [
         "file__src--requests--sessions-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 4,
@@ -134,7 +139,8 @@
       "observation": "Read tests/test_requests.py; captured unit hash 95dd5c40741e…",
       "selected_unit_ids": [
         "file__tests--test-requests-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 5,
@@ -156,7 +162,8 @@
       "observation": "Read docs/user/advanced.rst; captured unit hash 3cb8ac63e700…",
       "selected_unit_ids": [
         "file__docs--user--advanced-rst"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 6,
@@ -178,7 +185,8 @@
       "observation": "Read src/requests/models.py; captured unit hash 95bc0e03bea3…",
       "selected_unit_ids": [
         "file__src--requests--models-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 7,
@@ -200,7 +208,8 @@
       "observation": "Read src/requests/exceptions.py; captured unit hash c5e18f335245…",
       "selected_unit_ids": [
         "file__src--requests--exceptions-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 8,
@@ -263,7 +272,8 @@
         "result_excerpt": "{\"accepted\": false, \"validation_errors\": [\"use at least 4 focused searches (currently 1)\", \"read these required evidence units: file__docs--user--quickstart-rst (documented public behavior)\", \"claim matrix must cover all five required evidence units\"], \"instruction\": \"Resolve every item with more MCP work, then resubmit.\"}"
       },
       "observation": "Evidence gate rejected the draft: use at least 4 focused searches (currently 1); read these required evidence units: file__docs--user--quickstart-rst (documented public behavior); claim matrix must cover all five required evidence units",
-      "selected_unit_ids": []
+      "selected_unit_ids": [],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 9,
@@ -290,7 +300,8 @@
         "file__src--requests--status-codes-py",
         "file__tests--test-requests-py",
         "file__tests--test-lowlevel-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 10,
@@ -317,7 +328,8 @@
         "file__docs--static--custom-css",
         "file__src--requests--adapters-py",
         "file__src--requests--api-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 11,
@@ -344,7 +356,8 @@
         "file__src--requests--exceptions-py",
         "file__src--requests--sessions-py",
         "file__docs--api-rst"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 12,
@@ -371,7 +384,8 @@
         "file__src--requests--status-codes-py",
         "file__tests--test-requests-py",
         "file__tests--test-lowlevel-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 13,
@@ -393,7 +407,13 @@
       "observation": "Read docs/user/quickstart.rst; captured unit hash 0c65d40d6d1c…",
       "selected_unit_ids": [
         "file__docs--user--quickstart-rst"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop",
+      "trace_annotation": {
+        "kind": "evidence-gate-directed-read",
+        "search_discovered": false,
+        "required_by_step": 8
+      }
     },
     {
       "seq": 14,
@@ -415,7 +435,8 @@
       "observation": "Read src/requests/models.py; captured unit hash 95bc0e03bea3…",
       "selected_unit_ids": [
         "file__src--requests--models-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 15,
@@ -437,7 +458,8 @@
       "observation": "Read src/requests/sessions.py; captured unit hash 37132aa52850…",
       "selected_unit_ids": [
         "file__src--requests--sessions-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 16,
@@ -459,7 +481,8 @@
       "observation": "Read tests/test_requests.py; captured unit hash 95dd5c40741e…",
       "selected_unit_ids": [
         "file__tests--test-requests-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 17,
@@ -481,7 +504,8 @@
       "observation": "Read src/requests/exceptions.py; captured unit hash c5e18f335245…",
       "selected_unit_ids": [
         "file__src--requests--exceptions-py"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 18,
@@ -503,7 +527,8 @@
       "observation": "Read docs/user/quickstart.rst; captured unit hash 0c65d40d6d1c…",
       "selected_unit_ids": [
         "file__docs--user--quickstart-rst"
-      ]
+      ],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 19,
@@ -571,26 +596,29 @@
         "result_excerpt": "{\"accepted\": true, \"checks_passed\": 8, \"claims_linked\": 8}"
       },
       "observation": "Deliverable accepted by the evidence gate.",
-      "selected_unit_ids": []
+      "selected_unit_ids": [],
+      "execution_origin": "recorded-model-tool-loop"
     },
     {
       "seq": 20,
       "phase": "verify",
       "status": "rejected",
-      "label": "Semantic audit catches a fluent but unsupported docs claim",
-      "public_action_note": "A read unit must contain the fact attributed to it; search rank and plausibility are not enough.",
+      "execution_origin": "deterministic-offline-review",
+      "label": "Offline semantic audit rejects an unsupported docs claim",
+      "public_action_note": "Deterministic offline step—not a model call. Audit the raw accepted draft against the two captured documentation units.",
       "tool": {
         "name": "semantic_claim_audit",
         "call_id": "offline-review-semantic_claim_audit",
         "arguments": {
+          "source": "raw-transcript.json#call_tJpbi2xabsNwDeCJd8MLBN83",
           "claim": "docs/user/advanced.rst documents max_redirects",
           "unit_id": "file__docs--user--advanced-rst"
         },
         "duration_ms": 0,
-        "result_sha256": "28e85ef36094f4f8eb220599fc182cc0dbc55bee0a8dbe7b34e46cefa12554c7",
-        "result_excerpt": "{\"accepted\": false, \"unsupported_claim\": \"docs/user/advanced.rst documents max_redirects\", \"evidence\": {\"advanced_contains_max_redirects\": false, \"quickstart_documents_configured_maximum_exception\": true}, \"action\": \"remove the unsupported claim and cite only quickstart's exact contract\"}"
+        "result_sha256": "b290e810edba09394c91002f4ca0f9e1c3afb96ae4f71bead4d8b95dad09df89",
+        "result_excerpt": "{\"accepted\": false, \"unsupported_claim\": \"docs/user/advanced.rst documents max_redirects\", \"source_draft_sha256\": \"0e30f19a040185689db9d6b941c093266206d634195f7e275f4067a2f6eb26d9\", \"evidence\": {\"advanced_contains_max_redirects\": false, \"quickstart_documents_configured_maximum_exception\": true}, \"action\": \"apply the checked exact-once semantic transform\", \"transform_id\": \"requests-redirect-semantic-review-v1\"}"
       },
-      "observation": "The model's draft overstates the captured documentation. advanced.rst never mentions max_redirects.",
+      "observation": "The recorded model draft overstates the captured documentation: advanced.rst never mentions max_redirects.",
       "selected_unit_ids": [
         "file__docs--user--advanced-rst",
         "file__docs--user--quickstart-rst"
@@ -600,22 +628,25 @@
       "seq": 21,
       "phase": "deliver",
       "status": "passed",
-      "label": "Publish the evidence-safe maintainer brief",
-      "public_action_note": "Preserve the model's supported code/test findings; replace only the unsupported documentation claim.",
+      "execution_origin": "deterministic-offline-review",
+      "label": "Offline reviewer deterministically publishes the corrected brief",
+      "public_action_note": "Deterministic offline step—not a model call. Apply five asserted exact-once replacements to the preserved raw model draft.",
       "tool": {
         "name": "publish_reviewed_artifact",
         "call_id": "offline-review-publish_reviewed_artifact",
         "arguments": {
-          "source": "model draft in raw-transcript.json",
-          "review": "semantic_claim_audit",
+          "source": "accepted-model-draft.md",
+          "transform_id": "requests-redirect-semantic-review-v1",
           "output": "maintainer-impact-brief.md"
         },
         "duration_ms": 0,
-        "result_sha256": "28155cef34cb979a50c3b88fb92f69a28a507767e98dde63f2181847b25cf177",
-        "result_excerpt": "{\"accepted\": true, \"artifact\": \"maintainer-impact-brief.md\", \"unsupported_claims_remaining\": 0}"
+        "result_sha256": "52704b5471caad7ddf14dd4f0c6581758f4723d7553c2c021963853f52ec7adb",
+        "result_excerpt": "{\"accepted\": true, \"artifact\": \"maintainer-impact-brief.md\", \"source_draft\": \"accepted-model-draft.md\", \"source_draft_sha256\": \"0e30f19a040185689db9d6b941c093266206d634195f7e275f4067a2f6eb26d9\", \"artifact_sha256\": \"65c26fbf8bc7659154daf9ef42c5a940e29fb3de4361629e0013f556741afa0f\", \"unsupported_claims_remaining\": 0}"
       },
-      "observation": "The final artifact now says exactly what quickstart proves and explicitly marks the numeric default as undocumented.",
+      "observation": "The final artifact is regenerated from the raw accepted draft; it states only quickstart's exact contract and separates the raise site from the exception type.",
       "selected_unit_ids": [
+        "file__src--requests--sessions-py",
+        "file__src--requests--exceptions-py",
         "file__docs--user--quickstart-rst"
       ]
     }
@@ -623,16 +654,19 @@
   "artifact": {
     "name": "maintainer-impact-brief.md",
     "media_type": "text/markdown",
-    "sha256": "5233109df4870dc552a5f07d4aef8bf0523c953c59b3ceab01a4c51d9ef22a27",
+    "sha256": "65c26fbf8bc7659154daf9ef42c5a940e29fb3de4361629e0013f556741afa0f",
     "title": "Change Default Redirect Ceiling from 30 to 20 in Requests Library",
     "summary": "Changing the DEFAULT_REDIRECT_LIMIT constant from 30 to 20 is the minimal and correct source change to update the library-wide default redirect ceiling. The per-Session override remains intact. Tests for the default limit should be updated accordingly, and user documentation should be clarified to reflect the new default. No other code or exception changes are necessary.",
-    "content": "# Maintainer Impact Brief: Change Default Redirect Ceiling from 30 to 20 in Requests Library\n\n## Summary:\nThis proposed change reduces the library-wide default maximum number of HTTP redirects allowed from 30 to 20, while preserving the ability for users to override this limit on a per-Session basis. The change affects the constant DEFAULT_REDIRECT_LIMIT, the Session class initialization, runtime enforcement of redirect limits, the exception raised on exceeding the limit, relevant tests, and user documentation.\n\n## Evidence and Trace:\n\n1. Constant Definition:\n- In `src/requests/models.py`, the constant `DEFAULT_REDIRECT_LIMIT` is defined as 30.\n- This constant is imported and re-exposed in `src/requests/sessions.py` for backward compatibility.\n\n2. Session Initialization:\n- In `src/requests/sessions.py`, the `Session` class has an attribute `max_redirects` initialized to `DEFAULT_REDIRECT_LIMIT` (30).\n- This attribute can be overridden per Session instance by setting `s.max_redirects`.\n\n3. Runtime Enforcement:\n- In the `SessionRedirectMixin.resolve_redirects` method (`src/requests/sessions.py`), the number of redirects followed is tracked.\n- If the number of redirects exceeds `self.max_redirects`, a `TooManyRedirects` exception is raised.\n- The exception class `TooManyRedirects` is defined in `src/requests/exceptions.py`.\n\n4. Exception Type:\n- `TooManyRedirects` inherits from `RequestException`, which is a subclass of `IOError`.\n- This exception is raised with a message indicating the exceeded redirect limit.\n\n5. Tests:\n- In `tests/test_requests.py`, there are tests verifying the default redirect limit behavior:\n  - `test_HTTP_302_TOO_MANY_REDIRECTS` tests that a redirect chain exceeding 30 raises `TooManyRedirects`.\n  - `test_HTTP_302_TOO_MANY_REDIRECTS_WITH_PARAMS` tests that a custom `max_redirects` (e.g., 5) set on a Session instance is respected.\n- These tests confirm both the default limit and per-Session override functionality.\n\n6. User Documentation:\n- In `docs/user/quickstart.rst`, the redirection behavior is documented, including the use of the `allow_redirects` parameter and the `Response.history` property.\n- The same captured unit states that exceeding the configured maximum raises `TooManyRedirects`.\n- The captured user documentation does not explicitly state the numeric default, so the pack does not support claiming that “30” is part of the documented public contract.\n\n## Recommended Changes:\n- Change the value of `DEFAULT_REDIRECT_LIMIT` in `src/requests/models.py` from 30 to 20.\n- This will automatically update the default `max_redirects` in Session instances.\n- No changes are needed in the Session class code since it uses the constant.\n- No changes are needed in the exception class or runtime enforcement logic.\n- If maintainers want the numeric default to become part of the documented contract, add a note to `docs/user/quickstart.rst`; its current qualitative statement remains correct without an edit.\n- No changes are needed in tests for the custom per-Session override behavior.\n- Update the test `test_HTTP_302_TOO_MANY_REDIRECTS` in `tests/test_requests.py` to expect 20 redirects instead of 30 for the default limit.\n\n## What Should Not Change:\n- The per-Session override mechanism for `max_redirects` should remain unchanged.\n- The exception type `TooManyRedirects` and its usage should remain unchanged.\n- The runtime enforcement logic in `resolve_redirects` should remain unchanged except for the new default limit.\n- Other redirect-related behaviors and status codes should remain unchanged.\n\n## Claim-Evidence Matrix:\n\n| Claim                                                      | Evidence Source (file, unit)               |\n|------------------------------------------------------------|--------------------------------------------|\n| DEFAULT_REDIRECT_LIMIT is defined as 30                    | src/requests/models.py                      |\n| Session.max_redirects initialized to DEFAULT_REDIRECT_LIMIT| src/requests/sessions.py                    |\n| Redirect limit enforced in resolve_redirects method        | src/requests/sessions.py                    |\n| TooManyRedirects exception raised on exceeding redirects   | src/requests/sessions.py, src/requests/exceptions.py |\n| Tests verify default limit of 30 and per-Session override  | tests/test_requests.py                       |\n| User docs state that exceeding the configured maximum raises TooManyRedirects | docs/user/quickstart.rst |\n\n## Limitations:\n- The user documentation does not explicitly state the numeric default redirect limit; the change should add or clarify this.\n- The source code excerpts were truncated in some files, but the key elements for this change were found.\n- No evidence was found of other places defining or overriding the default redirect limit outside the traced files.\n\n## Summary:\nChanging the `DEFAULT_REDIRECT_LIMIT` constant from 30 to 20 is the minimal and correct source change to update the library-wide default redirect ceiling. The per-Session override remains intact. Tests for the default limit should be updated accordingly, and user documentation should be clarified to reflect the new default. No other code or exception changes are necessary.\n\n---",
+    "content": "# Maintainer Impact Brief: Change Default Redirect Ceiling from 30 to 20 in Requests Library\n\n## Summary:\nThis proposed change reduces the library-wide default maximum number of HTTP redirects allowed from 30 to 20, while preserving the ability for users to override this limit on a per-Session basis. The change affects the constant DEFAULT_REDIRECT_LIMIT, the Session class initialization, runtime enforcement of redirect limits, the exception raised on exceeding the limit, relevant tests, and user documentation.\n\n## Evidence and Trace:\n\n1. Constant Definition:\n- In `src/requests/models.py`, the constant `DEFAULT_REDIRECT_LIMIT` is defined as 30.\n- This constant is imported and re-exposed in `src/requests/sessions.py` for backward compatibility.\n\n2. Session Initialization:\n- In `src/requests/sessions.py`, the `Session` class has an attribute `max_redirects` initialized to `DEFAULT_REDIRECT_LIMIT` (30).\n- This attribute can be overridden per Session instance by setting `s.max_redirects`.\n\n3. Runtime Enforcement:\n- In the `SessionRedirectMixin.resolve_redirects` method (`src/requests/sessions.py`), the number of redirects followed is tracked.\n- If the number of redirects exceeds `self.max_redirects`, a `TooManyRedirects` exception is raised.\n- The exception class `TooManyRedirects` is defined in `src/requests/exceptions.py`.\n\n4. Exception Type:\n- `TooManyRedirects` inherits from `RequestException`, which is a subclass of `IOError`.\n- This exception is raised with a message indicating the exceeded redirect limit.\n\n5. Tests:\n- In `tests/test_requests.py`, there are tests verifying the default redirect limit behavior:\n  - `test_HTTP_302_TOO_MANY_REDIRECTS` tests that a redirect chain exceeding 30 raises `TooManyRedirects`.\n  - `test_HTTP_302_TOO_MANY_REDIRECTS_WITH_PARAMS` tests that a custom `max_redirects` (e.g., 5) set on a Session instance is respected.\n- These tests confirm both the default limit and per-Session override functionality.\n\n6. User Documentation:\n- In `docs/user/quickstart.rst`, the redirection behavior is documented, including the use of the `allow_redirects` parameter and the `Response.history` property.\n- The same captured unit states that exceeding the configured maximum raises `TooManyRedirects`.\n- The captured user documentation does not explicitly state the numeric default, so the pack does not support claiming that “30” is part of the documented public contract.\n\n## Recommended Changes:\n- Change the value of `DEFAULT_REDIRECT_LIMIT` in `src/requests/models.py` from 30 to 20.\n- This will automatically update the default `max_redirects` in Session instances.\n- No changes are needed in the Session class code since it uses the constant.\n- No changes are needed in the exception class or runtime enforcement logic.\n- If maintainers want the numeric default to become part of the documented contract, add a note to `docs/user/quickstart.rst`; its current qualitative statement remains correct without an edit.\n- No changes are needed in tests for the custom per-Session override behavior.\n- Update the test `test_HTTP_302_TOO_MANY_REDIRECTS` in `tests/test_requests.py` to expect 20 redirects instead of 30 for the default limit.\n\n## What Should Not Change:\n- The per-Session override mechanism for `max_redirects` should remain unchanged.\n- The exception type `TooManyRedirects` and its usage should remain unchanged.\n- The runtime enforcement logic in `resolve_redirects` should remain unchanged except for the new default limit.\n- Other redirect-related behaviors and status codes should remain unchanged.\n\n## Claim-Evidence Matrix:\n\n| Claim                                                      | Evidence Source (file, unit)               |\n|------------------------------------------------------------|--------------------------------------------|\n| DEFAULT_REDIRECT_LIMIT is defined as 30                    | src/requests/models.py                      |\n| Session.max_redirects initialized to DEFAULT_REDIRECT_LIMIT| src/requests/sessions.py                    |\n| Redirect limit enforced in resolve_redirects method        | src/requests/sessions.py                    |\n| TooManyRedirects is raised when the count exceeds self.max_redirects | src/requests/sessions.py |\n| TooManyRedirects is defined as a RequestException subtype | src/requests/exceptions.py |\n| Tests verify default limit of 30 and per-Session override  | tests/test_requests.py                       |\n| User docs state that exceeding the configured maximum raises TooManyRedirects | docs/user/quickstart.rst |\n\n## Limitations:\n- The user documentation does not explicitly state the numeric default redirect limit; the change should add or clarify this.\n- The source code excerpts were truncated in some files, but the key elements for this change were found.\n- No evidence was found of other places defining or overriding the default redirect limit outside the traced files.\n\n## Summary:\nChanging the `DEFAULT_REDIRECT_LIMIT` constant from 30 to 20 is the minimal and correct source change to update the library-wide default redirect ceiling. The per-Session override remains intact. Tests for the default limit should be updated accordingly, and user documentation should be clarified to reflect the new default. No other code or exception changes are necessary.\n\n---",
     "limitations": [
       "The user documentation does not explicitly state the numeric default redirect limit; the change should add or clarify this.",
       "The source code excerpts were truncated in some files, but the key elements for this change were found.",
       "No evidence was found of other places defining or overriding the default redirect limit outside the traced files."
     ],
-    "review_status": "model draft + offline semantic review"
+    "review_status": "recorded model draft + deterministic offline semantic review",
+    "source_draft": "accepted-model-draft.md",
+    "source_draft_sha256": "0e30f19a040185689db9d6b941c093266206d634195f7e275f4067a2f6eb26d9",
+    "transform_id": "requests-redirect-semantic-review-v1"
   },
   "claims": [
     {
@@ -681,7 +715,7 @@
     },
     {
       "claim_id": "claim-05",
-      "text": "TooManyRedirects exception raised on exceeding redirects",
+      "text": "TooManyRedirects is defined as a RequestException subtype",
       "support": {
         "resource_id": "requests",
         "unit_id": "file__src--requests--exceptions-py",
@@ -742,22 +776,22 @@
     {
       "id": "claim_citations_were_read",
       "passed": true,
-      "detail": "7 final claims; every unit was read"
+      "detail": "7 final claims; every unit was read; quickstart was gate-directed rather than search-discovered"
     },
     {
       "id": "structural_evidence_gate",
       "passed": true,
-      "detail": "model draft covered all required code, test, exception, and docs roles"
+      "detail": "recorded model draft covered all required code, test, exception, and docs roles"
     },
     {
       "id": "semantic_claim_audit",
       "passed": true,
-      "detail": "unsupported advanced.rst claim detected and removed"
+      "detail": "accepted raw draft 0e30f19a040185689db9d6b941c093266206d634195f7e275f4067a2f6eb26d9 regenerated with 5 asserted exact-once replacements"
     },
     {
       "id": "reviewed_artifact_written",
       "passed": true,
-      "detail": "maintainer-impact-brief.md · sha256 5233109df4870dc552a5f07d4aef8bf0523c953c59b3ceab01a4c51d9ef22a27"
+      "detail": "maintainer-impact-brief.md · sha256 65c26fbf8bc7659154daf9ef42c5a940e29fb3de4361629e0013f556741afa0f"
     }
   ],
   "verification": {
@@ -766,11 +800,89 @@
     "total_count": 9,
     "raw_transcript": "raw-transcript.json",
     "raw_transcript_sha256": "181176c2222d8c2172d2f3655aa12708bf1e41c0f034376b5059cb7eba4d9f8d",
-    "replay_note": "The raw transcript preserves the original model draft. Steps 20–21 record the offline semantic rejection and corrected publishable artifact."
+    "replay_note": "Steps 1–19 replay the recorded model/MCP trace. Steps 20–21 are deterministic offline operations that re-extract the accepted model draft and regenerate the artifact.",
+    "raw_transcript_scope": "raw-transcript.json contains recorded model messages/tool calls and MCP JSON-RPC for steps 1–19 only; deterministic offline review/publish steps 20–21 are in run.json."
   },
   "draft_review": {
     "raw_model_draft_preserved": true,
+    "source_of_truth": "last accepted submit_deliverable artifact_markdown in raw-transcript.json",
+    "accepted_submit_call_id": "call_tJpbi2xabsNwDeCJd8MLBN83",
+    "source_draft": {
+      "name": "accepted-model-draft.md",
+      "sha256": "0e30f19a040185689db9d6b941c093266206d634195f7e275f4067a2f6eb26d9",
+      "bytes": 5334
+    },
+    "deterministic_transform": {
+      "transform_id": "requests-redirect-semantic-review-v1",
+      "input_sha256": "0e30f19a040185689db9d6b941c093266206d634195f7e275f4067a2f6eb26d9",
+      "output_sha256": "65c26fbf8bc7659154daf9ef42c5a940e29fb3de4361629e0013f556741afa0f",
+      "operations": [
+        {
+          "operation_id": "replace-unsupported-docs-section",
+          "match_count": 1,
+          "before_sha256": "fd22e06f84b9e7158dd1db0f0e60fef75e0f6390200d34971c44c8f141021d88",
+          "after_sha256": "dc66c432ca60d3b34b70ba3ae9bc8c417e9672cae20f48a52c7cba9d52003616"
+        },
+        {
+          "operation_id": "replace-unsupported-docs-recommendation",
+          "match_count": 1,
+          "before_sha256": "79bfea87859331139f8396ba5d755a72ca411259d190ec60b784204e71c465c6",
+          "after_sha256": "1320633c118fc97c8855460832f7a37a22610b0690798c4a21c4609dfbb59d61"
+        },
+        {
+          "operation_id": "split-raise-and-exception-type-matrix-row",
+          "match_count": 1,
+          "before_sha256": "33390078c201986db103b58093e41a42d48ec714b980ac4b2697f93123c59251",
+          "after_sha256": "bfa7fd36606c95272b1eae00ae252885685097e040f625dd53dd2634a53d3260"
+        },
+        {
+          "operation_id": "remove-unsupported-advanced-docs-matrix-row",
+          "match_count": 1,
+          "before_sha256": "a77ce02f13203467b1fe468094938b68d1028d4c7df49465a75bf9a2ffc35b0f",
+          "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "operation_id": "tighten-quickstart-matrix-row",
+          "match_count": 1,
+          "before_sha256": "8b4367000f99c4d5b6c4642e8c3ec0aa55db1c9250c94e315cd1c5cc18a43cab",
+          "after_sha256": "3df661a8069dfa7f18ec13b3badd9acc205ad2fb620b4dbdca94518af78b6944"
+        }
+      ],
+      "terminal_newline": "normalized to exactly one LF"
+    },
     "rejected_claim": "docs/user/advanced.rst documents max_redirects",
     "final_artifact_is_reviewed": true
+  },
+  "timeline": {
+    "visible_steps": 21,
+    "segments": [
+      {
+        "id": "recorded-model-mcp",
+        "first_step": 1,
+        "last_step": 19,
+        "step_count": 19,
+        "source": "raw-transcript.json"
+      },
+      {
+        "id": "deterministic-offline-review",
+        "first_step": 20,
+        "last_step": 21,
+        "step_count": 2,
+        "source": "review_recorded_llm_run.py"
+      }
+    ],
+    "raw_transcript_scope": "raw-transcript.json contains recorded model messages/tool calls and MCP JSON-RPC for steps 1–19 only; deterministic offline review/publish steps 20–21 are in run.json."
+  },
+  "evidence_lineage": {
+    "quickstart": {
+      "unit_id": "file__docs--user--quickstart-rst",
+      "path": "evidence-gate-directed-read",
+      "search_discovered_before_first_read": false,
+      "gate_submit_call_id": "call_VZgYKmlCPCJC36Nfls9lypm3",
+      "raw_mcp_first_read_event": 14,
+      "note": "The first submission's evidence gate named this required docs unit. The model then read it directly; none of the preceding ranked searches returned it.",
+      "gate_rejection_step": 8,
+      "first_read_step": 13
+    }
   }
 }

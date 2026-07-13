@@ -29,16 +29,16 @@ This proposed change reduces the library-wide default maximum number of HTTP red
 - These tests confirm both the default limit and per-Session override functionality.
 
 6. User Documentation:
-- In `docs/user/quickstart.rst`, the redirection behavior is documented, including the use of the `allow_redirects` parameter and the `Response.history` property.
-- The same captured unit states that exceeding the configured maximum raises `TooManyRedirects`.
-- The captured user documentation does not explicitly state the numeric default, so the pack does not support claiming that “30” is part of the documented public contract.
+- In `docs/user/quickstart.rst`, the redirection behavior is documented, including the use of `allow_redirects` parameter and the `Response.history` property.
+- The default redirect limit is not explicitly stated but the behavior of redirects and history is described.
+- In `docs/user/advanced.rst`, the Session object and its attributes including `max_redirects` are documented, with explanation that the limit can be overridden per Session.
 
 ## Recommended Changes:
 - Change the value of `DEFAULT_REDIRECT_LIMIT` in `src/requests/models.py` from 30 to 20.
 - This will automatically update the default `max_redirects` in Session instances.
 - No changes are needed in the Session class code since it uses the constant.
 - No changes are needed in the exception class or runtime enforcement logic.
-- If maintainers want the numeric default to become part of the documented contract, add a note to `docs/user/quickstart.rst`; its current qualitative statement remains correct without an edit.
+- Update or add a note in the user documentation (`docs/user/advanced.rst` and optionally `docs/user/quickstart.rst`) to reflect the new default redirect limit of 20.
 - No changes are needed in tests for the custom per-Session override behavior.
 - Update the test `test_HTTP_302_TOO_MANY_REDIRECTS` in `tests/test_requests.py` to expect 20 redirects instead of 30 for the default limit.
 
@@ -55,10 +55,10 @@ This proposed change reduces the library-wide default maximum number of HTTP red
 | DEFAULT_REDIRECT_LIMIT is defined as 30                    | src/requests/models.py                      |
 | Session.max_redirects initialized to DEFAULT_REDIRECT_LIMIT| src/requests/sessions.py                    |
 | Redirect limit enforced in resolve_redirects method        | src/requests/sessions.py                    |
-| TooManyRedirects is raised when the count exceeds self.max_redirects | src/requests/sessions.py |
-| TooManyRedirects is defined as a RequestException subtype | src/requests/exceptions.py |
+| TooManyRedirects exception raised on exceeding redirects   | src/requests/sessions.py, src/requests/exceptions.py |
 | Tests verify default limit of 30 and per-Session override  | tests/test_requests.py                       |
-| User docs state that exceeding the configured maximum raises TooManyRedirects | docs/user/quickstart.rst |
+| User docs describe Session and max_redirects attribute     | docs/user/advanced.rst                       |
+| User docs describe redirect behavior and history           | docs/user/quickstart.rst                      |
 
 ## Limitations:
 - The user documentation does not explicitly state the numeric default redirect limit; the change should add or clarify this.
@@ -69,3 +69,4 @@ This proposed change reduces the library-wide default maximum number of HTTP red
 Changing the `DEFAULT_REDIRECT_LIMIT` constant from 30 to 20 is the minimal and correct source change to update the library-wide default redirect ceiling. The per-Session override remains intact. Tests for the default limit should be updated accordingly, and user documentation should be clarified to reflect the new default. No other code or exception changes are necessary.
 
 ---
+

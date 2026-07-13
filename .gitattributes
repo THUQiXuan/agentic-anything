@@ -8,6 +8,10 @@ demos/sources/*.zip -text -diff
 # but do not flag source-owned trailing spaces as repository formatting errors.
 demos/packs/*/pages/*.md whitespace=-trailing-space
 
+# This file is the byte-exact Markdown argument from the recorded model call;
+# its final blank line belongs to that frozen transcript.
+demos/runs/requests-redirect-impact-llm/accepted-model-draft.md whitespace=-blank-at-eof
+
 # These two Requests documentation pages intentionally contain examples of
 # merge-conflict markers; they are source evidence, not unresolved repo state.
 demos/packs/requests/pages/file__docs--community--support-rst.md -diff

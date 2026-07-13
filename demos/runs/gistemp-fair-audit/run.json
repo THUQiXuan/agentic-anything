@@ -107,93 +107,366 @@
     "fair_audit": [
       {
         "definition": "(meta)data are assigned a globally unique and persistent identifier",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "F1",
         "rationale": "A source URL and local unit IDs exist, but global persistence is not established.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "A source URL and local unit IDs exist, but global persistence is not established."
+          }
+        ],
         "status": "not_evidenced"
       },
       {
         "definition": "data are described with rich metadata (defined by R1 below)",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "F2",
         "rationale": "The rows preserve a schema and values; descriptive metadata remains sparse.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "The rows preserve a schema and values; descriptive metadata remains sparse."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "metadata clearly and explicitly include the identifier of the data it describes",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "F3",
         "rationale": "Read units carry source locators, but no explicit persistent dataset identifier is shown.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "Read units carry source locators, but no explicit persistent dataset identifier is shown."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "(meta)data are registered or indexed in a searchable resource",
+        "evidence_refs": [
+          "RUN-S3",
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "F4",
-        "rationale": "The MCP pack is searchable locally; registration in an external searchable registry is not evidenced.",
+        "rationale": "A recorded search_resource step searched the local MCP pack; registration in an external searchable registry is not evidenced.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "RUN-S3"
+            ],
+            "text": "A recorded search_resource step searched the local MCP pack"
+          },
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "registration in an external searchable registry is not evidenced."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "(meta)data are retrievable by their identifier using a standardized communications protocol",
+        "evidence_refs": [
+          "RUN-R4",
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "A1",
-        "rationale": "Units are retrievable through MCP, but not by an evidenced globally persistent identifier.",
+        "rationale": "A recorded read_unit step retrieved a captured unit through MCP; no globally persistent identifier is evidenced.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "RUN-R4"
+            ],
+            "text": "A recorded read_unit step retrieved a captured unit through MCP"
+          },
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "no globally persistent identifier is evidenced."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "the protocol is open, free, and universally implementable",
+        "evidence_refs": [
+          "RUN-C1",
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "A1.1",
-        "rationale": "The recorded stdio MCP exchange works without network access; universality is not established by this pack.",
+        "rationale": "A recorded local stdio MCP exchange works with network_access=false; the captured pack units do not establish that the protocol is universally implementable.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "RUN-C1"
+            ],
+            "text": "A recorded local stdio MCP exchange works with network_access=false"
+          },
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "the captured pack units do not establish that the protocol is universally implementable."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "the protocol allows for an authentication and authorization procedure, where necessary",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "A1.2",
         "rationale": "No authentication or authorization procedure appears in the captured dataset units.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "No authentication or authorization procedure appears in the captured dataset units."
+          }
+        ],
         "status": "not_evidenced"
       },
       {
         "definition": "metadata are accessible, even when the data are no longer available",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "A2",
         "rationale": "The snapshot cannot prove metadata survival after source data disappearance.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "The snapshot cannot prove metadata survival after source data disappearance."
+          }
+        ],
         "status": "not_evidenced"
       },
       {
         "definition": "(meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation.",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "I1",
         "rationale": "A machine-readable table schema is preserved, but no formal knowledge-representation language is declared.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "A machine-readable table schema is preserved, but no formal knowledge-representation language is declared."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "(meta)data use vocabularies that follow FAIR principles",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "I2",
         "rationale": "No FAIR vocabulary is declared in the captured dataset units.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "No FAIR vocabulary is declared in the captured dataset units."
+          }
+        ],
         "status": "not_evidenced"
       },
       {
         "definition": "(meta)data include qualified references to other (meta)data",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "I3",
         "rationale": "No qualified references to other metadata objects are captured.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "No qualified references to other metadata objects are captured."
+          }
+        ],
         "status": "not_evidenced"
       },
       {
         "definition": "meta(data) are richly described with a plurality of accurate and relevant attributes",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "R1",
         "rationale": "Column names and values are present, while richer contextual attributes are limited.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "Column names and values are present, while richer contextual attributes are limited."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "(meta)data are released with a clear and accessible data usage license",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "R1.1",
         "rationale": "No data-usage license appears in the complete three-unit GISTEMP pack.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "No data-usage license appears in the complete three-unit GISTEMP pack."
+          }
+        ],
         "status": "not_evidenced"
       },
       {
         "definition": "(meta)data are associated with detailed provenance",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "R1.2",
         "rationale": "Source locators and content SHA-256 values provide capture-level provenance.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "Source locators and content SHA-256 values provide capture-level provenance."
+          }
+        ],
         "status": "partial"
       },
       {
         "definition": "(meta)data meet domain-relevant community standards",
+        "evidence_refs": [
+          "G1",
+          "G2",
+          "G3"
+        ],
         "principle": "R1.3",
         "rationale": "No domain-community metadata standard is declared in the captured units.",
+        "rationale_segments": [
+          {
+            "evidence_refs": [
+              "G1",
+              "G2",
+              "G3"
+            ],
+            "text": "No domain-community metadata standard is declared in the captured units."
+          }
+        ],
         "status": "not_evidenced"
+      }
+    ],
+    "run_evidence": [
+      {
+        "claim": "The local MCP search returned the expected GISTEMP overview unit.",
+        "evidence_id": "RUN-S3",
+        "kind": "recorded-run-step",
+        "step": 3,
+        "tool": "search_resource"
+      },
+      {
+        "claim": "The MCP read returned the captured overview unit and its content hash.",
+        "evidence_id": "RUN-R4",
+        "kind": "recorded-run-step",
+        "step": 4,
+        "tool": "read_unit"
+      },
+      {
+        "claim": "The local stdio MCP session initialized successfully; run metadata records data_access='real stdio MCP subprocess only' and network_access=false.",
+        "evidence_id": "RUN-C1",
+        "kind": "recorded-run-step-and-metadata",
+        "metadata": {
+          "network_access": false,
+          "transport": "stdio"
+        },
+        "step": 1,
+        "tool": "initialize + tools/list"
       }
     ],
     "status_counts": {

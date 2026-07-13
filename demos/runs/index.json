@@ -6,9 +6,13 @@
   "runs": [
     {
       "files": {
+        "accepted-model-draft.md": {
+          "path": "requests-redirect-impact-llm/accepted-model-draft.md",
+          "sha256": "0e30f19a040185689db9d6b941c093266206d634195f7e275f4067a2f6eb26d9"
+        },
         "maintainer-impact-brief.md": {
           "path": "requests-redirect-impact-llm/maintainer-impact-brief.md",
-          "sha256": "5233109df4870dc552a5f07d4aef8bf0523c953c59b3ceab01a4c51d9ef22a27"
+          "sha256": "65c26fbf8bc7659154daf9ef42c5a940e29fb3de4361629e0013f556741afa0f"
         },
         "raw-transcript.json": {
           "path": "requests-redirect-impact-llm/raw-transcript.json",
@@ -16,7 +20,7 @@
         },
         "run.json": {
           "path": "requests-redirect-impact-llm/run.json",
-          "sha256": "8d0d11d8b017d89bd1f8204862a2338fb1a95290c3d5c7e6a0460af94f1eb73b"
+          "sha256": "60697d9c57901edf8a02eeceeeb44a7ec23814a093d689249d33945f973ceccd"
         }
       },
       "mode": "real-llm-tool-loop+mcp-stdio",
@@ -76,7 +80,7 @@
       "files": {
         "artifact.md": {
           "path": "gistemp-fair-audit/artifact.md",
-          "sha256": "a52319de85041fa70c5dd903dbb54b09fa7c6fcbe834b9bfe603e82708a8d109"
+          "sha256": "31c7d54118e05ac02c911a8057c6eb9989c6c5197afc31107663a7b4c8e3dae6"
         },
         "raw-events.jsonl": {
           "path": "gistemp-fair-audit/raw-events.jsonl",
@@ -84,11 +88,11 @@
         },
         "run.json": {
           "path": "gistemp-fair-audit/run.json",
-          "sha256": "d32514ad26fdace5ede9582333703165c77c1d4fa0cdf6cf4f889c9e68e44978"
+          "sha256": "ccc2113f26371b1bed6fe31c4076663401c35a0d05fb7b2e2b88c5449a9cfa32"
         },
         "verification.json": {
           "path": "gistemp-fair-audit/verification.json",
-          "sha256": "57b2fc752013913083d382a9607ed3dcb1b65abd0492bd48d1871c7c4eb89164"
+          "sha256": "a968ceadcb4c126ae8454a058aa9be604605242cdf8eeab012b898064d8e0744"
         }
       },
       "mode": "deterministic-evidence-agent",

@@ -447,6 +447,15 @@ def citation_marker(citation: dict[str, Any]) -> str:
     )
 
 
+def run_evidence_marker(evidence: dict[str, Any]) -> str:
+    """Render evidence about this recorded run, not about a source-pack unit."""
+    return (
+        f"[{evidence['evidence_id']}] run step {evidence['step']} "
+        f"`{evidence['tool']}` — {evidence['claim']} "
+        "Source: `run.json` plus the corresponding `raw-events.jsonl` exchange."
+    )
+
+
 def build_requests_run() -> tuple[dict[str, Any], str, dict[str, Any], list[dict[str, Any]]]:
     task = (
         "Assess the code, tests, exception, and documentation impact of changing "
@@ -818,14 +827,21 @@ def derive_gistemp(rows: dict[int, dict[str, float | None]]) -> dict[str, Any]:
     }
 
 
-def build_fair_audit(definitions: dict[str, str]) -> list[dict[str, str]]:
+def build_fair_audit(
+    definitions: dict[str, str],
+    runtime_refs: dict[str, str],
+) -> list[dict[str, Any]]:
     assessments = {
         "F1": ("not_evidenced", "A source URL and local unit IDs exist, but global persistence is not established."),
         "F2": ("partial", "The rows preserve a schema and values; descriptive metadata remains sparse."),
         "F3": ("partial", "Read units carry source locators, but no explicit persistent dataset identifier is shown."),
-        "F4": ("partial", "The MCP pack is searchable locally; registration in an external searchable registry is not evidenced."),
-        "A1": ("partial", "Units are retrievable through MCP, but not by an evidenced globally persistent identifier."),
-        "A1.1": ("partial", "The recorded stdio MCP exchange works without network access; universality is not established by this pack."),
+        "F4": ("partial", "A recorded search_resource step searched the local MCP pack; registration in an external searchable registry is not evidenced."),
+        "A1": ("partial", "A recorded read_unit step retrieved a captured unit through MCP; no globally persistent identifier is evidenced."),
+        "A1.1": (
+            "partial",
+            "A recorded local stdio MCP exchange works with network_access=false; "
+            "the captured pack units do not establish that the protocol is universally implementable.",
+        ),
         "A1.2": ("not_evidenced", "No authentication or authorization procedure appears in the captured dataset units."),
         "A2": ("not_evidenced", "The snapshot cannot prove metadata survival after source data disappearance."),
         "I1": ("partial", "A machine-readable table schema is preserved, but no formal knowledge-representation language is declared."),
@@ -836,15 +852,32 @@ def build_fair_audit(definitions: dict[str, str]) -> list[dict[str, str]]:
         "R1.2": ("partial", "Source locators and content SHA-256 values provide capture-level provenance."),
         "R1.3": ("not_evidenced", "No domain-community metadata standard is declared in the captured units."),
     }
-    return [
-        {
+    audit: list[dict[str, Any]] = []
+    for principle in FAIR_IDS:
+        rationale = assessments[principle][1]
+        if principle in runtime_refs:
+            runtime_text, pack_text = rationale.split("; ", 1)
+            rationale_segments = [
+                {"text": runtime_text, "evidence_refs": [runtime_refs[principle]]},
+                {"text": pack_text, "evidence_refs": ["G1", "G2", "G3"]},
+            ]
+        else:
+            rationale_segments = [
+                {"text": rationale, "evidence_refs": ["G1", "G2", "G3"]},
+            ]
+        audit.append({
             "principle": principle,
             "definition": definitions[principle],
             "status": assessments[principle][0],
-            "rationale": assessments[principle][1],
-        }
-        for principle in FAIR_IDS
-    ]
+            "rationale": rationale,
+            "rationale_segments": rationale_segments,
+            "evidence_refs": [
+                reference
+                for segment in rationale_segments
+                for reference in segment["evidence_refs"]
+            ],
+        })
+    return audit
 
 
 def build_gistemp_fair_run() -> tuple[dict[str, Any], str, dict[str, Any], list[dict[str, Any]]]:
@@ -964,7 +997,23 @@ def build_gistemp_fair_run() -> tuple[dict[str, Any], str, dict[str, Any], list[
             raise RuntimeError(
                 f"FAIR definition set mismatch: expected {FAIR_IDS}, got {sorted(definitions)}"
             )
-        audit = build_fair_audit(definitions)
+        local_search_step = next(
+            step for step in run.steps
+            if step["tool"] == "search_resource"
+            and step["tool_input"].get("resource_id") == "gistemp"
+        )
+        local_read_step = next(
+            step for step in run.steps
+            if step["tool"] == "read_unit"
+            and step["tool_input"].get("unit_id") == overview
+        )
+        connect_step = run.steps[0]
+        runtime_refs = {
+            "F4": f"RUN-S{local_search_step['step']}",
+            "A1": f"RUN-R{local_read_step['step']}",
+            "A1.1": f"RUN-C{connect_step['step']}",
+        }
+        audit = build_fair_audit(definitions, runtime_refs)
         all_keys = gistemp_keys + [("fair-paper", fair_unit)]
         status_counts = {
             status: sum(item["status"] == status for item in audit)
@@ -999,13 +1048,48 @@ def build_gistemp_fair_run() -> tuple[dict[str, Any], str, dict[str, Any], list[
             run.citation("G3", "The recent row unit supplies 1979–2026 values and missing markers.", "gistemp", recent_rows),
             run.citation("F1", "The paper states all 15 FAIR sub-principles used by the audit.", "fair-paper", fair_unit),
         ]
+        run_evidence = [
+            {
+                "evidence_id": runtime_refs["F4"],
+                "kind": "recorded-run-step",
+                "step": local_search_step["step"],
+                "tool": local_search_step["tool"],
+                "claim": "The local MCP search returned the expected GISTEMP overview unit.",
+            },
+            {
+                "evidence_id": runtime_refs["A1"],
+                "kind": "recorded-run-step",
+                "step": local_read_step["step"],
+                "tool": local_read_step["tool"],
+                "claim": "The MCP read returned the captured overview unit and its content hash.",
+            },
+            {
+                "evidence_id": runtime_refs["A1.1"],
+                "kind": "recorded-run-step-and-metadata",
+                "step": connect_step["step"],
+                "tool": connect_step["tool"],
+                "claim": (
+                    "The local stdio MCP session initialized successfully; run metadata records "
+                    "data_access='real stdio MCP subprocess only' and network_access=false."
+                ),
+                "metadata": {
+                    "transport": "stdio",
+                    "network_access": False,
+                },
+            },
+        ]
 
         period_rows = "\n".join(
             f"| {period} | {value:.3f} °C |"
             for period, value in derived["decadal_means"].items()
         )
         audit_rows = "\n".join(
-            f"| {item['principle']} | {item['definition']} | `{item['status']}` | {item['rationale']} [F1][G1][G2][G3] |"
+            f"| {item['principle']} | {item['definition']} | `{item['status']}` | "
+            + "; ".join(
+                f"{segment['text']} {''.join(f'[{ref}]' for ref in segment['evidence_refs'])}"
+                for segment in item["rationale_segments"]
+            )
+            + " |"
             for item in audit
         )
         artifact = f"""# NASA GISTEMP reproducible brief and FAIR evidence audit
@@ -1040,14 +1124,20 @@ The definitions below come from the captured FAIR Guiding Principles paper.
 [F1] `partial` means some pack evidence exists but the full principle is not
 established; `not_evidenced` means this closed capture does not support the
 claim. Absence of evidence here is not evidence that NASA lacks the property.
+Markers beginning with `RUN-` cite this run's step/transport record, not facts
+contained in the FAIR paper or GISTEMP pack units.
 
-| Principle | Paper definition | Status | Pack-scoped rationale |
+| Principle | Paper definition | Status | Evidence-scoped rationale |
 |---|---|---|---|
 {audit_rows}
 
 ## Read-before-cite ledger
 
-""" + "\n".join(f"- {citation_marker(item)}" for item in citations) + "\n"
+""" + "\n".join(f"- {citation_marker(item)}" for item in citations) + """
+
+## Run-evidence ledger
+
+""" + "\n".join(f"- {run_evidence_marker(item)}" for item in run_evidence) + "\n"
 
         assertions: list[dict[str, Any]] = []
         resources = {item["resource_id"]: item for item in info.get("resources", [])}
@@ -1136,10 +1226,20 @@ claim. Absence of evidence here is not evidence that NASA lacks the property.
             f"citations={len(citations)}",
         )
         artifact_markers = set(re.findall(r"\[((?:G|F)\d+)\]", artifact))
+        artifact_run_markers = set(re.findall(r"\[(RUN-[A-Z]\d+)\]", artifact))
         assertion(
             assertions, "artifact_citation_set_complete",
-            artifact_markers == {item["citation_id"] for item in citations},
-            f"markers={sorted(artifact_markers)}",
+            artifact_markers == {item["citation_id"] for item in citations}
+            and artifact_run_markers == {item["evidence_id"] for item in run_evidence}
+            and all(
+                next(step for step in run.steps if step["step"] == item["step"])["tool"]
+                == item["tool"]
+                for item in run_evidence
+            ),
+            (
+                f"pack_markers={sorted(artifact_markers)}; "
+                f"run_markers={sorted(artifact_run_markers)}"
+            ),
         )
         assertion(
             assertions, "citation_hashes_are_sha256",
@@ -1166,7 +1266,12 @@ claim. Absence of evidence here is not evidence that NASA lacks the property.
             "The preamble-aware importer exposes the real table shape.",
         )
 
-        result = {"derived": derived, "fair_audit": audit, "status_counts": status_counts}
+        result = {
+            "derived": derived,
+            "fair_audit": audit,
+            "run_evidence": run_evidence,
+            "status_counts": status_counts,
+        }
         verification = verification_payload(assertions, artifact)
         payload = run_payload(run, citations, result, verification)
         raw_events = list(client.raw_events)
@@ -1282,10 +1387,17 @@ def recorded_llm_index_entry() -> dict[str, Any] | None:
     artifact_name = payload["artifact"]["name"]
     artifact_path = destination / artifact_name
     raw_path = destination / payload["verification"]["raw_transcript"]
+    draft_meta = payload.get("draft_review", {}).get("source_draft") or {}
+    draft_name = draft_meta.get("name")
+    if not draft_name:
+        raise RuntimeError("recorded LLM run has no indexed accepted model draft")
+    draft_path = destination / draft_name
     if sha256_file(artifact_path) != payload["artifact"]["sha256"]:
         raise RuntimeError("recorded LLM artifact hash mismatch; rerun review_recorded_llm_run.py")
     if sha256_file(raw_path) != payload["verification"]["raw_transcript_sha256"]:
         raise RuntimeError("recorded LLM transcript hash mismatch; rerun review_recorded_llm_run.py")
+    if not draft_path.is_file() or sha256_file(draft_path) != draft_meta.get("sha256"):
+        raise RuntimeError("recorded LLM accepted draft hash mismatch; rerun review_recorded_llm_run.py")
     if not payload["verification"]["passed"] or not all(item["passed"] for item in payload["checks"]):
         raise RuntimeError("recorded LLM run has a failed publishability check")
     publishable = run_path.read_text(encoding="utf-8") + raw_path.read_text(encoding="utf-8")
@@ -1310,6 +1422,7 @@ def recorded_llm_index_entry() -> dict[str, Any] | None:
         "files": {
             "run.json": {"path": f"{payload['run_id']}/run.json", "sha256": sha256_file(run_path)},
             artifact_name: {"path": f"{payload['run_id']}/{artifact_name}", "sha256": sha256_file(artifact_path)},
+            draft_name: {"path": f"{payload['run_id']}/{draft_name}", "sha256": sha256_file(draft_path)},
             raw_path.name: {"path": f"{payload['run_id']}/{raw_path.name}", "sha256": sha256_file(raw_path)},
         },
     }
