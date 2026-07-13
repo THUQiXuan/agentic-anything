@@ -1,55 +1,84 @@
-# Agentic Anything authentic-source showcase
+# Agentic Anything long-horizon demo gallery
 
-[Open the hosted walkthrough](https://thuqixuan.github.io/agentic-anything/) ·
-[inspect the raw results](results/showcase.json) ·
+[Open the hosted gallery](https://thuqixuan.github.io/agentic-anything/) ·
+[inspect the run index](runs/index.json) ·
 [audit the source manifest](sources/real-sources.json) ·
 [read the main project documentation](../README.md)
 
-This directory is a checked-in, reproducible walkthrough built from real
-external resources. No source passage, code file, table row, or book chapter
-was invented for the demo.
+The gallery answers a harder question than “can the pack retrieve one fact?”:
+can an agent use a pack across a long task, produce a useful file, and leave
+enough evidence for another process to check the work?
 
-## What the walkthrough proves
+## Three recorded runs
 
-The flagship case traces the Requests redirect limit through three pieces of
-the real `v2.34.2` repository: the constant definition, `Session` default, and
-runtime guard. The transformation lab then applies the same contract to five
-different native formats:
+| Run | Controller | Horizon | Output | Checks |
+|---|---|---:|---|---:|
+| Requests redirect impact | Real `openai/gpt-4.1-mini` tool loop over stdio MCP | 21 visible steps | reviewed maintainer brief + claim ledger | 9/9 |
+| NASA GISTEMP + FAIR audit | Deterministic evidence agent over two packs | 16 steps | computed climate brief + 15-principle audit | 23/23 |
+| Requests redirect impact | Deterministic evidence agent | 14 steps | reproducible change-impact report | 20/20 |
 
-| Resource | Publisher and pinned version | Checked question |
-|---|---|---|
-| Code repository | PSF Requests `v2.34.2` | redirect ceiling and enforcement |
-| Book | Project Gutenberg eBook #11 | whether the Hatter answers his riddle |
-| Website | Python 3.13.14 documentation | recommended token randomness |
-| Dataset | NASA GISTEMP v4 snapshot | the 2024 annual anomaly |
-| Paper | FAIR Principles, PMCID PMC4792175 | the meaning of machine-actionable |
+The real model run starts with no repository context. It makes 19 tool calls,
+including five searches and eleven reads. Its first submission is rejected for
+missing search/documentation coverage. A later offline semantic review catches
+a second, more subtle problem: the model attributed `max_redirects` to a docs
+unit that never says it. The raw transcript keeps the original draft; the final
+artifact removes that unsupported claim.
 
-Each source is retained as an unmodified local snapshot. The
-[`real-sources.json`](sources/real-sources.json) manifest records its publisher
-URL, format, version, license, snapshot filename, and SHA-256. The build fails
-if any byte no longer matches.
+The deterministic runs are not presented as LLM reasoning. They are explicit,
+task-specific agent policies that drive fresh `agentic-anything mcp` subprocesses,
+parse returned evidence, compute results, and reject citations to units that were
+not searched and read first. They can be rebuilt byte-for-byte without a key.
 
-Every resource is committed in three layers:
+## What is checked in
 
-1. `sources/` — publisher snapshots and their provenance manifest;
-2. `packs/` — actual agent-native packs, generated CLIs, interface manifests,
-   skills, and AGENT guides;
-3. `results/` — exact evidence, CLI, MCP, and quality transcripts consumed by
-   the HTML walkthrough.
+```text
+demos/
+├── sources/                       # five byte-for-byte publisher snapshots
+├── packs/                         # generated agent-native representations
+├── runs/
+│   ├── requests-redirect-impact-llm/
+│   │   ├── run.json               # public step timeline and checked claims
+│   │   ├── raw-transcript.json    # model messages + full MCP JSON-RPC
+│   │   └── maintainer-impact-brief.md
+│   ├── gistemp-fair-audit/        # run, artifact, raw events, verification
+│   └── requests-redirect-impact/  # run, artifact, raw events, verification
+├── build_demos.py                 # rebuild authentic packs (zero model calls)
+├── build_agent_runs.py            # replay deterministic agents
+├── record_llm_run.py              # optional paid one-time recorder
+├── review_recorded_llm_run.py     # offline semantic review
+└── verify_demos.py                # publishability and lineage checks
+```
+
+Every upstream resource still has a publisher URL, pinned version, license, and
+snapshot SHA-256 in [`real-sources.json`](sources/real-sources.json). The pack
+build verifies those bytes before doing any transformation.
 
 ## Rebuild and verify
 
 From the repository root:
 
 ```bash
-python demos/build_demos.py
-python demos/verify_demos.py
+PYTHONPATH=src python demos/build_demos.py
+PYTHONPATH=src python demos/review_recorded_llm_run.py
+PYTHONPATH=src python demos/build_agent_runs.py
+PYTHONPATH=src python demos/verify_demos.py
 ```
 
-Missing snapshots are downloaded from their declared publisher URL, then
-verified. Existing snapshots are never silently refreshed. The builder removes
-`OPENROUTER_API_KEY` and `AGENTIC_API_KEY` from child processes and normalizes
-capture timestamps, so no credential, paid request, or model output is needed.
+This rebuilds five packs, replays both deterministic runs through real stdio MCP
+processes, verifies the already-recorded model run, and checks 52 long-run
+assertions. It makes no paid calls.
+
+To record a fresh model trajectory instead:
+
+```bash
+export OPENROUTER_API_KEY="<your-key>"
+PYTHONPATH=src python demos/record_llm_run.py --model openai/gpt-4.1-mini
+PYTHONPATH=src python demos/review_recorded_llm_run.py
+PYTHONPATH=src python demos/build_agent_runs.py
+```
+
+The key is read only from the process environment. It is never written to a
+pack, transcript, artifact, or page.
 
 To view the page locally:
 
@@ -60,8 +89,10 @@ python -m http.server 8000 --directory demos
 
 ## Scope
 
-The demo validates deterministic capture, focused evidence retrieval, generated
-resource CLIs, stable interface manifests, and read-only MCP access over pinned
-real resources. The short evidence-backed answers are editorially curated and
-verified against the captured text; this is not a benchmark of generative answer
-quality or human productivity.
+- “Replay” animates committed events; GitHub Pages does not run an agent server.
+- The recorded model output is not accepted merely because it sounds plausible.
+- Deterministic agents demonstrate long tool use and computation, not hidden
+  model reasoning.
+- MCP access is read-only, and no upstream resource is changed.
+- Code units may be truncated at the pack capture limit; the complete release
+  archive is authenticated separately by its snapshot hash.

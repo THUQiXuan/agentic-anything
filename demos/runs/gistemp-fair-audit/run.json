@@ -1,0 +1,636 @@
+{
+  "citations": [
+    {
+      "citation_id": "G1",
+      "cited_after_read": true,
+      "claim": "The pack overview identifies the Land-Ocean Global Means table.",
+      "content_sha256": "f54a1006b28624bf339f660c804e5b673e275014a16237b3f0e37bd825f28db8",
+      "locator": "overview",
+      "read_step": 4,
+      "resource_id": "gistemp",
+      "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+    },
+    {
+      "citation_id": "G2",
+      "cited_after_read": true,
+      "claim": "The historical row unit supplies the schema and years through 1978.",
+      "content_sha256": "3db6b57975a728bb2d3f891166d1bb3adf26da9b8725e874bd72c226abf3261a",
+      "locator": "rows 1-100",
+      "read_step": 6,
+      "resource_id": "gistemp",
+      "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+    },
+    {
+      "citation_id": "G3",
+      "cited_after_read": true,
+      "claim": "The recent row unit supplies 1979–2026 values and missing markers.",
+      "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c",
+      "locator": "rows 101-147",
+      "read_step": 8,
+      "resource_id": "gistemp",
+      "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+    },
+    {
+      "citation_id": "F1",
+      "cited_after_read": true,
+      "claim": "The paper states all 15 FAIR sub-principles used by the audit.",
+      "content_sha256": "049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f",
+      "locator": "fair-guiding-principles-pmc4792175.html",
+      "read_step": 11,
+      "resource_id": "fair-paper",
+      "unit_id": "fair-guiding-principles-pmc4792175"
+    }
+  ],
+  "data_access": "real stdio MCP subprocess only",
+  "mcp": {
+    "command": [
+      "python",
+      "-m",
+      "agentic_anything",
+      "mcp",
+      "demos/packs/gistemp",
+      "demos/packs/fair-paper"
+    ],
+    "protocol_version": "2025-11-25",
+    "server": {
+      "name": "agentic-anything",
+      "title": "Agentic Anything Resource Agents",
+      "version": "0.4.1"
+    },
+    "tools": [
+      "resource_info",
+      "search_resource",
+      "read_unit"
+    ],
+    "transport": "stdio"
+  },
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "network_access": false,
+  "outputs": {
+    "artifact": "artifact.md",
+    "raw_events": "raw-events.jsonl",
+    "verification": "verification.json"
+  },
+  "packs": [
+    "gistemp",
+    "fair-paper"
+  ],
+  "planner": "fixed transparent state machine",
+  "raw_event_normalization": "Local checkout prefix replaced with '.'; all other JSON-RPC data preserved.",
+  "result": {
+    "derived": {
+      "annual_column": "J-D",
+      "annual_values": {
+        "2023": 1.17,
+        "2024": 1.28,
+        "2025": 1.19,
+        "2026": null
+      },
+      "complete_annual_years": 146,
+      "decadal_means": {
+        "1980-1989": 0.245,
+        "1990-1999": 0.384,
+        "2000-2009": 0.587,
+        "2010-2019": 0.806,
+        "2020-2025": 1.065
+      },
+      "delta_2024_vs_2010s_mean": 0.474,
+      "delta_2024_vs_2023": 0.11,
+      "missing_value_policy": "Exclude only rows whose J-D value is '***' from annual comparisons.",
+      "parsed_years": 147,
+      "record_complete_year": {
+        "J-D": 1.28,
+        "year": 2024
+      }
+    },
+    "fair_audit": [
+      {
+        "definition": "(meta)data are assigned a globally unique and persistent identifier",
+        "principle": "F1",
+        "rationale": "A source URL and local unit IDs exist, but global persistence is not established.",
+        "status": "not_evidenced"
+      },
+      {
+        "definition": "data are described with rich metadata (defined by R1 below)",
+        "principle": "F2",
+        "rationale": "The rows preserve a schema and values; descriptive metadata remains sparse.",
+        "status": "partial"
+      },
+      {
+        "definition": "metadata clearly and explicitly include the identifier of the data it describes",
+        "principle": "F3",
+        "rationale": "Read units carry source locators, but no explicit persistent dataset identifier is shown.",
+        "status": "partial"
+      },
+      {
+        "definition": "(meta)data are registered or indexed in a searchable resource",
+        "principle": "F4",
+        "rationale": "The MCP pack is searchable locally; registration in an external searchable registry is not evidenced.",
+        "status": "partial"
+      },
+      {
+        "definition": "(meta)data are retrievable by their identifier using a standardized communications protocol",
+        "principle": "A1",
+        "rationale": "Units are retrievable through MCP, but not by an evidenced globally persistent identifier.",
+        "status": "partial"
+      },
+      {
+        "definition": "the protocol is open, free, and universally implementable",
+        "principle": "A1.1",
+        "rationale": "The recorded stdio MCP exchange works without network access; universality is not established by this pack.",
+        "status": "partial"
+      },
+      {
+        "definition": "the protocol allows for an authentication and authorization procedure, where necessary",
+        "principle": "A1.2",
+        "rationale": "No authentication or authorization procedure appears in the captured dataset units.",
+        "status": "not_evidenced"
+      },
+      {
+        "definition": "metadata are accessible, even when the data are no longer available",
+        "principle": "A2",
+        "rationale": "The snapshot cannot prove metadata survival after source data disappearance.",
+        "status": "not_evidenced"
+      },
+      {
+        "definition": "(meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation.",
+        "principle": "I1",
+        "rationale": "A machine-readable table schema is preserved, but no formal knowledge-representation language is declared.",
+        "status": "partial"
+      },
+      {
+        "definition": "(meta)data use vocabularies that follow FAIR principles",
+        "principle": "I2",
+        "rationale": "No FAIR vocabulary is declared in the captured dataset units.",
+        "status": "not_evidenced"
+      },
+      {
+        "definition": "(meta)data include qualified references to other (meta)data",
+        "principle": "I3",
+        "rationale": "No qualified references to other metadata objects are captured.",
+        "status": "not_evidenced"
+      },
+      {
+        "definition": "meta(data) are richly described with a plurality of accurate and relevant attributes",
+        "principle": "R1",
+        "rationale": "Column names and values are present, while richer contextual attributes are limited.",
+        "status": "partial"
+      },
+      {
+        "definition": "(meta)data are released with a clear and accessible data usage license",
+        "principle": "R1.1",
+        "rationale": "No data-usage license appears in the complete three-unit GISTEMP pack.",
+        "status": "not_evidenced"
+      },
+      {
+        "definition": "(meta)data are associated with detailed provenance",
+        "principle": "R1.2",
+        "rationale": "Source locators and content SHA-256 values provide capture-level provenance.",
+        "status": "partial"
+      },
+      {
+        "definition": "(meta)data meet domain-relevant community standards",
+        "principle": "R1.3",
+        "rationale": "No domain-community metadata standard is declared in the captured units.",
+        "status": "not_evidenced"
+      }
+    ],
+    "status_counts": {
+      "not_evidenced": 7,
+      "partial": 8
+    }
+  },
+  "run_id": "gistemp-fair-audit",
+  "schema_version": "1.0",
+  "snapshot_date": "2026-07-11",
+  "steps": [
+    {
+      "next_step_reason": "Inspect both resource boundaries before selecting data and rubric evidence.",
+      "output_summary": "Connected to agentic-anything 0.4.1; tools: resource_info, search_resource, read_unit.",
+      "phase": "connect",
+      "step": 1,
+      "tool": "initialize + tools/list",
+      "tool_input": {
+        "protocolVersion": "2025-11-25"
+      },
+      "units": []
+    },
+    {
+      "next_step_reason": "Read every GISTEMP unit so absence claims in the later audit have a closed capture scope.",
+      "output_summary": "fair-paper (document, 1 units); gistemp (dataset, 3 units)",
+      "phase": "inspect",
+      "step": 2,
+      "tool": "resource_info",
+      "tool_input": {},
+      "units": []
+    },
+    {
+      "next_step_reason": "Read the table overview, including its capture-level limitations.",
+      "output_summary": "Found 3 hit(s); top evidence units: nasa-gistemp-global__001__nasa-gistemp-global-csv-overview (10.810), nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147 (1.755), nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100 (0.946).",
+      "phase": "search",
+      "step": 3,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "Land-Ocean Global Means overview 147 data rows 19 columns",
+        "resource_id": "gistemp",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 10.81,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 1.755,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 0.946,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Retrieve the historical rows and their explicit column header.",
+      "output_summary": "Read 394 Markdown characters from overview; confirmed 3 required anchor(s); sha256 f54a1006b28624bf339f660c804e5b673e275014a16237b3f0e37bd825f28db8.",
+      "phase": "read",
+      "step": 4,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "gistemp",
+        "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+      },
+      "units": [
+        {
+          "content_sha256": "f54a1006b28624bf339f660c804e5b673e275014a16237b3f0e37bd825f28db8",
+          "locator": "overview",
+          "resource_id": "gistemp",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the first table segment for the historical series and schema.",
+      "output_summary": "Found 3 hit(s); top evidence units: nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100 (3.242), nasa-gistemp-global__001__nasa-gistemp-global-csv-overview (3.216), nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147 (1.209).",
+      "phase": "search",
+      "step": 5,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "Year Jan Feb Mar Apr J-D 1880 1978 global means",
+        "resource_id": "gistemp",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 3.242,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 3.216,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 1.209,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Retrieve the modern segment containing 2023, 2024, 2025, and incomplete 2026.",
+      "output_summary": "Read 13,073 Markdown characters from rows 1-100; confirmed 4 required anchor(s); sha256 3db6b57975a728bb2d3f891166d1bb3adf26da9b8725e874bd72c226abf3261a.",
+      "phase": "read",
+      "step": 6,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "gistemp",
+        "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+      },
+      "units": [
+        {
+          "content_sha256": "3db6b57975a728bb2d3f891166d1bb3adf26da9b8725e874bd72c226abf3261a",
+          "locator": "rows 1-100",
+          "resource_id": "gistemp",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read recent rows and preserve the explicit '***' missing-value marker.",
+      "output_summary": "Found 3 hit(s); top evidence units: nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147 (4.127), nasa-gistemp-global__001__nasa-gistemp-global-csv-overview (0.268), nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100 (0.225).",
+      "phase": "search",
+      "step": 7,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "2023 2024 2025 2026 J-D annual global anomaly",
+        "resource_id": "gistemp",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 4.127,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 0.268,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "gistemp",
+          "score": 0.225,
+          "status": "discovered_not_yet_read",
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Parse the two row units and compute annual comparisons without using the raw CSV file.",
+      "output_summary": "Read 5,763 Markdown characters from rows 101-147; confirmed 5 required anchor(s); sha256 53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c.",
+      "phase": "read",
+      "step": 8,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "gistemp",
+        "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+      },
+      "units": [
+        {
+          "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c",
+          "locator": "rows 101-147",
+          "resource_id": "gistemp",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Retrieve the FAIR definitions that will serve as the audit rubric.",
+      "output_summary": "Parsed 147 years; excluded incomplete 2026 J-D; computed 2024=1.28, record year 2024, and five period means.",
+      "phase": "compute",
+      "step": 9,
+      "tool": "parse_markdown_table_and_compute",
+      "tool_input": {
+        "annual_column": "J-D",
+        "input": "two read_unit Markdown responses",
+        "missing_marker": "***"
+      },
+      "units": [
+        {
+          "content_sha256": "3db6b57975a728bb2d3f891166d1bb3adf26da9b8725e874bd72c226abf3261a",
+          "locator": "rows 1-100",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+        },
+        {
+          "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c",
+          "locator": "rows 101-147",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the complete paper unit before citing any FAIR principle.",
+      "output_summary": "Found 1 hit(s); top evidence units: fair-guiding-principles-pmc4792175 (4.316).",
+      "phase": "search",
+      "step": 10,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "F1 F2 F3 F4 persistent identifier rich metadata searchable resource",
+        "resource_id": "fair-paper",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "fair-paper",
+          "score": 4.316,
+          "status": "discovered_not_yet_read",
+          "unit_id": "fair-guiding-principles-pmc4792175"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Use focused searches to confirm the Accessible subgroup wording.",
+      "output_summary": "Read 54,519 Markdown characters from fair-guiding-principles-pmc4792175.html; confirmed 4 required anchor(s); sha256 049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f.",
+      "phase": "read",
+      "step": 11,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "fair-paper",
+        "unit_id": "fair-guiding-principles-pmc4792175"
+      },
+      "units": [
+        {
+          "content_sha256": "049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f",
+          "locator": "fair-guiding-principles-pmc4792175.html",
+          "resource_id": "fair-paper",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "fair-guiding-principles-pmc4792175"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Confirm the Interoperable subgroup wording in focused evidence snippets.",
+      "output_summary": "Found 1 hit(s); top evidence units: fair-guiding-principles-pmc4792175 (5.073).",
+      "phase": "search",
+      "step": 12,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "A1 A1.1 A1.2 A2 retrievable standardized protocol authentication metadata accessible",
+        "resource_id": "fair-paper",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "fair-paper",
+          "score": 5.073,
+          "status": "discovered_not_yet_read",
+          "unit_id": "fair-guiding-principles-pmc4792175"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Confirm the Reusable subgroup wording and provenance/license requirements.",
+      "output_summary": "Found 1 hit(s); top evidence units: fair-guiding-principles-pmc4792175 (3.682).",
+      "phase": "search",
+      "step": 13,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "I1 I2 I3 formal language vocabularies qualified references metadata",
+        "resource_id": "fair-paper",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "fair-paper",
+          "score": 3.682,
+          "status": "discovered_not_yet_read",
+          "unit_id": "fair-guiding-principles-pmc4792175"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Extract all 15 definitions and score only what the completely read GISTEMP pack evidences.",
+      "output_summary": "Found 1 hit(s); top evidence units: fair-guiding-principles-pmc4792175 (5.994).",
+      "phase": "search",
+      "step": 14,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "R1 R1.1 R1.2 R1.3 usage license detailed provenance community standards",
+        "resource_id": "fair-paper",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "fair-paper",
+          "score": 5.994,
+          "status": "discovered_not_yet_read",
+          "unit_id": "fair-guiding-principles-pmc4792175"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Validate calculations, principle coverage, closed-scope absence claims, and citation order.",
+      "output_summary": "Audited all 15 FAIR entries: 8 partial and 7 not evidenced; no unsupported full-pass claim.",
+      "phase": "compute",
+      "step": 15,
+      "tool": "closed_scope_fair_audit",
+      "tool_input": {
+        "allowed_statuses": [
+          "partial",
+          "not_evidenced"
+        ],
+        "principles": [
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "A1",
+          "A1.1",
+          "A1.2",
+          "A2",
+          "I1",
+          "I2",
+          "I3",
+          "R1",
+          "R1.1",
+          "R1.2",
+          "R1.3"
+        ],
+        "scope": "captured GISTEMP pack, not NASA's complete stewardship program"
+      },
+      "units": [
+        {
+          "content_sha256": "f54a1006b28624bf339f660c804e5b673e275014a16237b3f0e37bd825f28db8",
+          "locator": "overview",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+        },
+        {
+          "content_sha256": "3db6b57975a728bb2d3f891166d1bb3adf26da9b8725e874bd72c226abf3261a",
+          "locator": "rows 1-100",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+        },
+        {
+          "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c",
+          "locator": "rows 101-147",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+        },
+        {
+          "content_sha256": "049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f",
+          "locator": "fair-guiding-principles-pmc4792175.html",
+          "resource_id": "fair-paper",
+          "status": "read",
+          "unit_id": "fair-guiding-principles-pmc4792175"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Emit the reproducible research brief, cautious FAIR audit, and raw MCP replay log.",
+      "output_summary": "Recomputed all numeric checks, confirmed all three GISTEMP units were read, and confirmed the complete 15-principle rubric.",
+      "phase": "validate",
+      "step": 16,
+      "tool": "deterministic_assertions",
+      "tool_input": {
+        "evidence_units": 4
+      },
+      "units": [
+        {
+          "content_sha256": "f54a1006b28624bf339f660c804e5b673e275014a16237b3f0e37bd825f28db8",
+          "locator": "overview",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__001__nasa-gistemp-global-csv-overview"
+        },
+        {
+          "content_sha256": "3db6b57975a728bb2d3f891166d1bb3adf26da9b8725e874bd72c226abf3261a",
+          "locator": "rows 1-100",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100"
+        },
+        {
+          "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c",
+          "locator": "rows 101-147",
+          "resource_id": "gistemp",
+          "status": "read",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147"
+        },
+        {
+          "content_sha256": "049c7896330605fa4f1eb3f540a51770d77004466f3c77a5d1046b130fa8701f",
+          "locator": "fair-guiding-principles-pmc4792175.html",
+          "resource_id": "fair-paper",
+          "status": "read",
+          "unit_id": "fair-guiding-principles-pmc4792175"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "assertions_passed": 23,
+    "assertions_total": 23,
+    "cited_units": 4,
+    "read_calls": 4,
+    "search_calls": 7,
+    "steps": 16
+  },
+  "task": "Compute a reproducible annual GISTEMP trend summary from the captured table, handle incomplete years explicitly, and audit the pack against all 15 FAIR sub-principles."
+}

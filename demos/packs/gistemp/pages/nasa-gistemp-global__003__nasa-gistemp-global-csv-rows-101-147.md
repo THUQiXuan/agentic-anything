@@ -1,14 +1,12 @@
-# nasa-gistemp-global.csv rows 101-148
+# nasa-gistemp-global.csv rows 101-147
 
-- page_id: `nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148`
+- page_id: `nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147`
 - url: https://data.giss.nasa.gov/gistemp/data_v4.html
 - type: table
 
 ## Content
 
-Land-Ocean: Global Means
-
-1979 | .08 | -.10 | .19 | .15 | .03 | .14 | .03 | .16 | .25 | .26 | .28 | .47 | .16 | .13 | .02 | .12 | .11 | .26
+Year | Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec | J-D | D-N | DJF | MAM | JJA | SON
 
 1980 | .29 | .39 | .29 | .29 | .35 | .20 | .22 | .18 | .20 | .13 | .29 | .21 | .25 | .28 | .39 | .31 | .20 | .21
 

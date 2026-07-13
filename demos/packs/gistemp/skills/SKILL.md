@@ -15,7 +15,7 @@ This `dataset` pack is a structured capture of https://data.giss.nasa.gov/gistem
 |---|---|---|
 | `nasa-gistemp-global__001__nasa-gistemp-global-csv-overview` | table | nasa-gistemp-global.csv overview |
 | `nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100` | table | nasa-gistemp-global.csv rows 1-100 |
-| `nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148` | table | nasa-gistemp-global.csv rows 101-148 |
+| `nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147` | table | nasa-gistemp-global.csv rows 101-147 |
 
 ## Reading the pack
 

@@ -105,6 +105,32 @@ def test_csv(tmp_path):
     assert any("Tokyo | 13960000" in u.text() for u in units[1:])
 
 
+def test_csv_single_column_preamble_before_header(tmp_path):
+    f = tmp_path / "temperatures.csv"
+    f.write_text(
+        "Land-Ocean: Global Means\n"
+        "Temperature anomalies in degrees Celsius\n"
+        "Year,Jan,Feb,J-D\n"
+        "2023,.87,.96,1.17\n"
+        "2024,1.25,1.43,1.28\n",
+        encoding="utf-8",
+    )
+
+    rtype, units = ingest_file(f)
+
+    assert rtype == "dataset"
+    overview = units[0].text()
+    assert "2 data rows, 4 columns." in overview
+    assert "Columns: Year, Jan, Feb, J-D" in overview
+    assert "Preamble:\nLand-Ocean: Global Means" in overview
+    assert "Temperature anomalies in degrees Celsius" in overview
+    assert units[1].locator == "rows 1-2"
+    table = units[1].text()
+    assert "Year | Jan | Feb | J-D" in table
+    assert "2024 | 1.25 | 1.43 | 1.28" in table
+    assert "Land-Ocean: Global Means" not in table
+
+
 def test_jsonl(tmp_path):
     f = tmp_path / "events.jsonl"
     f.write_text('{"event": "start", "n": 1}\n{"event": "stop", "n": 2}\n',

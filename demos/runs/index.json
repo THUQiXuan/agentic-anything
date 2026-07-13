@@ -1,0 +1,122 @@
+{
+  "description": "One real model tool loop plus two deterministic evidence-agent trajectories over authentic packs. Every run is inspectable; deterministic runs rebuild offline.",
+  "mode": "mixed-recorded-agent-runs",
+  "model_calls": 10,
+  "rebuild": "python demos/build_agent_runs.py  # replays deterministic runs; validates recorded LLM run",
+  "runs": [
+    {
+      "files": {
+        "maintainer-impact-brief.md": {
+          "path": "requests-redirect-impact-llm/maintainer-impact-brief.md",
+          "sha256": "5233109df4870dc552a5f07d4aef8bf0523c953c59b3ceab01a4c51d9ef22a27"
+        },
+        "raw-transcript.json": {
+          "path": "requests-redirect-impact-llm/raw-transcript.json",
+          "sha256": "181176c2222d8c2172d2f3655aa12708bf1e41c0f034376b5059cb7eba4d9f8d"
+        },
+        "run.json": {
+          "path": "requests-redirect-impact-llm/run.json",
+          "sha256": "8d0d11d8b017d89bd1f8204862a2338fb1a95290c3d5c7e6a0460af94f1eb73b"
+        }
+      },
+      "mode": "real-llm-tool-loop+mcp-stdio",
+      "model_calls": 10,
+      "packs": [
+        "requests"
+      ],
+      "passed": true,
+      "run_id": "requests-redirect-impact-llm",
+      "summary": {
+        "assertions_passed": 9,
+        "assertions_total": 9,
+        "cited_units": 5,
+        "read_calls": 11,
+        "search_calls": 5,
+        "steps": 21
+      },
+      "task": "Create an evidence-grounded maintainer impact brief for this proposed change: change Requests' library-wide default redirect ceiling from 30 to 20 while preserving per-Session overrides. Trace the constant definition, Session initialization, runtime enforcement, exception type, current default and custom limit tests, and user documentation. Recommend the smallest source/test/docs changes, call out what should not change, and attach a claim-evidence matrix. Use only the pinned pack; if capture truncation prevents a conclusion, say so."
+    },
+    {
+      "files": {
+        "artifact.md": {
+          "path": "requests-redirect-impact/artifact.md",
+          "sha256": "a6820fefe8553c3c2bf6800debf19f70f0afabc1815f8fa00c55b61407ec9484"
+        },
+        "raw-events.jsonl": {
+          "path": "requests-redirect-impact/raw-events.jsonl",
+          "sha256": "2f46aec58b948ad0f954014dca7fe0264f551cb751fd6b96f6226f060041cead"
+        },
+        "run.json": {
+          "path": "requests-redirect-impact/run.json",
+          "sha256": "749e3a0aeae8829cafbe5c51c850f04692e1196525c8c5bc895e485f2ae5c383"
+        },
+        "verification.json": {
+          "path": "requests-redirect-impact/verification.json",
+          "sha256": "7484806897efcd71731727d56f3ea7c0d821f946ad6258befda65371590601b0"
+        }
+      },
+      "mode": "deterministic-evidence-agent",
+      "model_calls": 0,
+      "packs": [
+        "requests"
+      ],
+      "passed": true,
+      "run_id": "requests-redirect-impact",
+      "summary": {
+        "assertions_passed": 20,
+        "assertions_total": 20,
+        "cited_units": 5,
+        "read_calls": 5,
+        "search_calls": 5,
+        "steps": 14
+      },
+      "task": "Assess the code, tests, exception, and documentation impact of changing Requests v2.34.2's default redirect ceiling from 30 to 10. Do not modify upstream code."
+    },
+    {
+      "files": {
+        "artifact.md": {
+          "path": "gistemp-fair-audit/artifact.md",
+          "sha256": "a52319de85041fa70c5dd903dbb54b09fa7c6fcbe834b9bfe603e82708a8d109"
+        },
+        "raw-events.jsonl": {
+          "path": "gistemp-fair-audit/raw-events.jsonl",
+          "sha256": "3fbca45aefba234ab080267cd54e1abd7d09cd056641202123d4805420cf6088"
+        },
+        "run.json": {
+          "path": "gistemp-fair-audit/run.json",
+          "sha256": "d32514ad26fdace5ede9582333703165c77c1d4fa0cdf6cf4f889c9e68e44978"
+        },
+        "verification.json": {
+          "path": "gistemp-fair-audit/verification.json",
+          "sha256": "57b2fc752013913083d382a9607ed3dcb1b65abd0492bd48d1871c7c4eb89164"
+        }
+      },
+      "mode": "deterministic-evidence-agent",
+      "model_calls": 0,
+      "packs": [
+        "gistemp",
+        "fair-paper"
+      ],
+      "passed": true,
+      "run_id": "gistemp-fair-audit",
+      "summary": {
+        "assertions_passed": 23,
+        "assertions_total": 23,
+        "cited_units": 4,
+        "read_calls": 4,
+        "search_calls": 7,
+        "steps": 16
+      },
+      "task": "Compute a reproducible annual GISTEMP trend summary from the captured table, handle incomplete years explicitly, and audit the pack against all 15 FAIR sub-principles."
+    }
+  ],
+  "schema_version": "1.0",
+  "snapshot_date": "2026-07-11",
+  "summary": {
+    "all_passed": true,
+    "assertions_passed": 52,
+    "assertions_total": 52,
+    "run_count": 3,
+    "runs_passed": 3
+  }
+}

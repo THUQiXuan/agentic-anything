@@ -1,0 +1,111 @@
+{
+  "artifact_sha256": "a6820fefe8553c3c2bf6800debf19f70f0afabc1815f8fa00c55b61407ec9484",
+  "assertions": [
+    {
+      "detail": "deterministic-evidence-agent",
+      "id": "mode_is_explicit",
+      "passed": true
+    },
+    {
+      "detail": "No model client is imported or invoked.",
+      "id": "zero_model_calls",
+      "passed": true
+    },
+    {
+      "detail": "Negotiated 2025-11-25.",
+      "id": "mcp_initialized",
+      "passed": true
+    },
+    {
+      "detail": "Available tools: resource_info, search_resource, read_unit.",
+      "id": "required_tools_available",
+      "passed": true
+    },
+    {
+      "detail": "units=74",
+      "id": "authentic_pack_size",
+      "passed": true
+    },
+    {
+      "detail": "searches=5",
+      "id": "minimum_search_horizon",
+      "passed": true
+    },
+    {
+      "detail": "reads=5",
+      "id": "minimum_read_horizon",
+      "passed": true
+    },
+    {
+      "detail": "read units=['file__docs--user--quickstart-rst', 'file__src--requests--exceptions-py', 'file__src--requests--models-py', 'file__src--requests--sessions-py', 'file__tests--test-requests-py']",
+      "id": "all_required_units_read",
+      "passed": true
+    },
+    {
+      "detail": "Every read followed a search result containing that unit.",
+      "id": "all_reads_were_discovered",
+      "passed": true
+    },
+    {
+      "detail": "models.py pins 30.",
+      "id": "definition_anchor",
+      "passed": true
+    },
+    {
+      "detail": "sessions.py contains initialization and enforcement.",
+      "id": "default_and_guard_anchors",
+      "passed": true
+    },
+    {
+      "detail": "Exception inheritance confirmed.",
+      "id": "exception_anchor",
+      "passed": true
+    },
+    {
+      "detail": "Default and explicit override tests confirmed.",
+      "id": "tests_pin_default_and_override",
+      "passed": true
+    },
+    {
+      "detail": "Quickstart contract confirmed.",
+      "id": "docs_describe_configured_limit",
+      "passed": true
+    },
+    {
+      "detail": "citations=5",
+      "id": "citations_read_before_use",
+      "passed": true
+    },
+    {
+      "detail": "markers=['R1', 'R2', 'R3', 'R4', 'R5']",
+      "id": "artifact_citation_set_complete",
+      "passed": true
+    },
+    {
+      "detail": "Every cited read returned a 64-character SHA-256.",
+      "id": "citation_hashes_are_sha256",
+      "passed": true
+    },
+    {
+      "detail": "Impact compares the evidenced default with the requested proposal.",
+      "id": "impact_is_consistent",
+      "passed": true
+    },
+    {
+      "detail": "Every JSON-RPC request with an id has one recorded response.",
+      "id": "raw_stdio_round_trips",
+      "passed": true
+    },
+    {
+      "detail": "The checkout prefix is normalized to '.' in the checked-in raw log.",
+      "id": "raw_log_is_portable",
+      "passed": true
+    }
+  ],
+  "assertions_passed": 20,
+  "assertions_total": 20,
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "passed": true,
+  "schema_version": "1.0"
+}

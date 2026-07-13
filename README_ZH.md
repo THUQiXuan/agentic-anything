@@ -8,7 +8,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-170%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-173%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
@@ -81,6 +81,11 @@ YouTube 的上游限制）。
 需要 Python 3.10+。核心安装只用标准库。
 
 ## 快速开始
+
+想先看真实效果，可以打开[在线 Demo](https://thuqixuan.github.io/agentic-anything/)：其中包含
+一个真实模型通过 MCP 完成的 21 步代码影响分析，以及 NASA 数据 + FAIR 论文审计、
+Requests 仓库分析两条可离线重放的长任务。工具调用、驳回过程、最终工件、引用和
+52 项校验都可以直接检查。
 
 ```bash
 # 1. 把任何资源变成 Agent 原生 pack + 资源 Agent 接口

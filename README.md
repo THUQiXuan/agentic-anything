@@ -8,7 +8,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-170%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-173%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
@@ -89,8 +89,11 @@ Want to see real outputs before installing? The
 [interactive demo gallery](https://thuqixuan.github.io/agentic-anything/)
 uses five hash-pinned resources from Project Gutenberg, the PSF Requests
 repository, Python's official documentation, NASA GISTEMP, and PubMed Central.
-It shows the real source before conversion, the generated pack, and actual
-search/CLI/MCP results; every claim links back to a locator and content hash.
+It now shows three recorded long-horizon runs: a real model completing a
+21-step code-impact task through MCP, a reproducible NASA + FAIR research
+audit, and a deterministic 14-step repository analysis. Exact tool calls,
+rejections, final artifacts, locators, hashes, and 52 offline checks are all
+inspectable.
 
 ```bash
 # 1. Turn ANY resource into an agent-native pack + resource-agent interfaces

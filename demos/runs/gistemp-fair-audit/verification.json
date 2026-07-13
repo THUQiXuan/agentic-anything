@@ -1,0 +1,126 @@
+{
+  "artifact_sha256": "a52319de85041fa70c5dd903dbb54b09fa7c6fcbe834b9bfe603e82708a8d109",
+  "assertions": [
+    {
+      "detail": "deterministic-evidence-agent",
+      "id": "mode_is_explicit",
+      "passed": true
+    },
+    {
+      "detail": "No model client is imported or invoked.",
+      "id": "zero_model_calls",
+      "passed": true
+    },
+    {
+      "detail": "Negotiated 2025-11-25.",
+      "id": "mcp_initialized",
+      "passed": true
+    },
+    {
+      "detail": "resources=[('fair-paper', 1), ('gistemp', 3)]",
+      "id": "two_authentic_resources_inspected",
+      "passed": true
+    },
+    {
+      "detail": "searches=7",
+      "id": "long_search_horizon",
+      "passed": true
+    },
+    {
+      "detail": "reads=4",
+      "id": "all_pack_units_read",
+      "passed": true
+    },
+    {
+      "detail": "Every read followed a search result containing that unit.",
+      "id": "all_reads_were_discovered",
+      "passed": true
+    },
+    {
+      "detail": "years=147",
+      "id": "parsed_year_count",
+      "passed": true
+    },
+    {
+      "detail": "complete=146",
+      "id": "complete_annual_count",
+      "passed": true
+    },
+    {
+      "detail": "2026 J-D parsed as None from '***'.",
+      "id": "missing_2026_excluded",
+      "passed": true
+    },
+    {
+      "detail": "values={'2023': 1.17, '2024': 1.28, '2025': 1.19, '2026': None}",
+      "id": "annual_values_exact",
+      "passed": true
+    },
+    {
+      "detail": "record={'year': 2024, 'J-D': 1.28}",
+      "id": "record_year_exact",
+      "passed": true
+    },
+    {
+      "detail": "delta23=0.11, delta2010s=0.474",
+      "id": "derived_deltas_exact",
+      "passed": true
+    },
+    {
+      "detail": "means={'1980-1989': 0.245, '1990-1999': 0.384, '2000-2009': 0.587, '2010-2019': 0.806, '2020-2025': 1.065}",
+      "id": "decadal_means_exact",
+      "passed": true
+    },
+    {
+      "detail": "principles=15",
+      "id": "all_fair_definitions_extracted",
+      "passed": true
+    },
+    {
+      "detail": "status_counts={'partial': 8, 'not_evidenced': 7}",
+      "id": "audit_avoids_unsupported_pass",
+      "passed": true
+    },
+    {
+      "detail": "All three GISTEMP units were read before not-evidenced assessments.",
+      "id": "closed_scope_for_absence_claims",
+      "passed": true
+    },
+    {
+      "detail": "citations=4",
+      "id": "citations_read_before_use",
+      "passed": true
+    },
+    {
+      "detail": "markers=['F1', 'G1', 'G2', 'G3']",
+      "id": "artifact_citation_set_complete",
+      "passed": true
+    },
+    {
+      "detail": "Every cited read returned a 64-character SHA-256.",
+      "id": "citation_hashes_are_sha256",
+      "passed": true
+    },
+    {
+      "detail": "Every JSON-RPC request with an id has one recorded response.",
+      "id": "raw_stdio_round_trips",
+      "passed": true
+    },
+    {
+      "detail": "The checkout prefix is normalized to '.' in the checked-in raw log.",
+      "id": "raw_log_is_portable",
+      "passed": true
+    },
+    {
+      "detail": "The preamble-aware importer exposes the real table shape.",
+      "id": "overview_schema_is_correct",
+      "passed": true
+    }
+  ],
+  "assertions_passed": 23,
+  "assertions_total": 23,
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "passed": true,
+  "schema_version": "1.0"
+}

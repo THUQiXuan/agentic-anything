@@ -1,21 +1,17 @@
 {
   "spec_version": "0.2",
-  "page_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148",
+  "page_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147",
   "source_url": "https://data.giss.nasa.gov/gistemp/data_v4.html",
-  "url_path": "rows 101-148",
-  "title": "nasa-gistemp-global.csv rows 101-148",
+  "url_path": "rows 101-147",
+  "title": "nasa-gistemp-global.csv rows 101-147",
   "page_type": "table",
   "unit_kind": "table",
-  "locator": "rows 101-148",
-  "summary": "Land-Ocean: Global Means\n1979 | .08 | -.10 | .19 | .15 | .03 | .14 | .03 | .16 | .25 | .26 | .28 | .47 | .16 | .13 | .02 | .12 | .11 | .26\n1980 | .29 | .39 | .29 | .29 | .35 | .20 | .22 | .18 | .20 | .13 | .29 | .21 | .25 | .28 | .39 | .31…",
+  "locator": "rows 101-147",
+  "summary": "Year | Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec | J-D | D-N | DJF | MAM | JJA | SON\n1980 | .29 | .39 | .29 | .29 | .35 | .20 | .22 | .18 | .20 | .13 | .29 | .21 | .25 | .28 | .39 | .31 | .20 | .21\n1981 | .53 |…",
   "content": [
     {
       "kind": "p",
-      "text": "Land-Ocean: Global Means"
-    },
-    {
-      "kind": "p",
-      "text": "1979 | .08 | -.10 | .19 | .15 | .03 | .14 | .03 | .16 | .25 | .26 | .28 | .47 | .16 | .13 | .02 | .12 | .11 | .26"
+      "text": "Year | Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec | J-D | D-N | DJF | MAM | JJA | SON"
     },
     {
       "kind": "p",
@@ -213,6 +209,6 @@
   "provenance": {
     "source_path": "https://data.giss.nasa.gov/gistemp/data_v4.html",
     "capture_mode": "ingest",
-    "content_sha256": "d48825820cc83054e89b58a32ffae3a50047a28bfa131d5cedc304e6945f0d94"
+    "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c"
   }
 }

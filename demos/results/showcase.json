@@ -975,21 +975,21 @@
           "title": "nasa-gistemp-global.csv overview",
           "type": "table",
           "locator": "overview",
-          "content_sha256": "3a3208cada660af7740aea57b3c82c02dd51c9e94fab53ecc9f4832ab12479a9"
+          "content_sha256": "f54a1006b28624bf339f660c804e5b673e275014a16237b3f0e37bd825f28db8"
         },
         {
           "unit_id": "nasa-gistemp-global__002__nasa-gistemp-global-csv-rows-1-100",
           "title": "nasa-gistemp-global.csv rows 1-100",
           "type": "table",
           "locator": "rows 1-100",
-          "content_sha256": "92eda7b112c6194bbf8e40133e06c45f79c896349d336fa5a948860e0618ac4e"
+          "content_sha256": "3db6b57975a728bb2d3f891166d1bb3adf26da9b8725e874bd72c226abf3261a"
         },
         {
-          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148",
-          "title": "nasa-gistemp-global.csv rows 101-148",
+          "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147",
+          "title": "nasa-gistemp-global.csv rows 101-147",
           "type": "table",
-          "locator": "rows 101-148",
-          "content_sha256": "d48825820cc83054e89b58a32ffae3a50047a28bfa131d5cedc304e6945f0d94"
+          "locator": "rows 101-147",
+          "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c"
         }
       ],
       "preview": {
@@ -1042,9 +1042,9 @@
       "query_result": {
         "query": "2024",
         "rank": 1,
-        "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148",
-        "title": "nasa-gistemp-global.csv rows 101-148",
-        "score": 0.969,
+        "unit_id": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147",
+        "title": "nasa-gistemp-global.csv rows 101-147",
+        "score": 0.976,
         "evidence": "2024 | 1.25 | 1.43 | 1.39 | 1.32 | 1.16 | 1.23 | 1.20 | 1.30 | 1.21 | 1.35 | 1.30 | 1.27 | 1.28 | 1.29 | 1.35 | 1.29 | 1.24 | 1.28",
         "evidence_blocks": [
           {
@@ -1058,8 +1058,8 @@
         "matched": [
           "2024"
         ],
-        "locator": "rows 101-148",
-        "content_sha256": "d48825820cc83054e89b58a32ffae3a50047a28bfa131d5cedc304e6945f0d94"
+        "locator": "rows 101-147",
+        "content_sha256": "53cadbd0b342fe928b98bbd74db494c37a553c57aefc7f08d965e89db2d31f8c"
       },
       "interfaces": [
         "conversation",
@@ -1078,7 +1078,7 @@
       "cli_result": {
         "cli": "cli/gistemp_cli.py",
         "info": "site_id: gistemp\nseed_url: https://data.giss.nasa.gov/gistemp/data_v4.html\ncaptured_at: 2026-07-11T00:00:00Z\ncapture_mode: ingest\npage_count: 3\nfrontier_count: 0",
-        "search": "1  nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-148  nasa-gistemp-global.csv rows 101-148\n      - 2024 | 1.25 | 1.43 | 1.39 | 1.32 | 1.16 | 1.23 | 1.20 | 1.30 | 1.21 | 1.35 | 1.30 | 1.27 | 1.28 | 1.29 | 1.35 | 1.29 | 1.24 | 1.28"
+        "search": "1  nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147  nasa-gistemp-global.csv rows 101-147\n      - 2024 | 1.25 | 1.43 | 1.39 | 1.32 | 1.16 | 1.23 | 1.20 | 1.30 | 1.21 | 1.35 | 1.30 | 1.27 | 1.28 | 1.29 | 1.35 | 1.29 | 1.24 | 1.28"
       }
     },
     {

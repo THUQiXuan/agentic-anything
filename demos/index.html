@@ -3,517 +3,842 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A before-and-after walkthrough built from five pinned real-world resources: a book, GitHub repository, official documentation, NASA dataset, and open-access paper.">
-  <meta name="theme-color" content="#f5f3ee">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23131720'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='28' font-family='Arial' font-weight='700' fill='white'%3EA+%3C/text%3E%3C/svg%3E">
-  <title>Agentic Anything — Real Inputs, Inspectable Outputs</title>
+  <meta name="description" content="Recorded long-horizon agent runs over authentic Agentic Anything resource packs.">
+  <title>Agentic Anything · Recorded agent runs</title>
   <style>
     :root {
-      --paper: #f5f3ee;
-      --white: #fff;
-      --ink: #131720;
-      --muted: #667080;
-      --line: #dcded8;
-      --blue: #2f55ff;
-      --blue-soft: #e9edff;
-      --lime: #c9f36a;
-      --lime-dark: #20300f;
-      --orange: #ff7648;
-      --dark: #10141e;
-      --dark-2: #181e2b;
-      --radius: 22px;
-      --shadow: 0 24px 70px rgba(25, 31, 43, .1);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background: var(--paper);
+      --bg: #f6f7f8;
+      --paper: #ffffff;
+      --ink: #17202a;
+      --muted: #65707d;
+      --line: #dfe3e7;
+      --line-dark: #c8ced5;
+      --accent: #2457d6;
+      --accent-soft: #edf2ff;
+      --green: #147a4b;
+      --green-soft: #eaf7f0;
+      --amber: #8a5a08;
+      --amber-soft: #fff5dd;
+      --red: #b42318;
+      --red-soft: #fff0ee;
+      --code: #101820;
+      --radius: 12px;
+      --shadow: 0 1px 2px rgba(17, 24, 39, .05);
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--paper); color: var(--ink); }
-    button, a { font: inherit; }
-    button { color: inherit; }
-    a { color: inherit; }
-    mark { background: #dcff58; color: inherit; border-radius: 3px; padding: 0 .12em; }
-    code, pre, .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
-    .shell { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
-    .topbar { position: sticky; top: 0; z-index: 30; height: 68px; background: rgba(245,243,238,.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(19,23,32,.08); }
-    .topbar .shell { height: 100%; display: flex; align-items: center; justify-content: space-between; }
-    .brand { display: flex; gap: 11px; align-items: center; font-weight: 780; text-decoration: none; }
-    .brand-badge { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--ink); color: white; font-size: 13px; }
-    .nav { display: flex; align-items: center; gap: 26px; color: #5f6877; font-size: 14px; }
-    .nav a { text-decoration: none; }
-    .nav .github { padding: 11px 16px; border: 1px solid var(--line); border-radius: 12px; background: white; color: var(--ink); font-weight: 700; }
-
-    .hero { min-height: 665px; padding: 82px 0 54px; display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: 64px; }
-    .eyebrow { display: flex; align-items: center; gap: 9px; color: var(--blue); text-transform: uppercase; font-size: 11px; letter-spacing: .17em; font-weight: 850; }
-    .eyebrow::before { content: ""; width: 20px; height: 2px; background: currentColor; }
-    h1 { margin: 16px 0 22px; font-size: clamp(56px, 6.3vw, 90px); line-height: .91; letter-spacing: -.065em; max-width: 780px; }
-    h1 .blue { color: var(--blue); }
-    .hero-copy > p { max-width: 660px; margin: 0; color: var(--muted); font-size: 18px; line-height: 1.65; }
-    .hero-copy > p strong { color: var(--ink); }
-    .hero-actions { display: flex; gap: 10px; margin-top: 28px; }
-    .button { display: inline-flex; align-items: center; justify-content: center; padding: 13px 18px; border-radius: 12px; text-decoration: none; font-weight: 750; font-size: 14px; }
-    .button.primary { background: var(--blue); color: white; box-shadow: 0 12px 24px rgba(47,85,255,.24); }
-    .button.secondary { background: white; border: 1px solid var(--line); }
-    .truth-row { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; color: var(--muted); font-size: 12px; }
-    .truth-row span::before { content: "✓"; display: inline-grid; place-items: center; width: 17px; height: 17px; margin-right: 6px; border-radius: 50%; background: #def6d8; color: #20803a; font-weight: 900; }
-
-    .hero-proof { position: relative; min-height: 470px; }
-    .proof-aura { position: absolute; inset: 22px -20px 18px 20px; border-radius: 70px; background: linear-gradient(135deg, #dce4ff, #ebf3d5); transform: rotate(-3deg); }
-    .proof-board { position: absolute; inset: 0; padding: 24px; border-radius: 28px; background: var(--dark); color: white; box-shadow: 0 36px 70px rgba(16,20,30,.25); transform: rotate(1.5deg); }
-    .proof-board-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid #313847; }
-    .proof-board-head b { font-size: 13px; }
-    .verified { color: var(--lime); background: rgba(201,243,106,.11); padding: 7px 10px; border-radius: 99px; font-size: 10px; font-weight: 850; letter-spacing: .08em; }
-    .source-stack { display: grid; gap: 9px; padding: 18px 0; }
-    .real-source { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 11px; padding: 11px 12px; background: var(--dark-2); border: 1px solid #2c3444; border-radius: 12px; }
-    .source-icon { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: #273044; color: var(--lime); font-weight: 900; font-size: 10px; }
-    .real-source b { display: block; font-size: 12px; }
-    .real-source small { display: block; margin-top: 3px; color: #8f9aad; font-size: 9px; }
-    .real-source .check { color: var(--lime); font-size: 12px; }
-    .transform-line { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; border-top: 1px solid #313847; padding-top: 17px; color: #9ca6b8; font-size: 10px; }
-    .transform-line i { height: 1px; background: #3a4355; }
-    .transform-line strong { background: var(--blue); color: white; font-style: normal; padding: 9px 12px; border-radius: 99px; }
-    .proof-output { margin-top: 14px; padding: 13px; border-radius: 12px; background: #20283a; border-left: 3px solid var(--lime); }
-    .proof-output b { display: block; font-size: 11px; }
-    .proof-output code { display: block; margin-top: 7px; color: #b7c2d4; font-size: 9px; line-height: 1.6; }
-
-    .metrics { display: grid; grid-template-columns: repeat(5, 1fr); background: white; border: 1px solid var(--line); border-radius: 18px 18px 0 0; overflow: hidden; }
-    .metric { min-height: 92px; padding: 22px; border-right: 1px solid var(--line); }
-    .metric:last-child { border-right: 0; }
-    .metric strong { display: block; font-size: 25px; letter-spacing: -.04em; }
-    .metric small { display: block; margin-top: 6px; color: var(--muted); font-size: 10px; }
-
-    .flagship { background: var(--dark); color: white; padding: 76px 0 82px; }
-    .flagship-head { display: grid; grid-template-columns: .82fr 1.18fr; gap: 70px; align-items: end; }
-    .flagship h2, .section-title h2 { margin: 12px 0 0; font-size: clamp(42px, 5vw, 66px); line-height: .96; letter-spacing: -.055em; }
-    .flagship-question { color: #aab3c2; line-height: 1.65; }
-    .flagship-question strong { display: block; color: white; margin-bottom: 8px; font-size: 16px; }
-    .answer-number { display: flex; align-items: center; gap: 18px; margin: 40px 0 24px; padding: 22px 24px; border: 1px solid #303849; border-radius: 17px; background: var(--dark-2); }
-    .answer-number > span { font-size: 64px; line-height: 1; color: var(--lime); font-weight: 900; letter-spacing: -.07em; }
-    .answer-number p { margin: 0; color: #d9dfeb; line-height: 1.5; }
-    .answer-number p b { display: block; color: white; font-size: 17px; }
-    .trace { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .trace-card { min-height: 260px; padding: 20px; border: 1px solid #303849; border-radius: 17px; background: var(--dark-2); display: flex; flex-direction: column; }
-    .trace-top { display: flex; justify-content: space-between; align-items: center; color: var(--lime); text-transform: uppercase; letter-spacing: .1em; font-size: 9px; font-weight: 850; }
-    .trace-top span:last-child { color: #69768a; font-size: 34px; letter-spacing: -.05em; }
-    .trace-card h3 { margin: 10px 0 9px; font-size: 17px; }
-    .trace-code { margin: 0; padding: 13px; border-radius: 10px; background: #0d1119; color: #c9d2df; font-size: 10px; line-height: 1.55; white-space: pre-wrap; overflow: hidden; flex: 1; }
-    .trace-meta { margin-top: 11px; color: #727f92; font-size: 9px; line-height: 1.45; overflow-wrap: anywhere; }
-    .trace-card a { color: #b9c5ff; text-decoration: none; }
-    .flagship-result { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 17px 20px; border-radius: 14px; background: var(--lime); color: var(--lime-dark); font-size: 13px; }
-    .flagship-result b { font-size: 14px; }
-    .flagship-result span { white-space: nowrap; font-size: 10px; font-weight: 800; }
-
-    .passports { padding: 80px 0 26px; }
-    .section-title { display: grid; grid-template-columns: 1fr .7fr; align-items: end; gap: 50px; }
-    .section-title p { margin: 0; color: var(--muted); line-height: 1.65; }
-    .passport-grid { margin-top: 30px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-    .passport { min-height: 250px; display: flex; flex-direction: column; padding: 18px; border: 1px solid var(--line); border-radius: 17px; background: white; text-decoration: none; transition: transform .2s, box-shadow .2s; }
-    .passport:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-    .passport-top { display: flex; justify-content: space-between; align-items: center; }
-    .passport-type { padding: 6px 8px; border-radius: 7px; background: var(--blue-soft); color: var(--blue); text-transform: uppercase; font-size: 9px; font-weight: 900; }
-    .passport-top span:last-child { color: #45a151; font-size: 11px; }
-    .passport h3 { margin: 16px 0 7px; font-size: 15px; line-height: 1.25; }
-    .passport .publisher { color: var(--muted); font-size: 11px; line-height: 1.4; }
-    .passport dl { margin: auto 0 0; }
-    .passport dt { margin-top: 11px; color: #8a92a0; text-transform: uppercase; letter-spacing: .08em; font-size: 8px; font-weight: 850; }
-    .passport dd { margin: 4px 0 0; font-size: 9px; line-height: 1.45; overflow-wrap: anywhere; }
-    .passport .sha { font-family: "SFMono-Regular", Consolas, monospace; color: #4a5464; }
-
-    .lab { padding: 80px 0 92px; }
-    .resource-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 28px 0 16px; }
-    .resource-tab { min-height: 62px; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: white; cursor: pointer; text-align: left; }
-    .resource-tab.active { background: var(--ink); color: white; border-color: var(--ink); box-shadow: 0 10px 24px rgba(19,23,32,.18); }
-    .tab-icon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--blue-soft); color: var(--blue); font-size: 9px; font-weight: 900; }
-    .resource-tab.active .tab-icon { background: var(--lime); color: var(--ink); }
-    .resource-tab b, .resource-tab small { display: block; }
-    .resource-tab b { font-size: 12px; }
-    .resource-tab small { margin-top: 3px; color: #8b94a3; font-size: 9px; }
-
-    .compare { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 92px; }
-    .compare::before { content: "agentify →"; position: absolute; left: 50%; top: 46%; transform: translate(-50%,-50%); z-index: 4; width: 74px; height: 74px; display: grid; place-items: center; border-radius: 50%; border: 7px solid var(--paper); background: var(--blue); color: white; font-size: 11px; font-weight: 850; box-shadow: 0 12px 28px rgba(47,85,255,.25); }
-    .compare::after { content: ""; position: absolute; left: calc(50% - 46px); top: 46%; width: 92px; height: 1px; background: var(--line); }
-    .compare-card { min-height: 560px; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: var(--shadow); }
-    .compare-head { min-height: 82px; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 17px 20px; border-bottom: 1px solid var(--line); }
-    .compare-head small { display: block; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: 9px; font-weight: 850; }
-    .compare-head strong { display: block; margin-top: 5px; font-size: 16px; }
-    .source-link, .manifest-link { padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; white-space: nowrap; text-decoration: none; font-size: 10px; font-weight: 800; }
-    .source-context { padding: 11px 20px; background: #fff8ee; border-bottom: 1px solid #efe2d2; color: #9b512f; font-size: 10px; line-height: 1.45; }
-    .native-preview { height: 420px; overflow: auto; padding: 24px; }
-    .source-foot { display: flex; justify-content: space-between; gap: 15px; padding: 11px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 9px; }
-    .source-foot span { overflow-wrap: anywhere; }
-    .doc-preview { max-width: 520px; margin: 0 auto; color: #30394a; line-height: 1.7; }
-    .doc-preview .doc-kicker { color: var(--blue); text-transform: uppercase; letter-spacing: .1em; font-size: 9px; font-weight: 900; }
-    .doc-preview h3 { margin: 9px 0 17px; color: var(--ink); font-family: Georgia, serif; font-size: 27px; line-height: 1.1; }
-    .doc-preview p { padding-left: 16px; border-left: 3px solid var(--lime); font-family: Georgia, serif; font-size: 14px; }
-    .code-file { margin-bottom: 14px; border: 1px solid #2b3343; border-radius: 12px; overflow: hidden; background: #111722; }
-    .code-file-head { display: flex; justify-content: space-between; padding: 9px 12px; background: #1b2230; color: #9da9bb; font-size: 9px; }
-    .code-file pre { margin: 0; padding: 12px; color: #c7d1df; font-size: 9.5px; line-height: 1.6; white-space: pre; overflow: auto; }
-    .dataset-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-    .dataset-table th { position: sticky; top: 0; background: var(--ink); color: white; text-align: right; padding: 10px 8px; }
-    .dataset-table th:first-child, .dataset-table td:first-child { text-align: left; font-weight: 800; }
-    .dataset-table td { text-align: right; padding: 10px 8px; border-bottom: 1px solid var(--line); }
-    .dataset-table tr.focus td { background: #edffd0; color: #263314; font-weight: 750; }
-    .dataset-note { margin-top: 13px; color: var(--muted); font-size: 10px; line-height: 1.5; }
-    .web-preview { max-width: 530px; margin: 0 auto; }
-    .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px; border: 1px solid var(--line); border-radius: 10px 10px 0 0; background: #edf0f5; }
-    .browser-dot { width: 7px; height: 7px; border-radius: 50%; background: #bbc1cc; }
-    .browser-url { margin-left: 7px; flex: 1; padding: 5px 8px; border-radius: 5px; background: white; color: #727c8b; font-size: 8px; }
-    .web-body { padding: 20px; border: 1px solid var(--line); border-top: 0; color: #323b49; line-height: 1.65; }
-    .web-body h3 { margin: 0 0 13px; font-size: 21px; color: var(--ink); }
-    .web-body p { font-size: 12px; }
-    .web-body p:first-of-type { padding: 12px; background: #f3f6ff; border-left: 3px solid var(--blue); }
-
-    .after-card { background: var(--dark); color: white; border-color: var(--dark); }
-    .after-card .compare-head { border-color: #303849; background: #151a25; }
-    .after-card .compare-head small { color: #9aa5b8; }
-    .manifest-link { border-color: #3a4355; }
-    .pack-preview { height: 466px; padding: 20px; overflow: auto; }
-    .pack-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 13px; font-size: 11px; }
-    .pack-count { padding: 5px 8px; border-radius: 99px; background: rgba(201,243,106,.12); color: var(--lime); font-size: 9px; font-weight: 850; }
-    .unit-list { display: grid; gap: 8px; }
-    .unit { padding: 11px 12px; border: 1px solid #30394a; border-radius: 11px; background: var(--dark-2); }
-    .unit-top { display: flex; justify-content: space-between; gap: 12px; }
-    .unit b { font-size: 11px; }
-    .unit em { color: #8490a3; font-style: normal; font-size: 8px; text-transform: uppercase; }
-    .unit code { display: block; margin-top: 6px; color: #778397; font-size: 8px; overflow-wrap: anywhere; }
-    .unit small { display: block; margin-top: 6px; color: #9ba7ba; font-family: "SFMono-Regular", Consolas, monospace; font-size: 8px; }
-    .more-units { padding: 10px; text-align: center; color: #788497; font-size: 9px; }
-    .interfaces { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #303849; }
-    .interface { padding: 6px 8px; border-radius: 7px; background: #293243; color: #b7c1cf; font-size: 8px; }
-
-    .answer-panel { margin-top: 14px; border: 1px solid var(--line); border-radius: 19px; background: white; overflow: hidden; }
-    .answer-head { display: grid; grid-template-columns: .9fr 1.1fr; }
-    .question-box, .answer-box { padding: 20px; }
-    .question-box { border-right: 1px solid var(--line); }
-    .answer-label { color: var(--blue); text-transform: uppercase; letter-spacing: .11em; font-size: 9px; font-weight: 900; }
-    .question-box p, .answer-box p { margin: 8px 0 0; line-height: 1.5; }
-    .question-box p { font-size: 14px; font-weight: 750; }
-    .answer-box { background: #eef1ff; border-left: 3px solid var(--blue); }
-    .answer-box p { font-size: 13px; }
-    .use-head { min-height: 58px; display: flex; justify-content: space-between; align-items: center; padding: 0 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .use-head strong { font-size: 12px; }
-    .use-tabs { display: flex; gap: 3px; }
-    .use-tab { padding: 8px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); cursor: pointer; font-size: 9px; font-weight: 800; }
-    .use-tab.active { background: var(--ink); color: white; }
-    .use-body { display: grid; grid-template-columns: .82fr 1.18fr; min-height: 220px; }
-    .command-side, .result-side { padding: 18px; }
-    .command-side { border-right: 1px solid var(--line); }
-    .tiny-label { display: block; margin-bottom: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-size: 8px; font-weight: 850; }
-    .command { position: relative; margin: 0; min-height: 50px; padding: 12px 40px 12px 12px; border-radius: 10px; background: var(--dark); color: #d1daea; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 9px; line-height: 1.55; }
-    .copy { position: absolute; right: 9px; top: 9px; width: 25px; height: 25px; border: 1px solid #3b4557; border-radius: 7px; background: #252d3d; color: white; cursor: pointer; }
-    .use-note { margin: 12px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
-    .result-card { padding: 14px; border-radius: 11px; background: #eef1ff; border-left: 3px solid var(--blue); }
-    .result-card strong { font-size: 12px; }
-    .result-card p { margin: 8px 0; font-size: 11px; line-height: 1.55; white-space: pre-wrap; }
-    .result-meta { color: #66718a; font-family: "SFMono-Regular", Consolas, monospace; font-size: 8px; line-height: 1.5; overflow-wrap: anywhere; }
-    .terminal-result { max-height: 190px; overflow: auto; margin: 0; padding: 14px; border-radius: 11px; background: var(--dark); color: #c7d2e2; font-size: 9px; line-height: 1.6; white-space: pre-wrap; }
-
-    .boundary { padding: 34px 0 74px; border-top: 1px solid var(--line); }
-    .boundary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .boundary-card { padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: white; }
-    .boundary-card h3 { margin: 0 0 12px; font-size: 14px; }
-    .boundary-card ul { margin: 0; padding-left: 17px; color: var(--muted); font-size: 11px; line-height: 1.75; }
-    footer { padding: 24px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 9px; }
-    footer .shell { display: flex; justify-content: space-between; }
-    .ok { color: #348845; }
-
-    @media (max-width: 980px) {
-      .hero { grid-template-columns: 1fr; padding-top: 60px; }
-      .hero-proof { min-height: 470px; }
-      .flagship-head, .section-title { grid-template-columns: 1fr; gap: 24px; }
-      .passport-grid { grid-template-columns: repeat(2, 1fr); }
-      .passport:last-child { grid-column: span 2; }
-      .compare { gap: 28px; }
-      .compare::before, .compare::after { display: none; }
-      .metrics { grid-template-columns: repeat(3, 1fr); }
-      .metric:nth-child(3) { border-right: 0; }
-      .metric:nth-child(n+4) { border-top: 1px solid var(--line); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
-    @media (max-width: 720px) {
-      .shell { width: min(100% - 24px, 1220px); }
-      .topbar { height: 68px; }
-      .nav > a:not(.github) { display: none; }
-      .hero { min-height: 0; padding: 54px 0 42px; gap: 46px; }
-      h1 { font-size: 52px; }
-      .hero-copy > p { font-size: 16px; }
-      .hero-actions { flex-direction: column; align-items: stretch; }
-      .truth-row { gap: 12px; }
-      .hero-proof { min-height: 490px; overflow: hidden; border-radius: 52px; }
-      .proof-aura { inset: 10px -5px; }
-      .proof-board { padding: 16px; }
-      .real-source { grid-template-columns: 32px 1fr auto; padding: 9px; }
-      .source-icon { width: 30px; height: 30px; }
-      .metrics { grid-template-columns: 1fr 1fr; border-radius: 14px; }
-      .metric { min-height: 80px; padding: 16px; border-top: 1px solid var(--line); }
-      .metric:nth-child(odd) { border-right: 1px solid var(--line); }
-      .metric:nth-child(even) { border-right: 0; }
-      .metric:first-child, .metric:nth-child(2) { border-top: 0; }
-      .metric:last-child { grid-column: span 2; }
-      .flagship { padding: 58px 0; }
-      .flagship h2, .section-title h2 { font-size: 43px; }
-      .answer-number { align-items: flex-start; }
-      .answer-number > span { font-size: 52px; }
-      .trace { grid-template-columns: 1fr; }
-      .trace-card { min-height: 0; }
-      .flagship-result { align-items: flex-start; flex-direction: column; }
-      .passports, .lab { padding-top: 58px; }
-      .passport-grid { grid-template-columns: 1fr; }
-      .passport:last-child { grid-column: auto; }
-      .passport { min-height: 210px; }
-      .resource-tabs { display: flex; overflow-x: auto; padding-bottom: 6px; }
-      .resource-tab { min-width: 145px; }
-      .compare { grid-template-columns: 1fr; gap: 12px; }
-      .compare-card { min-height: 0; }
-      .native-preview { height: 400px; }
-      .pack-preview { height: 420px; }
-      .answer-head, .use-body { grid-template-columns: 1fr; }
-      .question-box { border-right: 0; border-bottom: 1px solid var(--line); }
-      .command-side { border-right: 0; border-bottom: 1px solid var(--line); }
-      .use-head { align-items: flex-start; flex-direction: column; gap: 10px; padding: 14px; }
-      .use-tabs { width: 100%; }
-      .use-tab { flex: 1; }
-      .boundary-grid { grid-template-columns: 1fr; }
-      footer .shell { gap: 10px; flex-direction: column; }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .mono, code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+
+    .topbar {
+      position: sticky;
+      z-index: 50;
+      top: 0;
+      border-bottom: 1px solid rgba(223, 227, 231, .9);
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(12px);
+    }
+    .topbar .shell {
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: flex; gap: 10px; align-items: center; text-decoration: none; font-weight: 750; }
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 8px;
+      color: white;
+      background: var(--ink);
+      font-size: 13px;
+      letter-spacing: -.04em;
+    }
+    .nav { display: flex; align-items: center; gap: 22px; font-size: 14px; }
+    .nav a { color: var(--muted); text-decoration: none; }
+    .nav a:hover { color: var(--ink); }
+    .nav .repo-link {
+      padding: 7px 12px;
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      color: var(--ink);
+      background: white;
+      font-weight: 650;
+    }
+
+    .hero { padding: 86px 0 60px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(310px, .65fr); gap: 64px; align-items: end; }
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px var(--green-soft); }
+    h1 { max-width: 760px; margin: 0; font-size: clamp(44px, 6vw, 72px); line-height: 1.02; letter-spacing: -.055em; }
+    .hero-copy > p { max-width: 740px; margin: 26px 0 0; color: #4e5966; font-size: 19px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .button {
+      display: inline-flex;
+      min-height: 43px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      border: 1px solid var(--line-dark);
+      border-radius: 8px;
+      background: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .button.primary { border-color: var(--accent); color: white; background: var(--accent); }
+    .button:hover { transform: translateY(-1px); }
+    .hero-proof {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero-proof-head { padding: 14px 16px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .08em; }
+    .proof-row { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 13px 16px; border-bottom: 1px solid var(--line); }
+    .proof-row:last-child { border: 0; }
+    .proof-num { color: #929ba5; font: 12px/1 "SFMono-Regular", monospace; }
+    .proof-row strong { display: block; font-size: 14px; }
+    .proof-row small { display: block; margin-top: 2px; color: var(--muted); }
+    .proof-state { color: var(--green); font-size: 12px; font-weight: 800; }
+
+    .totals { margin-top: 42px; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
+    .total { min-height: 100px; padding: 22px; border-right: 1px solid var(--line); }
+    .total:last-child { border: 0; }
+    .total strong { display: block; font-size: 27px; letter-spacing: -.04em; }
+    .total span { color: var(--muted); font-size: 13px; }
+
+    .section { padding: 74px 0; border-top: 1px solid var(--line); }
+    .section.white { background: white; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 28px; }
+    .section-head h2 { margin: 0; font-size: clamp(31px, 4vw, 44px); line-height: 1.08; letter-spacing: -.04em; }
+    .section-head p { max-width: 520px; margin: 0; color: var(--muted); }
+    .eyebrow { margin-bottom: 9px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+
+    .run-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+    .run-option {
+      min-height: 166px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .run-option:hover { border-color: #aab4c0; }
+    .run-option.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+    .run-kind { display: inline-flex; padding: 3px 7px; border-radius: 5px; color: var(--accent); background: var(--accent-soft); font-size: 10px; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+    .run-kind.deterministic { color: var(--amber); background: var(--amber-soft); }
+    .run-option h3 { margin: 13px 0 7px; font-size: 16px; line-height: 1.3; }
+    .run-option p { margin: 0; color: var(--muted); font-size: 13px; }
+    .run-option .run-mini { display: block; margin-top: 13px; color: #46515d; font: 11px/1.4 "SFMono-Regular", monospace; }
+
+    .task-card { margin-bottom: 16px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
+    .task-top { display: flex; justify-content: space-between; gap: 28px; }
+    .task-card h3 { margin: 0 0 7px; font-size: 23px; letter-spacing: -.025em; }
+    .task-card p { max-width: 820px; margin: 0; color: #4e5966; }
+    .status-badge { white-space: nowrap; align-self: start; padding: 5px 9px; border-radius: 6px; color: var(--green); background: var(--green-soft); font-size: 11px; font-weight: 850; text-transform: uppercase; }
+    .run-facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .fact { padding: 6px 9px; border: 1px solid var(--line); border-radius: 6px; color: #52606d; background: #fafbfc; font: 11px/1.2 "SFMono-Regular", monospace; }
+
+    .runner {
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      min-height: 650px;
+      border: 1px solid var(--line-dark);
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .timeline-panel { border-right: 1px solid var(--line); background: #fafbfc; }
+    .timeline-controls { display: flex; align-items: center; gap: 8px; min-height: 58px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+    .play {
+      min-width: 88px;
+      padding: 8px 11px;
+      border: 1px solid var(--line-dark);
+      border-radius: 7px;
+      background: white;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    .play:hover { border-color: var(--accent); }
+    .step-counter { margin-left: auto; color: var(--muted); font: 11px/1 "SFMono-Regular", monospace; }
+    .step-list { max-height: 591px; overflow: auto; padding: 8px; }
+    .step-button {
+      position: relative;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 8px;
+      padding: 11px 9px;
+      border: 1px solid transparent;
+      border-radius: 7px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+    .step-button::after { content: ""; position: absolute; left: 23px; top: 39px; bottom: -12px; width: 1px; background: var(--line); }
+    .step-button:last-child::after { display: none; }
+    .step-button:hover { background: white; }
+    .step-button.active { border-color: #cbd7f4; background: var(--accent-soft); }
+    .step-index { position: relative; z-index: 1; display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid var(--line-dark); border-radius: 50%; color: #65707d; background: white; font: 10px/1 "SFMono-Regular", monospace; }
+    .step-button.rejected .step-index { border-color: #efaca5; color: var(--red); background: var(--red-soft); }
+    .step-name { display: block; padding-top: 1px; font-size: 12px; font-weight: 720; line-height: 1.35; }
+    .step-meta { display: block; margin-top: 4px; color: var(--muted); font: 10px/1.3 "SFMono-Regular", monospace; }
+    .step-button.rejected .step-meta { color: var(--red); }
+
+    .step-detail { min-width: 0; padding: 30px; }
+    .detail-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .phase-badge { padding: 4px 7px; border-radius: 5px; color: var(--accent); background: var(--accent-soft); font-size: 10px; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+    .phase-badge.rejected { color: var(--red); background: var(--red-soft); }
+    .call-id { color: var(--muted); font: 10px/1 "SFMono-Regular", monospace; overflow: hidden; text-overflow: ellipsis; }
+    .step-detail h3 { margin: 18px 0 8px; font-size: 26px; line-height: 1.18; letter-spacing: -.03em; }
+    .observation { max-width: 760px; margin: 0; color: #4e5966; }
+    .decision-note { margin-top: 20px; padding: 12px 14px; border-left: 3px solid var(--accent); color: #44505c; background: #f8faff; font-size: 13px; }
+    .decision-note.rejected { border-color: var(--red); background: var(--red-soft); }
+    .io-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .io-card { min-width: 0; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+    .io-label { display: block; padding: 9px 11px; border-bottom: 1px solid var(--line); color: var(--muted); background: #fafbfc; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+    .io-card pre { height: 218px; margin: 0; padding: 13px; overflow: auto; color: #d7e2ed; background: var(--code); font-size: 11px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+    .evidence-block { margin-top: 22px; }
+    .evidence-block > strong { display: block; margin-bottom: 9px; font-size: 12px; }
+    .evidence-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .unit-pill { max-width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; color: #4f5a66; background: white; font: 10px/1.3 "SFMono-Regular", monospace; overflow-wrap: anywhere; text-decoration: none; }
+    .unit-pill:hover { border-color: var(--accent); color: var(--accent); }
+    .raw-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .text-link { color: var(--accent); font-size: 12px; font-weight: 700; }
+
+    .deliverable-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, .55fr); gap: 18px; align-items: start; }
+    .artifact-shell, .verification-shell { border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); overflow: hidden; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 54px; padding: 11px 15px; border-bottom: 1px solid var(--line); background: #fafbfc; }
+    .panel-head strong { font-size: 13px; }
+    .panel-head span, .panel-head a { color: var(--muted); font: 10px/1.3 "SFMono-Regular", monospace; }
+    .artifact { max-height: 760px; overflow: auto; padding: 28px 30px 34px; }
+    .artifact h1, .artifact h2, .artifact h3 { margin: 26px 0 10px; line-height: 1.2; letter-spacing: -.025em; }
+    .artifact h1 { margin-top: 0; font-size: 28px; }
+    .artifact h2 { padding-bottom: 6px; border-bottom: 1px solid var(--line); font-size: 20px; }
+    .artifact h3 { font-size: 16px; }
+    .artifact p { margin: 10px 0; color: #3f4a55; }
+    .artifact ul { margin: 9px 0 16px; padding-left: 22px; }
+    .artifact li { margin: 4px 0; }
+    .artifact code { padding: 2px 4px; border-radius: 4px; color: #1c469f; background: var(--accent-soft); font-size: .9em; }
+    .artifact-table-wrap { margin: 15px 0; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+    .artifact table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .artifact th, .artifact td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .artifact th { background: #f7f8fa; }
+    .artifact tr:last-child td { border-bottom: 0; }
+    .cite { display: inline-block; padding: 1px 4px; border-radius: 4px; color: var(--accent); background: var(--accent-soft); font: 10px/1.4 "SFMono-Regular", monospace; }
+    .checks { padding: 8px; }
+    .check-row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+    .check-row:last-child { border: 0; }
+    .check-icon { display: grid; width: 18px; height: 18px; place-items: center; border-radius: 50%; color: white; background: var(--green); font-size: 10px; }
+    .check-row b { display: block; font-size: 12px; overflow-wrap: anywhere; }
+    .check-row span { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .claim-list { margin-top: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: white; overflow: hidden; }
+    .claim-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .45fr); gap: 20px; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+    .claim-row:last-child { border: 0; }
+    .claim-row p { margin: 0; font-size: 13px; }
+    .claim-source { color: var(--muted); font: 10px/1.5 "SFMono-Regular", monospace; overflow-wrap: anywhere; }
+
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .why-card { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
+    .why-card span { display: block; margin-bottom: 12px; color: var(--muted); font: 11px/1 "SFMono-Regular", monospace; }
+    .why-card h3 { margin: 0 0 9px; font-size: 18px; }
+    .why-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .source-table-wrap { overflow: auto; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
+    .source-table { width: 100%; min-width: 820px; border-collapse: collapse; font-size: 13px; }
+    .source-table th, .source-table td { padding: 13px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .source-table th { color: var(--muted); background: #fafbfc; font-size: 10px; letter-spacing: .07em; text-transform: uppercase; }
+    .source-table tr:last-child td { border: 0; }
+    .source-table a { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .source-table code { color: var(--muted); font-size: 10px; }
+
+    .reproduce { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr); gap: 30px; }
+    .reproduce h2 { margin: 0 0 12px; font-size: 36px; letter-spacing: -.04em; }
+    .reproduce p { color: var(--muted); }
+    .terminal { border: 1px solid #28323c; border-radius: var(--radius); overflow: hidden; background: var(--code); box-shadow: var(--shadow); }
+    .terminal-head { padding: 10px 13px; border-bottom: 1px solid #2d3945; color: #8fa1b2; font: 10px/1 "SFMono-Regular", monospace; }
+    .terminal pre { margin: 0; padding: 17px; overflow: auto; color: #dce7f1; font-size: 12px; line-height: 1.7; }
+    .limits { margin-top: 22px; padding: 20px 22px; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
+    .limits h3 { margin: 0 0 10px; font-size: 15px; }
+    .limits ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 13px; }
+    .limits li { margin: 5px 0; }
+
+    footer { padding: 26px 0; border-top: 1px solid var(--line); color: var(--muted); background: white; font-size: 12px; }
+    footer .shell { display: flex; justify-content: space-between; gap: 20px; }
+
+    .error { margin: 40px auto; padding: 22px; border: 1px solid #efaca5; border-radius: var(--radius); color: var(--red); background: var(--red-soft); }
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      .hero-grid, .deliverable-grid, .reproduce { grid-template-columns: 1fr; }
+      .hero { padding-top: 62px; }
+      .hero-proof { max-width: 560px; }
+      .run-picker, .why-grid { grid-template-columns: 1fr; }
+      .run-option { min-height: 0; }
+      .runner { grid-template-columns: 1fr; }
+      .timeline-panel { border-right: 0; border-bottom: 1px solid var(--line); }
+      .step-list { max-height: 310px; }
+      .io-grid { grid-template-columns: 1fr; }
+      .io-card pre { height: 180px; }
+    }
+    @media (max-width: 640px) {
+      .shell { width: min(100% - 24px, 1120px); }
+      .nav > a:not(.repo-link) { display: none; }
+      h1 { font-size: 43px; }
+      .hero-copy > p { font-size: 17px; }
+      .totals { grid-template-columns: 1fr 1fr; }
+      .total:nth-child(2) { border-right: 0; }
+      .total:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .section { padding: 56px 0; }
+      .section-head, .task-top { display: block; }
+      .section-head p { margin-top: 12px; }
+      .status-badge { display: inline-block; margin-top: 16px; }
+      .step-detail { padding: 22px 16px; }
+      .artifact { padding: 22px 17px 28px; }
+      .claim-row { grid-template-columns: 1fr; gap: 7px; }
+      footer .shell { display: block; }
+      footer span { display: block; margin-top: 4px; }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="shell">
-      <a class="brand" href="#top"><span class="brand-badge">A²</span><span>Agentic Anything</span></a>
-      <nav class="nav"><a href="#proof">The proof</a><a href="#sources">Real sources</a><a href="#lab">Try the packs</a><a class="github" href="https://github.com/THUQiXuan/agentic-anything" target="_blank" rel="noreferrer">View GitHub ↗</a></nav>
+      <a class="brand" href="#top"><span class="brand-mark">A²</span><span>Agentic Anything</span></a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#runs">Runs</a>
+        <a href="#artifact-section">Outputs</a>
+        <a href="#reproduce">Reproduce</a>
+        <a class="repo-link" href="https://github.com/THUQiXuan/agentic-anything" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </nav>
     </div>
   </header>
 
   <main id="top">
-    <section class="shell hero">
-      <div class="hero-copy">
-        <div class="eyebrow">Real-world product walkthrough</div>
-        <h1>Real inputs.<br><span class="blue">Inspectable</span><br>outputs.</h1>
-        <p>No invented handbook and no toy repository. This page runs <strong>Agentic Anything</strong> against a public-domain book, a tagged GitHub release, official Python documentation, NASA data, and a CC BY research paper—then exposes the exact evidence behind every answer.</p>
-        <div class="hero-actions"><a class="button primary" href="#proof">Trace a real code answer</a><a class="button secondary" href="#lab">Compare all five sources</a></div>
-        <div class="truth-row"><span>publisher links</span><span>pinned versions & SHA-256</span><span>zero synthetic source lines</span></div>
-      </div>
-      <div class="hero-proof" aria-label="Five verified real resources become one agent-native layer">
-        <div class="proof-aura"></div>
-        <div class="proof-board">
-          <div class="proof-board-head"><b>source-passports.json</b><span class="verified">5 / 5 VERIFIED</span></div>
-          <div class="source-stack">
-            <div class="real-source"><span class="source-icon">GIT</span><span><b>psf/requests · v2.34.2</b><small>GitHub release archive · Apache-2.0</small></span><span class="check">✓</span></div>
-            <div class="real-source"><span class="source-icon">EPUB</span><span><b>Alice · Gutenberg #11</b><small>Public-domain book · 14 chapters</small></span><span class="check">✓</span></div>
-            <div class="real-source"><span class="source-icon">DOC</span><span><b>Python 3.13 secrets</b><small>Official PSF documentation</small></span><span class="check">✓</span></div>
-            <div class="real-source"><span class="source-icon">CSV</span><span><b>NASA GISTEMP v4</b><small>Global anomaly data · 1880–2026</small></span><span class="check">✓</span></div>
-            <div class="real-source"><span class="source-icon">CC</span><span><b>FAIR Principles paper</b><small>PMC4792175 · CC BY 4.0</small></span><span class="check">✓</span></div>
-          </div>
-          <div class="transform-line"><i></i><strong>agentify →</strong><i></i></div>
-          <div class="proof-output"><b>One consistent resource-agent contract</b><code>typed units · focused evidence · locators · hashes<br>generated CLI · MCP · AGENT.md</code></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="shell metrics" aria-label="Verified demo metrics">
-      <div class="metric"><strong id="metric-publishers">—</strong><small>independent publishers</small></div>
-      <div class="metric"><strong id="metric-types">—</strong><small>native resource types</small></div>
-      <div class="metric"><strong id="metric-units">—</strong><small>real evidence units</small></div>
-      <div class="metric"><strong id="metric-checks">—</strong><small>quality checks passing</small></div>
-      <div class="metric"><strong id="metric-synthetic">—</strong><small>synthetic source lines</small></div>
-    </div>
-
-    <section class="flagship" id="proof">
+    <section class="hero">
       <div class="shell">
-        <div class="flagship-head">
-          <div><div class="eyebrow" style="color:var(--lime)">Flagship proof · real GitHub release</div><h2>Trace behavior,<br>not keywords.</h2></div>
-          <div class="flagship-question"><strong>Question</strong><span id="flagship-task">Loading the verified code question…</span></div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="kicker"><span class="pulse"></span>Recorded runs over authentic resources</div>
+            <h1>Watch the work, not a one-line answer.</h1>
+            <p>Real tasks that take many steps: inspect a pack, search, read exact units, revise after rejection, compute, write a useful file, and verify every claim.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="#runs" id="hero-replay">Replay a real model run</a>
+              <a class="button" href="#artifact-section">See the finished work</a>
+            </div>
+          </div>
+          <aside class="hero-proof" aria-label="What is recorded">
+            <div class="hero-proof-head">What you can inspect</div>
+            <div class="proof-row"><span class="proof-num">01</span><span><strong>Actual MCP calls</strong><small>arguments, outputs, call IDs</small></span><span class="proof-state">saved</span></div>
+            <div class="proof-row"><span class="proof-num">02</span><span><strong>Decision boundary</strong><small>why the next public action follows</small></span><span class="proof-state">saved</span></div>
+            <div class="proof-row"><span class="proof-num">03</span><span><strong>Evidence lineage</strong><small>unit, locator, content hash</small></span><span class="proof-state">saved</span></div>
+            <div class="proof-row"><span class="proof-num">04</span><span><strong>Useful deliverable</strong><small>report, calculations, audit</small></span><span class="proof-state">checked</span></div>
+          </aside>
         </div>
-        <div class="answer-number"><span>30</span><p><b>redirects by default</b><span id="flagship-answer">Loading the checked answer…</span></p></div>
-        <div class="trace" id="flagship-trace"></div>
-        <div class="flagship-result"><b>One answer assembled from a constant, object initialization, and runtime guard.</b><span id="flagship-citations">3 locators · 3 content hashes</span></div>
+        <div class="totals" aria-label="Recorded demo totals">
+          <div class="total"><strong id="total-runs">—</strong><span>completed long tasks</span></div>
+          <div class="total"><strong id="total-steps">—</strong><span>visible run steps</span></div>
+          <div class="total"><strong id="total-tools">—</strong><span>search + read calls</span></div>
+          <div class="total"><strong id="total-checks">—</strong><span>offline checks passing</span></div>
+        </div>
       </div>
     </section>
 
-    <section class="shell passports" id="sources">
-      <div class="section-title">
-        <div><div class="eyebrow">Authenticity ledger</div><h2>Every input has<br>a source passport.</h2></div>
-        <p>A demo is only convincing if its inputs can be audited. Each card links to the publisher and records the exact version, license, snapshot file, and byte-level hash used to build the checked-in pack.</p>
-      </div>
-      <div class="passport-grid" id="passport-grid"></div>
-    </section>
-
-    <section class="shell lab" id="lab">
-      <div class="section-title">
-        <div><div class="eyebrow">Before → pack → use</div><h2>See exactly what<br>becomes usable.</h2></div>
-        <p>Pick a source. The left side preserves a recognizable native view; the right side is the actual generated pack. Below them, run the real query through search, its generated CLI, or MCP.</p>
-      </div>
-      <div class="resource-tabs" id="resource-tabs"></div>
-      <div class="compare">
-        <article class="compare-card">
-          <header class="compare-head"><div><small>Before · authentic source</small><strong id="before-title">Loading…</strong></div><a class="source-link" id="source-link" target="_blank" rel="noreferrer">Open publisher ↗</a></header>
-          <div class="source-context" id="before-problem"></div>
-          <div class="native-preview" id="native-preview"></div>
-          <div class="source-foot"><span id="source-version"></span><span class="mono" id="source-sha"></span></div>
+    <section class="section" id="runs">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Choose a run</div><h2>Long enough to show<br>the pack doing real work.</h2></div>
+          <p>One run uses an actual model through OpenRouter. Two use explicit deterministic agent policies so every calculation and citation can be rebuilt byte-for-byte.</p>
+        </div>
+        <div class="run-picker" id="run-picker"></div>
+        <article class="task-card">
+          <div class="task-top">
+            <div><h3 id="run-title">Loading recorded runs…</h3><p id="run-task"></p></div>
+            <span class="status-badge" id="run-status">loading</span>
+          </div>
+          <div class="run-facts" id="run-facts"></div>
         </article>
-        <article class="compare-card after-card">
-          <header class="compare-head"><div><small>After · agent-native pack</small><strong id="after-title">Loading…</strong></div><a class="manifest-link" id="manifest-link" target="_blank">Open manifest ↗</a></header>
-          <div class="pack-preview" id="pack-preview"></div>
-        </article>
+        <div class="runner">
+          <aside class="timeline-panel">
+            <div class="timeline-controls">
+              <button class="play" id="play-run" type="button">▶ Replay run</button>
+              <button class="play" id="reset-run" type="button">↺ Reset</button>
+              <span class="step-counter" id="step-counter">— / —</span>
+            </div>
+            <div class="step-list" id="step-list"></div>
+          </aside>
+          <article class="step-detail">
+            <div class="detail-top"><span class="phase-badge" id="detail-phase">—</span><span class="call-id" id="detail-call"></span></div>
+            <h3 id="detail-title">Select a step</h3>
+            <p class="observation" id="detail-observation"></p>
+            <div class="decision-note" id="detail-note"></div>
+            <div class="io-grid">
+              <div class="io-card"><span class="io-label">Exact tool input</span><pre id="detail-input"></pre></div>
+              <div class="io-card"><span class="io-label">Recorded output</span><pre id="detail-output"></pre></div>
+            </div>
+            <div class="evidence-block"><strong>Evidence units touched</strong><div class="evidence-list" id="detail-units"></div></div>
+            <div class="raw-row" id="raw-links"></div>
+          </article>
+        </div>
       </div>
-      <section class="answer-panel">
-        <div class="answer-head"><div class="question-box"><span class="answer-label">Human asks</span><p id="demo-question"></p></div><div class="answer-box"><span class="answer-label">Evidence-backed answer</span><p id="demo-answer"></p></div></div>
-        <header class="use-head"><strong>Now use the transformed resource</strong><div class="use-tabs"><button class="use-tab active" data-use="search">Search evidence</button><button class="use-tab" data-use="cli">Generated CLI</button><button class="use-tab" data-use="mcp">Connect MCP</button></div></header>
-        <div class="use-body"><div class="command-side"><span class="tiny-label">Run this</span><pre class="command"><code id="use-command"></code><button class="copy" id="copy-command" aria-label="Copy command">⧉</button></pre><p class="use-note" id="use-note"></p></div><div class="result-side"><span class="tiny-label">Actual checked-in result</span><div id="use-result"></div></div></div>
-      </section>
     </section>
 
-    <section class="boundary">
-      <div class="shell boundary-grid">
-        <div class="boundary-card"><h3>Directly demonstrated</h3><ul><li>Five unmodified, hash-verified external source snapshots.</li><li>Real EPUB, GitHub release, webpage, CSV, and scholarly HTML ingestion.</li><li>Focused evidence snippets with unit locator and content hash.</li><li>Generated resource CLIs, MCP access, AGENT.md, and manifests.</li></ul></div>
-        <div class="boundary-card"><h3>Boundary of this demo</h3><ul><li>Evidence-backed editorial answers are curated; no LLM is invoked at build time.</li><li>The showcase does not benchmark human productivity or generative answer quality.</li><li>Read-only MCP access does not authorize mutation of upstream resources.</li><li>Publisher license and attribution requirements still apply to source reuse.</li></ul></div>
+    <section class="section white" id="artifact-section">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Final deliverable</div><h2>The run ends with<br>something you can use.</h2></div>
+          <p>The report is checked in as a normal file. The right column shows the exact assertions that decide whether the run is publishable.</p>
+        </div>
+        <div class="deliverable-grid">
+          <article class="artifact-shell">
+            <div class="panel-head"><strong id="artifact-name">artifact.md</strong><a id="artifact-raw" target="_blank">open raw ↗</a></div>
+            <div class="artifact" id="artifact"></div>
+          </article>
+          <aside class="verification-shell">
+            <div class="panel-head"><strong id="verification-title">Verification</strong><span id="artifact-hash"></span></div>
+            <div class="checks" id="checks"></div>
+          </aside>
+        </div>
+        <div class="claim-list" id="claim-list"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Why the pack mattered</div><h2>Less context hunting.<br>More verifiable work.</h2></div>
+        </div>
+        <div class="why-grid">
+          <article class="why-card"><span>BEFORE</span><h3>Native resource</h3><p>A 74-file repository, a 147-year table, or a long paper has its own structure. An agent must first discover where evidence lives.</p></article>
+          <article class="why-card"><span>AGENT PACK</span><h3>One stable contract</h3><p><code>resource_info</code>, <code>search_resource</code>, and <code>read_unit</code> work across every format and return locators plus hashes.</p></article>
+          <article class="why-card"><span>AFTER</span><h3>Auditable outcome</h3><p>The agent can carry a task across many calls, and each final claim can be checked against a unit it actually read.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white" id="sources">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Source ledger</div><h2>Real inputs, pinned<br>before the run starts.</h2></div>
+          <p>The longer runs use a subset of the five authentic packs. Every original snapshot has a publisher URL, version, license, and verified SHA-256.</p>
+        </div>
+        <div class="source-table-wrap">
+          <table class="source-table">
+            <thead><tr><th>Resource</th><th>Publisher / version</th><th>Native input</th><th>Snapshot SHA-256</th></tr></thead>
+            <tbody id="source-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reproduce">
+      <div class="shell reproduce">
+        <div>
+          <div class="eyebrow">Reproduce locally</div>
+          <h2>The page is a replay.<br>The checks are live.</h2>
+          <p>Rebuild the packs, rerun both deterministic agents through fresh stdio MCP processes, and verify the committed model recording without paying for another model call.</p>
+          <div class="limits">
+            <h3>Boundary of this demo</h3>
+            <ul>
+              <li>“Replay” animates a checked-in recording; GitHub Pages is not secretly running a server.</li>
+              <li>The model run is a real one-time tool loop. Model text is not trusted until its evidence gate passes.</li>
+              <li>Deterministic runs demonstrate tool use and calculations, not hidden LLM reasoning.</li>
+              <li>All source access is read-only. No upstream repository, dataset, or paper is modified.</li>
+              <li>Captured code units can be truncated; the release ZIP hash authenticates the complete upstream snapshot.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-head">repository root · offline replay</div>
+          <pre><span style="color:#7ed3a4">$</span> python demos/build_demos.py
+<span style="color:#7ed3a4">$</span> python demos/build_agent_runs.py
+<span style="color:#7ed3a4">$</span> python demos/verify_demos.py
+
+<span style="color:#8fa1b2"># optional: record a fresh paid model run</span>
+<span style="color:#7ed3a4">$</span> export OPENROUTER_API_KEY="&lt;your-key&gt;"
+<span style="color:#7ed3a4">$</span> python demos/record_llm_run.py
+
+<span style="color:#7ed3a4">✓</span> raw MCP request/response pairs
+<span style="color:#7ed3a4">✓</span> read-before-cite ordering
+<span style="color:#7ed3a4">✓</span> artifact and snapshot hashes
+<span style="color:#7ed3a4">✓</span> derived numerical results</pre>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer><div class="shell"><span>Agentic Anything · authentic-source showcase · snapshot 2026-07-11</span><span id="load-state">loading committed evidence…</span></div></footer>
+  <footer>
+    <div class="shell"><span>Agentic Anything · long-horizon demo gallery</span><span id="load-state">loading committed recordings…</span></div>
+  </footer>
 
   <script>
-    let showcase;
-    let selected = 0;
-    let useMode = "search";
-    const tabMeta = {
-      requests: ["GIT", "Requests"], alice: ["EPUB", "Alice"], secrets: ["DOC", "Python docs"],
-      gistemp: ["CSV", "NASA"], "fair-paper": ["CC", "FAIR paper"]
-    };
+    "use strict";
+
+    const RUN_SPECS = [
+      {
+        id: "requests-redirect-impact-llm",
+        run: "runs/requests-redirect-impact-llm/run.json",
+        artifact: "runs/requests-redirect-impact-llm/maintainer-impact-brief.md",
+        raw: "runs/requests-redirect-impact-llm/raw-transcript.json",
+        short: "Real model · code impact",
+        description: "A model searches, reads, submits too early, then repairs the evidence gap.",
+      },
+      {
+        id: "gistemp-fair-audit",
+        run: "runs/gistemp-fair-audit/run.json",
+        artifact: "runs/gistemp-fair-audit/artifact.md",
+        verification: "runs/gistemp-fair-audit/verification.json",
+        raw: "runs/gistemp-fair-audit/raw-events.jsonl",
+        short: "Data + paper · research audit",
+        description: "Parse 147 years, handle missing data, calculate trends, audit 15 FAIR principles.",
+      },
+      {
+        id: "requests-redirect-impact",
+        run: "runs/requests-redirect-impact/run.json",
+        artifact: "runs/requests-redirect-impact/artifact.md",
+        verification: "runs/requests-redirect-impact/verification.json",
+        raw: "runs/requests-redirect-impact/raw-events.jsonl",
+        short: "Deterministic · code impact",
+        description: "Trace a change through definition, default, guard, exception, tests, and docs.",
+      },
+    ];
+
+    let runs = [];
+    let showcase = null;
+    let selectedRun = 0;
+    let selectedStep = 0;
+    let timer = null;
+
     const esc = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
-    const shortHash = value => esc(String(value || "").slice(0, 12));
+    const pretty = value => typeof value === "string" ? value : JSON.stringify(value ?? {}, null, 2);
+    const shortHash = value => String(value || "").slice(0, 12);
+    const ms = value => value >= 1000 ? `${(value / 1000).toFixed(1)}s` : `${value}ms`;
 
-    function highlighted(text, matched = []) {
-      let safe = esc(text);
-      [...matched].sort((a,b) => b.length - a.length).forEach(term => {
-        if (!term || term.length < 2) return;
-        const pattern = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        safe = safe.replace(new RegExp(`(${pattern})`, "gi"), "<mark>$1</mark>");
-      });
-      return safe;
+    function inlineMarkdown(text) {
+      let value = esc(text);
+      value = value.replace(/`([^`]+)`/g, "<code>$1</code>");
+      value = value.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      value = value.replace(/\[([A-Z]\d+)\]/g, '<span class="cite">[$1]</span>');
+      return value;
     }
 
-    function renderMetrics() {
-      const s = showcase.summary;
-      document.getElementById("metric-publishers").textContent = s.publishers;
-      document.getElementById("metric-types").textContent = s.resource_types;
-      document.getElementById("metric-units").textContent = s.units;
-      document.getElementById("metric-checks").textContent = `${s.assertions_passed} / ${s.assertions_total}`;
-      document.getElementById("metric-synthetic").textContent = showcase.synthetic_source_lines;
-    }
-
-    function renderFlagship() {
-      const flag = showcase.flagship;
-      document.getElementById("flagship-task").textContent = flag.task;
-      document.getElementById("flagship-answer").textContent = flag.answer;
-      document.getElementById("flagship-trace").innerHTML = flag.steps.map(step => `<article class="trace-card"><div class="trace-top"><span>${esc(step.label)}</span><span>${esc(step.step)}</span></div><h3>${esc(step.finding)}</h3><pre class="trace-code">${highlighted(step.result.evidence, step.result.matched)}</pre><div class="trace-meta"><a href="${esc(step.deep_link)}" target="_blank" rel="noreferrer">${esc(step.result.locator)} ↗</a><br>rank ${esc(step.result.rank)} · sha256 ${shortHash(step.result.content_sha256)}…</div></article>`).join("");
-      document.getElementById("flagship-citations").textContent = `${flag.steps.length} locators · ${flag.steps.length} content hashes`;
-    }
-
-    function renderPassports() {
-      document.getElementById("passport-grid").innerHTML = showcase.demos.map(demo => `<a class="passport" href="${esc(demo.source.origin_url)}" target="_blank" rel="noreferrer"><div class="passport-top"><span class="passport-type">${esc(demo.resource_type)}</span><span>✓ verified</span></div><h3>${esc(demo.source.title)}</h3><div class="publisher">${esc(demo.source.publisher)}</div><dl><dt>Version</dt><dd>${esc(demo.source.version)}</dd><dt>License</dt><dd>${esc(demo.source.license)}</dd><dt>Snapshot SHA-256</dt><dd class="sha">${shortHash(demo.source.sha256)}…</dd></dl></a>`).join("");
-    }
-
-    function renderNative(demo) {
-      const preview = demo.preview;
-      const host = document.getElementById("native-preview");
-      if (preview.kind === "code") {
-        host.innerHTML = preview.files.map(file => `<div class="code-file"><div class="code-file-head"><span>${esc(file.path.split("/").slice(-3).join("/"))}</span><span>line ${esc(file.start_line)}</span></div><pre>${highlighted(file.code, ["DEFAULT_REDIRECT_LIMIT", "max_redirects", "TooManyRedirects", "30"])}</pre></div>`).join("");
-      } else if (preview.kind === "dataset") {
-        host.innerHTML = `<div class="doc-preview"><span class="doc-kicker">${esc(preview.title)}</span><h3>Global temperature anomaly</h3></div><table class="dataset-table"><thead><tr>${preview.columns.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${preview.rows.map(row => `<tr class="${row[0] === "2024" ? "focus" : ""}">${row.map(cell => `<td>${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table><p class="dataset-note">${esc(preview.note)}</p>`;
-      } else if (preview.kind === "web") {
-        host.innerHTML = `<div class="web-preview"><div class="browser-bar"><i class="browser-dot"></i><i class="browser-dot"></i><i class="browser-dot"></i><span class="browser-url">${esc(demo.source.origin_url)}</span></div><div class="web-body"><h3>${esc(preview.heading)}</h3>${preview.passages.map(text => `<p>${highlighted(text, demo.query_result.matched)}</p>`).join("")}</div></div>`;
-      } else {
-        host.innerHTML = `<div class="doc-preview"><span class="doc-kicker">${esc(preview.kind === "book" ? preview.chapter : "Open-access paper · CC BY 4.0")}</span><h3>${esc(preview.kind === "book" ? demo.source.title : preview.heading)}</h3>${preview.passages.map(text => `<p>${highlighted(text, demo.query_result.matched)}</p>`).join("")}</div>`;
+    function markdownToHtml(markdown) {
+      const lines = String(markdown || "").replace(/\r/g, "").split("\n");
+      const out = [];
+      let index = 0;
+      const isTableDivider = line => /^\s*\|?[\s:|-]+\|\s*$/.test(line || "") && (line.match(/-/g) || []).length >= 3;
+      while (index < lines.length) {
+        const line = lines[index];
+        if (!line.trim() || line.trim() === "---") { index += 1; continue; }
+        const heading = /^(#{1,3})\s+(.+)$/.exec(line);
+        if (heading) {
+          const level = heading[1].length;
+          out.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+          index += 1;
+          continue;
+        }
+        if (line.includes("|") && isTableDivider(lines[index + 1])) {
+          const rows = [];
+          const split = row => row.trim().replace(/^\||\|$/g, "").split("|").map(cell => cell.trim());
+          const header = split(line);
+          index += 2;
+          while (index < lines.length && lines[index].includes("|") && lines[index].trim()) {
+            rows.push(split(lines[index]));
+            index += 1;
+          }
+          out.push(`<div class="artifact-table-wrap"><table><thead><tr>${header.map(cell => `<th>${inlineMarkdown(cell)}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${inlineMarkdown(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
+          continue;
+        }
+        if (/^\s*[-*]\s+/.test(line)) {
+          const items = [];
+          while (index < lines.length && /^\s*[-*]\s+/.test(lines[index])) {
+            items.push(lines[index].replace(/^\s*[-*]\s+/, ""));
+            index += 1;
+          }
+          out.push(`<ul>${items.map(item => `<li>${inlineMarkdown(item)}</li>`).join("")}</ul>`);
+          continue;
+        }
+        const paragraph = [line.trim()];
+        index += 1;
+        while (index < lines.length && lines[index].trim() && !/^(#{1,3})\s+/.test(lines[index]) && !/^\s*[-*]\s+/.test(lines[index]) && !(lines[index].includes("|") && isTableDivider(lines[index + 1]))) {
+          paragraph.push(lines[index].trim());
+          index += 1;
+        }
+        out.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`);
       }
+      return out.join("");
     }
 
-    function renderPack(demo) {
-      const chosen = demo.query_result.unit_id;
-      const ordered = [...demo.units].sort((a,b) => (a.unit_id === chosen ? -1 : b.unit_id === chosen ? 1 : 0));
-      const visible = ordered.slice(0, 5);
-      document.getElementById("pack-preview").innerHTML = `<div class="pack-summary"><b>agent-pack.json → typed units</b><span class="pack-count">${demo.unit_count} captured</span></div><div class="unit-list">${visible.map(unit => `<div class="unit"><div class="unit-top"><b>${esc(unit.title)}</b><em>${esc(unit.type)}</em></div><code>${esc(unit.locator)}</code><small>sha256 ${shortHash(unit.content_sha256)}…</small></div>`).join("")}${demo.unit_count > visible.length ? `<div class="more-units">+ ${demo.unit_count - visible.length} more units in the manifest</div>` : ""}</div><div class="interfaces">${demo.interfaces.map(name => `<span class="interface">${esc(name)}</span>`).join("")}</div>`;
-    }
+    function isLLM(run) { return String(run.mode || "").includes("llm"); }
 
-    function evidenceResult(result) {
-      const blocks = result.evidence_blocks.slice(0, 2).map(block => `<p>${highlighted(block.text, block.matched)}</p>`).join("");
-      return `<div class="result-card"><strong>${esc(result.title)}</strong>${blocks}<div class="result-meta">unit: ${esc(result.unit_id)}<br>locator: ${esc(result.locator)}<br>rank: ${esc(result.rank)} · sha256: ${esc(result.content_sha256)}</div></div>`;
-    }
-
-    function renderUse() {
-      const demo = showcase.demos[selected];
-      const commandKey = useMode === "search" ? "query" : useMode;
-      document.getElementById("use-command").textContent = demo.use_commands[commandKey];
-      const note = document.getElementById("use-note");
-      const result = document.getElementById("use-result");
-      if (useMode === "search") {
-        note.textContent = "Unicode BM25F returns a typed unit and a focused snippet centered on the matched terms, plus source locator and provenance hash.";
-        result.innerHTML = evidenceResult(demo.query_result);
-      } else if (useMode === "cli") {
-        note.textContent = "This resource-specific CLI was generated inside the pack. The panel shows its actual checked-in stdout for the same query.";
-        result.innerHTML = `<pre class="terminal-result">${esc(demo.cli_result.search)}</pre>`;
-      } else {
-        note.textContent = "A read-only MCP host can inspect boundaries, search all five packs, and read an exact unit without a model key.";
-        result.innerHTML = `<pre class="terminal-result">tools/list\n  resource_info   → boundaries + unit ids\n  search_resource → focused BM25F evidence\n  read_unit       → markdown + locator + sha256\n\nprotocol: ${esc(showcase.mcp.initialize.result.protocolVersion)}\nfirst cross-resource hit: ${esc(showcase.mcp.search_response.hits[0].resource_id)}\nmodel calls inside server: 0</pre>`;
+    function normalizedSteps(run) {
+      if (isLLM(run)) {
+        return run.steps.map(step => ({
+          number: step.seq,
+          phase: step.phase,
+          status: step.status,
+          label: step.label,
+          tool: step.tool.name,
+          callId: step.tool.call_id,
+          input: step.tool.arguments,
+          output: step.tool.result_excerpt,
+          summary: step.observation,
+          note: step.public_action_note || (step.status === "rejected" ? "The evidence gate forces another search/read cycle before delivery." : "The observed result is available to the next model turn."),
+          units: (step.selected_unit_ids || []).map(unit_id => ({resource_id: "requests", unit_id})),
+        }));
       }
+      return run.steps.map(step => ({
+        number: step.step,
+        phase: step.phase,
+        status: "passed",
+        label: step.output_summary.split(";")[0] || step.tool,
+        tool: step.tool,
+        callId: "deterministic policy",
+        input: step.tool_input,
+        output: step.output_summary,
+        summary: step.output_summary,
+        note: step.next_step_reason,
+        units: step.units || [],
+      }));
     }
 
-    function selectResource(index) {
-      selected = index;
-      const demo = showcase.demos[index];
-      document.querySelectorAll(".resource-tab").forEach((node, i) => node.classList.toggle("active", i === index));
-      document.getElementById("before-title").textContent = demo.source.title;
-      document.getElementById("before-problem").textContent = demo.before_problem;
-      document.getElementById("source-link").href = demo.source.origin_url;
-      document.getElementById("source-version").textContent = `${demo.source.publisher} · ${demo.source.version}`;
-      document.getElementById("source-sha").textContent = `sha256 ${demo.source.sha256.slice(0, 12)}…`;
-      document.getElementById("after-title").textContent = `${demo.resource_type} pack · ${demo.unit_count} units`;
-      document.getElementById("manifest-link").href = `packs/${demo.id}/agent-interface.json`;
-      document.getElementById("demo-question").textContent = demo.question;
-      document.getElementById("demo-answer").textContent = demo.answer;
-      renderNative(demo);
-      renderPack(demo);
-      renderUse();
+    function runStats(item) {
+      const run = item.data;
+      if (isLLM(run)) {
+        return {
+          steps: run.steps.length,
+          searches: run.recording.search_calls,
+          reads: run.recording.read_calls,
+          units: run.recording.unique_units_read,
+          checks: run.verification.passed_count,
+          checkTotal: run.verification.total_count,
+          modelCalls: run.recording.model_calls,
+        };
+      }
+      return {
+        steps: run.summary.steps,
+        searches: run.summary.search_calls,
+        reads: run.summary.read_calls,
+        units: run.summary.cited_units,
+        checks: item.verify.assertions_passed,
+        checkTotal: item.verify.assertions_total,
+        modelCalls: 0,
+      };
+    }
+
+    function runTitle(item) {
+      if (item.data.title) return item.data.title;
+      if (item.spec.id === "gistemp-fair-audit") return "Turn a climate table and a paper into a reproducible audit";
+      return "Find the full blast radius of a redirect-default change";
+    }
+
+    function runTask(item) {
+      return typeof item.data.task === "string" ? item.data.task : item.data.task.brief;
+    }
+
+    function renderTotals() {
+      const stats = runs.map(runStats);
+      document.getElementById("total-runs").textContent = runs.length;
+      document.getElementById("total-steps").textContent = stats.reduce((sum, item) => sum + item.steps, 0);
+      document.getElementById("total-tools").textContent = stats.reduce((sum, item) => sum + item.searches + item.reads, 0);
+      document.getElementById("total-checks").textContent = stats.reduce((sum, item) => sum + item.checks, 0);
+    }
+
+    function renderPicker() {
+      const host = document.getElementById("run-picker");
+      host.innerHTML = runs.map((item, index) => {
+        const stats = runStats(item);
+        return `<button class="run-option ${index === selectedRun ? "active" : ""}" data-run="${index}" type="button"><span class="run-kind ${isLLM(item.data) ? "" : "deterministic"}">${isLLM(item.data) ? "Actual LLM + MCP" : "Deterministic agent"}</span><h3>${esc(item.spec.short)}</h3><p>${esc(item.spec.description)}</p><span class="run-mini">${stats.steps} steps · ${stats.searches} search · ${stats.reads} read · ${stats.checks}/${stats.checkTotal} checks</span></button>`;
+      }).join("");
+      host.querySelectorAll("[data-run]").forEach(button => button.addEventListener("click", () => selectRun(Number(button.dataset.run))));
+    }
+
+    function renderTask() {
+      const item = runs[selectedRun];
+      const run = item.data;
+      const stats = runStats(item);
+      document.getElementById("run-title").textContent = runTitle(item);
+      document.getElementById("run-task").textContent = runTask(item);
+      document.getElementById("run-status").textContent = `${stats.checks}/${stats.checkTotal} checks passed`;
+      const facts = [];
+      facts.push(isLLM(run) ? `model ${run.recording.model}` : "policy deterministic-evidence-agent");
+      facts.push(`${stats.steps} visible steps`);
+      facts.push(`${stats.searches} searches · ${stats.reads} reads`);
+      facts.push(`${stats.units} unique cited/read units`);
+      if (isLLM(run)) {
+        facts.push(`${run.recording.model_calls} model turns`);
+        facts.push(`${ms(run.recording.duration_ms)} recorded wall time`);
+      } else {
+        facts.push("0 model calls · offline rebuild");
+      }
+      facts.push(`${run.packs.length} pinned pack${run.packs.length === 1 ? "" : "s"}`);
+      document.getElementById("run-facts").innerHTML = facts.map(value => `<span class="fact">${esc(value)}</span>`).join("");
+    }
+
+    function renderStepList() {
+      const steps = normalizedSteps(runs[selectedRun].data);
+      document.getElementById("step-list").innerHTML = steps.map((step, index) => `<button class="step-button ${index === selectedStep ? "active" : ""} ${step.status === "rejected" ? "rejected" : ""}" data-step="${index}" type="button"><span class="step-index">${String(step.number).padStart(2, "0")}</span><span><span class="step-name">${esc(step.label)}</span><span class="step-meta">${esc(step.tool)} · ${esc(step.status)}</span></span></button>`).join("");
+      document.querySelectorAll("[data-step]").forEach(button => button.addEventListener("click", () => selectStep(Number(button.dataset.step))));
+      document.getElementById("step-counter").textContent = `${selectedStep + 1} / ${steps.length}`;
+    }
+
+    function renderStepDetail() {
+      const item = runs[selectedRun];
+      const steps = normalizedSteps(item.data);
+      const step = steps[selectedStep];
+      const phase = document.getElementById("detail-phase");
+      phase.textContent = `${step.phase} · ${step.status}`;
+      phase.className = `phase-badge ${step.status === "rejected" ? "rejected" : ""}`;
+      document.getElementById("detail-call").textContent = step.callId || "";
+      document.getElementById("detail-title").textContent = step.label;
+      document.getElementById("detail-observation").textContent = step.summary;
+      const note = document.getElementById("detail-note");
+      note.textContent = step.note || "No additional public decision note was recorded.";
+      note.className = `decision-note ${step.status === "rejected" ? "rejected" : ""}`;
+      document.getElementById("detail-input").textContent = pretty(step.input);
+      document.getElementById("detail-output").textContent = pretty(step.output);
+      const units = step.units.filter(unit => unit && (unit.unit_id || typeof unit === "string"));
+      document.getElementById("detail-units").innerHTML = units.length ? units.map(unit => {
+        const unitId = typeof unit === "string" ? unit : unit.unit_id;
+        const resourceId = (typeof unit === "object" && unit.resource_id) || (item.data.packs[0]?.resource_id) || item.data.packs[0] || "requests";
+        return `<a class="unit-pill" href="packs/${encodeURIComponent(resourceId)}/pages/${encodeURIComponent(unitId)}.json" target="_blank">${esc(resourceId)}/${esc(unitId)} ↗</a>`;
+      }).join("") : '<span class="unit-pill">no unit selected in this step</span>';
+      const raw = item.spec.raw;
+      const packLinks = (item.data.packs || []).map(pack => typeof pack === "string" ? pack : pack.resource_id).map(id => `<a class="text-link" href="packs/${encodeURIComponent(id)}/agent-pack.json" target="_blank">${esc(id)} manifest ↗</a>`).join("");
+      document.getElementById("raw-links").innerHTML = `<a class="text-link" href="${esc(raw)}" target="_blank">open complete recorded transcript ↗</a>${packLinks}`;
+    }
+
+    function checksFor(item) {
+      if (isLLM(item.data)) return item.data.checks.map(check => ({id: check.id, passed: check.passed, detail: check.detail}));
+      return item.verify.assertions;
+    }
+
+    function citationsFor(item) {
+      if (isLLM(item.data)) return item.data.claims.map(claim => ({text: claim.text, support: claim.support}));
+      return item.data.citations.map(citation => ({
+        text: citation.claim,
+        support: {
+          resource_id: citation.resource_id,
+          unit_id: citation.unit_id,
+          locator: citation.locator,
+          captured_unit_sha256: citation.content_sha256,
+        },
+      }));
+    }
+
+    function renderArtifact() {
+      const item = runs[selectedRun];
+      const checks = checksFor(item);
+      const citations = citationsFor(item);
+      document.getElementById("artifact-name").textContent = item.spec.artifact.split("/").pop();
+      document.getElementById("artifact-raw").href = item.spec.artifact;
+      document.getElementById("artifact").innerHTML = markdownToHtml(item.artifact);
+      const artifactHash = isLLM(item.data) ? item.data.artifact.sha256 : item.verify.artifact_sha256;
+      document.getElementById("artifact-hash").textContent = `sha256 ${shortHash(artifactHash)}…`;
+      document.getElementById("verification-title").textContent = `${checks.filter(check => check.passed).length}/${checks.length} checks passing`;
+      document.getElementById("checks").innerHTML = checks.map(check => `<div class="check-row"><span class="check-icon">✓</span><span><b>${esc(check.id.replaceAll("_", " "))}</b><span>${esc(check.detail || "passed")}</span></span></div>`).join("");
+      document.getElementById("claim-list").innerHTML = `<div class="panel-head"><strong>Claim → evidence ledger</strong><span>${citations.length} linked claims</span></div>${citations.map(claim => `<div class="claim-row"><p>${esc(claim.text)}</p><div class="claim-source">${esc(claim.support.resource_id)}/${esc(claim.support.unit_id)}<br>${esc(claim.support.locator || "")}<br>sha256 ${esc(shortHash(claim.support.captured_unit_sha256 || claim.support.content_sha256))}…</div></div>`).join("")}`;
+    }
+
+    function renderSources() {
+      document.getElementById("source-rows").innerHTML = showcase.demos.map(demo => `<tr><td><a href="${esc(demo.source.origin_url)}" target="_blank" rel="noreferrer">${esc(demo.source.title)} ↗</a></td><td>${esc(demo.source.publisher)}<br><small>${esc(demo.source.version)}</small></td><td>${esc(demo.source.format)}<br><small>${esc(demo.resource_type)} · ${demo.unit_count} units</small></td><td><code>${esc(demo.source.sha256)}</code></td></tr>`).join("");
+    }
+
+    function stopReplay() {
+      if (timer) clearInterval(timer);
+      timer = null;
+      document.getElementById("play-run").textContent = "▶ Replay run";
+    }
+
+    function selectStep(index) {
+      selectedStep = index;
+      renderStepList();
+      renderStepDetail();
+      const active = document.querySelector(".step-button.active");
+      active?.scrollIntoView({block: "nearest", behavior: "smooth"});
+    }
+
+    function selectRun(index) {
+      stopReplay();
+      selectedRun = index;
+      selectedStep = 0;
+      renderPicker();
+      renderTask();
+      renderStepList();
+      renderStepDetail();
+      renderArtifact();
+    }
+
+    function toggleReplay() {
+      if (timer) { stopReplay(); return; }
+      const steps = normalizedSteps(runs[selectedRun].data);
+      if (selectedStep >= steps.length - 1) selectStep(0);
+      document.getElementById("play-run").textContent = "Ⅱ Pause";
+      timer = setInterval(() => {
+        if (selectedStep >= steps.length - 1) { stopReplay(); return; }
+        selectStep(selectedStep + 1);
+      }, 1150);
     }
 
     async function load() {
       try {
-        showcase = await (await fetch("results/showcase.json")).json();
-        renderMetrics();
-        renderFlagship();
-        renderPassports();
-        const tabs = document.getElementById("resource-tabs");
-        showcase.demos.forEach((demo, index) => {
-          const [icon, label] = tabMeta[demo.id];
-          const button = document.createElement("button");
-          button.className = "resource-tab";
-          button.dataset.sourceId = demo.id;
-          button.innerHTML = `<span class="tab-icon">${icon}</span><span><b>${label}</b><small>${demo.resource_type}</small></span>`;
-          button.addEventListener("click", () => selectResource(index));
-          tabs.appendChild(button);
-        });
-        selectResource(0);
-        const state = document.getElementById("load-state");
-        state.textContent = "✓ verified real-source evidence loaded";
-        state.className = "ok";
+        const loadedRuns = await Promise.all(RUN_SPECS.map(async spec => {
+          const requests = [fetch(spec.run), fetch(spec.artifact)];
+          if (spec.verification) requests.push(fetch(spec.verification));
+          const responses = await Promise.all(requests);
+          if (responses.some(response => !response.ok)) throw new Error(`could not load ${spec.id}`);
+          return {spec, data: await responses[0].json(), artifact: await responses[1].text(), verify: spec.verification ? await responses[2].json() : null};
+        }));
+        const showcaseResponse = await fetch("results/showcase.json");
+        if (!showcaseResponse.ok) throw new Error("could not load showcase provenance");
+        showcase = await showcaseResponse.json();
+        runs = loadedRuns;
+        renderTotals();
+        renderSources();
+        selectRun(0);
+        document.getElementById("load-state").textContent = `${runs.length} recordings loaded · source snapshot ${showcase.snapshot_date}`;
+        document.getElementById("play-run").addEventListener("click", toggleReplay);
+        document.getElementById("reset-run").addEventListener("click", () => { stopReplay(); selectStep(0); });
+        document.getElementById("hero-replay").addEventListener("click", () => setTimeout(toggleReplay, 450));
       } catch (error) {
-        document.getElementById("load-state").textContent = `Demo data failed to load: ${error.message}`;
+        document.getElementById("load-state").textContent = "recording load failed";
+        document.querySelector("#runs .shell").insertAdjacentHTML("afterbegin", `<div class="error"><strong>Could not load committed demo data.</strong><br>${esc(error.message)}<br><small>Serve this directory over HTTP instead of opening index.html directly.</small></div>`);
       }
     }
 
-    document.querySelectorAll(".use-tab").forEach(button => button.addEventListener("click", () => {
-      useMode = button.dataset.use;
-      document.querySelectorAll(".use-tab").forEach(node => node.classList.toggle("active", node === button));
-      renderUse();
-    }));
-    document.getElementById("copy-command").addEventListener("click", async event => {
-      await navigator.clipboard.writeText(document.getElementById("use-command").textContent);
-      event.currentTarget.textContent = "✓";
-      setTimeout(() => event.currentTarget.textContent = "⧉", 1200);
-    });
     load();
   </script>
 </body>

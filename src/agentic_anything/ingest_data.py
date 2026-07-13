@@ -41,6 +41,30 @@ def _mk_unit(base, index, title, kind, content, path, locator):
 
 # ------------------------------------------------------------- CSV / TSV ---
 
+def _csv_header_index(rows: list[list[str]]) -> int:
+    """Locate a table header after optional single-column preamble rows.
+
+    Some publisher CSV exports begin with a human-readable title before the
+    actual delimited table.  For example, NASA GISTEMP starts with
+    ``Land-Ocean: Global Means`` and puts its 19-column header on the next
+    line.  Treat a leading run of single-cell rows as a preamble only when a
+    later multi-column row is corroborated by a following row of equal width.
+    This keeps ordinary one-column CSV files and ragged tables unchanged.
+    """
+
+    if len(rows) < 3 or len(rows[0]) != 1:
+        return 0
+    for index in range(1, min(len(rows) - 1, 25)):
+        if any(len(row) != 1 for row in rows[:index]):
+            return 0
+        width = len(rows[index])
+        if width <= 1 or sum(bool(cell.strip()) for cell in rows[index]) < 2:
+            continue
+        if any(len(row) == width for row in rows[index + 1:index + 6]):
+            return index
+    return 0
+
+
 def ingest_csv(path: Path) -> list:
     from .ingest import _read_text
 
@@ -55,7 +79,9 @@ def ingest_csv(path: Path) -> list:
     rows = [r for r in rows if any(cell.strip() for cell in r)]
     if not rows:
         raise DataError(f"no rows in {path}")
-    header, data = rows[0], rows[1:]
+    header_index = _csv_header_index(rows)
+    preamble = rows[:header_index]
+    header, data = rows[header_index], rows[header_index + 1:]
     truncated = len(data) > _MAX_ROWS_TOTAL
     data = data[:_MAX_ROWS_TOTAL]
     base = slugify(path.stem, 40)
@@ -67,6 +93,11 @@ def ingest_csv(path: Path) -> list:
                               f"{len(header)} columns."},
         {"kind": "p", "text": "Columns: " + ", ".join(h.strip() for h in header)},
     ]
+    if preamble:
+        preamble_text = "\n".join(
+            " | ".join(cell.strip() for cell in row) for row in preamble
+        )
+        overview.append({"kind": "p", "text": "Preamble:\n" + preamble_text})
     units = [_mk_unit(base, 1, f"{path.name} overview", "table", overview,
                       path, "overview")]
     for start in range(0, len(data), _ROWS_PER_UNIT):

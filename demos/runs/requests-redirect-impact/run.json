@@ -1,0 +1,514 @@
+{
+  "citations": [
+    {
+      "citation_id": "R1",
+      "cited_after_read": true,
+      "claim": "The default redirect constant is 30.",
+      "content_sha256": "95bc0e03bea32cc48ea37aaabbaa48c9f09f1b9138d3ca93d31aa60c3665dbd6",
+      "locator": "src/requests/models.py",
+      "read_step": 4,
+      "resource_id": "requests",
+      "unit_id": "file__src--requests--models-py"
+    },
+    {
+      "citation_id": "R2",
+      "cited_after_read": true,
+      "claim": "Session copies the default and enforces it against response history.",
+      "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a",
+      "locator": "src/requests/sessions.py",
+      "read_step": 6,
+      "resource_id": "requests",
+      "unit_id": "file__src--requests--sessions-py"
+    },
+    {
+      "citation_id": "R3",
+      "cited_after_read": true,
+      "claim": "TooManyRedirects inherits from RequestException.",
+      "content_sha256": "c5e18f3352454968e337bb3056f0867df2f37c0a0d2c1a77dc05e7e0b3c0411b",
+      "locator": "src/requests/exceptions.py",
+      "read_step": 8,
+      "resource_id": "requests",
+      "unit_id": "file__src--requests--exceptions-py"
+    },
+    {
+      "citation_id": "R4",
+      "cited_after_read": true,
+      "claim": "Regression tests pin history length 30 and a custom value of 5.",
+      "content_sha256": "95dd5c40741e00bb8062593e19a2853985f0a65d67eb9eb64046d05841832d87",
+      "locator": "tests/test_requests.py",
+      "read_step": 10,
+      "resource_id": "requests",
+      "unit_id": "file__tests--test-requests-py"
+    },
+    {
+      "citation_id": "R5",
+      "cited_after_read": true,
+      "claim": "The quickstart documents history and the configured-maximum exception.",
+      "content_sha256": "0c65d40d6d1cf008eeb66a235029d5da9fa66641bf5ce58599a3e0606138d9c1",
+      "locator": "docs/user/quickstart.rst",
+      "read_step": 12,
+      "resource_id": "requests",
+      "unit_id": "file__docs--user--quickstart-rst"
+    }
+  ],
+  "data_access": "real stdio MCP subprocess only",
+  "mcp": {
+    "command": [
+      "python",
+      "-m",
+      "agentic_anything",
+      "mcp",
+      "demos/packs/requests"
+    ],
+    "protocol_version": "2025-11-25",
+    "server": {
+      "name": "agentic-anything",
+      "title": "Agentic Anything Resource Agents",
+      "version": "0.4.1"
+    },
+    "tools": [
+      "resource_info",
+      "search_resource",
+      "read_unit"
+    ],
+    "transport": "stdio"
+  },
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "network_access": false,
+  "outputs": {
+    "artifact": "artifact.md",
+    "raw_events": "raw-events.jsonl",
+    "verification": "verification.json"
+  },
+  "packs": [
+    "requests"
+  ],
+  "planner": "fixed transparent state machine",
+  "raw_event_normalization": "Local checkout prefix replaced with '.'; all other JSON-RPC data preserved.",
+  "result": {
+    "behavioral_risk": "Previously successful default redirect chains of length 10 through 29 would fail.",
+    "current_default": 30,
+    "direct_code_edits": [
+      "src/requests/models.py"
+    ],
+    "direct_test_edits": [
+      "tests/test_requests.py default-history assertion"
+    ],
+    "documentation_assessment": "The captured quickstart promises a configured maximum and TooManyRedirects, but does not state the numeric default in that section.",
+    "proposed_default": 10,
+    "unchanged_mechanisms": [
+      "Session copies DEFAULT_REDIRECT_LIMIT during initialization",
+      "resolve_redirects compares response history with Session.max_redirects",
+      "TooManyRedirects remains the raised exception type",
+      "explicit per-session max_redirects values remain supported"
+    ]
+  },
+  "run_id": "requests-redirect-impact",
+  "schema_version": "1.0",
+  "snapshot_date": "2026-07-11",
+  "steps": [
+    {
+      "next_step_reason": "Inspect the resource boundary before searching for redirect behavior.",
+      "output_summary": "Connected to agentic-anything 0.4.1; tools: resource_info, search_resource, read_unit.",
+      "phase": "connect",
+      "step": 1,
+      "tool": "initialize + tools/list",
+      "tool_input": {
+        "protocolVersion": "2025-11-25"
+      },
+      "units": []
+    },
+    {
+      "next_step_reason": "Locate the single source of truth for the numeric default.",
+      "output_summary": "Inspected requests: code, 74 units, 0 frontier entries.",
+      "phase": "inspect",
+      "step": 2,
+      "tool": "resource_info",
+      "tool_input": {
+        "resource_id": "requests"
+      },
+      "units": []
+    },
+    {
+      "next_step_reason": "Read the definition and verify the exact current value.",
+      "output_summary": "Found 5 hit(s); top evidence units: file__src--requests--models-py (12.551), file__src--requests--sessions-py (13.215), file__src--requests--status-codes-py (9.201).",
+      "phase": "search",
+      "step": 3,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "DEFAULT_REDIRECT_LIMIT int 30 definition models",
+        "resource_id": "requests",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 12.551,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__src--requests--models-py"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 13.215,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__src--requests--sessions-py"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 9.201,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__src--requests--status-codes-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Trace how a Session consumes the constant and enforces the limit.",
+      "output_summary": "Read 20,208 Markdown characters from src/requests/models.py; confirmed 1 required anchor(s); sha256 95bc0e03bea32cc48ea37aaabbaa48c9f09f1b9138d3ca93d31aa60c3665dbd6.",
+      "phase": "read",
+      "step": 4,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "requests",
+        "unit_id": "file__src--requests--models-py"
+      },
+      "units": [
+        {
+          "content_sha256": "95bc0e03bea32cc48ea37aaabbaa48c9f09f1b9138d3ca93d31aa60c3665dbd6",
+          "locator": "src/requests/models.py",
+          "resource_id": "requests",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "file__src--requests--models-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read Session initialization and the runtime redirect guard together.",
+      "output_summary": "Found 5 hit(s); top evidence units: file__tests--test-requests-py (24.286), file__src--requests--sessions-py (26.089), file__tests--test-lowlevel-py (13.178).",
+      "phase": "search",
+      "step": 5,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "self max_redirects DEFAULT_REDIRECT_LIMIT len response history TooManyRedirects",
+        "resource_id": "requests",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 24.286,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__tests--test-requests-py"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 26.089,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__src--requests--sessions-py"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 13.178,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__tests--test-lowlevel-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Verify the public exception type raised by that guard.",
+      "output_summary": "Read 20,214 Markdown characters from src/requests/sessions.py; confirmed 3 required anchor(s); sha256 37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a.",
+      "phase": "read",
+      "step": 6,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "requests",
+        "unit_id": "file__src--requests--sessions-py"
+      },
+      "units": [
+        {
+          "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a",
+          "locator": "src/requests/sessions.py",
+          "resource_id": "requests",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "file__src--requests--sessions-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the exception declaration and inheritance.",
+      "output_summary": "Found 5 hit(s); top evidence units: file__src--requests--exceptions-py (17.236), file__tests--test-requests-py (11.698), file__docs--api-rst (7.952).",
+      "phase": "search",
+      "step": 7,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "class TooManyRedirects RequestException too many redirects",
+        "resource_id": "requests",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 17.236,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__src--requests--exceptions-py"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 11.698,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__tests--test-requests-py"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 7.952,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__docs--api-rst"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Find executable regression tests that pin default and custom behavior.",
+      "output_summary": "Read 4,756 Markdown characters from src/requests/exceptions.py; confirmed 2 required anchor(s); sha256 c5e18f3352454968e337bb3056f0867df2f37c0a0d2c1a77dc05e7e0b3c0411b.",
+      "phase": "read",
+      "step": 8,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "requests",
+        "unit_id": "file__src--requests--exceptions-py"
+      },
+      "units": [
+        {
+          "content_sha256": "c5e18f3352454968e337bb3056f0867df2f37c0a0d2c1a77dc05e7e0b3c0411b",
+          "locator": "src/requests/exceptions.py",
+          "resource_id": "requests",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "file__src--requests--exceptions-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the tests to identify assertions affected by a 30-to-10 change.",
+      "output_summary": "Found 5 hit(s); top evidence units: file__tests--test-requests-py (31.924), file__history-md (17.158), file__tests--test-lowlevel-py (21.507).",
+      "phase": "search",
+      "step": 9,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "test HTTP 302 TOO MANY REDIRECTS response history 30 custom max redirects 5",
+        "resource_id": "requests",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 31.924,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__tests--test-requests-py"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 17.158,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__history-md"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 21.507,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__tests--test-lowlevel-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Check what the user-facing quickstart promises about redirects.",
+      "output_summary": "Read 20,207 Markdown characters from tests/test_requests.py; confirmed 4 required anchor(s); sha256 95dd5c40741e00bb8062593e19a2853985f0a65d67eb9eb64046d05841832d87.",
+      "phase": "read",
+      "step": 10,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "requests",
+        "unit_id": "file__tests--test-requests-py"
+      },
+      "units": [
+        {
+          "content_sha256": "95dd5c40741e00bb8062593e19a2853985f0a65d67eb9eb64046d05841832d87",
+          "locator": "tests/test_requests.py",
+          "resource_id": "requests",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "file__tests--test-requests-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the documentation contract and distinguish numeric from qualitative promises.",
+      "output_summary": "Found 5 hit(s); top evidence units: file__docs--user--quickstart-rst (13.910), file__docs--api-rst (8.669), file__src--requests--sessions-py (8.323).",
+      "phase": "search",
+      "step": 11,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "redirection history configured maximum redirections TooManyRedirects exception",
+        "resource_id": "requests",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 13.91,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__docs--user--quickstart-rst"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 8.669,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__docs--api-rst"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "requests",
+          "score": 8.323,
+          "status": "discovered_not_yet_read",
+          "unit_id": "file__src--requests--sessions-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Synthesize the direct code, test, exception, and documentation impact.",
+      "output_summary": "Read 19,124 Markdown characters from docs/user/quickstart.rst; confirmed 3 required anchor(s); sha256 0c65d40d6d1cf008eeb66a235029d5da9fa66641bf5ce58599a3e0606138d9c1.",
+      "phase": "read",
+      "step": 12,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "requests",
+        "unit_id": "file__docs--user--quickstart-rst"
+      },
+      "units": [
+        {
+          "content_sha256": "0c65d40d6d1cf008eeb66a235029d5da9fa66641bf5ce58599a3e0606138d9c1",
+          "locator": "docs/user/quickstart.rst",
+          "resource_id": "requests",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "file__docs--user--quickstart-rst"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Run hard assertions over every source anchor and citation precondition.",
+      "output_summary": "Mapped one direct constant edit, one pinned default test expectation, four unchanged mechanisms, and the 10–29 redirect-chain compatibility risk.",
+      "phase": "compute",
+      "step": 13,
+      "tool": "deterministic_change_impact",
+      "tool_input": {
+        "from": 30,
+        "scope": "default behavior only",
+        "to": 10
+      },
+      "units": [
+        {
+          "content_sha256": "95bc0e03bea32cc48ea37aaabbaa48c9f09f1b9138d3ca93d31aa60c3665dbd6",
+          "locator": "src/requests/models.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__src--requests--models-py"
+        },
+        {
+          "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a",
+          "locator": "src/requests/sessions.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__src--requests--sessions-py"
+        },
+        {
+          "content_sha256": "c5e18f3352454968e337bb3056f0867df2f37c0a0d2c1a77dc05e7e0b3c0411b",
+          "locator": "src/requests/exceptions.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__src--requests--exceptions-py"
+        },
+        {
+          "content_sha256": "95dd5c40741e00bb8062593e19a2853985f0a65d67eb9eb64046d05841832d87",
+          "locator": "tests/test_requests.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__tests--test-requests-py"
+        },
+        {
+          "content_sha256": "0c65d40d6d1cf008eeb66a235029d5da9fa66641bf5ce58599a3e0606138d9c1",
+          "locator": "docs/user/quickstart.rst",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__docs--user--quickstart-rst"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Emit the evidence-backed change-impact artifact and replay metadata.",
+      "output_summary": "Validated all required layers and confirmed every final citation points to a previously read unit.",
+      "phase": "validate",
+      "step": 14,
+      "tool": "deterministic_assertions",
+      "tool_input": {
+        "evidence_units": 5
+      },
+      "units": [
+        {
+          "content_sha256": "95bc0e03bea32cc48ea37aaabbaa48c9f09f1b9138d3ca93d31aa60c3665dbd6",
+          "locator": "src/requests/models.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__src--requests--models-py"
+        },
+        {
+          "content_sha256": "37132aa52850a6d7acaadacc80657cae6bb5c4f34befc45cbdf1ec6930d4447a",
+          "locator": "src/requests/sessions.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__src--requests--sessions-py"
+        },
+        {
+          "content_sha256": "c5e18f3352454968e337bb3056f0867df2f37c0a0d2c1a77dc05e7e0b3c0411b",
+          "locator": "src/requests/exceptions.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__src--requests--exceptions-py"
+        },
+        {
+          "content_sha256": "95dd5c40741e00bb8062593e19a2853985f0a65d67eb9eb64046d05841832d87",
+          "locator": "tests/test_requests.py",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__tests--test-requests-py"
+        },
+        {
+          "content_sha256": "0c65d40d6d1cf008eeb66a235029d5da9fa66641bf5ce58599a3e0606138d9c1",
+          "locator": "docs/user/quickstart.rst",
+          "resource_id": "requests",
+          "status": "read",
+          "unit_id": "file__docs--user--quickstart-rst"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "assertions_passed": 20,
+    "assertions_total": 20,
+    "cited_units": 5,
+    "read_calls": 5,
+    "search_calls": 5,
+    "steps": 14
+  },
+  "task": "Assess the code, tests, exception, and documentation impact of changing Requests v2.34.2's default redirect ceiling from 30 to 10. Do not modify upstream code."
+}

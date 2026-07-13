@@ -8,6 +8,9 @@
 
 ### Table: nasa-gistemp-global.csv
 
-148 data rows, 1 columns.
+147 data rows, 19 columns.
 
-Columns: Land-Ocean: Global Means
+Columns: Year, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, J-D, D-N, DJF, MAM, JJA, SON
+
+Preamble:
+Land-Ocean: Global Means
