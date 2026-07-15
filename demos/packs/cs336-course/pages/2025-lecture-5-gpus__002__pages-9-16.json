@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-5-gpus__002__pages-9-16",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+  "url_path": "pages 9-16",
+  "title": "2025 Lecture 5 - GPUs — pages 9-16",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 9-16",
+  "summary": "Anatomy of a GPU (execution units)\nEach SM further contains many SPs \n(streaming processor)  that can \nexecute ‘threads’ in parallel\nGPUs have many SM (streaming \nmultiprocessors) that independently \nexecute ‘blocks’ (jobs).\nAnatomy of a G…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Anatomy of a GPU (execution units)\nEach SM further contains many SPs \n(streaming processor)  that can \nexecute ‘threads’ in parallel\nGPUs have many SM (streaming \nmultiprocessors) that independently \nexecute ‘blocks’ (jobs)."
+    },
+    {
+      "kind": "p",
+      "text": "Anatomy of a GPU (memory)\nThe closer the memory to the SM, the faster it is – L1 and shared memory is inside \nthe SM. L2 cache is on die, and global memory are the memory chips next to the GPU\nSRAM (shared/cache memory) is much more expensive (100x) but ~ 8x faster than DRAM (Global memory)"
+    },
+    {
+      "kind": "p",
+      "text": "Execution model of a GPU\nThere are 3 important players in the execution model\nThreads: Threads ‘do the work’ in parallel – all threads execute the same instructions but with \ndifferent inputs (SIMT). \nBlocks: Blocks are groups of threads. Each block runs on a SM w/ its own shared memory.\nWarp: Threads always execute in a ‘warp’ of 32 consecutively numbered threads each."
+    },
+    {
+      "kind": "p",
+      "text": "Memory model of a GPU\nEach thread can access its own register, and shared memory within the block.\nInformation that goes across blocks need to be read/written to global memory (slow)"
+    },
+    {
+      "kind": "p",
+      "text": "Side thread – What about TPUs?\nGPUs, TPUs, and many other accelerators are at a high level, similar\nCore structure – lightweight control, fast (big) matmul unit, fast memory. \nDifferences -  how the accelerators are networked (in the parallelism lecture)\n      -   no warps (just blocks – tradeoffs in matmul vs non-matmul)\nA GPU has more SMs\nTPUs has fewer TCs\n(but similar matmul perf)"
+    },
+    {
+      "kind": "p",
+      "text": "Strengths of the GPU model\n❖ Easily scales up hard workloads (by adding more SMs)\n❖ Easy (?) to program due to the SIMT model\n❖ Threads are ‘lightweight’ and can be stopped and started"
+    },
+    {
+      "kind": "p",
+      "text": "GPUs as fast matrix multipliers\nEarly days of NVIDIA GPUs – programmable shaders. Researchers hacked this to do matmuls"
+    },
+    {
+      "kind": "p",
+      "text": "New matmul hardware means matmuls are fast and special\nTensor cores (introduced in V, T series) are specialized matrix multiplication circuits.\nMatmuls  are >10x faster than other floating point ops!"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "7429a0a870e48ee3eb92925609c7aeddcec988dcba3b2ace91e16a4d543c8faf",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 5.pdf",
+    "attachment_sha256": "ff25621de3d3d462a534070a209a8efac1b8410e3da58de08f764e33482bb6ba",
+    "attachment_bytes": 4766673
+  }
+}

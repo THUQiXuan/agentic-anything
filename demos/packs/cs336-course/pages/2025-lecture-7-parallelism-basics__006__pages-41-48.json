@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-7-parallelism-basics__006__pages-41-48",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+  "url_path": "pages 41-48",
+  "title": "2025 Lecture 7 - Parallelism basics — pages 41-48",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 41-48",
+  "summary": "A final complexity – activation memory\nThus far, we have only really discussed parameter memory. \nTensor and pipeline parallel can linearly reduce those.. but what about activations?\n[Korthikanti et al 2022]\nWhat’s the activation memory pe…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "A final complexity – activation memory\nThus far, we have only really discussed parameter memory. \nTensor and pipeline parallel can linearly reduce those.. but what about activations?\n[Korthikanti et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "What’s the activation memory per layer?\nStarting point: activation memory needed if storing everything\n• The 5𝑎𝑠\nℎ  terms come from the quadratic attention terms incl dropout\n• As with flash attention, we can drop this term via recomputation"
+    },
+    {
+      "kind": "p",
+      "text": "Activation under tensor parallel\nTensor parallel splits out the matrix multiplies in attention + MLP\nThe remaining 10 term is for the LayerNorm  (4sbh), Dropout (2sbh), and inputs to the \nattention and MLP (4sbh). These terms alone will continue to grow with size"
+    },
+    {
+      "kind": "p",
+      "text": "Making memory truly linear – sequence parallel\nObservation: all the 10sbh terms are pointwise ops over the sequence\n … so split up the layer norm/dropout layers along the sequence axis. \n• In the forward pass, ‘ 𝑔’ is an all gather, ‘ ത𝑔’ is reduce -scatter\n• In the backward pass, the two are reversed."
+    },
+    {
+      "kind": "p",
+      "text": "Making activation memory fully scale with more machines\nPutting it together to get full linear scaling for memory."
+    },
+    {
+      "kind": "p",
+      "text": "Other parallelism strategies\nContext parallel / Ring attention \n(split activations across GPUs \nin a long sequence)\nExpert parallel \n(split experts across GPUs)"
+    },
+    {
+      "kind": "p",
+      "text": "Recap: LLM parallelism table..\nWhat are each of the parallelism primitives good for?\nSync \noverhead\nMemory Bandwidth Batch size Easy to \nuse?\nDDP/ZeRO1 Per-batch No \nscaling\n2* # param Linear Very\nFSDP \n(ZeRO3)\n3x Per-FSDP \nblock\nLinear 3 * # param Linear Very\nPipeline Per-pipeline Linear Activations Linear NO\nTensor+seq 2x transformer \nblock\nLinear 8*activations per-\nlayer all-reduce\nNo impact No\nHave to balance limited resource – memory, bandwidth, batch size"
+    },
+    {
+      "kind": "p",
+      "text": "Model vs Tensor parallel (TPU book)\nKey quantity\nGlobal batch size (divided by GPU)"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "f2d17dce48534e6b6e0ca0d1b673872eccef346b6c9b52de6d3ab7e9d08b9b1b",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 7.pdf",
+    "attachment_sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+    "attachment_bytes": 5004408
+  }
+}

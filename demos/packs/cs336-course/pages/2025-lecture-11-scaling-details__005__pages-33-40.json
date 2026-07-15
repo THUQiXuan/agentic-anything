@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-11-scaling-details__005__pages-33-40",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+  "url_path": "pages 33-40",
+  "title": "2025 Lecture 11 - Scaling details — pages 33-40",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 33-40",
+  "summary": "LLaMA 3 (2024) Scaling laws\nIsoflops -style scaling (39 -1 ratio)\n Compute -to-downstream scaling\nHunyuan-1 (2024) large scaling laws\nYet more isoflops -style scaling (but this time for MoE parameter sizes)\nOptimal ratio – 96-1 (data to ac…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "LLaMA 3 (2024) Scaling laws\nIsoflops -style scaling (39 -1 ratio)\n Compute -to-downstream scaling"
+    },
+    {
+      "kind": "p",
+      "text": "Hunyuan-1 (2024) large scaling laws\nYet more isoflops -style scaling (but this time for MoE parameter sizes)\nOptimal ratio – 96-1 (data to active param)"
+    },
+    {
+      "kind": "p",
+      "text": "MiniMax-01 (2025)\nArchitecture scaling laws + Chinchilla method 1"
+    },
+    {
+      "kind": "p",
+      "text": "Recent scaling law recipes\nCerebrasGPT\n• Use muP to make hyperparams invariant to scale\n• Directly use the chinchilla scaling formula\nDeepSeek recipe\n• Assume most transformer hypers are invariant to scale\n• Do a scaling analysis on batch / LR to figure out optimal scaling\n• IsoFLOP analysis to figure out model sizing\n› Use a piecewise-linear schedule to make chinchilla scaling cheap.\nminiCPM recipe\n• Use muP to make transformer + LR invariant to scale\n• Use a piecewise linear schedule to get sample for Chinchilla method 3 (curve fitting)\nRecent (late 2024+) but less detailed\nLLaMA 3 / Hunyuan\n• Just isoflops (no other scaling details)\nMinimax\n• Architecture choice / decision scaling"
+    },
+    {
+      "kind": "p",
+      "text": "Validating and understanding muP\n“Scale invariant” hyperparameter tuning would be very useful\nCerebrasGPT  and miniCPT  also use muP – is it actually useful?"
+    },
+    {
+      "kind": "p",
+      "text": "What is muP, anyway?\nmuP is based off the following assertion. As a function of the width of the network 𝑛𝑙..\nA1: The activations at initialization should remain Θ(1)\nA2: After one gradient step, the change in activation should be Θ(1)\nNote: if individual activations are Θ(1), then the norm should be Θ nl\n(this is a very accessible ‘muP for babies’ paper)"
+    },
+    {
+      "kind": "p",
+      "text": "Deriving muP (condition A1) \nSuppose that we have a simple, deep linear network ( ℎ𝑙 = 𝑊𝑙ℎ𝑙−1) and we init\n 𝑊𝑙 ∼ 𝑁 0, 𝜎𝐼𝑛𝑙×𝑛𝑙−1  then by basic matrix concentration 𝑊𝑙 ∗ → 𝜎( 𝑛𝑙−1 + 𝑛𝑙) and,\nℎ𝑙 2 ≈ 𝑊𝑙 ∗ ℎ𝑙−1 2\nNow let’s pick 𝜎 = 𝑛𝑙\n𝑛𝑙−1\n𝑛𝑙 + 𝑛𝑙−1\n−1\n= Θ 1\n𝑛𝑙−1\nmin 1, 𝑛𝑙\n𝑛𝑙−1\n. What happens?\n Inductive assumption - ℎ𝑙−1 2 = Θ 𝑛𝑙−1\n Inductive case - 𝑊𝑙 ∗ → 𝜎 𝑛𝑙−1 + 𝑛𝑙 = 𝑛𝑙\n𝑛𝑙−1 \nℎ𝑙 2 = 𝑛𝑙 + 𝑜( 𝑛𝑙)\n[Comments – the ≈ here is a bit hand-wavy, as the min s.v. of a Gaussian is 𝑛𝑙 − 𝑛𝑙−1 − 1, and is non-uniform, like J.L.]"
+    },
+    {
+      "kind": "p",
+      "text": "Deriving muP (condition A2)\nNow we need to deal with updates. Suppose we have the update Δ𝑊𝑙 on the weights.\nFor SGD, on a linear layer, this looks like a rank -one loss -activation outer product.\nΔ𝑊𝑙 = −𝜂𝑙∇ℎ𝑙ℓ ℎ𝑙−1\n⊤\nThus, Δ𝑊𝑙ℎ𝑙−1 2 = Δ𝑊𝑙 ∗ ℎ𝑙−1 2 . Now note that we have the update\nΔhl = WlΔℎ𝑙−1 + Δ𝑊𝑙(ℎ𝑙−1 + Δℎ𝑙−1)\nAssuming that the leading order terms don’t cancel, we see that\n• WlΔℎ𝑙−1 = Θ( 𝑛𝑙)  from induction assumption + condition A1 argument\n• Δ𝑊𝑙ℎ𝑙−1 = 𝛥𝑊𝑙 ∗ 𝑛𝑙−1 from above, thus 𝜟𝑾𝒍 ∗ = 𝚯 𝒏𝒍\n𝒏𝒍−𝟏\n• Δ𝑊𝑙Δℎ𝑙−1 = 𝑂( Δ𝑊𝑙 ∗ 𝑛𝑙−1)"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "cde3342fe8fa4bafa3d0a2da9e2a56d488250e2d4dc224d72f8964fcf7ca5f94",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 11.pdf",
+    "attachment_sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+    "attachment_bytes": 6265218
+  }
+}

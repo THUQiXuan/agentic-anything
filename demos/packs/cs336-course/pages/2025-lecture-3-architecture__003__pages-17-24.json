@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__003__pages-17-24",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 17-24",
+  "title": "2025 Lecture 3 - architecture — pages 17-24",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 17-24",
+  "summary": "RMSNorm - validation\nRMSNorm  runtime (and surprisingly, perf) gains have been seen in papers\nNarang et al 2020\nMore generally: dropping bias terms\nMost modern transformers don’t have bias terms.\nOriginal Transformer: \nMost implementations…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "RMSNorm - validation\nRMSNorm  runtime (and surprisingly, perf) gains have been seen in papers\nNarang et al 2020"
+    },
+    {
+      "kind": "p",
+      "text": "More generally: dropping bias terms\nMost modern transformers don’t have bias terms.\nOriginal Transformer: \nMost implementations (if they’re not gated):\n𝐹𝐹𝑁 𝑥 = 𝜎 𝑥𝑊1 𝑊2\nReasons: memory (similar to RMSnorm ) and optimization stability"
+    },
+    {
+      "kind": "p",
+      "text": "LayerNorm: recap\n• Basically everyone does pre -norm.\n• Intuition – keep the good parts of residual connections\n• Observations – nicer gradient propagation, fewer spike\n• Some people add a second norm outside the residual stream (NOT post -norm)\n• Most people do RMSnorm\n• In practice, works as well as LayerNorm\n• But, has fewer parameters to move around, which saves on wallclock time\n• People more generally drop bias terms since the compute/param tradeoffs are not \ngreat."
+    },
+    {
+      "kind": "p",
+      "text": "Activations\nA whole zoo of activations .. \n ReLU, GeLU, Swish, ELU, GLU, GeGLU, ReGLU, SeLU, SwiGLU, LiGLU\nWhat are these things? What do people use? Does it matter?"
+    },
+    {
+      "kind": "p",
+      "text": "A few of the common activations\nReLU\n𝐹𝐹 𝑥 = max 0, 𝑥𝑊1 𝑊2\nGeLU\n𝐹𝐹 𝑥 = GELU 𝑥𝑊1 𝑊2\n𝐺𝐸𝐿𝑈 𝑥 ≔ 𝑥Φ(𝑥)\nSwiGLU  / GeGLU  (next slide..)\nNotable models:\nOriginal transformer, T5, \nGopher, Chinchilla, OPT\nNotable models:\nGPT1/2/3, GPTJ, GPT -Neox, \nBLOOM\nNotable models:\nLlama, PaLM,T5 v1.1, most \nmodels post 2023"
+    },
+    {
+      "kind": "p",
+      "text": "Gated activations (*GLU)\nGLUs modify the ‘first part’ of a FF layer\n𝐹𝐹 𝑥 = max 0, 𝑥𝑊1 𝑊2\nInstead of a linear + ReLU, augment the above with an (entrywise) linear term\nmax 0, 𝑥𝑊1 → max 0, 𝑥𝑊1 ⊗ (𝑥𝑉)\nThis gives the gated variant (ReGLU) – note that we have an extra parameter (V)\nFFReGLU 𝑥 = (max 0, 𝑥𝑊1 ⊗ 𝑥𝑉) 𝑊2"
+    },
+    {
+      "kind": "p",
+      "text": "Gated variants of standard FF layers\nGeGLU\nSwiGLU (swish is 𝑥 ∗ sigmoid(𝑥))\nNote: Gated models use smaller dimensions for the 𝑑𝑓𝑓 by 2/3\nNotable models:\nT5 v1.1, mT5, LaMDA, Phi3, \nGemma 2, Gemma 3\nNotable models:\nLLaMa 1/2/3, PaLM, Mistral, \nOlMo, most models post 2023"
+    },
+    {
+      "kind": "p",
+      "text": "Do gated linear units work?\nYes, fairly consistently so.\nShazeer 2020"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "761ff9ba1f6500d0767e92300e6fbf83efe4e24470d771339e93dce788bac178",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

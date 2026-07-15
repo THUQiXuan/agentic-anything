@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-5-gpus__006__pages-41-48",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+  "url_path": "pages 41-48",
+  "title": "2025 Lecture 5 - GPUs — pages 41-48",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 41-48",
+  "summary": "Putting it together: understanding a matrix mystery\nWhy is it faster  to have bigger matrices? \nThis section is from https://www.thonking.ai/p/what-shapes-do-matrix-multiplications\nMatrix mystery\nWe understand some of this (compute intensi…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Putting it together: understanding a matrix mystery\nWhy is it faster  to have bigger matrices? \nThis section is from https://www.thonking.ai/p/what-shapes-do-matrix-multiplications"
+    },
+    {
+      "kind": "p",
+      "text": "Matrix mystery\nWe understand some of this (compute intensity, tiling). Let’s take a closer look.."
+    },
+    {
+      "kind": "p",
+      "text": "Part 1: tiling\nTiling has a major impact through alignment."
+    },
+    {
+      "kind": "p",
+      "text": "Part 2: wave quantization\nWhat’s with the periodic behavior?\nThis happens at 1792 to 1793 size.\nWhy? Using a tile size of 256 × 128,  there are\n1792\n256 × 1792\n128 = 7 × 14 = 98\ntiles. If we increase this to 1793, we have \n8 × 15 = 120\ntiles.\nAn A100 has 108 SMs, so it cannot execute all 120"
+    },
+    {
+      "kind": "p",
+      "text": "Recap of part 2: making ML workloads go fast\n❖ Reduce memory accesses\n❖Coalescing\n❖Fusion\n❖ Move memory to shared memory\n❖Tiling\n❖ Trade memory for compute/accuracy\n❖Quantization\n❖Recomputation"
+    },
+    {
+      "kind": "p",
+      "text": "Part 3: Using what we know to understand Flash Attention\nFlash attention [Dao et al] dramatically accelerates attention.. But how?\nTechnique from paper:"
+    },
+    {
+      "kind": "p",
+      "text": "Recap of attention computation\nAttention  computation : 3 matrix multiplies (K, Q, V) with a softmax  in between"
+    },
+    {
+      "kind": "p",
+      "text": "Tiling part 1: tiling for the KQV matrix multiply\nThis figure 1 from the paper is literally just tiling for a KQV matrix multiply..\nBut what do we do about the softmax ?"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "6b2999484b928ee9b35a4a4f9882ae478733ed387e0066f32b0a6245a01ee3ea",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 5.pdf",
+    "attachment_sha256": "ff25621de3d3d462a534070a209a8efac1b8410e3da58de08f764e33482bb6ba",
+    "attachment_bytes": 4766673
+  }
+}

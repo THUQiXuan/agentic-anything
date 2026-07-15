@@ -1,0 +1,29 @@
+{
+  "spec_version": "0.2",
+  "page_id": "tears-of-steel-en-srt__tears-of-steel-en__004__00-09-26",
+  "source_url": "demos/sources/footage/tears_of_steel_en.srt",
+  "url_path": "tears_of_steel_en.srt · 00:09:26–00:09:27",
+  "title": "transcript 00:09:26–00:09:27",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "tears_of_steel_en.srt · 00:09:26–00:09:27",
+  "summary": "[00:09:26.000 → 00:09:27.000] Could'a gone worse.",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "[00:09:26.000 → 00:09:27.000] Could'a gone worse."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "demos/sources/footage/tears_of_steel_en.srt",
+    "capture_mode": "ingest",
+    "content_sha256": "caaa87a9259bb7c3c6f8273b44f3d3ffc7b184ff3048e5c56c704c3235931876",
+    "start_seconds": 566.0,
+    "end_seconds": 567.0,
+    "cue_count": 1
+  }
+}

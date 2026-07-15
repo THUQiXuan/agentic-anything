@@ -1278,6 +1278,608 @@ contained in the FAIR paper or GISTEMP pack units.
     return payload, artifact, verification, raw_events
 
 
+_STALE_HANDOUT_URL = (
+    "https://github.com/stanford-cs336/assignment1-basics/blob/main/"
+    "cs336_spring2025_assignment1_basics.pdf"
+)
+
+
+def build_course_week1_run() -> tuple[dict[str, Any], str, dict[str, Any], list[dict[str, Any]]]:
+    """Course-agent onboarding: one URL became a study-ready course pack."""
+    task = (
+        "Onboard a new CS336 student for week 1 using only the captured course pack "
+        "(course page + deep-captured lecture PDFs + the assignment starter repository): "
+        "(1) say what Assignment 1 is and exactly where to start in the starter repo; "
+        "(2) point to the lecture slides, with page numbers, for the architecture "
+        "material the assignment needs; (3) the course page links a PDF handout for "
+        "Assignment 1 — check whether that link still resolves, and if it does not, "
+        "locate the handout inside the captured repository instead."
+    )
+    pack = PACKS / "cs336-course"
+    resource = "cs336-course"
+    readme = "stanford-cs336-assignment1-basics__file__readme-md"
+    agents_md = "stanford-cs336-assignment1-basics__file__agents-md"
+    tree = "stanford-cs336-assignment1-basics__repo__000__tree"
+    slides = "2025-lecture-3-architecture__004__pages-25-32"
+    course_page = "spring2025"
+
+    with StdioMCPClient([pack]) as client:
+        run = EvidenceRun("cs336-course-week1", task, [resource], client)
+        run.start("Inspect the course resource: units, linked attachments, capture frontier.")
+        info = run.inspect(
+            resource,
+            "Find the course page unit that anchors the schedule and assignment links.",
+        )
+
+        run.search(
+            resource,
+            "language modeling from scratch coursework assignments schedule",
+            expected_unit=course_page,
+            next_reason="Read the course page to ground what Assignment 1 links to.",
+        )
+        course_read = run.read(
+            resource, course_page,
+            anchors=["Assignment 1", "assignment1-basics"],
+            next_reason="Open the starter repository README that the page links to.",
+        )
+
+        run.search(
+            resource,
+            "assignment 1 basics handout setup environment uv",
+            expected_unit=readme,
+            next_reason="Read the starter README: assignment scope, handout path, setup commands.",
+        )
+        readme_read = run.read(
+            resource, readme,
+            anchors=[
+                "# CS336 Spring 2025 Assignment 1: Basics",
+                "see the assignment handout at",
+                "cs336_assignment1_basics.pdf",
+                "We manage our environments with `uv`",
+            ],
+            next_reason="Check the course's explicit policy for AI assistants before drafting a plan.",
+        )
+
+        run.search(
+            resource,
+            "AI agent guidelines teaching assistant not solution generator",
+            expected_unit=agents_md,
+            next_reason="Read the AI-usage policy the staff ship inside the starter repo.",
+        )
+        agents_read = run.read(
+            resource, agents_md,
+            anchors=["Teaching Assistant, Not Solution Generator"],
+            next_reason="Locate the exact architecture slides the assignment depends on.",
+        )
+
+        run.search(
+            resource,
+            "rotary position embedding RoPE attention architecture",
+            expected_unit=slides,
+            next_reason="Read the slide segment and confirm it covers RoPE at page granularity.",
+        )
+        slides_read = run.read(
+            resource, slides,
+            anchors=["RoPE", "rotary"],
+            next_reason="The course page's handout link failed during capture; verify what the repo actually contains.",
+        )
+
+        run.search(
+            resource,
+            "repository tree files present but not captured",
+            expected_unit=tree,
+            next_reason="Read the full repository tree, including files beyond the text-capture boundary.",
+        )
+        tree_read = run.read(
+            resource, tree,
+            anchors=["cs336_assignment1_basics.pdf  (965,629 bytes)"],
+            next_reason="Cross-check the dead link recorded in the capture frontier against the repo tree.",
+        )
+
+        stale_entries = [
+            entry for entry in info.get("frontier", [])
+            if entry.get("url") == _STALE_HANDOUT_URL
+            and str(entry.get("skip_reason", "")).startswith("attachment_fetch_failed")
+        ]
+        if not stale_entries:
+            raise RuntimeError("expected the stale Assignment 1 handout link in the frontier")
+
+        evidence_keys = [
+            (resource, course_page),
+            (resource, readme),
+            (resource, agents_md),
+            (resource, slides),
+            (resource, tree),
+        ]
+        link_rot = {
+            "stale_url": _STALE_HANDOUT_URL,
+            "frontier_skip_reason": stale_entries[0]["skip_reason"],
+            "renamed_file_in_repo": "cs336_assignment1_basics.pdf",
+            "renamed_file_bytes": 965_629,
+        }
+        run.compute_step(
+            "deterministic_link_rot_check",
+            {"frontier_entries_scanned": len(info.get("frontier", []))},
+            (
+                "The page's Assignment 1 handout URL is recorded in the frontier as "
+                f"{stale_entries[0]['skip_reason']} (HTTP 404 during capture), while the "
+                "captured repository tree lists cs336_assignment1_basics.pdf "
+                "(965,629 bytes): the handout moved into the repo under a new name."
+            ),
+            [(resource, tree)],
+            "Validate citation discipline and emit the study plan.",
+        )
+        run.validate_step(
+            "Validated all anchors and confirmed every final citation points to a previously read unit.",
+            evidence_keys,
+            "Emit the evidence-backed week-1 study plan.",
+        )
+
+        citations = [
+            run.citation(
+                "C1",
+                "The course page schedules Assignment 1 and links the starter repository.",
+                resource, course_page,
+            ),
+            run.citation(
+                "C2",
+                "Assignment 1 is 'Basics'; setup uses uv; the README points to the handout PDF path inside the repo.",
+                resource, readme,
+            ),
+            run.citation(
+                "C3",
+                "Course policy: AI assistants act as teaching aids, not solution generators.",
+                resource, agents_md,
+            ),
+            run.citation(
+                "C4",
+                "Lecture 3 slides pages 25-32 cover RoPE / rotary position embeddings.",
+                resource, slides,
+            ),
+            run.citation(
+                "C5",
+                "The repository tree lists cs336_assignment1_basics.pdf (965,629 bytes) beyond the text-capture boundary.",
+                resource, tree,
+            ),
+        ]
+
+        artifact = f"""# CS336 week-1 study plan (evidence-grounded)
+
+## Task
+
+{task}
+
+## 1. What Assignment 1 is, and where to start
+
+Assignment 1 is **"Basics"** — the from-scratch foundations assignment of
+*CS336: Language Modeling from Scratch*. The course page schedules it and
+links the `stanford-cs336/assignment1-basics` starter repository. [C1]
+
+Start in the starter repository, in this order: [C2]
+
+1. `README.md` — scope, environment setup (`uv` managed), and how to run the
+   test suite.
+2. `cs336_assignment1_basics.pdf` — the full handout (see §3 for why you will
+   not reach it from the course page link).
+3. `tests/adapters.py` + `tests/` — the graded surface: implement until the
+   tests pass.
+
+Note the course's own AI policy before wiring up an assistant: agents in this
+course are teaching aids, **not** solution generators. [C3]
+
+## 2. The slides you need for the architecture material
+
+Lecture 3 ("architecture") covers the transformer-architecture decisions the
+assignment implements. The RoPE / rotary position embedding material is on
+**slides pages 25-32** of the captured deck. [C4]
+
+## 3. Handout link status: dead on the page, alive in the repo
+
+- The course page's Assignment 1 handout link
+  `{_STALE_HANDOUT_URL}`
+  failed during capture and is recorded in the pack frontier as
+  `{stale_entries[0]['skip_reason']}` (run step 2; the frontier is part of the
+  pack, so any agent can re-check this without leaving the pack).
+- The captured repository tree lists `cs336_assignment1_basics.pdf`
+  (965,629 bytes) at the repo root — the handout was renamed (the
+  `spring2025` prefix was dropped) rather than removed. [C5]
+- Practical consequence: open the handout from the repository, not from the
+  course page link.
+
+## Citations
+
+{chr(10).join(citation_marker(item) for item in citations)}
+
+## Capture limits
+
+Lecture PDFs beyond the deep-capture budget and all lecture videos are
+recorded in the pack frontier rather than captured; code units may be
+truncated at the per-file capture limit. Everything cited above was read
+inside the pack during this run.
+"""
+
+        assertions: list[dict[str, Any]] = []
+        assertion(
+            assertions, "course-frontier-records-dead-handout-link",
+            bool(stale_entries),
+            "The stale Assignment 1 handout URL is in the pack frontier with an attachment_fetch_failed reason.",
+        )
+        assertion(
+            assertions, "course-tree-lists-renamed-handout",
+            "cs336_assignment1_basics.pdf  (965,629 bytes)" in tree_read.get("markdown", ""),
+            "The repository tree unit lists the renamed handout with its exact size.",
+        )
+        assertion(
+            assertions, "course-slides-page-addressable",
+            slides_read.get("locator", "") == "pages 25-32",
+            f"Slide citation is page-addressable (locator: {slides_read.get('locator')}).",
+        )
+        assertion(
+            assertions, "course-readme-names-handout-path",
+            "cs336_assignment1_basics.pdf" in readme_read.get("markdown", ""),
+            "The starter README names the in-repo handout path.",
+        )
+        assertion(
+            assertions, "course-page-links-starter-repo",
+            "assignment1-basics" in course_read.get("markdown", ""),
+            "The captured course page links the starter repository.",
+        )
+        assertion(
+            assertions, "course-ai-policy-read",
+            "Teaching Assistant, Not Solution Generator" in agents_read.get("markdown", ""),
+            "The staff's AI-usage policy was read before recommending agent workflows.",
+        )
+        assertion(
+            assertions, "citations-only-after-read",
+            all(item["cited_after_read"] for item in citations),
+            "Every citation points to a unit read earlier in the run.",
+        )
+        assertion(
+            assertions, "citation-markers-in-artifact",
+            all(citation_marker(item) in artifact for item in citations),
+            "The artifact embeds the full unit + locator + hash marker for every citation.",
+        )
+        assertion(
+            assertions, "attachment-provenance-present",
+            any(att.get("kind") == "repo" for att in client_attachments(pack))
+            and sum(att.get("kind") == "document" for att in client_attachments(pack)) >= 5,
+            "The pack records the deep-captured repository and at least five documents with hashes.",
+        )
+        assertion(
+            assertions, "raw-events-have-no-local-paths",
+            str(ROOT) not in json.dumps(client.raw_events, ensure_ascii=False),
+            "Raw JSON-RPC events contain no local checkout paths.",
+        )
+
+        verification = verification_payload(assertions, artifact)
+        result = {
+            "assignment": "Assignment 1 — Basics (from-scratch foundations)",
+            "start_here": ["README.md", "cs336_assignment1_basics.pdf", "tests/adapters.py"],
+            "slides": "2025 Lecture 3 — architecture, pages 25-32 (RoPE / rotary embeddings)",
+            "link_rot": link_rot,
+        }
+        payload = run_payload(run, citations, result, verification)
+        raw_events = list(client.raw_events)
+    return payload, artifact, verification, raw_events
+
+
+def client_attachments(pack: Path) -> list[dict[str, Any]]:
+    site = json.loads((pack / "site.json").read_text(encoding="utf-8"))
+    return site.get("attachments", [])
+
+
+_CUE_STAMP = re.compile(
+    r"\[(\d{2}):(\d{2}):(\d{2})\.(\d{3}) → (\d{2}):(\d{2}):(\d{2})\.(\d{3})\]"
+)
+
+
+def _cue_seconds(stamp: str) -> float:
+    h, m, s = stamp.split(":")
+    return int(h) * 3600 + int(m) * 60 + float(s)
+
+
+def _fmt_seconds(seconds: float) -> str:
+    if seconds < 0:
+        seconds = 0.0
+    millis = round(seconds * 1000)
+    h, rem = divmod(millis, 3_600_000)
+    m, rem = divmod(rem, 60_000)
+    s, ms = divmod(rem, 1000)
+    return f"{h:02d}:{m:02d}:{s:02d}.{ms:03d}"
+
+
+def build_footage_teaser_run() -> tuple[dict[str, Any], str, dict[str, Any], list[dict[str, Any]]]:
+    """Vlogger workflow: subtitles-only footage folder → frame-accurate cut list."""
+    task = (
+        "A creator has a footage folder: three open films with subtitles but no "
+        "script. Assemble a short teaser (under 45 seconds) on the theme "
+        "'dragons, machines, and a breaking world'. Find the exact spoken moments, "
+        "then emit a frame-accurate cut list with per-clip attribution and "
+        "executable ffmpeg commands against the films' official releases. "
+        "Every timecode must come from a read transcript unit."
+    )
+    pack = PACKS / "footage-library"
+    resource = "footage-library"
+    ed_unit = "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+    sintel_1 = "sintel-en-srt__sintel-en__001__00-01-47"
+    sintel_2 = "sintel-en-srt__sintel-en__002__00-05-04"
+    tos_unit = "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+
+    sources = json.loads(
+        (DEMO / "sources" / "real-sources.json").read_text(encoding="utf-8")
+    )["sources"]
+    media = {
+        "ed": sources["footage-elephants-dream"],
+        "sintel": sources["footage-sintel"],
+        "tos": sources["footage-tears-of-steel"],
+    }
+
+    with StdioMCPClient([pack]) as client:
+        run = EvidenceRun("footage-teaser-cut", task, [resource], client)
+        run.start("Inspect the footage library: which clips exist and how they are time-windowed.")
+        run.inspect(
+            resource,
+            "Search the transcripts for the machine motif in Elephants Dream.",
+        )
+
+        run.search(
+            resource,
+            "listen to the sounds of the machine",
+            expected_unit=ed_unit,
+            next_reason="Read the window and pin the exact cue timecodes for the machine line.",
+        )
+        ed_read = run.read(
+            resource, ed_unit,
+            anchors=["[00:03:10.010 → 00:03:14.396] Listen… Listen to the sounds of the machine."],
+            next_reason="Find the first dragon reveal in Sintel.",
+        )
+
+        run.search(
+            resource,
+            "what did they take a dragon",
+            expected_unit=sintel_1,
+            next_reason="Read the window and pin the 'A dragon.' cue.",
+        )
+        sintel1_read = run.read(
+            resource, sintel_1,
+            anchors=["[00:02:23.400 → 00:02:25.000] A dragon."],
+            next_reason="Find the 'dragon lands' warning later in Sintel.",
+        )
+
+        run.search(
+            resource,
+            "these are dragon lands closer than you know",
+            expected_unit=sintel_2,
+            next_reason="Read the window and pin the 'dragon lands' cue.",
+        )
+        sintel2_read = run.read(
+            resource, sintel_2,
+            anchors=["[00:07:37.800 → 00:07:40.500] These are dragon lands, Sintel."],
+            next_reason="Find the 'destroy the world' beat in Tears of Steel.",
+        )
+
+        run.search(
+            resource,
+            "no reason to destroy the world",
+            expected_unit=tos_unit,
+            next_reason="Read the window and pin the closing teaser line.",
+        )
+        tos_read = run.read(
+            resource, tos_unit,
+            anchors=["[00:06:01.000 → 00:06:03.000] But that's no reason to destroy the world."],
+            next_reason="Scout one alternate/b-roll beat in case the edit needs comic relief.",
+        )
+
+        tos_alt = "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+        run.search(
+            resource,
+            "freaked out by my robot hand",
+            expected_unit=tos_alt,
+            next_reason="Read the window and pin the alternate cue's exact timing.",
+        )
+        tos_alt_read = run.read(
+            resource, tos_alt,
+            anchors=["[00:00:30.800 → 00:00:34.000] Why don't you just admit that you're freaked out by my robot hand?"],
+            next_reason="Compute padded cut points and total runtime from the pinned cues.",
+        )
+
+        pad = 0.75
+        clips = [
+            {
+                "n": 1, "film": "Elephants Dream (2006)", "key": "ed",
+                "unit": ed_unit, "cue": "[00:03:10.010 → 00:03:14.396]",
+                "line": "Listen… Listen to the sounds of the machine.",
+                "start": 190.010, "end": 194.396, "read": ed_read,
+            },
+            {
+                "n": 2, "film": "Sintel (2010)", "key": "sintel",
+                "unit": sintel_1, "cue": "[00:02:23.400 → 00:02:25.000]",
+                "line": "A dragon.",
+                "start": 143.400, "end": 145.000, "read": sintel1_read,
+            },
+            {
+                "n": 3, "film": "Sintel (2010)", "key": "sintel",
+                "unit": sintel_2, "cue": "[00:07:37.800 → 00:07:40.500]",
+                "line": "These are dragon lands, Sintel.",
+                "start": 457.800, "end": 460.500, "read": sintel2_read,
+            },
+            {
+                "n": 4, "film": "Tears of Steel (2012)", "key": "tos",
+                "unit": tos_unit, "cue": "[00:06:01.000 → 00:06:03.000]",
+                "line": "But that's no reason to destroy the world.",
+                "start": 361.000, "end": 363.000, "read": tos_read,
+            },
+        ]
+        for clip in clips:
+            clip["cut_in"] = _fmt_seconds(clip["start"] - pad)
+            clip["cut_out"] = _fmt_seconds(clip["end"] + pad)
+            clip["duration"] = round(clip["end"] + pad - (clip["start"] - pad), 3)
+        total = round(sum(clip["duration"] for clip in clips), 3)
+
+        alternate = {
+            "film": "Tears of Steel (2012)", "key": "tos", "unit": tos_alt,
+            "cue": "[00:00:30.800 → 00:00:34.000]",
+            "line": "Why don't you just admit that you're freaked out by my robot hand?",
+            "cut_in": _fmt_seconds(30.800 - pad), "cut_out": _fmt_seconds(34.000 + pad),
+            "read": tos_alt_read,
+        }
+
+        evidence_keys = [(resource, c["unit"]) for c in clips] + [(resource, tos_alt)]
+        run.compute_step(
+            "deterministic_cut_list",
+            {"padding_seconds": pad, "clips": len(clips)},
+            (
+                f"Padded each pinned cue by ±{pad}s and sequenced {len(clips)} clips; "
+                f"total teaser runtime {total}s (< 45s budget)."
+            ),
+            evidence_keys,
+            "Validate that every cut timecode is transcript-grounded, then emit the cut list.",
+        )
+        run.validate_step(
+            "Every cut derives from a cue stamp read inside the pack; runtime is within budget.",
+            evidence_keys,
+            "Emit the teaser cut list with ffmpeg commands and attribution.",
+        )
+
+        citations = [
+            run.citation("F1", "The machine line with exact cue timing.", resource, ed_unit),
+            run.citation("F2", "The dragon reveal with exact cue timing.", resource, sintel_1),
+            run.citation("F3", "The dragon-lands warning with exact cue timing.", resource, sintel_2),
+            run.citation("F4", "The 'destroy the world' beat with exact cue timing.", resource, tos_unit),
+            run.citation("F5", "An alternate b-roll beat with exact cue timing.", resource, tos_alt),
+        ]
+
+        clip_rows = "\n".join(
+            f"| {c['n']} | {c['film']} | `{c['cue']}` | `{c['cut_in']} → {c['cut_out']}` "
+            f"| “{c['line']}” | [F{c['n']}] | {c['duration']}s |"
+            for c in clips
+        )
+        ffmpeg_lines = "\n".join(
+            f"ffmpeg -ss {c['cut_in']} -to {c['cut_out']} "
+            f"-i \"{media[c['key']]['media_url']}\" "
+            f"-c:v libx264 -c:a aac -movflags +faststart clip_{c['n']:02d}.mp4"
+            for c in clips
+        )
+        concat_lines = "\n".join(f"file 'clip_{c['n']:02d}.mp4'" for c in clips)
+
+        artifact = f"""# Teaser cut list — “dragons, machines, and a breaking world”
+
+## Task
+
+{task}
+
+## Edit decision list ({total}s total, budget 45s)
+
+| # | Film | Source cue (transcript) | Padded cut (±{pad}s) | Line | Evidence | Length |
+|---|---|---|---|---|---|---|
+{clip_rows}
+
+Every “source cue” above is quoted verbatim from a transcript unit that this
+run read through MCP; the padded cut is pure arithmetic on that cue.
+
+## Cut commands (against the official releases)
+
+```bash
+{ffmpeg_lines}
+
+cat > teaser_concat.txt <<'LIST'
+{concat_lines}
+LIST
+ffmpeg -f concat -safe 0 -i teaser_concat.txt -c copy teaser.mp4
+```
+
+Re-encoding (`libx264`) keeps the cuts frame-accurate; `-c copy` on the final
+concat is lossless. Timecodes are authored against the official full-length
+releases listed below — a differently trimmed encode may shift them.
+
+## Alternate / b-roll (scouted, not in the main sequence)
+
+| Film | Source cue | Padded cut | Line | Evidence |
+|---|---|---|---|---|
+| {alternate['film']} | `{alternate['cue']}` | `{alternate['cut_in']} → {alternate['cut_out']}` | “{alternate['line']}” | [F5] |
+
+## Attribution (required by the licenses)
+
+- **Elephants Dream (2006)** — {media['ed']['license']}
+  media: {media['ed']['media_url']}
+- **Sintel (2010)** — {media['sintel']['license']}
+  media: {media['sintel']['media_url']}
+- **Tears of Steel (2012)** — {media['tos']['license']}
+  media: {media['tos']['media_url']}
+
+## Citations
+
+{chr(10).join(citation_marker(item) for item in citations)}
+"""
+
+        assertions: list[dict[str, Any]] = []
+        for clip in clips:
+            marker = f"{clip['cue']} {clip['line']}"
+            assertion(
+                assertions, f"clip-{clip['n']}-cue-grounded",
+                marker in clip["read"].get("markdown", ""),
+                f"Cut {clip['n']} quotes cue and line verbatim from {clip['unit']}.",
+            )
+        assertion(
+            assertions, "alternate-cue-grounded",
+            f"{alternate['cue']} {alternate['line']}" in alternate["read"].get("markdown", ""),
+            f"The scouted b-roll beat quotes cue and line verbatim from {alternate['unit']}.",
+        )
+        assertion(
+            assertions, "teaser-within-budget",
+            total < 45.0,
+            f"Total teaser runtime {total}s is under the 45s budget.",
+        )
+        assertion(
+            assertions, "padding-is-pure-arithmetic",
+            all(
+                abs((_cue_seconds(c["cut_out"].replace(",", ".")) -
+                     _cue_seconds(c["cut_in"].replace(",", "."))) -
+                    (c["end"] - c["start"] + 2 * pad)) < 0.002
+                for c in clips
+            ),
+            "Each padded cut equals its cue range extended by exactly ±0.75s.",
+        )
+        assertion(
+            assertions, "ffmpeg-commands-reference-pinned-media",
+            all(media[c["key"]]["media_url"] in artifact for c in clips),
+            "Every clip command targets an official, manifest-pinned media URL.",
+        )
+        assertion(
+            assertions, "attribution-block-complete",
+            all(media[k]["license"] in artifact for k in ("ed", "sintel", "tos")),
+            "The artifact carries the full CC-BY attribution line for all three films.",
+        )
+        assertion(
+            assertions, "citations-only-after-read",
+            all(item["cited_after_read"] for item in citations),
+            "Every citation points to a unit read earlier in the run.",
+        )
+        assertion(
+            assertions, "citation-markers-in-artifact",
+            all(citation_marker(item) in artifact for item in citations),
+            "The artifact embeds the full unit + locator + hash marker for every citation.",
+        )
+        assertion(
+            assertions, "raw-events-have-no-local-paths",
+            str(ROOT) not in json.dumps(client.raw_events, ensure_ascii=False),
+            "Raw JSON-RPC events contain no local checkout paths.",
+        )
+
+        verification = verification_payload(assertions, artifact)
+        result = {
+            "clips": [
+                {k: clip[k] for k in ("n", "film", "cue", "cut_in", "cut_out", "line", "duration")}
+                for clip in clips
+            ],
+            "total_seconds": total,
+            "budget_seconds": 45.0,
+        }
+        payload = run_payload(run, citations, result, verification)
+        raw_events = list(client.raw_events)
+    return payload, artifact, verification, raw_events
+
+
 def verification_payload(assertions: list[dict[str, Any]], artifact: str) -> dict[str, Any]:
     passed = sum(item["passed"] for item in assertions)
     return {
@@ -1432,7 +2034,8 @@ def main() -> int:
     RUNS.mkdir(parents=True, exist_ok=True)
 
     built = []
-    for builder in (build_requests_run, build_gistemp_fair_run):
+    for builder in (build_course_week1_run, build_footage_teaser_run,
+                    build_requests_run, build_gistemp_fair_run):
         payload, artifact, verification, raw_events = builder()
         built.append(write_run(payload, artifact, verification, raw_events))
 

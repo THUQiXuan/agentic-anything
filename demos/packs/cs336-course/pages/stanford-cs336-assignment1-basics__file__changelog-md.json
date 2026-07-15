@@ -1,0 +1,254 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__changelog-md",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "CHANGELOG.md",
+  "title": "CHANGELOG.md",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "CHANGELOG.md",
+  "summary": "# Changelog\nAll changes we make to the assignment code or PDF will be documented in this file.\n## [26.0.3] 2026-04-07\n- handout: Adjust leaderboard time limit from 90 to 45 minutes\n## [26.0.2] 2026-04-06\n- handout: Fix SGD example bug\n- co…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "# Changelog"
+    },
+    {
+      "kind": "p",
+      "text": "All changes we make to the assignment code or PDF will be documented in this file."
+    },
+    {
+      "kind": "p",
+      "text": "## [26.0.3] 2026-04-07\n- handout: Adjust leaderboard time limit from 90 to 45 minutes"
+    },
+    {
+      "kind": "p",
+      "text": "## [26.0.2] 2026-04-06\n- handout: Fix SGD example bug\n- code: Add CLAUDE.md"
+    },
+    {
+      "kind": "p",
+      "text": "## [26.0.1] 2026-04-05\n- handout: Fix a few typos, broken links\n- code: Fix some references to H100s in favor of B200\n- code: Fixture for AdamW updated to cover bugfix from 26.0.0 (should not have caused an issue previously regardless)"
+    },
+    {
+      "kind": "p",
+      "text": "## [26.0.0] 2026-03-30\n- handout: Latex -> Typst (!)\n- handout: Fix tens of typos\n- handout: Assume B200s\n- handout: Clarify some aspects of tokenization\n- handout: Modernize architecture for accounting\n- handout: Fix AdamW disparity to paper (order of weight-decay vs gradient update)\n- handout: Revert column/row major changes\n- code: Many tests fixed, made more specific\n- code: Tensor typing revised is adapters and tests"
+    },
+    {
+      "kind": "p",
+      "text": "## [1.0.6] 2025-08-28\n- handout: Fix bug in RoPE formulation\n- code: Fix typing for adapters\n- code: Relock dependencies\n- code: Minor reformatting"
+    },
+    {
+      "kind": "p",
+      "text": "## [1.0.5] 2025-04-15\n- code: Add submission script, fix typos\n- code: Use `uv_build` for the package build system\n- handout: Fix RoPE indexing\n- code: Fix test for truncated LM inputs\n- code: Ruff reformatting and linting\n- code: Simplify snapshot testing\n- code: Make everything compatible with `ty` typing"
+    },
+    {
+      "kind": "p",
+      "text": "## [1.0.4] - 2025-04-08\n### Added\n- handout: add guidance on parallelizing pretokenization and provide starter code for chunking\n- handout: add guidance on removing special tokens before pretokenization (you should split on them!)"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed\n- handout: fix command for compiling model on MPS backend"
+    },
+    {
+      "kind": "p",
+      "text": "## [1.0.3] - 2025-04-07\n### Added\n- code: Test for removing special tokens when training BPE"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed\n- handout: Fixed RoPE off-by-one error\n- code: Fix for Intel Macs, support 3.11 and PyTorch 2.2.2 when on MacOS x86_64"
+    },
+    {
+      "kind": "p",
+      "text": "## [1.0.2] - 2025-04-03\n### Added\n- code: Missing tests for Linear and Embedding"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed\n- handout: Fix RMSNorm interface\n- handout: Add hints in RMSNorm and SwiGLU specifications to improve numerical stability\n- handout: Clarify the BPE stylized example uses naive pretokenization by splitting on whitespace; your implementations should still use the provided regex\n- handout: Fix docstring for RMSNorm"
+    },
+    {
+      "kind": "p",
+      "text": "## [1.0.1] - 2025-04-02\n### Changed\n- code: Add some tolerance to RoPE tests\n- code: Make sure loading happens on CPU for tests\n- code: Fix docstring typing for readability of Tensor annotations in VSCode (pls fix, @Microsoft)"
+    },
+    {
+      "kind": "p",
+      "text": "## [1.0.0] - 2025-04-01"
+    },
+    {
+      "kind": "p",
+      "text": "### Added\n- code: uv environments\n- code: Tensor type annotations\n- code: Snapshot testing, use --update-snapshots to update (soln only)\n- code/handout: SwiGLU\n- code/handout: RoPE\n- handout: einops\n- code/handout: new ablations\n- handout: low-resource tips\n- handout: Linear and Embedding from scratch"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed\n- handout: complete reformatting, restructuring, rewording\n- handout: redefine attention\n- handout: GeLU -> SiLU\n- handout: parameter initialization\n- handout: remove dropout\n- handout: redraw figures\n- handout: new experiments\n- handout: BPE explanations, systems, explain weird behaviors in solutions"
+    },
+    {
+      "kind": "p",
+      "text": "### Fixed"
+    },
+    {
+      "kind": "p",
+      "text": "- code: fix `test_get_batch` to handle \"AssertionError: Torch not compiled with CUDA enabled\".\n- handout: clarify that gradient clipping norm is calculated over all the parameters.\n- code: fix gradient clipping test comparing wrong tensors\n- code: test skipping parameters with no gradient and properly computing norm with multiple parameters"
+    },
+    {
+      "kind": "p",
+      "text": "## [0.1.6] - 2024-04-13"
+    },
+    {
+      "kind": "p",
+      "text": "### Added"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed"
+    },
+    {
+      "kind": "p",
+      "text": "### Fixed"
+    },
+    {
+      "kind": "p",
+      "text": "- handout: edit expected TinyStories run time to 30-40 minutes.\n- handout: add more details about how to use `np.memmap` or the `mmap_mode` flag\n  to `np.load`.\n- code: fix `get_tokenizer()` docstring.\n- handout: specify that problem `main_experiment` should use the same settings\n  as TinyStories.\n- code: replace mentions of layernorm with RMSNorm."
+    },
+    {
+      "kind": "p",
+      "text": "## [0.1.5] - 2024-04-06"
+    },
+    {
+      "kind": "p",
+      "text": "### Added"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed"
+    },
+    {
+      "kind": "p",
+      "text": "- handout: clarify example of preferring lexicographically greater merges to\n  specify that we want tuple comparison."
+    },
+    {
+      "kind": "p",
+      "text": "### Fixed"
+    },
+    {
+      "kind": "p",
+      "text": "- handout: fix expected number of training tokens for TinyStories, should be\n  327,680,000.\n- code: fix typo in `run_get_lr_cosine_schedule` return docstring.\n- code: fix typo in `test_tokenizer.py`"
+    },
+    {
+      "kind": "p",
+      "text": "## [0.1.4] - 2024-04-04"
+    },
+    {
+      "kind": "p",
+      "text": "### Added"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed"
+    },
+    {
+      "kind": "p",
+      "text": "- code: skip `Tokenizer` memory-related tests on non-Linux systems, since\n  support for RLIMIT_AS is inconsistent.\n- code: reduce increase atol on end-to-end Transformer forward pass tests.\n- code: remove dropout in model-related tests to improve determinism across\n  platforms.\n- code: add `attn_pdrop` to `run_multihead_self_attention` adapter.\n- code: clarify `{q,k,v}_proj` dimension orders in the adapters.\n- code: increase atol on cross-entropy tests\n- code: remove unnecessary warning in `test_get_lr_cosine_schedule`"
+    },
+    {
+      "kind": "p",
+      "text": "### Fixed"
+    },
+    {
+      "kind": "p",
+      "text": "- handout: fix signature of `Tokenizer.__init__` to include `self`.\n- handout: mention that `Tokenizer.from_files` should be a class method.\n- handout: clarify list of model hyperparameters listed in `adamwAccounting`.\n- handout: clarify that `adamwAccounting` (b) considers a GPT-2 XL-shaped model\n  (with our architecture), not necessarily the literal GPT-2 XL model.\n- handout: moved softmax problem to where softmax is first mentioned (Scaled Dot-Product Attention, Section 3.4.3)\n- handout: removed redundant initialization (t = 0) in AdamW pseudocode\n- handout: added resources needed for BPE training"
+    },
+    {
+      "kind": "p",
+      "text": "## [0.1.3] - 2024-04-02"
+    },
+    {
+      "kind": "p",
+      "text": "### Added"
+    },
+    {
+      "kind": "p",
+      "text": "### Changed"
+    },
+    {
+      "kind": "p",
+      "text": "- handout: edit `adamWAccounting`, part (d) to define MFU and mention that the\n  backward pass is typically assumed to have twice the FLOPS of the forward pass.\n- handout: provide a hint about desired behavior when a user passes in input IDs\n  to `Tokenizer.decode` that correspond to invalid UTF-8 bytes."
+    },
+    {
+      "kind": "p",
+      "text": "### Fixed"
+    },
+    {
+      "kind": "p",
+      "text": "## [0.1.2] - 2024-04-02"
+    },
+    {
+      "kind": "p",
+      "text": "### Added"
+    },
+    {
+      "kind": "p",
+      "text": "- handout: added some more information about submitting to the leaderboard."
+    },
+    {
+      "kind": "p",
+      "text": "### Changed"
+    },
+    {
+      "kind": "p",
+      "text": "### Fixed"
+    },
+    {
+      "kind": "p",
+      "text": "## [0.1.1] - 2024-04-01"
+    },
+    {
+      "kind": "p",
+      "text": "### Added"
+    },
+    {
+      "kind": "p",
+      "text": "- code: add a note to README.md that pull requests and issues are welcome and\n  encouraged."
+    },
+    {
+      "kind": "p",
+      "text": "### Changed"
+    },
+    {
+      "kind": "p",
+      "text": "- handout: edit motivation for pre-tokenization to include a note about\n  desired behavior with tokens that differ only in punctuation.\n- handout: remove total number of points after each section.\n- handout: mention that large language models (e.g., LLaMA and GPT-3) often use\n  AdamW betas of (0.9, 0.95) (in contrast to the PyTorch defaults of (0.9, 0.999)).\n- handout: explicitly mention the deliverable in the `adamw` problem.\n- code: rename `test_serialization::test_checkpoint` to\n  `test_serialization::test_checkpointing` to match the handout.\n- code: slightly relax the time limit in `test_train_bpe_speed`."
+    },
+    {
+      "kind": "p",
+      "text": "### Fixed"
+    },
+    {
+      "kind": "p",
+      "text": "- code: fix an issue in the `train_bpe` tests where the expected merges and vocab did\n  not properly reflect tiebreaking with the lexicographically greatest pair.\n  - This occurred because our reference implementation (which checks against HF)\n    follows the GPT-2 tokenizer in remapping bytes that aren't human-readable to\n    printable unicode strings. To match the HF code, we were erroneously tiebreaking\n    on this remapped unicode representation instead of the original bytes.\n- handout: fix the expected number of non-embedding parameters for model with\n  recommended TinyStories hyperparameters (section 7.2).\n- handout: replace `<|endofsequence|>` with `<|endoftext|>` in the `decoding` problem.\n- code: fix the setup command (`pip install -e .'[test]'`)to improve zsh compatibility.\n- handout: fix various trivial typos and formatting errors."
+    },
+    {
+      "kind": "p",
+      "text": "## [0.1.0] - 2024-04-01"
+    },
+    {
+      "kind": "p",
+      "text": "Initial release."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "46dab494ae04d2cd45674df187a2fec9c5878690ae9ac79c6358f49778226bee",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

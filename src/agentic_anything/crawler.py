@@ -32,6 +32,36 @@ _SKIP_EXTENSIONS = (
     ".woff", ".woff2", ".ttf", ".eot",
 )
 
+# Link targets that are worth capturing through a dedicated ingester instead
+# of the HTML crawler: documents a page "attaches" (lecture slides, papers,
+# datasets) and repositories/videos it references.
+_ATTACHMENT_DOCUMENT_EXTENSIONS = (
+    ".pdf", ".docx", ".pptx", ".xlsx", ".epub",
+    ".csv", ".tsv", ".ipynb", ".md", ".markdown",
+    ".srt", ".vtt",
+)
+_ATTACHMENT_ARCHIVE_EXTENSIONS = (".zip", ".tar", ".tgz", ".tar.gz")
+
+
+def attachment_kind(url: str) -> str | None:
+    """'repo' | 'video' | 'document' | 'archive' for followable link targets.
+
+    Returns None for ordinary page links and pure assets (images, CSS, JS).
+    """
+    from .ingest import classify_url  # local import: ingest imports packer lazily
+
+    kind = classify_url(url)
+    if kind in ("repo", "video"):
+        return kind
+    if kind != "file":
+        return None
+    path = urlsplit(url.split("?")[0].split("#")[0]).path.lower()
+    if path.endswith(_ATTACHMENT_ARCHIVE_EXTENSIONS):
+        return "archive"
+    if path.endswith(_ATTACHMENT_DOCUMENT_EXTENSIONS):
+        return "document"
+    return None
+
 
 @dataclass
 class CrawledPage:
@@ -59,9 +89,21 @@ class FrontierEntry:
 
 
 @dataclass
+class AttachmentCandidate:
+    """A link target better served by a dedicated ingester than the crawler."""
+
+    url: str
+    kind: str            # "document" | "archive" | "repo" | "video"
+    anchor_text: str
+    from_page_id: str
+    discovered_via: str = "content_link"
+
+
+@dataclass
 class CrawlOutcome:
     pages: list[CrawledPage] = field(default_factory=list)
     frontier: list[FrontierEntry] = field(default_factory=list)
+    attachments: list[AttachmentCandidate] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
 
 
@@ -105,6 +147,21 @@ def crawl(
             enqueue(sm_url, 4, "sitemap", "", 1)
 
     seed_path_prefix = urlsplit(seed_url).path.rstrip("/") or "/"
+    seen_attachments: set[str] = set()
+
+    def note_attachment(link, kind: str, from_page_id: str) -> None:
+        key = normalize_url(link.url)
+        if key in seen_attachments:
+            return
+        seen_attachments.add(key)
+        outcome.attachments.append(
+            AttachmentCandidate(
+                url=link.url,
+                kind=kind,
+                anchor_text=(link.text or "").strip()[:200],
+                from_page_id=from_page_id,
+            )
+        )
 
     while queue:
         bucket, _, url, via, from_page, depth = heapq.heappop(queue)
@@ -174,6 +231,12 @@ def crawl(
 
         for link in page.structure.links:
             target = link.url
+            a_kind = attachment_kind(target)
+            if a_kind:
+                # documents, repos, and videos are captured by dedicated
+                # ingesters (or recorded in the frontier), never crawled
+                note_attachment(link, a_kind, page.page_id)
+                continue
             if not _crawlable(target):
                 continue
             if not same_site(target, seed_url):

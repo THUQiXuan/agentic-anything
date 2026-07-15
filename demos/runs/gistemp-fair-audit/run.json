@@ -55,7 +55,7 @@
     "server": {
       "name": "agentic-anything",
       "title": "Agentic Anything Resource Agents",
-      "version": "0.4.1"
+      "version": "0.5.0"
     },
     "tools": [
       "resource_info",
@@ -480,7 +480,7 @@
   "steps": [
     {
       "next_step_reason": "Inspect both resource boundaries before selecting data and rubric evidence.",
-      "output_summary": "Connected to agentic-anything 0.4.1; tools: resource_info, search_resource, read_unit.",
+      "output_summary": "Connected to agentic-anything 0.5.0; tools: resource_info, search_resource, read_unit.",
       "phase": "connect",
       "step": 1,
       "tool": "initialize + tools/list",

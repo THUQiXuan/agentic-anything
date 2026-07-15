@@ -58,6 +58,10 @@ def _build_config_from_args(args) -> BuildConfig:
         include_html=not args.no_html,
         probe_well_known=not args.no_probe,
         extra_seeds=args.seed or [],
+        follow_docs=args.follow_docs,
+        follow_repos=args.follow_repos,
+        follow_hosts=args.follow_host or [],
+        follow_max_bytes=args.follow_max_mb * 1_000_000,
     )
 
 
@@ -94,6 +98,17 @@ def _add_build_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--timeout", type=float, default=20.0)
     parser.add_argument("--seed", action="append", default=None,
                         help="extra seed URL (repeatable)")
+    parser.add_argument("--follow-docs", type=int, default=0, metavar="N",
+                        help="deep capture: ingest up to N linked documents "
+                             "(PDF/DOCX/PPTX/XLSX/EPUB/CSV/ipynb/…) into the pack")
+    parser.add_argument("--follow-repos", type=int, default=0, metavar="N",
+                        help="deep capture: ingest up to N linked GitHub "
+                             "repositories into the pack")
+    parser.add_argument("--follow-host", action="append", default=None, metavar="HOST",
+                        help="extra host allowed for deep capture downloads "
+                             "(repeatable; same-site and github.com are always allowed)")
+    parser.add_argument("--follow-max-mb", type=int, default=30, metavar="MB",
+                        help="per-attachment download cap in MB (default: 30)")
 
 
 def _add_llm_options(parser: argparse.ArgumentParser) -> None:
@@ -188,8 +203,11 @@ def cmd_build(args) -> int:
         _print_json(payload)
     else:
         print(f"pack: {payload['pack_dir']}")
+        extra = ""
+        if payload.get("attachment_count"):
+            extra = f"   linked resources captured: {payload['attachment_count']}"
         print(f"pages captured: {payload['page_count']}   frontier: {payload['frontier_count']}   "
-              f"api surface entries: {payload['api_count']}")
+              f"api surface entries: {payload['api_count']}{extra}")
         for warning in payload["warnings"]:
             print(f"warning: {warning}", file=sys.stderr)
     return rc
@@ -236,9 +254,12 @@ def cmd_agentify(args) -> int:
                                "guide_path": str(out.resolve() / "AGENT.md")}})
     else:
         print(f"pack: {build_payload['pack_dir']}")
+        extra = ""
+        if build_payload.get("attachment_count"):
+            extra = f"   linked resources captured: {build_payload['attachment_count']}"
         print(f"pages captured: {build_payload['page_count']}   "
               f"frontier: {build_payload['frontier_count']}   "
-              f"api surface entries: {build_payload['api_count']}")
+              f"api surface entries: {build_payload['api_count']}{extra}")
         print(f"skill written: {skill_payload['skill_path']}")
         print(f"resource CLI written: {cli_path}")
         print(f"agent interface written: {agent_path}")

@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__004__pages-25-32",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 25-32",
+  "title": "2025 Lecture 3 - architecture — pages 25-32",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 25-32",
+  "summary": "Do gated linear units work (2)?\nYes, with other works corroborating Shazeer  2020\nNarang et al 2020\nGating, activations\n• Many variations ( ReLU, GeLU, *GLU) across models.\n• *GLU isn’t necessary  for a good model (see GPT3), but it’s prob…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Do gated linear units work (2)?\nYes, with other works corroborating Shazeer  2020\nNarang et al 2020"
+    },
+    {
+      "kind": "p",
+      "text": "Gating, activations\n• Many variations ( ReLU, GeLU, *GLU) across models.\n• *GLU isn’t necessary  for a good model (see GPT3), but it’s probably helpful\n Otuer, recent outlier models..\n  Nemotron  340B (Squared ReLU), Falcon 2 11b ( ReLU)\n• But evidence points towards somewhat consistent gains from Swi/GeGLU"
+    },
+    {
+      "kind": "p",
+      "text": "Serial vs Parallel layers\nNormal transformer blocks are serial  – they compute attention, then the MLP\nCould we parallelize the transformer block?"
+    },
+    {
+      "kind": "p",
+      "text": "Parallel layers\nA few models (GPTJ, PaLM, GPT-NeoX) do parallel layers. Originally in GPT -J\nIf implemented right, LayerNorm  can be shared, and matrix multiplies can be fused\nRecent Models: Cohere Command A, Falcon 2 11B, Command R+"
+    },
+    {
+      "kind": "p",
+      "text": "Summary: architectures\nPre-vs-post norm: \n• Everyone does pre-norm (except \nOPT350M), likely with good reason.\nLayer vs RMSnorm :\n• RMSnorm has clear compute wins, \nsometimes even performance\nGating:\n• GLUs seem generally better, though \ndifferences are small\nSerial vs parallel layers:\n• No extremely serious ablations, but has a \ncompute win."
+    },
+    {
+      "kind": "p",
+      "text": "Many variations in position embeddings\nSine embeddings: add sines and cosines that enable localization\n𝐸𝑚𝑏𝑒𝑑 𝑥, 𝑖 = 𝑣𝑥 + 𝑃𝐸𝑝𝑜𝑠\nAbsolute embeddings: add a position vector to the embedding\n𝐸𝑚𝑏𝑒𝑑 𝑥, 𝑖 = 𝑣𝑥 + 𝑢𝑖\nRelative embeddings: add a vector to the attention computation  \nNotable models:\nOriginal transformer\nNotable models:\nGPT1/2/3, OPT\nNotable models:\nT5, Gopher, Chinchilla\nRope embeddings (next slides..)\nNotable models: \n GPTJ, PaLM, LLaMA\nMost 2024+ models"
+    },
+    {
+      "kind": "p",
+      "text": "RoPE: rotary position embeddings\nHigh level thought process: a relative position embedding should be some 𝑓(𝑥, 𝑖) s.t. \n𝑓 𝑥, 𝑖 , 𝑓 𝑦, 𝑗 = 𝑔(𝑥, 𝑦, 𝑖 − 𝑗)\nThat is, the attention function only gets to depend on the relative position ( i-j). How do \nexisting embeddings not fulfill this goal?\n• Sine: Has various cross -terms that are not relative\n𝐸𝑚𝑏𝑒𝑑 𝑥, 𝑖 , 𝐸𝑚𝑏𝑒𝑑 𝑦, 𝑖 = 𝑣𝑥, 𝑣𝑦 + 𝑃𝐸𝑖, 𝑣𝑦 …\n• Absolute: obviously not relative\n• Relative embeddings: \n is not an inner product"
+    },
+    {
+      "kind": "p",
+      "text": "RoPE: rotary position embeddings\nHow can we solve this problem? \n•  We want our embeddings to be invariant to absolute position\n•  We know that inner products are invariant to arbitrary rotation.\nwe \nknow\nPosition independent \nembedding\nwe \nknow\nEmbedding \n“of course we know”\nRotate we by ‘2 positions’Rotate we by ‘0 positions’\nwe \nknow\nEmbedding \n“we know that”\nknow by ‘1 positions’ Rotate know by ‘3 positions’"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "3d0925b25bdb496a76b6882054fbfe5e52e4e234204ddd94882500c3a546a4e0",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

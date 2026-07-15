@@ -1,0 +1,86 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__readme-md",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "README.md",
+  "title": "README.md",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "README.md",
+  "summary": "# CS336 Spring 2025 Assignment 1: Basics\nFor a full description of the assignment, see the assignment handout at\n[cs336_assignment1_basics.pdf](./cs336_assignment1_basics.pdf)\nIf you see any issues with the assignment handout or code, plea…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "# CS336 Spring 2025 Assignment 1: Basics"
+    },
+    {
+      "kind": "p",
+      "text": "For a full description of the assignment, see the assignment handout at\n[cs336_assignment1_basics.pdf](./cs336_assignment1_basics.pdf)"
+    },
+    {
+      "kind": "p",
+      "text": "If you see any issues with the assignment handout or code, please feel free to\nraise a GitHub issue or open a pull request with a fix."
+    },
+    {
+      "kind": "p",
+      "text": "## Setup"
+    },
+    {
+      "kind": "p",
+      "text": "### Environment\nWe manage our environments with `uv` to ensure reproducibility, portability, and ease of use.\nInstall `uv` [here](https://github.com/astral-sh/uv#installation) (recommended), or run `pip install uv`/`brew install uv`.\nWe recommend reading a bit about managing projects in `uv` [here](https://docs.astral.sh/uv/guides/projects/#managing-dependencies) (you will not regret it!)."
+    },
+    {
+      "kind": "p",
+      "text": "You can now run any code in the repo using\n```sh\nuv run <python_file_path>\n```\nand the environment will be automatically solved and activated when necessary."
+    },
+    {
+      "kind": "p",
+      "text": "### Run unit tests"
+    },
+    {
+      "kind": "p",
+      "text": "```sh\nuv run pytest\n```"
+    },
+    {
+      "kind": "p",
+      "text": "Initially, all tests should fail with `NotImplementedError`s.\nTo connect your implementation to the tests, complete the\nfunctions in [./tests/adapters.py](./tests/adapters.py)."
+    },
+    {
+      "kind": "p",
+      "text": "### Download data\nDownload the TinyStories data and a subsample of OpenWebText"
+    },
+    {
+      "kind": "p",
+      "text": "``` sh\nmkdir -p data\ncd data"
+    },
+    {
+      "kind": "p",
+      "text": "wget https://huggingface.co/datasets/roneneldan/TinyStories/resolve/main/TinyStoriesV2-GPT4-train.txt\nwget https://huggingface.co/datasets/roneneldan/TinyStories/resolve/main/TinyStoriesV2-GPT4-valid.txt"
+    },
+    {
+      "kind": "p",
+      "text": "wget https://huggingface.co/datasets/stanford-cs336/owt-sample/resolve/main/owt_train.txt.gz\ngunzip owt_train.txt.gz\nwget https://huggingface.co/datasets/stanford-cs336/owt-sample/resolve/main/owt_valid.txt.gz\ngunzip owt_valid.txt.gz"
+    },
+    {
+      "kind": "p",
+      "text": "cd ..\n```"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "11bf3402f88f925e27a244b9102656a748d0c1e47f02399f42112faabe52f8fa",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

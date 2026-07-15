@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-11-scaling-details__003__pages-17-24",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+  "url_path": "pages 17-24",
+  "title": "2025 Lecture 11 - Scaling details — pages 17-24",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 17-24",
+  "summary": "What remains – model size vs data tradeoffs.\nFrom chinchilla – to fit a scaling law, we need to train from scratch, not just early stop\nThis turns the cost of fitting a scaling law from n to n^2.. Can we avoid this?\n(partial) solution in m…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "What remains – model size vs data tradeoffs.\nFrom chinchilla – to fit a scaling law, we need to train from scratch, not just early stop\nThis turns the cost of fitting a scaling law from n to n^2.. Can we avoid this?"
+    },
+    {
+      "kind": "p",
+      "text": "(partial) solution in miniCPM – WSD learning rate\nInstead of cosine, split learning rate into warmup, stable, and decay phases.\nFor chinchilla -style analysis, can restart the run at the end of the stable phase."
+    },
+    {
+      "kind": "p",
+      "text": "WSD learning rates work well in miniCPM\nSlower during the stable phase, rapid loss decay during decay phase. Decay ~ 10%."
+    },
+    {
+      "kind": "p",
+      "text": "Side note – other ways of estimating chinchilla curves\nGadre et al propose other, curve -fitting based ways of doing similar things \nCore idea – the ‘penalty’\nfrom overtraining remains stable"
+    },
+    {
+      "kind": "p",
+      "text": "Chinchilla-type analysis\nEquipped with the WSD learning rate, \nwe can now try to find the optimal data -to-model size ratio\nMiniCPM  authors choose method 1 (lower envelope) and method 3 (joint fit)"
+    },
+    {
+      "kind": "p",
+      "text": "Chinchlla method 1\nFairly clear (though maybe not linear?) trends\nDifferent colors indicate different models. Their runs suggest relatively low diminishing \nreturns due to data."
+    },
+    {
+      "kind": "p",
+      "text": "Chinchilla method 3\nTheir primary scaling approach is the joint fit – they find  very high data -model ratios."
+    },
+    {
+      "kind": "p",
+      "text": "Tiny models with lots of data\nThe overall data -to-model ratio is very high (192), though they argue LLaMA  \narchitectures should have a higher ratio.\nNote that recent models like LLaMA  3 has significantly  higher data -to-model ratios, \nsuggesting that with more careful optimization, we might be able to go far beyond \nthe 20* model_size  rule of thumb."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "47e90593f10d1d905f208ef543cca56033cdccc3652e267bd206c13b29e30161",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 11.pdf",
+    "attachment_sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+    "attachment_bytes": 6265218
+  }
+}

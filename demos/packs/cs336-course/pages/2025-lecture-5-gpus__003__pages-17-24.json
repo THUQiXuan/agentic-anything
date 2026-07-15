@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-5-gpus__003__pages-17-24",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+  "url_path": "pages 17-24",
+  "title": "2025 Lecture 5 - GPUs — pages 17-24",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 17-24",
+  "summary": "Compute scaling is faster than memory scaling\nFLOPs scale faster than memory – it’s hard to keep our compute units fed with data!\nhttps://medium.com /riselab/ai-and-memory-wall-2cb4265cb0b8\nRecap: GPUs – what are they and how do they work…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Compute scaling is faster than memory scaling\nFLOPs scale faster than memory – it’s hard to keep our compute units fed with data!\nhttps://medium.com /riselab/ai-and-memory-wall-2cb4265cb0b8"
+    },
+    {
+      "kind": "p",
+      "text": "Recap: GPUs – what are they and how do they work\n❖ GPUs are massively parallel – same instructions \napplied across many workers\n❖ Compute (and esp matmuls ) have scaled faster \nthan memory\n❖ We have to respect the memory hierarchy to \nmake things go fast."
+    },
+    {
+      "kind": "p",
+      "text": "Part 2: Making ML workloads fast on a GPU\nPerformance on a GPU can be complex, even for something as simple as a square matmul"
+    },
+    {
+      "kind": "p",
+      "text": "What makes ML workloads fast?\nThe roofline model  \nKey to this section: how do we avoid being memory bound?"
+    },
+    {
+      "kind": "p",
+      "text": "How do we make GPUs go fast?\n1. Control divergence (not a memory bottleneck..)\n2. Low precision computation\n3. Operator fusion\n4. Recomputation\n5. Coalescing memory\n6. Tiling"
+    },
+    {
+      "kind": "p",
+      "text": "Control divergence (not a memory issue)\nGPUs operate in a SIMT model – every thread in a warp is executing the same instruction\nConditionals are fine, but lead to significant overhead from the execution model"
+    },
+    {
+      "kind": "p",
+      "text": "Trick 1: Low precision computation\nIf you have fewer bits, you have fewer bits to move"
+    },
+    {
+      "kind": "p",
+      "text": "Low precision improves arithmetic intensity\nExample: elementwise ReLU (𝑥 = max(0, 𝑥)) on a vector of size 𝑛.\n(Float 32 case)\nMemory access : 1 read (x), 1 write (if x < 0), float 32 = 8 bytes\nOperations: 1 comparison op, 1 FLOP.\nIntensity: 8 bytes / FLOP\n(Float 16)\nMemory access : 1 read (x), 1 write (if x < 0), float 16 = 4 bytes\nOperations: 1 comparison op, 1 FLOP.\nIntensity: 4 bytes / FLOP"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "b43efba33825837d83ecb3f1e9ab2c855dce384d2a92f3396e335e7576f05681",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 5.pdf",
+    "attachment_sha256": "ff25621de3d3d462a534070a209a8efac1b8410e3da58de08f764e33482bb6ba",
+    "attachment_bytes": 4766673
+  }
+}

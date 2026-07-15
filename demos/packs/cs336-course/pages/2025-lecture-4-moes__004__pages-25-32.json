@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-4-moes__004__pages-25-32",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+  "url_path": "pages 25-32",
+  "title": "2025 Lecture 4 - MoEs — pages 25-32",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 25-32",
+  "summary": "RL for MoEs\nRL via REINFORCE does work, but not so much better that it’s a clear win\n(REINFORCE baseline approach, Clark et al 2020)\nRL is the ‘right solution’ but gradient variances and complexity \nmeans it’s not widely used\nStochastic ap…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "RL for MoEs\nRL via REINFORCE does work, but not so much better that it’s a clear win\n(REINFORCE baseline approach, Clark et al 2020)\nRL is the ‘right solution’ but gradient variances and complexity \nmeans it’s not widely used"
+    },
+    {
+      "kind": "p",
+      "text": "Stochastic approximations\nFrom Shazeer  et al 2017 – routing decisions are stochastic  with gaussian perturbations.\n1. This naturally leads to experts that are a bit more robust. \n2. The softmax  means that the model learns how to rank K experts"
+    },
+    {
+      "kind": "p",
+      "text": "Stochastic approximations\nStochastic jitter in Fedus  et al 2022. This does a uniform multiplicative perturbation for the \nsame goal of getting less brittle experts. This was later removed in Zoph et al 2022"
+    },
+    {
+      "kind": "p",
+      "text": "Heuristic balancing losses\nAnother key issue – systems efficiency requires that we use experts evenly..\nThe derivative with respect to 𝑝𝑖(𝑥) is 𝛼𝑁\n𝑇2 σ 1𝑎𝑟𝑔𝑚𝑎𝑥 𝑝 𝑥 =𝑖, \nso more frequent use = stronger downweighting  \nFrom the Switch Transformer [ Fedus  et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "Example from deepseek (v1-2)\nPer-expert balancing – same as the switch transformer\nPer-device balancing – the objective above, but aggregated by device."
+    },
+    {
+      "kind": "p",
+      "text": "DeepSeek v3 variation – per-expert biases\nSet up a per -expert bias (making it more likely to get tokens) and use online learning\nThey call this ‘ auxiliary loss free balancing ’\n(but the approach is not fully aux loss free..)"
+    },
+    {
+      "kind": "p",
+      "text": "What happens when removing load balancing losses?"
+    },
+    {
+      "kind": "p",
+      "text": "Training MoEs – the systems side\nMoEs parallelize nicely – Each FFN \ncan fit in a device\nEnables additional kinds of parallelism"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "2ad2c442041c490e76e175bfbce7da91c6c21236fe1d01ce158b9d1e11e81cc2",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 4.pdf",
+    "attachment_sha256": "b62ba6416f04c4473834fffa19119317e78542a6b8dc94a5e816790643cb0c4f",
+    "attachment_bytes": 4677130
+  }
+}

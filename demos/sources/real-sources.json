@@ -1,72 +1,204 @@
 {
-  "snapshot_date": "2026-07-11",
-  "policy": "Every demo input is an unmodified snapshot downloaded from the named publisher. The builder verifies each byte-for-byte SHA-256 before agentification.",
-  "sources": {
-    "alice": {
-      "title": "Alice's Adventures in Wonderland",
-      "publisher": "Project Gutenberg",
-      "resource_type": "book",
-      "format": "EPUB3",
-      "version": "eBook #11, updated 2025-06-26",
-      "origin_url": "https://www.gutenberg.org/ebooks/11",
-      "snapshot_url": "https://www.gutenberg.org/ebooks/11.epub3.images",
-      "snapshot_file": "alice-project-gutenberg-11.epub",
-      "sha256": "4ac9fc092435338fdb28e96b02989a46bbe075ec310f1789db87a653761cce92",
-      "license": "Public domain in the USA; Project Gutenberg terms apply",
-      "license_url": "https://www.gutenberg.org/policy/permission.html"
-    },
-    "requests": {
-      "title": "Requests",
-      "publisher": "Python Software Foundation / psf",
-      "resource_type": "code",
-      "format": "GitHub release archive",
-      "version": "v2.34.2, commit 6e83187b8feb273ed4c6cdab5efd8d54901dfab3",
-      "origin_url": "https://github.com/psf/requests/tree/v2.34.2",
-      "snapshot_url": "https://codeload.github.com/psf/requests/zip/refs/tags/v2.34.2",
-      "snapshot_file": "requests-v2.34.2.zip",
-      "archive_root": "requests-2.34.2",
-      "sha256": "f552f594e029e3631ed886dc34b42e86bbaca0858b6d06ec55fe81385f3c8d46",
-      "license": "Apache License 2.0",
-      "license_url": "https://github.com/psf/requests/blob/v2.34.2/LICENSE"
-    },
-    "secrets": {
-      "title": "secrets — Generate secure random numbers for managing secrets",
-      "publisher": "Python Software Foundation",
-      "resource_type": "web",
-      "format": "Official documentation webpage",
-      "version": "Python 3.13.14 documentation",
-      "origin_url": "https://docs.python.org/3.13/library/secrets.html",
-      "snapshot_url": "https://docs.python.org/3.13/library/secrets.html",
-      "snapshot_file": "python-3.13-secrets.html",
-      "sha256": "9464167bbc2a965a479e0a1dc2ff1fb4a701077e0b8c92bc1fa7937916711a74",
-      "license": "Python Software Foundation License Version 2",
-      "license_url": "https://docs.python.org/3.13/license.html"
-    },
-    "gistemp": {
-      "title": "GISS Surface Temperature Analysis (GISTEMP v4)",
-      "publisher": "NASA Goddard Institute for Space Studies",
-      "resource_type": "dataset",
-      "format": "CSV",
-      "version": "Snapshot 2026-07-11, observations through June 2026",
-      "origin_url": "https://data.giss.nasa.gov/gistemp/data_v4.html",
-      "snapshot_url": "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts%2BdSST.csv",
-      "snapshot_file": "nasa-gistemp-global.csv",
-      "sha256": "99d659d8c955c6599e93be3691467ff56eff80ee4b066c5cacfaaa6f7332ca9f",
-      "license": "NASA data with source acknowledgment requested",
-      "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
-    },
-    "fair-paper": {
-      "title": "The FAIR Guiding Principles for scientific data management and stewardship",
-      "publisher": "Scientific Data / PubMed Central",
-      "resource_type": "document",
-      "format": "Open-access scholarly HTML",
-      "version": "Scientific Data 3, 160018 (2016), PMCID PMC4792175",
-      "origin_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
-      "snapshot_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
-      "snapshot_file": "fair-guiding-principles-pmc4792175.html",
-      "sha256": "4ad8a99796d424923a47cb798c135699bca55fa1e2c322645959adc751f3a6a2",
-      "license": "Creative Commons Attribution 4.0 International",
-      "license_url": "https://creativecommons.org/licenses/by/4.0/"
-    }
+ "snapshot_date": "2026-07-11",
+ "policy": "Every demo input is an unmodified snapshot downloaded from the named publisher. The builder verifies each byte-for-byte SHA-256 before agentification.",
+ "sources": {
+  "alice": {
+   "title": "Alice's Adventures in Wonderland",
+   "publisher": "Project Gutenberg",
+   "resource_type": "book",
+   "format": "EPUB3",
+   "version": "eBook #11, updated 2025-06-26",
+   "origin_url": "https://www.gutenberg.org/ebooks/11",
+   "snapshot_url": "https://www.gutenberg.org/ebooks/11.epub3.images",
+   "snapshot_file": "alice-project-gutenberg-11.epub",
+   "sha256": "4ac9fc092435338fdb28e96b02989a46bbe075ec310f1789db87a653761cce92",
+   "license": "Public domain in the USA; Project Gutenberg terms apply",
+   "license_url": "https://www.gutenberg.org/policy/permission.html"
+  },
+  "requests": {
+   "title": "Requests",
+   "publisher": "Python Software Foundation / psf",
+   "resource_type": "code",
+   "format": "GitHub release archive",
+   "version": "v2.34.2, commit 6e83187b8feb273ed4c6cdab5efd8d54901dfab3",
+   "origin_url": "https://github.com/psf/requests/tree/v2.34.2",
+   "snapshot_url": "https://codeload.github.com/psf/requests/zip/refs/tags/v2.34.2",
+   "snapshot_file": "requests-v2.34.2.zip",
+   "archive_root": "requests-2.34.2",
+   "sha256": "f552f594e029e3631ed886dc34b42e86bbaca0858b6d06ec55fe81385f3c8d46",
+   "license": "Apache License 2.0",
+   "license_url": "https://github.com/psf/requests/blob/v2.34.2/LICENSE"
+  },
+  "secrets": {
+   "title": "secrets — Generate secure random numbers for managing secrets",
+   "publisher": "Python Software Foundation",
+   "resource_type": "web",
+   "format": "Official documentation webpage",
+   "version": "Python 3.13.14 documentation",
+   "origin_url": "https://docs.python.org/3.13/library/secrets.html",
+   "snapshot_url": "https://docs.python.org/3.13/library/secrets.html",
+   "snapshot_file": "python-3.13-secrets.html",
+   "sha256": "9464167bbc2a965a479e0a1dc2ff1fb4a701077e0b8c92bc1fa7937916711a74",
+   "license": "Python Software Foundation License Version 2",
+   "license_url": "https://docs.python.org/3.13/license.html"
+  },
+  "gistemp": {
+   "title": "GISS Surface Temperature Analysis (GISTEMP v4)",
+   "publisher": "NASA Goddard Institute for Space Studies",
+   "resource_type": "dataset",
+   "format": "CSV",
+   "version": "Snapshot 2026-07-11, observations through June 2026",
+   "origin_url": "https://data.giss.nasa.gov/gistemp/data_v4.html",
+   "snapshot_url": "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts%2BdSST.csv",
+   "snapshot_file": "nasa-gistemp-global.csv",
+   "sha256": "99d659d8c955c6599e93be3691467ff56eff80ee4b066c5cacfaaa6f7332ca9f",
+   "license": "NASA data with source acknowledgment requested",
+   "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+  },
+  "fair-paper": {
+   "title": "The FAIR Guiding Principles for scientific data management and stewardship",
+   "publisher": "Scientific Data / PubMed Central",
+   "resource_type": "document",
+   "format": "Open-access scholarly HTML",
+   "version": "Scientific Data 3, 160018 (2016), PMCID PMC4792175",
+   "origin_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+   "snapshot_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4792175/",
+   "snapshot_file": "fair-guiding-principles-pmc4792175.html",
+   "sha256": "4ad8a99796d424923a47cb798c135699bca55fa1e2c322645959adc751f3a6a2",
+   "license": "Creative Commons Attribution 4.0 International",
+   "license_url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "footage-sintel": {
+   "title": "Sintel (2010) — official English subtitles",
+   "publisher": "Blender Foundation (Durian Open Movie Project)",
+   "resource_type": "video-transcript",
+   "format": "SRT",
+   "version": "durian.blender.org site copy, fetched 2026-07-15",
+   "origin_url": "https://durian.blender.org/",
+   "snapshot_url": "https://durian.blender.org/wp-content/content/subtitles/sintel_en.srt",
+   "snapshot_file": "footage/sintel_en.srt",
+   "sha256": "4ed7e1f1bc5ff69fe33606960e4c048ba6766237bf33b132fef76e1a92cb64b2",
+   "media_url": "https://download.blender.org/durian/movies/Sintel.2010.1080p.mkv",
+   "license": "CC-BY 3.0 — © copyright Blender Foundation | durian.blender.org",
+   "license_url": "https://durian.blender.org/sharing/"
+  },
+  "footage-tears-of-steel": {
+   "title": "Tears of Steel (2012) — official English subtitles",
+   "publisher": "Blender Foundation (Mango Open Movie Project)",
+   "resource_type": "video-transcript",
+   "format": "SRT",
+   "version": "media.xiph.org mirror, fetched 2026-07-15",
+   "origin_url": "https://mango.blender.org/",
+   "snapshot_url": "https://media.xiph.org/tearsofsteel/subtitles/TOS-en.srt",
+   "snapshot_file": "footage/tears_of_steel_en.srt",
+   "sha256": "ce9578f6fe098a5821045a38884b229160f9e7ba27890448a92f5be330c6e6fe",
+   "media_url": "https://media.xiph.org/tearsofsteel/tears_of_steel_1080p.webm",
+   "license": "CC-BY 3.0 — (CC) Blender Foundation | mango.blender.org",
+   "license_url": "https://mango.blender.org/sharing/"
+  },
+  "footage-elephants-dream": {
+   "title": "Elephants Dream (2006) — English subtitles",
+   "publisher": "Blender Foundation (Orange Open Movie Project); transcript via Wikimedia Commons TimedText",
+   "resource_type": "video-transcript",
+   "format": "SRT",
+   "version": "Wikimedia Commons TimedText raw export, fetched 2026-07-15",
+   "origin_url": "https://orange.blender.org/",
+   "snapshot_url": "https://commons.wikimedia.org/w/index.php?title=TimedText:Elephants_Dream.ogv.en.srt&action=raw",
+   "snapshot_file": "footage/elephants_dream_en.srt",
+   "sha256": "7d3f512795e58c83710d3867b853d6e6ec8c9f01d616c594ba65599c5856cd01",
+   "media_url": "https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4",
+   "license": "CC-BY 2.5 — © copyright 2006, Blender Foundation / Netherlands Media Art Institute | orange.blender.org",
+   "license_url": "https://orange.blender.org/blog/creative-commons-license-2/"
   }
+ },
+ "remote_pinned": {
+  "cs336-course": {
+   "title": "CS336: Language Modeling from Scratch (Spring 2025)",
+   "publisher": "Stanford University",
+   "resource_type": "course",
+   "format": "live web capture with deep-captured attachments",
+   "version": "snapshot 2026-07-15T00:00:00Z",
+   "origin_url": "https://cs336.stanford.edu/spring2025/",
+   "snapshot": "remote-pinned",
+   "note": "Course page and lecture-viewer HTML are stored inside the pack (html/). Linked lecture PDFs and the assignment repository are not vendored; their exact download URLs, sizes, and SHA-256 digests are pinned below and inside every attachment page's provenance. Rebuild live with demos/build_course_pack.py.",
+   "license": "Course materials © Stanford CS336 staff; captured for a research/interoperability demo with links to the originals.",
+   "license_url": "https://cs336.stanford.edu/spring2025/",
+   "attachments": [
+    {
+     "title": "stanford-cs336/assignment1-basics",
+     "kind": "repo",
+     "url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+     "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+     "sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+     "bytes": 10635019
+    },
+    {
+     "title": "2025 Lecture 3 - architecture",
+     "kind": "document",
+     "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+     "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+     "sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+     "bytes": 5277140
+    },
+    {
+     "title": "2025 Lecture 4 - MoEs",
+     "kind": "document",
+     "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+     "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+     "sha256": "b62ba6416f04c4473834fffa19119317e78542a6b8dc94a5e816790643cb0c4f",
+     "bytes": 4677130
+    },
+    {
+     "title": "2025 Lecture 5 - GPUs",
+     "kind": "document",
+     "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+     "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+     "sha256": "ff25621de3d3d462a534070a209a8efac1b8410e3da58de08f764e33482bb6ba",
+     "bytes": 4766673
+    },
+    {
+     "title": "2025 Lecture 7 - Parallelism basics",
+     "kind": "document",
+     "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+     "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+     "sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+     "bytes": 5004408
+    },
+    {
+     "title": "2025 Lecture 9 - Scaling laws basics",
+     "kind": "document",
+     "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+     "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+     "sha256": "89f1e78e7c040a463a2f3a22025bcca9836ca1ecdbee88b398b780835e5bf7ce",
+     "bytes": 6014047
+    },
+    {
+     "title": "2025 Lecture 11 - Scaling details",
+     "kind": "document",
+     "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+     "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+     "sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+     "bytes": 6265218
+    }
+   ],
+   "dead_links_recorded": [
+    {
+     "url": "https://github.com/stanford-cs336/assignment5-alignment/blob/main/cs336_spring2025_assignment5_supplement_safety_rlhf.pdf",
+     "skip_reason": "attachment_fetch_failed:IngestError"
+    },
+    {
+     "url": "https://github.com/stanford-cs336/assignment1-basics/blob/main/cs336_spring2025_assignment1_basics.pdf",
+     "skip_reason": "attachment_fetch_failed:IngestError"
+    },
+    {
+     "url": "https://github.com/stanford-cs336/assignment2-systems/blob/main/cs336_spring2025_assignment2_systems.pdf",
+     "skip_reason": "attachment_fetch_failed:IngestError"
+    },
+    {
+     "url": "https://github.com/stanford-cs336/assignment3-scaling/blob/main/cs336_spring2025_assignment3_scaling.pdf",
+     "skip_reason": "attachment_fetch_failed:IngestError"
+    }
+   ]
+  }
+ }
 }

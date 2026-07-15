@@ -23,13 +23,14 @@ from pathlib import Path
 from . import __version__ as VERSION
 from .apis import ApiCollector
 from .config import BuildConfig
-from .crawler import CrawledPage, crawl
+from .crawler import AttachmentCandidate, CrawledPage, crawl
 from .markdown import page_to_markdown
 from .util import (
     page_id_from_url,
     with_default_scheme,
     sha256_bytes,
     site_slug_from_url,
+    slugify,
     truncate_text,
     url_path_of,
     utc_now_iso,
@@ -79,6 +80,7 @@ class BuildResult:
     frontier_count: int
     api_count: int
     warnings: list[str]
+    attachment_count: int = 0
 
     def as_json(self) -> dict:
         return {
@@ -87,6 +89,7 @@ class BuildResult:
             "page_count": self.page_count,
             "frontier_count": self.frontier_count,
             "api_count": self.api_count,
+            "attachment_count": self.attachment_count,
             "warnings": self.warnings,
         }
 
@@ -178,6 +181,12 @@ def build_pack(
             }
         )
 
+    # ---- linked attachments (deep capture) ---------------------------------
+    attachment_index, attachment_summaries, attachment_frontier = _follow_attachments(
+        outcome.attachments, config, url, pack_dir, captured_ids, warnings
+    )
+    page_index.extend(attachment_index)
+
     # ---- site.json ----------------------------------------------------------
     site_snapshot = {
         "spec_version": SPEC_VERSION,
@@ -192,7 +201,9 @@ def build_pack(
         "same_origin_only": config.same_origin_only,
         "max_pages": config.max_pages,
         "page_count": len(outcome.pages),
+        "attachment_page_count": len(attachment_index),
         "pages": page_index,
+        "attachments": attachment_summaries,
         "frontier": [
             {
                 "url": f.url,
@@ -202,7 +213,7 @@ def build_pack(
                 "from_page_id": f.from_page_id,
             }
             for f in outcome.frontier
-        ],
+        ] + attachment_frontier,
         "notes": outcome.notes + warnings,
     }
     write_json(pack_dir / "site.json", site_snapshot)
@@ -216,6 +227,8 @@ def build_pack(
         capabilities.append("visual_snapshots")
     if collector.surface.observed_network:
         capabilities.append("observed_network_api")
+    if attachment_summaries:
+        capabilities.append("linked_attachments")
     discovery = {
         "spec_version": SPEC_VERSION,
         "kind": "agentic-anything-pack",
@@ -244,10 +257,167 @@ def build_pack(
         pack_dir=pack_dir,
         site_id=site_id,
         page_count=len(outcome.pages),
-        frontier_count=len(outcome.frontier),
+        frontier_count=len(outcome.frontier) + len(attachment_frontier),
         api_count=collector.surface.total,
         warnings=warnings,
+        attachment_count=len(attachment_summaries),
     )
+
+
+_GITHUB_FETCH_HOSTS = {
+    "github.com", "gist.github.com",
+    "raw.githubusercontent.com", "codeload.github.com",
+    "objects.githubusercontent.com",
+}
+
+
+def _attachment_host_allowed(url: str, seed_url: str, config: BuildConfig) -> bool:
+    from urllib.parse import urlsplit
+
+    from .util import same_site
+
+    if same_site(url, seed_url):
+        return True
+    host = (urlsplit(url).hostname or "").lower().removeprefix("www.")
+    if host in _GITHUB_FETCH_HOSTS:
+        return True
+    return host in {
+        h.lower().removeprefix("www.") for h in config.follow_hosts
+    }
+
+
+def _follow_attachments(
+    candidates: list[AttachmentCandidate],
+    config: BuildConfig,
+    seed_url: str,
+    pack_dir: Path,
+    captured_ids: set[str],
+    warnings: list[str],
+) -> tuple[list[dict], list[dict], list[dict]]:
+    """Ingest linked documents/repos into the pack; record the rest.
+
+    Returns (page_index_entries, attachment_summaries, frontier_entries).
+    Videos are never downloaded — they are recorded in the frontier so an
+    agent can see exactly which media exists beyond the capture boundary.
+    """
+    from .fetcher import RobotsGate
+    from .ingest import direct_fetch_url, unit_manifest, units_for_url_asset
+
+    page_entries: list[dict] = []
+    summaries: list[dict] = []
+    frontier: list[dict] = []
+    if not candidates:
+        return page_entries, summaries, frontier
+
+    robots = RobotsGate(enabled=config.respect_robots, timeout=min(config.timeout, 10.0))
+    docs_left = config.follow_docs
+    repos_left = config.follow_repos
+    used_ids = set(captured_ids)
+
+    def record(cand: AttachmentCandidate, reason: str) -> None:
+        frontier.append({
+            "url": cand.url,
+            "candidate_page_id": page_id_from_url(cand.url),
+            "skip_reason": reason,
+            "discovered_via": "attachment_link",
+            "from_page_id": cand.from_page_id,
+            "attachment_kind": cand.kind,
+            "anchor_text": cand.anchor_text,
+        })
+
+    for cand in candidates:
+        if cand.kind == "video":
+            record(cand, "video_link_recorded")
+            continue
+        is_repo = cand.kind == "repo"
+        budget_left = repos_left if is_repo else docs_left
+        budget_configured = config.follow_repos if is_repo else config.follow_docs
+        if budget_configured <= 0:
+            record(cand, "attachment_not_followed")
+            continue
+        if budget_left <= 0:
+            record(cand, "attachment_budget_exhausted")
+            continue
+        if not _attachment_host_allowed(cand.url, seed_url, config):
+            record(cand, "attachment_host_not_allowed")
+            continue
+        if not robots.allowed(direct_fetch_url(cand.url)):
+            record(cand, "robots_disallowed")
+            continue
+
+        try:
+            asset = units_for_url_asset(
+                cand.url, max_bytes=config.follow_max_bytes, timeout=config.timeout)
+        except Exception as exc:  # noqa: BLE001 — keep capturing other links
+            record(cand, f"attachment_fetch_failed:{exc.__class__.__name__}")
+            warnings.append(f"attachment {cand.url} failed: {exc}")
+            continue
+
+        if is_repo:
+            repos_left -= 1
+        else:
+            docs_left -= 1
+
+        prefix = slugify(asset.title.replace("/", "-"), 40) if is_repo else ""
+        att_page_ids: list[str] = []
+        for unit in asset.units:
+            unit.meta.pop("ingest_warnings", None)
+            manifest = unit_manifest(unit)
+            page_id = f"{prefix}__{unit.unit_id}" if prefix else unit.unit_id
+            if page_id in used_ids:
+                n = 2
+                while f"{page_id}~{n}" in used_ids:
+                    n += 1
+                page_id = f"{page_id}~{n}"
+            used_ids.add(page_id)
+            manifest["page_id"] = page_id
+            manifest["source_url"] = cand.url
+            manifest["provenance"].update(
+                discovered_via="attachment",
+                attachment_kind=cand.kind,
+                attachment_url=cand.url,
+                fetched_url=asset.fetched_url,
+                from_page_id=cand.from_page_id,
+                anchor_text=cand.anchor_text,
+                attachment_sha256=asset.content_sha256,
+                attachment_bytes=asset.content_bytes,
+            )
+            write_json(pack_dir / "pages" / f"{page_id}.json", manifest)
+            (pack_dir / "pages" / f"{page_id}.md").write_text(
+                page_to_markdown(manifest), encoding="utf-8"
+            )
+            page_entries.append({
+                "page_id": page_id,
+                "url": cand.url,
+                "url_path": unit.locator,
+                "title": unit.title,
+                "page_type": unit.kind,
+                "summary": manifest["summary"],
+                "outgoing_page_ids": [],
+                "form_count": 0,
+                "discovered_via": "attachment",
+                "attachment_kind": cand.kind,
+                "depth": 1,
+                "rendered": False,
+                "has_screenshot": False,
+            })
+            att_page_ids.append(page_id)
+
+        summaries.append({
+            "url": cand.url,
+            "kind": cand.kind,
+            "resource_type": asset.resource_type,
+            "title": asset.title,
+            "anchor_text": cand.anchor_text,
+            "from_page_id": cand.from_page_id,
+            "fetched_url": asset.fetched_url,
+            "content_sha256": asset.content_sha256,
+            "content_bytes": asset.content_bytes,
+            "unit_count": len(asset.units),
+            "first_page_id": att_page_ids[0] if att_page_ids else None,
+        })
+
+    return page_entries, summaries, frontier
 
 
 def _page_manifest(page: CrawledPage, captured_ids: set[str], config: BuildConfig) -> dict:

@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-9-scaling-laws-basics__006__pages-41-48",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+  "url_path": "pages 41-48",
+  "title": "2025 Lecture 9 - Scaling laws basics — pages 41-48",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 41-48",
+  "summary": "Model-data joint scaling is accurate\nFrom Rosenfeld – fit scaling exponents on small data, small models. Predict rest.\nTrading off data size and model size: optimize 𝑛−𝛼+𝑚−𝛽 + 𝐶 with your costs.\nCompute tradeoffs.\nQ: what about other resou…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Model-data joint scaling is accurate\nFrom Rosenfeld – fit scaling exponents on small data, small models. Predict rest.\nTrading off data size and model size: optimize 𝑛−𝛼+𝑚−𝛽 + 𝐶 with your costs."
+    },
+    {
+      "kind": "p",
+      "text": "Compute tradeoffs.\nQ: what about other resources? Compute vs performance?\nFor a fixed compute budget…\nBig model that’s undertrained vs small model that’s well trained?\nScaling laws let us navigate this tradeoff\n[Kaplan+ 2021] [Brown+ 2020]"
+    },
+    {
+      "kind": "p",
+      "text": "Caution – ‘Optimal’ scaling laws are hard to get\nRosenfeld, Kaplan both predict relationship of data, model and perf.\nChinchilla [Hoffman et al] argue these fits are quite off.\nHoffman+ 2022"
+    },
+    {
+      "kind": "p",
+      "text": "Main difference – accounting for LR schedules"
+    },
+    {
+      "kind": "p",
+      "text": "Chinchilla in depth – 3 methods\nThe chinchilla authors suggest 3 ways of fitting scaling laws – we’ll go over each.\nThey mostly (minus method 3) suggest similar constants. More on this later.."
+    },
+    {
+      "kind": "p",
+      "text": "Method 1 – minimum over runs.\nSimilar to the FLOPS figure on Kaplan – \nthe minimum over the union of all training curves is a power law."
+    },
+    {
+      "kind": "p",
+      "text": "Method 2 - IsoFLOPS\nPick a range of FLOP budgets, vary the total parameter count, take the min over these \nconvex shapes. The minima form a power law."
+    },
+    {
+      "kind": "p",
+      "text": "Method 3 – Joint fits\nRun a bunch of models on the size -data grid. Use least squares to fit a joint scaling law"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "1efaaccfd284e5947a2f32bccb6c333e905f677bdd52d3a68f7c36e667f81b46",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 9.pdf",
+    "attachment_sha256": "89f1e78e7c040a463a2f3a22025bcca9836ca1ecdbee88b398b780835e5bf7ce",
+    "attachment_bytes": 6014047
+  }
+}

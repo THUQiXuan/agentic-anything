@@ -1,0 +1,29 @@
+{
+  "spec_version": "0.2",
+  "page_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23",
+  "source_url": "demos/sources/footage/tears_of_steel_en.srt",
+  "url_path": "tears_of_steel_en.srt · 00:00:23–00:03:23",
+  "title": "transcript 00:00:23–00:03:23",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "tears_of_steel_en.srt · 00:00:23–00:03:23",
+  "summary": "[00:00:23.000 → 00:00:24.500] You're a jerk, Thom.\n[00:00:25.000 → 00:00:27.000] Look Celia, we have to follow our passions;\n[00:00:27.000 → 00:00:30.500] ...you have your robotics, and I just want to be awesome in space.\n[00:00:30.800 → 0…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "[00:00:23.000 → 00:00:24.500] You're a jerk, Thom.\n[00:00:25.000 → 00:00:27.000] Look Celia, we have to follow our passions;\n[00:00:27.000 → 00:00:30.500] ...you have your robotics, and I just want to be awesome in space.\n[00:00:30.800 → 00:00:34.000] Why don't you just admit that you're freaked out by my robot hand?\n[00:00:34.500 → 00:00:36.000] I'm not freaked out by- it's...\n[00:00:37.000 → 00:00:38.000] ...alright! Fine!\n[00:00:38.000 → 00:00:41.000] I'm freaked out! I have nightmares that I'm being chased...\n[00:00:41.000 → 00:00:42.000] ...by these giant robotic claws of death...\n[00:00:42.200 → 00:00:45.000] \"Fourty years later\" Whatever, Thom. We're done.\n[00:00:50.000 → 00:00:53.500] Robot's memory synced and locked!\n[00:01:01.000 → 00:01:03.000] This is pretty freaky.\n[00:01:57.000 → 00:01:59.000] Shouldn't you be down there?\n[00:02:11.000 → 00:02:13.000] I heard you guys talking last night.\n[00:02:16.000 → 00:02:18.000] It's not my fault, you know.\n[00:03:11.000 → 00:03:12.000] Are you ready?\n[00:03:13.000 → 00:03:15.000] Of course you're ready, you're a rockstar.\n[00:03:17.000 → 00:03:18.000] How's it looking, Barley?\n[00:03:19.000 → 00:03:21.000] We should have about ten minutes...\n[00:03:21.500 → 00:03:23.000] Well that's perfect."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "demos/sources/footage/tears_of_steel_en.srt",
+    "capture_mode": "ingest",
+    "content_sha256": "55392d6ac98f89c07a71f9c7a4f3eb17de7a394d862c208abd26b5abf720c69e",
+    "start_seconds": 23.0,
+    "end_seconds": 203.0,
+    "cue_count": 19
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "artifact_sha256": "7deb67b1d713105c4e374710ff7ebe08ba0a0027ece14978aee9e56c8c07ebd1",
+  "assertions": [
+    {
+      "detail": "The stale Assignment 1 handout URL is in the pack frontier with an attachment_fetch_failed reason.",
+      "id": "course-frontier-records-dead-handout-link",
+      "passed": true
+    },
+    {
+      "detail": "The repository tree unit lists the renamed handout with its exact size.",
+      "id": "course-tree-lists-renamed-handout",
+      "passed": true
+    },
+    {
+      "detail": "Slide citation is page-addressable (locator: pages 25-32).",
+      "id": "course-slides-page-addressable",
+      "passed": true
+    },
+    {
+      "detail": "The starter README names the in-repo handout path.",
+      "id": "course-readme-names-handout-path",
+      "passed": true
+    },
+    {
+      "detail": "The captured course page links the starter repository.",
+      "id": "course-page-links-starter-repo",
+      "passed": true
+    },
+    {
+      "detail": "The staff's AI-usage policy was read before recommending agent workflows.",
+      "id": "course-ai-policy-read",
+      "passed": true
+    },
+    {
+      "detail": "Every citation points to a unit read earlier in the run.",
+      "id": "citations-only-after-read",
+      "passed": true
+    },
+    {
+      "detail": "The artifact embeds the full unit + locator + hash marker for every citation.",
+      "id": "citation-markers-in-artifact",
+      "passed": true
+    },
+    {
+      "detail": "The pack records the deep-captured repository and at least five documents with hashes.",
+      "id": "attachment-provenance-present",
+      "passed": true
+    },
+    {
+      "detail": "Raw JSON-RPC events contain no local checkout paths.",
+      "id": "raw-events-have-no-local-paths",
+      "passed": true
+    }
+  ],
+  "assertions_passed": 10,
+  "assertions_total": 10,
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "passed": true,
+  "schema_version": "1.0"
+}

@@ -1,19 +1,19 @@
 <div align="center">
 
-<img src="assets/agentic-anything-banner.png" alt="Agentic Anything" width="920">
-
 # Agentic Anything
 
 **把任何资源变成 Agent 原生表示，再变成可以直接对话和调用的资源 Agent。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-173%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
+<img src="assets/demo-course-agent.svg" alt="Agentic Anything：agentify 一个课程 URL，然后直接跟它对话——动画演示" width="920">
+
 [**在线 Demo 展示**](https://thuqixuan.github.io/agentic-anything/) ·
-[可复现的 demo 输入与输出](demos/)
+[录制的运行、来源与重建脚本](demos/)
 
 </div>
 
@@ -45,14 +45,20 @@
   `agent-interface.json` 与人/Agent 可读的 `AGENT.md`。只需要表示层时仍可
   单独使用 `build`。
 
+- **深捕获**把页面链接的*附件*一并收进同一个 pack：课程页链接的讲义
+  PDF、数据集、GitHub 起步仓库都变成与网页平级、可被引用的单元；而没有
+  跟进的部分（更多 PDF、视频、死链）会带着原因记录在 frontier 里，绝不
+  静默消失。一个课程 URL 就变成一个课程 Agent。见
+  [深捕获](#深捕获跟进页面链接的附件)。
+
 - **异构资源摄入**覆盖：
 
   | 类别 | 来源 |
   |---|---|
-  | 网站 | 同站爬取 · 结构化 manifest · **API 面清单**（表单、JS 接口、OpenAPI、feed、网络观测）· HTML 证据 · 可选截图 |
+  | 网站 | 同站爬取 · 结构化 manifest · **API 面清单**（表单、JS 接口、OpenAPI、feed、网络观测）· HTML 证据 · 可选截图 · **深捕获链接的文档与仓库** |
   | 论文与文档 | PDF（本地、**直链 URL、`arxiv:<id>`**）· DOCX · EPUB · Markdown · 纯文本/RST/LaTeX |
   | 演示与数据 | PPTX · XLSX · CSV/TSV · JSON/JSONL · Jupyter 笔记本 · **SQLite 数据库** |
-  | 音视频 | 在线视频 URL（YouTube/B站等，yt-dlp 拉字幕）· 本地音视频（ffmpeg 抽内嵌字幕 → whisper 转写）· SRT/VTT |
+  | 音视频 | 在线视频 URL（YouTube/B站等，yt-dlp 拉字幕）· 本地音视频（ffmpeg 抽内嵌字幕 → whisper 转写）· SRT/VTT，**逐句时间戳** |
   | 软件与代码 | **已安装的 CLI 软件**（`build cli:git`，help/子命令/man 自省）· **GitHub 仓库 URL** · 本地代码树 |
   | 其他 | 文件夹 · zip/tar 压缩包 · RSS/Atom 订阅与播客 · 邮件（.eml/.mbox） |
 
@@ -80,14 +86,34 @@ YouTube 的上游限制）。
 
 需要 Python 3.10+。核心安装只用标准库。
 
+## 先看效果
+
+[**Demo gallery**](https://thuqixuan.github.io/agentic-anything/) 回放的是
+录制好、可校验的真实会话——没有任何 mockup：
+
+- 🎓 **一个课程 URL → 一个课程 Agent。** 斯坦福 CS336 的课程页连同 6 份
+  讲义 PDF、作业起步仓库被深捕获进同一个 pack。三段真实模型对话录制回答
+  "RoPE 在哪几页 slides"，甚至绕过了 pack 如实记录的死链找到改名后的作业
+  讲义。旁边还有一条 14 步的确定性 agent run。
+- 🎬 **一个素材文件夹 → 一个剪辑 Agent。** 三部 CC-BY Blender 开源电影的
+  字幕变成可按台词检索的素材库；录制的 run 输出帧级精确的预告片剪辑清单，
+  附可执行 ffmpeg 命令和逐片署名。
+- 📦📖🐍📊📄 **另外五种资源形态**（代码仓库、整本书、文档站、NASA 数据集、
+  学术论文），外加一条真实 GPT-4.1-mini 通过 stdio MCP 完成的 21 步工具
+  循环（驳回过程原样保留）。
+
+页面上的一切都来自仓库中已提交的录制数据；74/74 项离线 run 校验和每条
+录制引用都会在 CI 里重新验证。
+
 ## 快速开始
 
-想先看真实效果，可以打开[在线 Demo](https://thuqixuan.github.io/agentic-anything/)：其中包含
-一个真实模型通过 MCP 完成的 21 步代码影响分析，以及 NASA 数据 + FAIR 论文审计、
-Requests 仓库分析两条可离线重放的长任务。工具调用、驳回过程、最终工件、引用和
-52 项校验都可以直接检查。
-
 ```bash
+# 0. 旗舰动作：一个课程 URL → 一个课程 Agent
+agentic-anything agentify https://cs336.stanford.edu/spring2025/ \
+    --follow-docs 6 --follow-repos 1 -o packs/cs336-course
+agentic-anything chat packs/cs336-course \
+    --ask "RoPE 在哪个 lecture 的哪几页 slides？"
+
 # 1. 把任何资源变成 Agent 原生 pack + 资源 Agent 接口
 agentic-anything agentify https://quotes.toscrape.com/  -o packs/quotes
 agentic-anything agentify arxiv:1706.03762              -o packs/paper
@@ -138,25 +164,61 @@ agentic-anything build https://quotes.toscrape.com/js/ -o packs/quotes-js \
 
 渲染模式还会**嗅探网络**：页面发出的每个 XHR/fetch API 调用都会被记录进 pack 的 API 面清单 —— 接口是真实观测到的，不是猜的。
 
+## 深捕获：跟进页面链接的附件
+
+网页往往只是一个*枢纽*：课程页链接着讲义 PDF、起步仓库和视频，项目页链接
+着手册和发布包。只做同站爬取会拿到枢纽、丢掉知识。深捕获把附件收进同一个
+pack：
+
+```bash
+agentic-anything agentify https://cs336.stanford.edu/spring2025/ \
+    --follow-docs 6 --follow-repos 1
+```
+
+| 选项 | 含义 |
+|---|---|
+| `--follow-docs N` | 最多摄入 N 个链接的文档（PDF/DOCX/PPTX/XLSX/EPUB/CSV/TSV/ipynb/MD/SRT/VTT、zip/tar 压缩包），走对应的摄入器 |
+| `--follow-repos N` | 最多摄入 N 个链接的 GitHub 仓库（codeload zip 导出 → 目录树 + 逐文件单元） |
+| `--follow-host HOST` | 额外允许从 HOST 下载（可重复）。同站与 github.com 系始终允许 |
+| `--follow-max-mb MB` | 单附件下载上限（默认 30） |
+
+捕获始终遵守的诚实规则：
+
+- 每个跟进的附件都记录**下载溯源**：原始链接、实际抓取 URL（GitHub blob →
+  `raw.githubusercontent.com`，仓库 → codeload）、SHA-256、字节数、来源页
+  面和锚文本。汇总在 `site.json → attachments`。
+- 附件单元是**一等页面**：检索、`chat`、MCP、`serve`、SKILL 和资源 CLI
+  对一个讲义 slides 单元（`pages 25-32`）与对一个爬取网页完全一致。
+- **没有静默消失。** 超出预算、主机不允许或下载失败的链接都进 frontier，
+  原因分别是 `attachment_budget_exhausted` / `attachment_not_followed` /
+  `attachment_host_not_allowed` / `attachment_fetch_failed:*`；视频链接只
+  记录（`video_link_recorded`），从不下载。
+- 仓库树会列出**文本捕获边界之外**的文件（二进制、PDF）及大小——demo 里
+  课程 Agent 正是靠这个证明"404 的作业讲义"其实还在仓库里，只是改了名。
+
 ## Agent 化后的资源长什么样
 
 ```
-packs/quotes/
+packs/cs336-course/
 ├── agent-pack.json          # 发现文档：这个 pack 里有什么
 ├── agent-interface.json     # 机器可读：如何对话和调用这个资源 Agent
 ├── AGENT.md                 # 入口指南；无需先理解 pack 文件布局
-├── site.json                # 页面索引 + 爬取边界（哪些没抓、为什么没抓）
+├── site.json                # 页面索引 · 附件清单（含哈希）· 爬取边界
 ├── pages/
-│   ├── index.json           # 结构化清单：内容、链接、表单、溯源信息
-│   └── index.md             # 同一页面的 Markdown 视图
-├── html/index.html          # 抓取的 HTML 证据
-├── snapshots/index.png      # 整页截图（渲染模式，可选）
+│   ├── spring2025.json      # 结构化清单：内容、链接、表单、溯源信息
+│   ├── spring2025.md        # 同一页面的 Markdown 视图
+│   ├── 2025-lecture-3-architecture__004__pages-25-32.md   # 深捕获的 PDF 单元
+│   └── stanford-cs336-assignment1-basics__file__readme-md.md  # 深捕获的仓库单元
+├── html/spring2025.html     # 抓取的 HTML 证据
+├── snapshots/…png           # 整页截图（渲染模式，可选）
 ├── api/apis.json            # 表单 · JS 接口 · OpenAPI · feed · 观测到的网络请求
 ├── skills/SKILL.md          # 生成的 Agent 使用指南（+ SKILL_ZH.md）
-└── cli/quotes_..._cli.py    # 生成的零依赖资源 CLI
+└── cli/cs336_course_cli.py  # 生成的零依赖资源 CLI
 ```
 
 设计原则（继承自启发本项目的几个前辈项目，见[致谢](#致谢)）：
+
+<div align="center"><img src="assets/agentic-anything-banner.png" alt="Agentic Anything 流水线内部结构" width="880"></div>
 
 - **非视觉优先**：Agent 读 Markdown 和 JSON，不解析渲染像素。截图可用但需显式开启。
 - **证据保全**：每个清单都用 SHA-256 链接回抓取的 HTML，结论可验证。
@@ -170,7 +232,7 @@ packs/quotes/
 | 命令 | 作用 |
 |---|---|
 | `agentify SOURCE -o DIR` | 首选一站式入口：生成 Agent 原生 pack、SKILL、资源 CLI、`agent-interface.json` 和 `AGENT.md` |
-| `build SOURCE -o DIR` | 只生成表示层；支持网站、视频、仓库、arXiv/feed URL、本地文件、文件夹/代码库和 `cli:<软件名>` |
+| `build SOURCE -o DIR` | 只生成表示层；支持网站、视频、仓库、arXiv/feed URL、本地文件、文件夹/代码库和 `cli:<软件名>`。网站构建支持深捕获：`--follow-docs N`、`--follow-repos N`、`--follow-host H`、`--follow-max-mb MB` |
 | `chat PACK [--ask 问题]` | 与 pack 对话（REPL 或一次性）。选项：`--top-k`、`--model`、`--base-url`、`--peer ID=URL`（咨询远端 agent）、`--json` |
 | `serve PACK...` | 把 pack 托管为 HTTP Agent。选项：`--host`、`--port`、`--enable-a2a`、`--model`、`--top-k` |
 | `mcp PACK...` | 以只读 stdio MCP 暴露 pack（resources + tools + prompts；不需要 API key） |
@@ -285,18 +347,24 @@ print(mcp.handle({"jsonrpc": "2.0", "id": 1, "method": "tools/list"}))
 
 ```bash
 pip install -e '.[dev]'
-python -m pytest tests -q        # 170 个测试；未装 Playwright 时渲染测试自动跳过
+python -m pytest tests -q        # 178 个测试；未装 Playwright 时渲染测试自动跳过
 ```
 
-测试覆盖：异构资源摄入、pack 构建、生成的资源 Agent 接口契约、
+测试覆盖：异构资源摄入、深捕获（跟进文档与仓库、frontier 纪律、主机白名
+单）、pack 构建、生成的资源 Agent 接口契约、
 Unicode/BM25F 检索、MCP 生命周期/resources/tools/prompts 与 stdout 纯净性、
 对话与 HTTP Agent、技能、资源 CLI 和 LLM 客户端。单元测试不调用任何外部
-服务或模型。可复现检索与 host 兼容性评估位于 [`benchmarks/`](benchmarks/)。
+服务或模型。可复现检索与 host 兼容性评估位于 [`benchmarks/`](benchmarks/)；
+demo 流水线（`demos/build_demos.py` → `build_agent_runs.py` →
+`build_gallery_data.py` → `verify_demos.py`）在 CI 里字节级一致地重建。
 
 ## 负责任地使用
 
 - 默认遵守 robots.txt（`--ignore-robots` 仅用于你自己的网站）。
 - 默认只爬同站、且有页面预算上限。
+- 深捕获下载是定点的单次抓取（等价于用户点击链接），受预算和体积上限约
+  束，仅限同站 + github.com + 显式允许的主机，且对实际抓取的 URL 做
+  robots 检查。爬取过程从不下载视频。
 - 生成的站点 CLI 的 `fetch` 命令仅限同源 GET。
 - 在为网站构建 pack、以及让 Agent 调用其接口之前，请先确认目标网站的服务条款。
 

@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-7-parallelism-basics__004__pages-25-32",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+  "url_path": "pages 25-32",
+  "title": "2025 Lecture 7 - Parallelism basics — pages 25-32",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 25-32",
+  "summary": "ZeRO in practice: will it fit?\nPure BF16 training (with Kahan summation), is viable and optimizer states are less \nbeefy. Let’s say BF16 for everything but the master weights – 12 bytes per param\nOn a 8X A100 80G..\nMax size (params) Formul…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "ZeRO in practice: will it fit?\nPure BF16 training (with Kahan summation), is viable and optimizer states are less \nbeefy. Let’s say BF16 for everything but the master weights – 12 bytes per param\nOn a 8X A100 80G..\nMax size (params) Formula for B/param\nBaseline 6.66.. B 12\nZero stage 1 16 B 5\nZero stage 2 24.62 B 2 (param) + (10 \n(grad+state))/8) \nZero stage 3 53.33 B 12/8"
+    },
+    {
+      "kind": "p",
+      "text": "Issues remain with data parallel – compute scaling\nWith data parallel , #machines < batch size (and near this, comm overhead is high)\nAnd there’s diminishing returns to batch sizes"
+    },
+    {
+      "kind": "p",
+      "text": "Issues remain with data parallel – models don’t fit\nZero stages 1 and 2 don’t let you scale memory\nZero stage 3 is nice in principle, but can be slow and does not reduce activation memory\nBetter ways to split up the model is needed…"
+    },
+    {
+      "kind": "p",
+      "text": "Beyond data parallel – model parallelism\nScaling up in memory (without changing batch size) with model parallelism\nWhat model parallelism is..\n• It splits up the parameters across GPUs (like zero3).. \n• But communicate activations (while zero3 sends params).\nWe cover two different types of parallelism\n1. Pipeline parallel\n2. Tensor parallel (+ Sequence parallel)\nThese correspond to two different ways of cutting up the model."
+    },
+    {
+      "kind": "p",
+      "text": "Layer-wise parallel\nLayer-wise parallel cuts up layers, assigns some subset to GPUS.\nActivations and partial gradients are passed back and forth"
+    },
+    {
+      "kind": "p",
+      "text": "What’s wrong with layer-wise parallel\nUtilization of layer -wise parallelism is terrible.. \nWith n gpus, each gpu is active 1\nn of the time.\nEach GPU is idling most of the time, waiting for the backward pass to propagate back"
+    },
+    {
+      "kind": "p",
+      "text": "A solution: pipeline parallel\nSolution: Pipeline -parallel.\nProcess ‘micro -batches’ (in this case, 4). \nSend off the first microbatch  and start computing the second. \nThe ratio of bubble time to useful compute is .. \n𝑛𝑠𝑡𝑎𝑔𝑒𝑠−1\n𝑛𝑚𝑖𝑐𝑟𝑜\n so we need a big batch size!"
+    },
+    {
+      "kind": "p",
+      "text": "Why pipeline parallel?\nPipelines seem terrible. Why do we do it?\n1. Pipelines save memory (compared to DDP)\n2. Pipelines can have good communication properties (compared to FDSP) – it \ndepends only on activations ( 𝑏 × 𝑠 × ℎ) and is point to point\n \nGenerally, we will use pipelines on slower network links (i.e. inter -node) as a way to get \nbetter memory -wise scaling."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "698b13a5585e923572fb487e88c986dbabdb221e0f0f1248b8d87a53703a1011",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 7.pdf",
+    "attachment_sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+    "attachment_bytes": 5004408
+  }
+}

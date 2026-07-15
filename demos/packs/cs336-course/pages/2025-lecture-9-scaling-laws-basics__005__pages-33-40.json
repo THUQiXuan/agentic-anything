@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-9-scaling-laws-basics__005__pages-33-40",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+  "url_path": "pages 33-40",
+  "title": "2025 Lecture 9 - Scaling laws basics — pages 33-40",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 33-40",
+  "summary": "3. Depth/Width: and other Transformer hypers\nDo hyperparameters like the aspect ratio depend on scale?\n4. Batch size: Critical batch size\nBatch size – known to have strong diminishing returns past a certain point.\nCritical batch = min numb…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "3. Depth/Width: and other Transformer hypers\nDo hyperparameters like the aspect ratio depend on scale?"
+    },
+    {
+      "kind": "p",
+      "text": "4. Batch size: Critical batch size\nBatch size – known to have strong diminishing returns past a certain point.\nCritical batch = min number of examples for target loss / min number of steps for target loss"
+    },
+    {
+      "kind": "p",
+      "text": "4. Batch size: critical batch size\nThe smaller the loss target,\nThe bigger the batch"
+    },
+    {
+      "kind": "p",
+      "text": "4. Batch size: selecting the optimal batch\nQ: as we increase both compute and model size, how should we scale training?\n• Huge batches, same number of steps\n• Fixed batches, more steps\nGood news for data parallel processing (?)"
+    },
+    {
+      "kind": "p",
+      "text": "5. Learning rates: muP and scale-aware LR choices\nYao et al 2024Yang et al 2022\nIf we naively scale up – optimal learning rate depends on scale.\nWe need scaling aware initialization and learning rate scaling"
+    },
+    {
+      "kind": "p",
+      "text": "Caution – scaling behaviors can differ downstream\nThus far : scaling is predictable and depends mainly on parameters\nCatch: downstream scaling can often be much less predictable\nTay et al 2023"
+    },
+    {
+      "kind": "p",
+      "text": "Some surprising takeaways\nThe effect of hyperparameters on big LMs can be predicted before  training!\n- Optimizer choice\n- Model depth\n-  Architecture choice\nThe scaling law based design procedure.\n1. Train a few smaller models\n2. Establish a scaling law (e.g. ADAM vs SGD scaling law)\n3. Select optimal hyperparam  based on the scaling law prediction."
+    },
+    {
+      "kind": "p",
+      "text": "One important use of scaling laws\nQ: Do we need more data or bigger models?\nClearly, lots of data is wasted on small models\nJoint data -model scaling laws describe how the two relate\nFrom Rosenfeld+ 2020, \n𝐸𝑟𝑟𝑜𝑟 = 𝑛−𝛼 + 𝑚−𝛽 + 𝐶\nFrom Kaplan+ 2020\n𝐸𝑟𝑟𝑜𝑟 = 𝑚−𝛼 + 𝑛−1 𝛽\nProvides surprisingly good fits to model -data joint error."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "63fd3f1f4228866b8feb4900f84cc13632bb512ad0744962c714882ee6f6ef1d",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 9.pdf",
+    "attachment_sha256": "89f1e78e7c040a463a2f3a22025bcca9836ca1ecdbee88b398b780835e5bf7ce",
+    "attachment_bytes": 6014047
+  }
+}

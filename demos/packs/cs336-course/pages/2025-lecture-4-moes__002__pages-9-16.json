@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-4-moes__002__pages-9-16",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+  "url_path": "pages 9-16",
+  "title": "2025 Lecture 4 - MoEs — pages 9-16",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 9-16",
+  "summary": "Earlier MoE results from Chinese groups – Qwen \nChinese LLM companies are also doing quite a bit of MoE work on the smaller end\nEarlier MoE results from Chinese groups - DeepSeek\nThere’s also some good recent ablation work on MoEs showing…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Earlier MoE results from Chinese groups – Qwen \nChinese LLM companies are also doing quite a bit of MoE work on the smaller end"
+    },
+    {
+      "kind": "p",
+      "text": "Earlier MoE results from Chinese groups - DeepSeek\nThere’s also some good recent ablation work on MoEs showing they’re generally good"
+    },
+    {
+      "kind": "p",
+      "text": "Recent MoE results – DeepSeek v3"
+    },
+    {
+      "kind": "p",
+      "text": "Why haven’t MoEs been more popular?\nInfrastructure is complex / advantages on multi node\nTraining objectives are somewhat heuristic (and sometimes unstable)\n[Zoph et al 2022]\n[Fedus et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "What MoEs generally look like\nTypical: replace MLP with MoE layer\n Less common: MoE for attention heads\n[ModuleFormer , JetMoE ]"
+    },
+    {
+      "kind": "p",
+      "text": "MoE – what varies?\n❖ Routing function\n❖ Expert sizes\n❖ Training objectives"
+    },
+    {
+      "kind": "p",
+      "text": "Routing function - overview\nMany of the routing algorithms boil down to ‘choose top k’\nToken chooses \nexpert\nExpert chooses \ntoken\nGlobal routing via \noptimization\n[Fedus et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "Routing type\nAlmost all the MoEs do a standard ‘token choice topk’ routing. Some recent ablations"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "1c8d47c65e41af9245a2f50275d7e115e637ff14f4cfae78aaa292edc413b0dd",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 4.pdf",
+    "attachment_sha256": "b62ba6416f04c4473834fffa19119317e78542a6b8dc94a5e816790643cb0c4f",
+    "attachment_bytes": 4677130
+  }
+}

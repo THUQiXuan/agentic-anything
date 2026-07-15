@@ -28,7 +28,7 @@ from urllib.parse import urljoin, urlsplit
 PACK_DIR = Path(__file__).resolve().parent.parent
 SITE_ID = 'gistemp'
 SEED_URL = 'https://data.giss.nasa.gov/gistemp/data_v4.html'
-USER_AGENT = "agentic-anything-sitecli/0.4.1"
+USER_AGENT = "agentic-anything-sitecli/0.5.0"
 
 
 def _read_json(path):

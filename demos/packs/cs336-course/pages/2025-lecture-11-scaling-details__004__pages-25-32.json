@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-11-scaling-details__004__pages-25-32",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+  "url_path": "pages 25-32",
+  "title": "2025 Lecture 11 - Scaling details — pages 25-32",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 25-32",
+  "summary": "Scaling curve fits are (generally) good\nOverall fits and predictions of models across a large range of sizes is fairly good.\nX-axis, number of tokens in billions.\nDeepSeek\nDeepSeek  (2024) – another LM with careful scaling analysis\n7 and 6…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Scaling curve fits are (generally) good\nOverall fits and predictions of models across a large range of sizes is fairly good.\nX-axis, number of tokens in billions."
+    },
+    {
+      "kind": "p",
+      "text": "DeepSeek\nDeepSeek  (2024) – another LM with careful scaling analysis\n7 and 67B param models – generally high performance compared to other open LM"
+    },
+    {
+      "kind": "p",
+      "text": "DeepSeek\nPerformance - Roughly comparable to LLaMA 2 models of equivalent size."
+    },
+    {
+      "kind": "p",
+      "text": "Scaling strategy – batch + LR \nScaling strategy : don’t use any muP, directly estimate optimal batch / LR"
+    },
+    {
+      "kind": "p",
+      "text": "Scaling analysis of learning rates\nSmall scale runs + collect ‘near optimal’ (within 0.25% of min) models.\nLearning rate fit looks a bit questionable.."
+    },
+    {
+      "kind": "p",
+      "text": "For chinchilla analysis: WSD-style learning rate\nDeepseek  uses WSD -style learning rate – fast warmup + two decay steps of 10% each.\nGenerally seems to match performance of cosine learning rates."
+    },
+    {
+      "kind": "p",
+      "text": "Data-size tradeoff analysis: Chinchilla method 2\nStraightforward isoflop -style analysis for selecting the model size tradeoffs."
+    },
+    {
+      "kind": "p",
+      "text": "Scaling predicts final model loss\nThe fitted scaling models (generally) accurately predict the final model losses."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "2bce97784fcafe3170021e66562aecaab0cfe2173d82b25313b439a030f2255d",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 11.pdf",
+    "attachment_sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+    "attachment_bytes": 6265218
+  }
+}

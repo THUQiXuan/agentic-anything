@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-9-scaling-laws-basics__001__pages-1-8",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+  "url_path": "pages 1-8",
+  "title": "2025 Lecture 9 - Scaling laws basics — pages 1-8",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 1-8",
+  "summary": "Lecture 9\nCS336\nS C A L I N G L A W S - B A S I C S\nTaking scaling seriously\nImagine the following scenario..\nYour friend has given you ten thousand H100s for a month, \nand asked you to build a good open source LM. \nWhat do you do?\n• Put t…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Lecture 9\nCS336\nS C A L I N G L A W S - B A S I C S"
+    },
+    {
+      "kind": "p",
+      "text": "Taking scaling seriously\nImagine the following scenario..\nYour friend has given you ten thousand H100s for a month, \nand asked you to build a good open source LM. \nWhat do you do?\n• Put together your infra team and distributed training framework (A2)\n• Put together a great pretraining dataset (A4)\n• Run a big model (but which one??) < - we are here."
+    },
+    {
+      "kind": "p",
+      "text": "Scaling isn’t easy\nWide or deep? How many heads? Which nonlinearity? \nWe could cargo cult things from existing LMs… but how do these get optimized in the first place?"
+    },
+    {
+      "kind": "p",
+      "text": "Today: simple, predictive ‘laws’ for behaviors of LMs\nThe approach -\n  scaling laws  which are simple, predictive rules for model performance\nOld and unpleasant: tune hyperparameters on big models\nNew (over?) optimism: tune on small models, extrapolate to large ones"
+    },
+    {
+      "kind": "p",
+      "text": "Part 1. Scaling laws, history and background.\n❖ Data scaling as empirical sample complexities\n❖ Initial forays into understanding neural scaling with data"
+    },
+    {
+      "kind": "p",
+      "text": "Sample complexity and rates\nTheorists have thought about ‘scaling’ for a long time..\nBut these are upper bounds, not actual, realized loss values.\nhttps://www.cs.cmu.edu/~epxing/Class/10701/slides/lecture16-VC.pdf\nHall, 1989\n(learning in a finite set of k hypotheses)\n(generative modeling for smooth densities)"
+    },
+    {
+      "kind": "p",
+      "text": "Earliest (data) scaling law paper – 1993"
+    },
+    {
+      "kind": "p",
+      "text": "Early history of scaling laws – data scaling\nLog-linear scaling with data [Banko and Brill ‘01]"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "4e6eefc87a413fb45a782496a11dd99f8703d5941ad4fcc6a4624a6f024c4c6b",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 9.pdf",
+    "attachment_sha256": "89f1e78e7c040a463a2f3a22025bcca9836ca1ecdbee88b398b780835e5bf7ce",
+    "attachment_bytes": 6014047
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "spec_version": "0.2",
+  "page_id": "sintel-en-srt__sintel-en__003__00-09-17",
+  "source_url": "demos/sources/footage/sintel_en.srt",
+  "url_path": "sintel_en.srt · 00:09:17–00:10:29",
+  "title": "transcript 00:09:17–00:10:29",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "sintel_en.srt · 00:09:17–00:10:29",
+  "summary": "[00:09:17.600 → 00:09:19.500] Scales!\n[00:10:21.600 → 00:10:24.000] Scales?\n[00:10:26.200 → 00:10:29.800] Scales...",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "[00:09:17.600 → 00:09:19.500] Scales!\n[00:10:21.600 → 00:10:24.000] Scales?\n[00:10:26.200 → 00:10:29.800] Scales..."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "demos/sources/footage/sintel_en.srt",
+    "capture_mode": "ingest",
+    "content_sha256": "df3c8ae8e1bd46b4109555917bf9592682acb5e83f57bc76306db0edf9a80931",
+    "start_seconds": 557.6,
+    "end_seconds": 629.8,
+    "cue_count": 3
+  }
+}

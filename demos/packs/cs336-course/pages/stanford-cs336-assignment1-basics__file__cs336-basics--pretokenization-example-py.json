@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__cs336-basics--pretokenization-example-py",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "cs336_basics/pretokenization_example.py",
+  "title": "cs336_basics/pretokenization_example.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "cs336_basics/pretokenization_example.py",
+  "summary": "import os\nfrom typing import BinaryIO\n\n\ndef find_chunk_boundaries(\n    file: BinaryIO,\n    desired_num_chunks: int,\n    split_special_token: bytes,\n) -> list[int]:\n    \"\"\"\n    Chunk the file into parts that can be counted independently.…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import os\nfrom typing import BinaryIO\n\n\ndef find_chunk_boundaries(\n    file: BinaryIO,\n    desired_num_chunks: int,\n    split_special_token: bytes,\n) -> list[int]:\n    \"\"\"\n    Chunk the file into parts that can be counted independently.\n    May return fewer chunks if the boundaries end up overlapping.\n    \"\"\"\n    assert isinstance(split_special_token, bytes), \"Must represent special token as a bytestring\"\n\n    # Get total file size in bytes\n    file.seek(0, os.SEEK_END)\n    file_size = file.tell()\n    file.seek(0)\n\n    chunk_size = file_size // desired_num_chunks\n\n    # Initial guesses for chunk boundary locations, uniformly spaced\n    # Chunks start on previous index, don't include last index\n    chunk_boundaries = [i * chunk_size for i in range(desired_num_chunks + 1)]\n    chunk_boundaries[-1] = file_size\n\n    mini_chunk_size = 4096  # Read ahead by 4k bytes at a time\n\n    for bi in range(1, len(chunk_boundaries) - 1):\n        initial_position = chunk_boundaries[bi]\n        file.seek(initial_position)  # Start at boundary guess\n        while True:\n            mini_chunk = file.read(mini_chunk_size)  # Read a mini chunk\n\n            # If EOF, this boundary should be at the end of the file\n            if mini_chunk == b\"\":\n                chunk_boundaries[bi] = file_size\n                break\n\n            # Find the special token in the mini chunk\n            found_at = mini_chunk.find(split_special_token)\n            if found_at != -1:\n                chunk_boundaries[bi] = initial_position + found_at\n                break\n            initial_position += mini_chunk_size\n\n    # Make sure all boundaries are unique, but might be fewer than desired_num_chunks\n    return sorted(set(chunk_boundaries))\n\n\n## Usage\nwith open(..., \"rb\") as f:\n    num_processes = 4\n    boundaries = find_chunk_boundaries(f, num_processes, b\"<|endoftext|>\")\n\n    # The following is a serial implementation, but you can parallelize this\n    # by sending each start/end pair to a set of processes.\n    for start, end in zip(boundaries[:-1], boundaries[1:]):\n        f.seek(start)\n        chunk = f.read(end - start).decode(\"utf-8\", errors=\"ignore\")\n        # Run pre-tokenization on your chunk and store the counts for each pre-token\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "58522ef9b51b6e62aecf91b9575dd290907a2e15fb442d9c6d3a0c88825cac0e",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

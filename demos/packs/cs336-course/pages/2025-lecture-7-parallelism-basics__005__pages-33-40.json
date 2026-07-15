@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-7-parallelism-basics__005__pages-33-40",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+  "url_path": "pages 33-40",
+  "title": "2025 Lecture 7 - Parallelism basics — pages 33-40",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 33-40",
+  "summary": "Pipeline performance is highly dependent on batch size\nBatch sizes are key to hiding the bubble – otherwise pipeline rapidly degrades perf\nTrading communication bandwidth for utilization\nSome more crazy pipeline patterns can improve utiliz…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Pipeline performance is highly dependent on batch size\nBatch sizes are key to hiding the bubble – otherwise pipeline rapidly degrades perf"
+    },
+    {
+      "kind": "p",
+      "text": "Trading communication bandwidth for utilization\nSome more crazy pipeline patterns can improve utilization, but at the cost of bandwidth"
+    },
+    {
+      "kind": "p",
+      "text": "‘Zero bubble’ pipelining\nSplit up backwards into two parts\n1. Backpropagating activations ( z,x)\n2. Computing weight gradients (W)\nThe second part can be done whenever"
+    },
+    {
+      "kind": "p",
+      "text": "Model parallel along the width axes\nAre there model parallel schemes with better utilization?\nWe can think of pipeline parallel as cutting up along depth. What about width?\nSimple matrix multiplication observation: decompose into submatrices, add partial sums"
+    },
+    {
+      "kind": "p",
+      "text": "Tensor parallel – GPUs have submatrices\nAssign columns (A1, A2) and rows (B1, B2) to separate GPUs. \n• In the forward pass, f is the identity, and g is an all -reduce. \n• In the backward pass, f is an all -reduce, g is the identity."
+    },
+    {
+      "kind": "p",
+      "text": "When do we tensor parallel?\nOn GPUs, tensor parallel within a node (up to 8 GPUs) due to high speed interconnects."
+    },
+    {
+      "kind": "p",
+      "text": "Tensor parallel – pros and cons vs pipeline parallel\nHow do things compare to pipeline parallel?\n Pros – no bubble. If your network is fast enough, there’s no waiting for others.\n          – low complexity – simple to ‘wrap’ models without major infra changes\n          – doesn’t need large batch sizes to work well\n Cons – much larger communication than pipeline parallel.\n• Pipeline: 𝑏𝑠ℎ point-to-point communication per microbatch\n• Tensor: 8𝑏𝑠ℎ 𝑛𝑑𝑒𝑣𝑖𝑐𝑒𝑠 −1\n𝑛𝑑𝑒𝑣𝑖𝑐𝑒𝑠\n per layer and all-reduce communication.\nUse tensor parallel whenever we have low -latency, high -bandwidth interconnects"
+    },
+    {
+      "kind": "p",
+      "text": "A final complexity – memory is dynamic!\nMemory isn’t just the static bits, but also activations! This can be big"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "f604085074bf046e78f0b364a36f7006dff3b5a528a496f6bc85d50d1ff76c8c",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 7.pdf",
+    "attachment_sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+    "attachment_bytes": 5004408
+  }
+}

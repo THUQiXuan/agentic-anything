@@ -52,6 +52,7 @@ _DIR_WALK_EXTENSIONS = DOCUMENT_EXTENSIONS
 # Units bigger than this are split (characters of content text).
 _MAX_UNIT_CHARS = 12_000
 _MIN_UNIT_CHARS = 200
+_MAX_PDF_PAGES_PER_UNIT = 8   # keep PDF citations page-addressable
 _MAX_ARCHIVE_MEMBERS = 4000
 _MAX_ARCHIVE_BYTES = 500_000_000  # decompressed cap (zip-bomb guard)
 
@@ -442,7 +443,12 @@ def _ingest_pdf(path: Path) -> list[Unit]:
         if text:
             buf.append(text)
             size += len(text)
-        if size >= _MAX_UNIT_CHARS or page_no == len(reader.pages):
+        # split on the char budget, on the page-window cap (slide decks carry
+        # little text per page — citations must still stay page-addressable),
+        # or at the end of the document
+        if (size >= _MAX_UNIT_CHARS
+                or (page_no - start_page + 1) >= _MAX_PDF_PAGES_PER_UNIT
+                or page_no == len(reader.pages)):
             if buf:
                 index = len(units) + 1
                 locator = (
@@ -524,14 +530,23 @@ def _subtitle_unit(base: str, index: int, cues, fmt) -> Unit:
     start = cues[0][0]
     end = max(c[1] for c in cues)  # a long cue can outlast later short cues
     locator = f"{fmt(start)}–{fmt(end)}"
-    text = " ".join(c[2] for c in cues)
+
+    def stamp(seconds: float) -> str:
+        whole = int(seconds)
+        millis = round((seconds - whole) * 1000)
+        return f"{whole // 3600:02d}:{whole % 3600 // 60:02d}:{whole % 60:02d}.{millis:03d}"
+
+    # One line per cue, prefixed with its exact time range: timecodes are the
+    # evidence a video/audio agent needs (finding moments, cutting clips).
+    lines = [f"[{stamp(c[0])} → {stamp(c[1])}] {c[2]}" for c in cues]
     return Unit(
         unit_id=f"{base}__{index:03d}__{fmt(start).replace(':', '-')}",
         title=f"transcript {locator}",
         kind="segment",
-        content=[{"kind": "p", "text": text}],
+        content=[{"kind": "pre", "text": "\n".join(lines)}],
         locator=locator,
-        meta={"start_seconds": round(start, 3), "end_seconds": round(end, 3)},
+        meta={"start_seconds": round(start, 3), "end_seconds": round(end, 3),
+              "cue_count": len(cues)},
     )
 
 
@@ -750,8 +765,6 @@ def classify_url(url: str) -> str:
 def build_pack_from_url_asset(url: str, output_dir: str | Path,
                               site_id: str | None = None):
     """Ingest a non-crawl URL (video, repo, arXiv, direct file, feed)."""
-    import tempfile
-
     from .fetcher import fetch
     from .util import site_slug_from_url
 
@@ -768,30 +781,19 @@ def build_pack_from_url_asset(url: str, output_dir: str | Path,
             output_dir, source_label=url)
 
     if kind == "repo":
-        from .ingest_code import ingest_github_url
-
-        repo_name, units = ingest_github_url(url)
+        asset = units_for_url_asset(url)
         return _write_units_pack(
-            units, "code", site_id or slugify(repo_name, 60) or "repo",
+            asset.units, "code", site_id or slugify(asset.title, 60) or "repo",
             output_dir, source_label=url)
 
     if kind == "arxiv":
         match = _ARXIV_RE.match(url.split("?")[0].split("#")[0])
         paper_id = match.group(1) + (match.group(2) or "")
-        pdf_url = f"https://arxiv.org/pdf/{paper_id}"
-        result = fetch(pdf_url, timeout=60, max_bytes=_MAX_DOWNLOAD_BYTES, retries=1)
-        if not result.ok or not result.body.startswith(b"%PDF"):
-            raise IngestError(f"could not download arXiv paper {paper_id}")
-        workdir = Path(tempfile.mkdtemp(prefix="aany_arxiv_"))
-        pdf_path = workdir / f"arxiv-{paper_id.replace('/', '-')}.pdf"
-        pdf_path.write_bytes(result.body)
-        units = _ingest_pdf(pdf_path)
-        for unit in units:
-            unit.source_path = f"https://arxiv.org/abs/{paper_id}"
+        asset = units_for_url_asset(url)
         return _write_units_pack(
-            units, "paper",
+            asset.units, "paper",
             site_id or "arxiv-" + slugify(paper_id.replace("/", "-"), 40),
-            output_dir, source_label=f"https://arxiv.org/abs/{paper_id}")
+            output_dir, source_label=asset.source_label)
 
     if kind == "feed":
         from .ingest_data import DataError, parse_feed
@@ -811,25 +813,13 @@ def build_pack_from_url_asset(url: str, output_dir: str | Path,
             output_dir, source_label=url)
 
     # kind == "file": download then reuse the local-file adapters
+    from urllib.parse import unquote
+
     bare = url.split("?")[0].split("#")[0]
-    blob = _GITHUB_BLOB_RE.match(bare)
-    fetch_url = url
-    if blob:  # GitHub blob pages serve HTML; fetch the raw file instead
-        fetch_url = (f"https://raw.githubusercontent.com/"
-                     f"{blob.group(1)}/{blob.group(2)}/{blob.group(3)}")
-    result = fetch(fetch_url, timeout=60, max_bytes=_MAX_DOWNLOAD_BYTES, retries=1)
-    if not result.ok:
-        raise IngestError(f"could not download {fetch_url} (HTTP {result.status})")
-    filename = Path(bare).name or "download"
-    _check_downloaded_body(filename, result)
-    workdir = Path(tempfile.mkdtemp(prefix="aany_dl_"))
-    local = workdir / filename
-    local.write_bytes(result.body)
-    resource_type, units = ingest_file(local)
-    for unit in units:
-        unit.source_path = url
+    asset = units_for_url_asset(url)
+    filename = Path(unquote(bare)).name or "download"
     return _write_units_pack(
-        units, resource_type,
+        asset.units, asset.resource_type,
         site_id or slugify(Path(filename).stem, 60) or site_slug_from_url(url),
         output_dir, source_label=url)
 
@@ -856,6 +846,124 @@ def _check_downloaded_body(filename: str, result) -> None:
         raise IngestError(f"downloaded file is not a valid {suffix} archive")
 
 
+@dataclass
+class AssetIngest:
+    """Units extracted from a non-crawl URL, plus download provenance."""
+
+    kind: str            # classify_url() kind: 'file' | 'repo' | 'arxiv'
+    resource_type: str   # pack-level resource type ('code', 'paper', ...)
+    title: str
+    units: list[Unit]
+    source_label: str    # canonical source URL for provenance
+    fetched_url: str     # URL actually downloaded (raw/codeload rewrite)
+    content_sha256: str
+    content_bytes: int
+
+
+def direct_fetch_url(url: str) -> str:
+    """The URL actually requested when ingesting ``url`` as a non-crawl asset.
+
+    GitHub blob pages rewrite to raw.githubusercontent.com, repositories to
+    their codeload zip export, arXiv ids to the PDF endpoint. Used both for
+    fetching and for policy checks (robots) against the real target.
+    """
+    bare = url.split("?")[0].split("#")[0]
+    blob = _GITHUB_BLOB_RE.match(bare)
+    if blob:
+        return (f"https://raw.githubusercontent.com/"
+                f"{blob.group(1)}/{blob.group(2)}/{blob.group(3)}")
+    kind = classify_url(url)
+    if kind == "repo":
+        from .ingest_code import codeload_zip_urls
+
+        return codeload_zip_urls(url)[0]
+    if kind == "arxiv":
+        match = _ARXIV_RE.match(bare)
+        paper_id = match.group(1) + (match.group(2) or "")
+        return f"https://arxiv.org/pdf/{paper_id}"
+    return url
+
+
+def units_for_url_asset(url: str, *, max_bytes: int | None = None,
+                        timeout: float = 60.0) -> AssetIngest:
+    """Fetch and ingest a 'file' / 'repo' / 'arxiv' URL into units.
+
+    This is ``build_pack_from_url_asset`` without the pack writing — the
+    building block for merging linked documents and repositories into a
+    site pack (deep capture) as well as for standalone asset packs.
+    """
+    import tempfile
+
+    from .fetcher import fetch
+
+    cap = max_bytes or _MAX_DOWNLOAD_BYTES
+    kind = classify_url(url)
+
+    if kind == "repo":
+        from .ingest_code import ingest_github_url
+
+        meta: dict = {}
+        repo_name, units = ingest_github_url(
+            url, timeout=max(timeout, 60.0), max_bytes=cap, meta=meta)
+        return AssetIngest(
+            kind="repo", resource_type="code", title=repo_name, units=units,
+            source_label=url, fetched_url=meta.get("fetched_url", url),
+            content_sha256=meta.get("content_sha256", ""),
+            content_bytes=meta.get("content_bytes", 0),
+        )
+
+    if kind == "arxiv":
+        match = _ARXIV_RE.match(url.split("?")[0].split("#")[0])
+        paper_id = match.group(1) + (match.group(2) or "")
+        pdf_url = f"https://arxiv.org/pdf/{paper_id}"
+        result = fetch(pdf_url, timeout=max(timeout, 60.0), max_bytes=cap, retries=1)
+        if not result.ok or not result.body.startswith(b"%PDF"):
+            raise IngestError(f"could not download arXiv paper {paper_id}")
+        if len(result.body) >= cap:
+            raise IngestError(f"arXiv paper {paper_id} exceeds the {cap // 1_000_000}MB cap")
+        workdir = Path(tempfile.mkdtemp(prefix="aany_arxiv_"))
+        pdf_path = workdir / f"arxiv-{paper_id.replace('/', '-')}.pdf"
+        pdf_path.write_bytes(result.body)
+        units = _ingest_pdf(pdf_path)
+        abs_url = f"https://arxiv.org/abs/{paper_id}"
+        for unit in units:
+            unit.source_path = abs_url
+        return AssetIngest(
+            kind="arxiv", resource_type="paper", title=f"arXiv {paper_id}",
+            units=units, source_label=abs_url, fetched_url=pdf_url,
+            content_sha256=sha256_bytes(result.body),
+            content_bytes=len(result.body),
+        )
+
+    if kind == "file":
+        from urllib.parse import unquote
+
+        bare = url.split("?")[0].split("#")[0]
+        fetch_url = direct_fetch_url(url)
+        result = fetch(fetch_url, timeout=max(timeout, 60.0), max_bytes=cap, retries=1)
+        if not result.ok:
+            raise IngestError(f"could not download {fetch_url} (HTTP {result.status})")
+        if len(result.body) >= cap:
+            raise IngestError(f"{fetch_url} exceeds the {cap // 1_000_000}MB download cap")
+        filename = Path(unquote(bare)).name or "download"
+        _check_downloaded_body(filename, result)
+        workdir = Path(tempfile.mkdtemp(prefix="aany_dl_"))
+        local = workdir / filename
+        local.write_bytes(result.body)
+        resource_type, units = ingest_file(local)
+        for unit in units:
+            unit.source_path = url
+        return AssetIngest(
+            kind="file", resource_type=resource_type,
+            title=Path(filename).stem, units=units,
+            source_label=url, fetched_url=fetch_url,
+            content_sha256=sha256_bytes(result.body),
+            content_bytes=len(result.body),
+        )
+
+    raise IngestError(f"unsupported asset kind '{kind}' for {url}")
+
+
 def build_pack_from_cli_tool(name: str, output_dir: str | Path,
                              site_id: str | None = None):
     """Installed software → agent pack (``build cli:<tool>``)."""
@@ -880,6 +988,32 @@ def build_pack_from_source(source: str, output_dir: str | Path, site_id: str | N
     site_id = site_id or default_id or "resource"
     return _write_units_pack(units, resource_type, site_id, output_dir,
                              source_label=str(path), warnings=warnings)
+
+
+def unit_manifest(unit: Unit) -> dict:
+    """The page-manifest dict for one unit (same schema web pages use)."""
+    return {
+        "spec_version": SPEC_VERSION,
+        "page_id": unit.unit_id,
+        "source_url": unit.source_path,
+        "url_path": unit.locator,
+        "title": unit.title,
+        "page_type": unit.kind,
+        "unit_kind": unit.kind,
+        "locator": unit.locator,
+        "summary": truncate_text(unit.text(), 240),
+        "content": unit.content,
+        "links": [],
+        "outgoing_page_ids": [],
+        "forms": [],
+        "images": [],
+        "provenance": {
+            "source_path": unit.source_path,
+            "capture_mode": "ingest",
+            "content_sha256": sha256_bytes(unit.text().encode("utf-8", "replace")),
+            **({k: v for k, v in unit.meta.items()} if unit.meta else {}),
+        },
+    }
 
 
 def _write_units_pack(units: list[Unit], resource_type: str, site_id: str,
@@ -909,28 +1043,7 @@ def _write_units_pack(units: list[Unit], resource_type: str, site_id: str,
 
     index_entries = []
     for unit in units:
-        manifest = {
-            "spec_version": SPEC_VERSION,
-            "page_id": unit.unit_id,
-            "source_url": unit.source_path,
-            "url_path": unit.locator,
-            "title": unit.title,
-            "page_type": unit.kind,
-            "unit_kind": unit.kind,
-            "locator": unit.locator,
-            "summary": truncate_text(unit.text(), 240),
-            "content": unit.content,
-            "links": [],
-            "outgoing_page_ids": [],
-            "forms": [],
-            "images": [],
-            "provenance": {
-                "source_path": unit.source_path,
-                "capture_mode": "ingest",
-                "content_sha256": sha256_bytes(unit.text().encode("utf-8", "replace")),
-                **({k: v for k, v in unit.meta.items()} if unit.meta else {}),
-            },
-        }
+        manifest = unit_manifest(unit)
         write_json(pack_dir / "pages" / f"{unit.unit_id}.json", manifest)
         (pack_dir / "pages" / f"{unit.unit_id}.md").write_text(
             page_to_markdown(manifest), encoding="utf-8"

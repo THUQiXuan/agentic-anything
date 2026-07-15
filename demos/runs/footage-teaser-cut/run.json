@@ -1,0 +1,537 @@
+{
+  "citations": [
+    {
+      "citation_id": "F1",
+      "cited_after_read": true,
+      "claim": "The machine line with exact cue timing.",
+      "content_sha256": "3538c39866ce3ddb823813809395bd15e69e04ce252cd321aaa9be4779810c28",
+      "locator": "elephants_dream_en.srt · 00:00:15–00:03:14",
+      "read_step": 4,
+      "resource_id": "footage-library",
+      "unit_id": "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+    },
+    {
+      "citation_id": "F2",
+      "cited_after_read": true,
+      "claim": "The dragon reveal with exact cue timing.",
+      "content_sha256": "58eca9968c1ab3534b6e7b6abc54deb3919cd528207605ad10f14f5fc0fdc0f0",
+      "locator": "sintel_en.srt · 00:01:47–00:04:28",
+      "read_step": 6,
+      "resource_id": "footage-library",
+      "unit_id": "sintel-en-srt__sintel-en__001__00-01-47"
+    },
+    {
+      "citation_id": "F3",
+      "cited_after_read": true,
+      "claim": "The dragon-lands warning with exact cue timing.",
+      "content_sha256": "f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93",
+      "locator": "sintel_en.srt · 00:05:04–00:07:44",
+      "read_step": 8,
+      "resource_id": "footage-library",
+      "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+    },
+    {
+      "citation_id": "F4",
+      "cited_after_read": true,
+      "claim": "The 'destroy the world' beat with exact cue timing.",
+      "content_sha256": "a9f9c6ff2d04c720e6687b8d49a3dadc89cb02f2fc215dcfa805a6bc25e1e135",
+      "locator": "tears_of_steel_en.srt · 00:03:23–00:06:25",
+      "read_step": 10,
+      "resource_id": "footage-library",
+      "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+    },
+    {
+      "citation_id": "F5",
+      "cited_after_read": true,
+      "claim": "An alternate b-roll beat with exact cue timing.",
+      "content_sha256": "55392d6ac98f89c07a71f9c7a4f3eb17de7a394d862c208abd26b5abf720c69e",
+      "locator": "tears_of_steel_en.srt · 00:00:23–00:03:23",
+      "read_step": 12,
+      "resource_id": "footage-library",
+      "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+    }
+  ],
+  "data_access": "real stdio MCP subprocess only",
+  "mcp": {
+    "command": [
+      "python",
+      "-m",
+      "agentic_anything",
+      "mcp",
+      "demos/packs/footage-library"
+    ],
+    "protocol_version": "2025-11-25",
+    "server": {
+      "name": "agentic-anything",
+      "title": "Agentic Anything Resource Agents",
+      "version": "0.5.0"
+    },
+    "tools": [
+      "resource_info",
+      "search_resource",
+      "read_unit"
+    ],
+    "transport": "stdio"
+  },
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "network_access": false,
+  "outputs": {
+    "artifact": "artifact.md",
+    "raw_events": "raw-events.jsonl",
+    "verification": "verification.json"
+  },
+  "packs": [
+    "footage-library"
+  ],
+  "planner": "fixed transparent state machine",
+  "raw_event_normalization": "Local checkout prefix replaced with '.'; all other JSON-RPC data preserved.",
+  "result": {
+    "budget_seconds": 45.0,
+    "clips": [
+      {
+        "cue": "[00:03:10.010 → 00:03:14.396]",
+        "cut_in": "00:03:09.260",
+        "cut_out": "00:03:15.146",
+        "duration": 5.886,
+        "film": "Elephants Dream (2006)",
+        "line": "Listen… Listen to the sounds of the machine.",
+        "n": 1
+      },
+      {
+        "cue": "[00:02:23.400 → 00:02:25.000]",
+        "cut_in": "00:02:22.650",
+        "cut_out": "00:02:25.750",
+        "duration": 3.1,
+        "film": "Sintel (2010)",
+        "line": "A dragon.",
+        "n": 2
+      },
+      {
+        "cue": "[00:07:37.800 → 00:07:40.500]",
+        "cut_in": "00:07:37.050",
+        "cut_out": "00:07:41.250",
+        "duration": 4.2,
+        "film": "Sintel (2010)",
+        "line": "These are dragon lands, Sintel.",
+        "n": 3
+      },
+      {
+        "cue": "[00:06:01.000 → 00:06:03.000]",
+        "cut_in": "00:06:00.250",
+        "cut_out": "00:06:03.750",
+        "duration": 3.5,
+        "film": "Tears of Steel (2012)",
+        "line": "But that's no reason to destroy the world.",
+        "n": 4
+      }
+    ],
+    "total_seconds": 16.686
+  },
+  "run_id": "footage-teaser-cut",
+  "schema_version": "1.0",
+  "snapshot_date": "2026-07-11",
+  "steps": [
+    {
+      "next_step_reason": "Inspect the footage library: which clips exist and how they are time-windowed.",
+      "output_summary": "Connected to agentic-anything 0.5.0; tools: resource_info, search_resource, read_unit.",
+      "phase": "connect",
+      "step": 1,
+      "tool": "initialize + tools/list",
+      "tool_input": {
+        "protocolVersion": "2025-11-25"
+      },
+      "units": []
+    },
+    {
+      "next_step_reason": "Search the transcripts for the machine motif in Elephants Dream.",
+      "output_summary": "Inspected footage-library: collection, 10 units, 0 frontier entries.",
+      "phase": "inspect",
+      "step": 2,
+      "tool": "resource_info",
+      "tool_input": {
+        "resource_id": "footage-library"
+      },
+      "units": []
+    },
+    {
+      "next_step_reason": "Read the window and pin the exact cue timecodes for the machine line.",
+      "output_summary": "Found 5 hit(s); top evidence units: elephants-dream-en-srt__elephants-dream-en__001__00-00-15 (6.923), elephants-dream-en-srt__elephants-dream-en__002__00-03-18 (5.789), elephants-dream-en-srt__elephants-dream-en__003__00-06-39 (3.263).",
+      "phase": "search",
+      "step": 3,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "listen to the sounds of the machine",
+        "resource_id": "footage-library",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 6.923,
+          "status": "discovered_not_yet_read",
+          "unit_id": "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 5.789,
+          "status": "discovered_not_yet_read",
+          "unit_id": "elephants-dream-en-srt__elephants-dream-en__002__00-03-18"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 3.263,
+          "status": "discovered_not_yet_read",
+          "unit_id": "elephants-dream-en-srt__elephants-dream-en__003__00-06-39"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Find the first dragon reveal in Sintel.",
+      "output_summary": "Read 1,470 Markdown characters from elephants_dream_en.srt · 00:00:15–00:03:14; confirmed 1 required anchor(s); sha256 3538c39866ce3ddb823813809395bd15e69e04ce252cd321aaa9be4779810c28.",
+      "phase": "read",
+      "step": 4,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "footage-library",
+        "unit_id": "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+      },
+      "units": [
+        {
+          "content_sha256": "3538c39866ce3ddb823813809395bd15e69e04ce252cd321aaa9be4779810c28",
+          "locator": "elephants_dream_en.srt · 00:00:15–00:03:14",
+          "resource_id": "footage-library",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the window and pin the 'A dragon.' cue.",
+      "output_summary": "Found 5 hit(s); top evidence units: sintel-en-srt__sintel-en__002__00-05-04 (2.423), sintel-en-srt__sintel-en__001__00-01-47 (2.226), tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23 (1.958).",
+      "phase": "search",
+      "step": 5,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "what did they take a dragon",
+        "resource_id": "footage-library",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 2.423,
+          "status": "discovered_not_yet_read",
+          "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 2.226,
+          "status": "discovered_not_yet_read",
+          "unit_id": "sintel-en-srt__sintel-en__001__00-01-47"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 1.958,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Find the 'dragon lands' warning later in Sintel.",
+      "output_summary": "Read 1,158 Markdown characters from sintel_en.srt · 00:01:47–00:04:28; confirmed 1 required anchor(s); sha256 58eca9968c1ab3534b6e7b6abc54deb3919cd528207605ad10f14f5fc0fdc0f0.",
+      "phase": "read",
+      "step": 6,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "footage-library",
+        "unit_id": "sintel-en-srt__sintel-en__001__00-01-47"
+      },
+      "units": [
+        {
+          "content_sha256": "58eca9968c1ab3534b6e7b6abc54deb3919cd528207605ad10f14f5fc0fdc0f0",
+          "locator": "sintel_en.srt · 00:01:47–00:04:28",
+          "resource_id": "footage-library",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "sintel-en-srt__sintel-en__001__00-01-47"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the window and pin the 'dragon lands' cue.",
+      "output_summary": "Found 5 hit(s); top evidence units: sintel-en-srt__sintel-en__002__00-05-04 (17.806), tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23 (4.027), tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26 (2.565).",
+      "phase": "search",
+      "step": 7,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "these are dragon lands closer than you know",
+        "resource_id": "footage-library",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 17.806,
+          "status": "discovered_not_yet_read",
+          "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 4.027,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 2.565,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Find the 'destroy the world' beat in Tears of Steel.",
+      "output_summary": "Read 474 Markdown characters from sintel_en.srt · 00:05:04–00:07:44; confirmed 1 required anchor(s); sha256 f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93.",
+      "phase": "read",
+      "step": 8,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "footage-library",
+        "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+      },
+      "units": [
+        {
+          "content_sha256": "f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93",
+          "locator": "sintel_en.srt · 00:05:04–00:07:44",
+          "resource_id": "footage-library",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the window and pin the closing teaser line.",
+      "output_summary": "Found 5 hit(s); top evidence units: tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23 (5.607), tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26 (2.399), elephants-dream-en-srt__elephants-dream-en__003__00-06-39 (3.048).",
+      "phase": "search",
+      "step": 9,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "no reason to destroy the world",
+        "resource_id": "footage-library",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 5.607,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 2.399,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 3.048,
+          "status": "discovered_not_yet_read",
+          "unit_id": "elephants-dream-en-srt__elephants-dream-en__003__00-06-39"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Scout one alternate/b-roll beat in case the edit needs comic relief.",
+      "output_summary": "Read 2,066 Markdown characters from tears_of_steel_en.srt · 00:03:23–00:06:25; confirmed 1 required anchor(s); sha256 a9f9c6ff2d04c720e6687b8d49a3dadc89cb02f2fc215dcfa805a6bc25e1e135.",
+      "phase": "read",
+      "step": 10,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "footage-library",
+        "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+      },
+      "units": [
+        {
+          "content_sha256": "a9f9c6ff2d04c720e6687b8d49a3dadc89cb02f2fc215dcfa805a6bc25e1e135",
+          "locator": "tears_of_steel_en.srt · 00:03:23–00:06:25",
+          "resource_id": "footage-library",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the window and pin the alternate cue's exact timing.",
+      "output_summary": "Found 5 hit(s); top evidence units: tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23 (10.020), tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23 (5.804), tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26 (1.613).",
+      "phase": "search",
+      "step": 11,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "freaked out by my robot hand",
+        "resource_id": "footage-library",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 10.02,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 5.804,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "footage-library",
+          "score": 1.613,
+          "status": "discovered_not_yet_read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Compute padded cut points and total runtime from the pinned cues.",
+      "output_summary": "Read 1,454 Markdown characters from tears_of_steel_en.srt · 00:00:23–00:03:23; confirmed 1 required anchor(s); sha256 55392d6ac98f89c07a71f9c7a4f3eb17de7a394d862c208abd26b5abf720c69e.",
+      "phase": "read",
+      "step": 12,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "footage-library",
+        "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+      },
+      "units": [
+        {
+          "content_sha256": "55392d6ac98f89c07a71f9c7a4f3eb17de7a394d862c208abd26b5abf720c69e",
+          "locator": "tears_of_steel_en.srt · 00:00:23–00:03:23",
+          "resource_id": "footage-library",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Validate that every cut timecode is transcript-grounded, then emit the cut list.",
+      "output_summary": "Padded each pinned cue by ±0.75s and sequenced 4 clips; total teaser runtime 16.686s (< 45s budget).",
+      "phase": "compute",
+      "step": 13,
+      "tool": "deterministic_cut_list",
+      "tool_input": {
+        "clips": 4,
+        "padding_seconds": 0.75
+      },
+      "units": [
+        {
+          "content_sha256": "3538c39866ce3ddb823813809395bd15e69e04ce252cd321aaa9be4779810c28",
+          "locator": "elephants_dream_en.srt · 00:00:15–00:03:14",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+        },
+        {
+          "content_sha256": "58eca9968c1ab3534b6e7b6abc54deb3919cd528207605ad10f14f5fc0fdc0f0",
+          "locator": "sintel_en.srt · 00:01:47–00:04:28",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "sintel-en-srt__sintel-en__001__00-01-47"
+        },
+        {
+          "content_sha256": "f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93",
+          "locator": "sintel_en.srt · 00:05:04–00:07:44",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+        },
+        {
+          "content_sha256": "a9f9c6ff2d04c720e6687b8d49a3dadc89cb02f2fc215dcfa805a6bc25e1e135",
+          "locator": "tears_of_steel_en.srt · 00:03:23–00:06:25",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+        },
+        {
+          "content_sha256": "55392d6ac98f89c07a71f9c7a4f3eb17de7a394d862c208abd26b5abf720c69e",
+          "locator": "tears_of_steel_en.srt · 00:00:23–00:03:23",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Emit the teaser cut list with ffmpeg commands and attribution.",
+      "output_summary": "Every cut derives from a cue stamp read inside the pack; runtime is within budget.",
+      "phase": "validate",
+      "step": 14,
+      "tool": "deterministic_assertions",
+      "tool_input": {
+        "evidence_units": 5
+      },
+      "units": [
+        {
+          "content_sha256": "3538c39866ce3ddb823813809395bd15e69e04ce252cd321aaa9be4779810c28",
+          "locator": "elephants_dream_en.srt · 00:00:15–00:03:14",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+        },
+        {
+          "content_sha256": "58eca9968c1ab3534b6e7b6abc54deb3919cd528207605ad10f14f5fc0fdc0f0",
+          "locator": "sintel_en.srt · 00:01:47–00:04:28",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "sintel-en-srt__sintel-en__001__00-01-47"
+        },
+        {
+          "content_sha256": "f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93",
+          "locator": "sintel_en.srt · 00:05:04–00:07:44",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+        },
+        {
+          "content_sha256": "a9f9c6ff2d04c720e6687b8d49a3dadc89cb02f2fc215dcfa805a6bc25e1e135",
+          "locator": "tears_of_steel_en.srt · 00:03:23–00:06:25",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+        },
+        {
+          "content_sha256": "55392d6ac98f89c07a71f9c7a4f3eb17de7a394d862c208abd26b5abf720c69e",
+          "locator": "tears_of_steel_en.srt · 00:00:23–00:03:23",
+          "resource_id": "footage-library",
+          "status": "read",
+          "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "assertions_passed": 12,
+    "assertions_total": 12,
+    "cited_units": 5,
+    "read_calls": 5,
+    "search_calls": 5,
+    "steps": 14
+  },
+  "task": "A creator has a footage folder: three open films with subtitles but no script. Assemble a short teaser (under 45 seconds) on the theme 'dragons, machines, and a breaking world'. Find the exact spoken moments, then emit a frame-accurate cut list with per-clip attribution and executable ffmpeg commands against the films' official releases. Every timecode must come from a read transcript unit."
+}

@@ -7,7 +7,7 @@
   "page_type": "code",
   "unit_kind": "code",
   "locator": "tree",
-  "summary": "Repository: requests-2.34.2\n74 files.\nAUTHORS.rst\nHISTORY.md\nLICENSE\nMakefile\nREADME.md\ndocs/Makefile\ndocs/_static/custom.css\ndocs/_themes/LICENSE\ndocs/_themes/flask_theme_support.py\ndocs/api.rst\ndocs/community/faq.rst\ndocs/community/out-t…",
+  "summary": "Repository: requests-2.34.2\n104 files: 74 captured as text units, 30 present but not captured (binary or unsupported format).\nAUTHORS.rst\nHISTORY.md\nLICENSE\nMakefile\nREADME.md\ndocs/Makefile\ndocs/_static/custom.css\ndocs/_themes/LICENSE\ndocs…",
   "content": [
     {
       "kind": "heading",
@@ -16,11 +16,20 @@
     },
     {
       "kind": "p",
-      "text": "74 files."
+      "text": "104 files: 74 captured as text units, 30 present but not captured (binary or unsupported format)."
     },
     {
       "kind": "pre",
       "text": "AUTHORS.rst\nHISTORY.md\nLICENSE\nMakefile\nREADME.md\ndocs/Makefile\ndocs/_static/custom.css\ndocs/_themes/LICENSE\ndocs/_themes/flask_theme_support.py\ndocs/api.rst\ndocs/community/faq.rst\ndocs/community/out-there.rst\ndocs/community/recommended.rst\ndocs/community/release-process.rst\ndocs/community/support.rst\ndocs/community/updates.rst\ndocs/community/vulnerabilities.rst\ndocs/conf.py\ndocs/dev/authors.rst\ndocs/dev/contributing.rst\ndocs/index.rst\ndocs/requirements.txt\ndocs/user/advanced.rst\ndocs/user/authentication.rst\ndocs/user/install.rst\ndocs/user/quickstart.rst\next/LICENSE\npyproject.toml\nrequirements-dev.txt\nsetup.py\nsrc/requests/__init__.py\nsrc/requests/__version__.py\nsrc/requests/_internal_utils.py\nsrc/requests/_types.py\nsrc/requests/adapters.py\nsrc/requests/api.py\nsrc/requests/auth.py\nsrc/requests/certs.py\nsrc/requests/compat.py\nsrc/requests/cookies.py\nsrc/requests/exceptions.py\nsrc/requests/help.py\nsrc/requests/hooks.py\nsrc/requests/models.py\nsrc/requests/packages.py\nsrc/requests/sessions.py\nsrc/requests/status_codes.py\nsrc/requests/structures.py\nsrc/requests/utils.py\ntests/__init__.py\ntests/certs/README.md\ntests/certs/expired/Makefile\ntests/certs/expired/README.md\ntests/certs/expired/ca/Makefile\ntests/certs/expired/server/Makefile\ntests/certs/mtls/Makefile\ntests/certs/mtls/README.md\ntests/certs/mtls/client/Makefile\ntests/certs/valid/server/Makefile\ntests/compat.py\ntests/conftest.py\ntests/test_adapters.py\ntests/test_help.py\ntests/test_hooks.py\ntests/test_lowlevel.py\ntests/test_packages.py\ntests/test_requests.py\ntests/test_structures.py\ntests/test_testserver.py\ntests/test_utils.py\ntests/testserver/__init__.py\ntests/testserver/server.py\ntests/utils.py\ntox.ini"
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Files present but not captured as text"
+    },
+    {
+      "kind": "pre",
+      "text": "MANIFEST.in  (126 bytes)\nNOTICE  (38 bytes)\ndocs/_static/requests-sidebar.png  (306,086 bytes)\ndocs/_templates/sidebar.html  (1,361 bytes)\ndocs/make.bat  (7,258 bytes)\next/kr.png  (9,459 bytes)\next/psf.png  (14,561 bytes)\next/requests-logo-compressed.png  (192,073 bytes)\next/requests-logo.ai  (2,189,478 bytes)\next/requests-logo.png  (192,073 bytes)\next/requests-logo.svg  (883,794 bytes)\nsrc/requests/py.typed  (0 bytes)\ntests/certs/expired/ca/ca-private.key  (1,700 bytes)\ntests/certs/expired/ca/ca.cnf  (463 bytes)\ntests/certs/expired/ca/ca.crt  (1,322 bytes)\ntests/certs/expired/ca/ca.srl  (41 bytes)\ntests/certs/expired/server/cert.cnf  (457 bytes)\ntests/certs/expired/server/server.csr  (1,159 bytes)\ntests/certs/expired/server/server.key  (1,704 bytes)\ntests/certs/expired/server/server.pem  (2,628 bytes)\ntests/certs/mtls/client/ca  (17 bytes)\ntests/certs/mtls/client/cert.cnf  (696 bytes)\ntests/certs/mtls/client/client.csr  (1,500 bytes)\ntests/certs/mtls/client/client.key  (1,704 bytes)\ntests/certs/mtls/client/client.pem  (2,628 bytes)\ntests/certs/valid/ca  (13 bytes)\ntests/certs/valid/server/cert.cnf  (722 bytes)\ntests/certs/valid/server/server.csr  (1,175 bytes)\ntests/certs/valid/server/server.key  (1,704 bytes)\ntests/certs/valid/server/server.pem  (2,770 bytes)"
     }
   ],
   "links": [],
@@ -30,6 +39,6 @@
   "provenance": {
     "source_path": "https://github.com/psf/requests/tree/v2.34.2",
     "capture_mode": "ingest",
-    "content_sha256": "bf512570cf19844852bca7ed7f84a8b4ab2e2bb2e25a6316bc7c5d0a1f1876a3"
+    "content_sha256": "fb4bbdf7cb878b32ab91b8f36edca5cc47176dfcfc2a7b28aa28e34c835edbb9"
   }
 }

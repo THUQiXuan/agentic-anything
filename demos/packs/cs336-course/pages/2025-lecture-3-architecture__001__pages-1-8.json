@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__001__pages-1-8",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 1-8",
+  "title": "2025 Lecture 3 - architecture — pages 1-8",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 1-8",
+  "summary": "Lecture 3\nCS336\nT atsuH\nE V E R Y T H I N GYO U D I D N’ T W A N T TO K N O W A B O U T\nL M  A R C H I T E C T U R EA N D T R A I N I N G\nLogistics\n❖ Join the slack! \n❖ Check to make sure you have the latest version of the assignment!\nOutl…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Lecture 3\nCS336\nT atsuH\nE V E R Y T H I N GYO U D I D N’ T W A N T TO K N O W A B O U T\nL M  A R C H I T E C T U R EA N D T R A I N I N G"
+    },
+    {
+      "kind": "p",
+      "text": "Logistics\n❖ Join the slack! \n❖ Check to make sure you have the latest version of the assignment!"
+    },
+    {
+      "kind": "p",
+      "text": "Outline and goals\n❖ Quick recap of the ‘standard’ transformer (what you implement)\n❖ What do most of the large LMs have in common?\n❖ What are common variations to the architecture / training process?\nToday’s theme: the best way to learn is hands-on experience\nthe second best way is to try to learn from others’ experience"
+    },
+    {
+      "kind": "p",
+      "text": "Starting point: the ‘original’ transformer\nReview: choices in the standard transformer\nPosition embedding: sines and cosines\nFFN: ReLU\nNorm type: post-norm, LayerNorm"
+    },
+    {
+      "kind": "p",
+      "text": "What you implemented – simple, modern variant\nDifferences:\n•  LayerNorm  is in front of the block\n• Rotary position embeddings ( RoPE)\n• FF layers use SwiGLU , not ReLU\n•  Linear layers (and layernorm ) have no \nbias (constant) terms\nWhy did we pick these?\nWhat should you pick?"
+    },
+    {
+      "kind": "p",
+      "text": "How should we think about architectures?\nLots of architecture. Just in the last year since last 336..\nOver 19 new dense model releases, many of them with minor architecture tweaks.."
+    },
+    {
+      "kind": "p",
+      "text": "Let’s look at the data (on dense architectures)\nLearn from the many other models (and papers) out there\nWe will talk through many major \narchitecture and hyperparameter variants. \n• What do all these models have in common? \n• What parts vary? \n• What can we learn from this?"
+    },
+    {
+      "kind": "p",
+      "text": "What are we going to cover?\nCommon architecture variations\n• Activations, FFN\n• Attention variants\n• Position embeddings\nHyperparameters that (do or don’t) matter\n• What is ff_dim ? Do multi_head  dims always sum to model_dim ? \n• How many vocab elements? \nStability tricks"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "2c5aaec7f3b7777895da973dea0b67c78342af099cc98122844928c4452580f2",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--fixtures--ts-tests--model-config-json",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/fixtures/ts_tests/model_config.json",
+  "title": "tests/fixtures/ts_tests/model_config.json",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/fixtures/ts_tests/model_config.json",
+  "summary": "{\n    \"vocab_size\": 10000,\n    \"context_length\": 16,\n    \"d_model\": 64,\n    \"num_layers\": 3,\n    \"num_heads\": 4,\n    \"d_ff\": 128,\n    \"remove_rmsnorm\": false,\n    \"use_post_norm\": false,\n    \"remove_rope\": false,\n    \"rope_theta\": 10000.0,…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "{\n    \"vocab_size\": 10000,\n    \"context_length\": 16,\n    \"d_model\": 64,\n    \"num_layers\": 3,\n    \"num_heads\": 4,\n    \"d_ff\": 128,\n    \"remove_rmsnorm\": false,\n    \"use_post_norm\": false,\n    \"remove_rope\": false,\n    \"rope_theta\": 10000.0,\n    \"ffn_type\": null\n}",
+      "lang": "json"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "aa27d10349b136e1f1ad9c9f506bafc99786816cb44dd6d5067ec04bc25b1699",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__005__pages-33-40",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 33-40",
+  "title": "2025 Lecture 3 - architecture — pages 33-40",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 33-40",
+  "summary": "RoPE: rotary position embeddings\nThere are many rotations, which one do you pick? \nJust pair up the coordinates and rotate them in 2d (motivation: complex numbers)\n[Su et al 2021]\nThe actual RoPE math\nMultiply with sines and cosines \nDiffe…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "RoPE: rotary position embeddings\nThere are many rotations, which one do you pick? \nJust pair up the coordinates and rotate them in 2d (motivation: complex numbers)\n[Su et al 2021]"
+    },
+    {
+      "kind": "p",
+      "text": "The actual RoPE math\nMultiply with sines and cosines \nDifference with sine embeddings – not additive, no cross terms"
+    },
+    {
+      "kind": "p",
+      "text": "Implementation and code for RoPE\n…\nSame stuff as the usual multi -head self attention below\nGet the RoPE \nmatrix cos/sin\nMultiply \nquery/key inputs\nUsual \nattention stuff\nNote: embedding at each attention operation to enforce position invariance"
+    },
+    {
+      "kind": "p",
+      "text": "Hyperparameters\nTransformer hyperparameter questions you might have had in 224n..\n• How much bigger should the feedforward size be compared to hidden size?\n• How many heads, and should num_heads  always divide hidden size?\n• What should my vocab size be?\nAnd other model setting questions\n• Do people even regularize these huge LMs?\n• How do people scale these models  - very deep or very wide?"
+    },
+    {
+      "kind": "p",
+      "text": "Surprising (?) consensus hyperparameter 1\nFeedforward – model dimension ratio.\nThere are two dimensions that are relevant – the feedforward dim ( 𝑑𝑓𝑓 ) and model dim \n(𝑑𝑚𝑜𝑑𝑒𝑙 ). What should their relationship be?\n𝒅𝒇𝒇 = 𝟒 𝒅𝒎𝒐𝒅𝒆𝒍\nThis is almost always  true. There’s just a few exceptions."
+    },
+    {
+      "kind": "p",
+      "text": "Exception #1 – GLU variants\nRemember that GLU variants scale down by 2/3 rd. This means most GLU variants have \n𝑑𝑓𝑓 =\n8\n3 𝑑𝑚𝑜𝑑𝑒𝑙 . This is mostly what happens. Some notable such examples.\nModel 𝒅𝒇𝒇/𝒅𝒎𝒐𝒅𝒆𝒍\nPaLM 4\nMistral 7B 3.5\nLLaMA-2 70B 3.5\nLLaMA 70B 2.68\nQwen 14B 2.67\nDeepSeek 67B 2.68\nYi 34B 2.85\nT5 v1.1 2.5\nModels are roughly in this range, though PaLM, LLaMA2  and Mistral are slightly larger"
+    },
+    {
+      "kind": "p",
+      "text": "Exception #2 – T5\nAs we have (and will) see, most LMs are have boring, conservative hyperparameters.\nOne exception is T5 [ Raffel  et al 2020] which has some very bold  settings. \nIn particular, for the 11B model, they set \n𝑑𝑓𝑓 = 65,536\n𝑑𝑚𝑜𝑑𝑒𝑙 = 1024\nFor an astounding 64 -times multiplier.\nOther, recent exceptions – Gemma 2 (8x), SmolLM/Gemma 3 (4x, GLU)"
+    },
+    {
+      "kind": "p",
+      "text": "Why this range of multipliers?\nEmpirically, there’s a  basin between 1 -10 where this hyperparameter is near -optimal\n[Kaplan+ 2020]"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "264785690dab875a04060b0ba29ca315f3bee7102932abe4183e1c44f8bc8b62",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

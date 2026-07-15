@@ -1,0 +1,38 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--fixtures--special-token-double-newlines",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/fixtures/special_token_double_newlines_non_whitespace.txt",
+  "title": "tests/fixtures/special_token_double_newlines_non_whitespace.txt",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/fixtures/special_token_double_newlines_non_whitespace.txt",
+  "summary": "<|endoftext|>\ntesting!",
+  "content": [
+    {
+      "kind": "p",
+      "text": "<|endoftext|>"
+    },
+    {
+      "kind": "p",
+      "text": "testing!"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "65b2139c103d0ae4066558cc659725bc25840ac9bd41f0c55effecd9e0dba4c3",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

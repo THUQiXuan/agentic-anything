@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__007__pages-49-56",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 49-56",
+  "title": "2025 Lecture 3 - architecture — pages 49-56",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 49-56",
+  "summary": "Dropout and other regularization\nDo we need regularization during pretraining?\nArguments against:\n• There is a lot of data (trillions of tokens), more than parameters.\n• SGD only does a single pass on a corpus (hard to memorize)\nThis is al…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Dropout and other regularization\nDo we need regularization during pretraining?\nArguments against:\n• There is a lot of data (trillions of tokens), more than parameters.\n• SGD only does a single pass on a corpus (hard to memorize)\nThis is all quite reasonable.. but what do people do in practice?"
+    },
+    {
+      "kind": "p",
+      "text": "Dropout and weight decay in practice\n* Most of the times papers just don’t discuss dropout. On open models, this closely matches not doing dropout. \nThis may not be true of closed models.\nModel Dropout* Weight decay\nOriginal transformer 0.1 0\nGPT2 0.1 0.1\nT5 0.1 0\nGPT3 0.1 0.1\nT5 v1.1 0 0\nPaLM 0 (variable)\nOPT 0.1 0.1\nLLaMA 0 0.1\nQwen 14B 0.1 0.1\nMany older models used \ndropout during pretraining\nNewer models (except Qwen) rely \nonly on weight decay"
+    },
+    {
+      "kind": "p",
+      "text": "Why weight decay LLMs?\n[Andriushchenko  et al 2023] has interesting observations about LLM weight decay\nIt’s not  to control overfitting\n Weight decay interacts with learning rates (cosine schedule)"
+    },
+    {
+      "kind": "p",
+      "text": "Summary: hyperparameters\nFeedforward\n• Factor-of-4 rule of thumb (8/3 for GLUs) is \nstandard (with some evidence)\nHead dim\n• Head dim*Num head = D model is standard \n– but low to no validation\nAspect ratio\n• Wide range of ‘good’ values (100-200). \nSystems concerns dictate the value\nRegularization\n• You still ‘regularize’ LMs but its effects are \nprimarily on optimization dynamics"
+    },
+    {
+      "kind": "p",
+      "text": "Stability tricks\nRecently, lots of attention on stable training  \nDon’t train models that look like the blue curve!"
+    },
+    {
+      "kind": "p",
+      "text": "Where do the issues arise? Beware of softmaxes!\nSoftmaxes  – can be ill -behaved due to exponentials / divison  by zero"
+    },
+    {
+      "kind": "p",
+      "text": "Output softmax stability – the ‘z-loss’\nRecall the softmax  calculation \n[From Devlin 2014]\nThis is useful for stability! PaLM pioneered this ‘z loss’ trick.\nOther examples: Baichuan  2 (2023), DCLM (2024), OLMo 2 (2025)"
+    },
+    {
+      "kind": "p",
+      "text": "Attention softmax stability – the ‘QK norm’\nThe query and keys are Layer (RMS) normed before going into the softmax  operation.\nOther examples: DCLM, OLMo2, Gemma 2\nOriginally from vision and multimodal models [ Dehgani  2023, Idefcs, Chameleon]\nNorms"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "e53772959d7b8ee25bcbafbf29c52e59ab220aa53a64f3c147b41f10c987e336",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__make-submission-sh",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "make_submission.sh",
+  "title": "make_submission.sh",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "make_submission.sh",
+  "summary": "#!/usr/bin/env bash\nset -euo pipefail\n\nuv run pytest --timeout 10 -v ./tests --junitxml=test_results.xml || true\necho \"Done running tests\"\n\n# Set the name of the output tar.gz file\noutput_file=\"cs336-spring2025-assignment-1-submission.zip\"…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "#!/usr/bin/env bash\nset -euo pipefail\n\nuv run pytest --timeout 10 -v ./tests --junitxml=test_results.xml || true\necho \"Done running tests\"\n\n# Set the name of the output tar.gz file\noutput_file=\"cs336-spring2025-assignment-1-submission.zip\"\nrm \"$output_file\" || true\n\n# Compress all files in the current directory into a single zip file\nzip -r \"$output_file\" . \\\n    -x '*egg-info*' \\\n    -x '*mypy_cache*' \\\n    -x '*pytest_cache*' \\\n    -x '*build*' \\\n    -x '*ipynb_checkpoints*' \\\n    -x '*__pycache__*' \\\n    -x '*.pkl' \\\n    -x '*.pickle' \\\n    -x '*.txt' \\\n    -x '*.log' \\\n    -x '*.json' \\\n    -x '*.out' \\\n    -x '*.err' \\\n    -x '.git*' \\\n    -x '.venv/*' \\\n    -x '.*' \\\n    -x 'tests/fixtures' \\\n    -x 'tests/_snapshots' \\\n    -x '*.pt' \\\n    -x '*.pth' \\\n    -x '*.npy' \\\n    -x '*.npz'\n\necho \"All files have been compressed into $output_file\"",
+      "lang": "sh"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "425454a1d15ee79f22f7c4f6fd75d12366d88bb43b86529f48380c9713aae410",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

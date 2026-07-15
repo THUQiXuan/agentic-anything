@@ -1,0 +1,34 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--fixtures--special-token-trailing-newline",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/fixtures/special_token_trailing_newlines.txt",
+  "title": "tests/fixtures/special_token_trailing_newlines.txt",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/fixtures/special_token_trailing_newlines.txt",
+  "summary": "<|endoftext|>",
+  "content": [
+    {
+      "kind": "p",
+      "text": "<|endoftext|>"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "3d0c1cf596181258a003e9f95c836c765d44353532e67c70d7dff48b05f64840",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

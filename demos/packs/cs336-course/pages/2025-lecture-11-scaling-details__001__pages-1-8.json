@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-11-scaling-details__001__pages-1-8",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+  "url_path": "pages 1-8",
+  "title": "2025 Lecture 11 - Scaling details — pages 1-8",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 1-8",
+  "summary": "Lecture 11\nCS336\nS C A L I N G – C A S E S T U D Y A N D D E T A I L S\nMotivation today\nWhat is the best practices for scaling and hparam tuning LMs?\n• Does chinchilla’s approach to scaling actually work?\n• Can we save compute when trainin…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Lecture 11\nCS336\nS C A L I N G – C A S E S T U D Y A N D D E T A I L S"
+    },
+    {
+      "kind": "p",
+      "text": "Motivation today\nWhat is the best practices for scaling and hparam tuning LMs?\n• Does chinchilla’s approach to scaling actually work?\n• Can we save compute when training and fitting these things?\n• Should we be picking particular architectures / parametrizations to scale nicely?"
+    },
+    {
+      "kind": "p",
+      "text": "Scaling in practice\nThe newest model we talked about with scaling details - 2022\nWhat about more recently?\n2023 2024 2024\n2024\n 2024\n 2025"
+    },
+    {
+      "kind": "p",
+      "text": "Maximum update parametrization – in depth\nRecall – the maximum update parametrization makes appealing claims\nScale-invariant hyperparameter tuning would be very nice. \nHow does it work, and does it work in practice?"
+    },
+    {
+      "kind": "p",
+      "text": "Recent models with detailed, public scaling recipes\n1. Cerebras -GPT\n2. MiniCPM\n3. DeepSeek"
+    },
+    {
+      "kind": "p",
+      "text": "CerebrasGPT\nCerebrasGPT  – 0.1 to 13B models trained with the Chinchilla recipe.\nCore finding – using muP parametrization makes scaling more stable"
+    },
+    {
+      "kind": "p",
+      "text": "Hyperparam scaling strategy\nCerebras  GPT authors find more predictable scaling from muP parametrization"
+    },
+    {
+      "kind": "p",
+      "text": "muP parametrization\nAppendix contains a very clear set of differences in parametrizing the model for scaling"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "5056599bcca2555086448f3455390f355d1fc7ba82e021305f190cbf2cc598ac",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 11.pdf",
+    "attachment_sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+    "attachment_bytes": 6265218
+  }
+}

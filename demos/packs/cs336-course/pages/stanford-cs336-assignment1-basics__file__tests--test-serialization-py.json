@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--test-serialization-py",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/test_serialization.py",
+  "title": "tests/test_serialization.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/test_serialization.py",
+  "summary": "import numpy\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\n\nfrom .adapters import get_adamw_cls, run_load_checkpoint, run_save_checkpoint\n\n\nclass _TestNet(nn.Module):\n    def __init__(self, d_input: int = 100, d_output…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import numpy\nimport torch\nimport torch.nn as nn\nimport torch.nn.functional as F\n\nfrom .adapters import get_adamw_cls, run_load_checkpoint, run_save_checkpoint\n\n\nclass _TestNet(nn.Module):\n    def __init__(self, d_input: int = 100, d_output: int = 10):\n        super().__init__()\n        self.fc1 = nn.Linear(d_input, 200)\n        self.fc2 = nn.Linear(200, 100)\n        self.fc3 = nn.Linear(100, d_output)\n\n    def forward(self, x):\n        x = F.relu(self.fc1(x))\n        x = F.relu(self.fc2(x))\n        x = self.fc3(x)\n        return x\n\n\ndef are_optimizers_equal(optimizer1_state_dict, optimizer2_state_dict, atol=1e-8, rtol=1e-5):\n    # Check if the keys of the main dictionaries are equal (e.g., 'state', 'param_groups')\n    if set(optimizer1_state_dict.keys()) != set(optimizer2_state_dict.keys()):\n        return False\n\n    # Check parameter groups are identical\n    if optimizer1_state_dict[\"param_groups\"] != optimizer2_state_dict[\"param_groups\"]:\n        return False\n\n    # Check states\n    state1 = optimizer1_state_dict[\"state\"]\n    state2 = optimizer2_state_dict[\"state\"]\n    if set(state1.keys()) != set(state2.keys()):\n        return False\n\n    for key in state1:\n        # Assuming state contents are also dictionaries\n        if set(state1[key].keys()) != set(state2[key].keys()):\n            return False\n\n        for sub_key in state1[key]:\n            item1 = state1[key][sub_key]\n            item2 = state2[key][sub_key]\n\n            # If both items are tensors, use torch.allclose\n            if torch.is_tensor(item1) and torch.is_tensor(item2):\n                if not torch.allclose(item1, item2, atol=atol, rtol=rtol):\n                    return False\n            # For non-tensor items, check for direct equality\n            elif item1 != item2:\n                return False\n    return True\n\n\ndef test_checkpointing(tmp_path):\n    torch.manual_seed(42)\n    d_input = 100\n    d_output = 10\n    num_iters = 10\n\n    model = _TestNet(d_input=d_input, d_output=d_output)\n    optimizer = get_adamw_cls()(\n        model.parameters(),\n        lr=1e-3,\n        weight_decay=0.01,\n        betas=(0.9, 0.999),\n        eps=1e-8,\n    )\n    # Use 1000 optimization steps for testing\n    it = 0\n    for _ in range(num_iters):\n        optimizer.zero_grad()\n        x = torch.rand(d_input)\n        y = torch.rand(d_output)\n        y_hat = model(x)\n        loss = ((y - y_hat) ** 2).sum()\n        loss.backward()\n        optimizer.step()\n        it += 1\n\n    serialization_path = tmp_path / \"checkpoint.pt\"\n    # Save the model\n    run_save_checkpoint(\n        model,\n        optimizer,\n        iteration=it,\n        out=serialization_path,\n    )\n\n    # Load the model back again\n    new_model = _TestNet(d_input=d_input, d_output=d_output)\n    new_optimizer = get_adamw_cls()(\n        new_model.parameters(),\n        lr=1e-3,\n        weight_decay=0.01,\n        betas=(0.9, 0.999),\n        eps=1e-8,\n    )\n    loaded_iterations = run_load_checkpoint(src=serialization_path, model=new_model, optimizer=new_optimizer)\n    assert it == loaded_iterations\n\n    # Compare the loaded model state with the original model state\n    original_model_state = model.state_dict()\n    original_optimizer_state = optimizer.state_dict()\n    new_model_state = new_model.state_dict()\n    new_optimizer_state = new_optimizer.state_dict()\n\n    # Check that state dict keys match\n    assert set(original_model_state.keys()) == set(new_model_state.keys())\n    assert set(original_optimizer_state.keys()) == set(new_optimizer_state.keys())\n\n    # compare the model state dicts\n    for key in original_model_state.keys():\n        numpy.testing.assert_allclose(\n            original_model_state[key].detach().numpy(),\n            new_model_state[key].detach().numpy(),\n        )\n    # compare the optimizer state dicts\n    assert are_optimizers_equal(original_optimizer_state, new_optimizer_state)\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "a9b6f94a782ac1cdf74845a0a9c9004b0d22d46e55c6a6f6a5ba7da0c1826270",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

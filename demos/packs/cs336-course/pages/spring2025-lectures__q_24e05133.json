@@ -1,0 +1,28 @@
+{
+  "spec_version": "0.1",
+  "page_id": "spring2025-lectures__q_24e05133",
+  "source_url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_12.json",
+  "url_path": "/spring2025-lectures?trace=var/traces/lecture_12.json",
+  "title": "Trace Viewer",
+  "lang": "en",
+  "meta_description": "",
+  "page_type": "content",
+  "summary": "",
+  "content": [],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "json_ld_types": [],
+  "provenance": {
+    "requested_url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_12.json",
+    "final_url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_12.json",
+    "http_status": 200,
+    "redirect_chain": [],
+    "capture_mode": "static",
+    "discovered_via": "seed_path_link",
+    "depth": 1,
+    "content_sha256": "60494d1cdf3350444c9a4040ceddbcdaea050b86a21b130e2a7fbfde33399e84",
+    "html_path": "html/spring2025-lectures__q_24e05133.html"
+  }
+}

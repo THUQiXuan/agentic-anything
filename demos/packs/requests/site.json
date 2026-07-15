@@ -1,6 +1,6 @@
 {
   "spec_version": "0.2",
-  "generator": "agentic-anything/0.4.1",
+  "generator": "agentic-anything/0.5.0",
   "site_id": "requests",
   "resource_type": "code",
   "seed_url": "https://github.com/psf/requests/tree/v2.34.2",
@@ -18,7 +18,7 @@
       "url_path": "tree",
       "title": "Repository tree: requests-2.34.2",
       "page_type": "code",
-      "summary": "Repository: requests-2.34.2\n74 files.\nAUTHORS.rst\nHISTORY.md\nLICENSE\nMakefile\nREADME.md\ndocs/Makefile\ndocs/_static/custom.css\ndocs/_themes/LICENSE\ndocs/_themes/flask_theme_support.py\ndocs/api.rst\ndocs/community/faq.rst\ndocs/community/out-t…",
+      "summary": "Repository: requests-2.34.2\n104 files: 74 captured as text units, 30 present but not captured (binary or unsupported format).\nAUTHORS.rst\nHISTORY.md\nLICENSE\nMakefile\nREADME.md\ndocs/Makefile\ndocs/_static/custom.css\ndocs/_themes/LICENSE\ndocs…",
       "outgoing_page_ids": [],
       "form_count": 0,
       "discovered_via": "ingest",

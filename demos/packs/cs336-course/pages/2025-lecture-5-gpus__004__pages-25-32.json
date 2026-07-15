@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-5-gpus__004__pages-25-32",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+  "url_path": "pages 25-32",
+  "title": "2025 Lecture 5 - GPUs — pages 25-32",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 25-32",
+  "summary": "Low precision drives faster matrix multiplies\nLots of operations in modern GPUs are accelerated via low / mixed precision operations\nTensor cores\nhttps://nvlab s.github.io/eccv2020-mixed-precision-tutorial/files/dusan_stosic-training-neura…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Low precision drives faster matrix multiplies\nLots of operations in modern GPUs are accelerated via low / mixed precision operations\nTensor cores\nhttps://nvlab s.github.io/eccv2020-mixed-precision-tutorial/files/dusan_stosic-training-neural-networks-with-tensor-cores.pdf"
+    },
+    {
+      "kind": "p",
+      "text": "Trick 2: Operator fusion\nThink of a GPU like a factory – inputs come from a warehouse (memory) and is \nprocessed at a factory\nhttps://horace.io/brrr_intro.html\nCompute scales up, memory doesn’t"
+    },
+    {
+      "kind": "p",
+      "text": "Operator fusion to minimize memory access\nWhat if we have to do many operations? Shipping back and forth is somewhat silly\nFused kernel\nNaïve (non-fused)"
+    },
+    {
+      "kind": "p",
+      "text": "Example – sines and cosines\nComputing sin2𝑥 + cos 2 𝑥 naively launches 5 CUDA kernels (back and forth)\nhttps://towardsdatascience.com/how-pytorch-2-0-accelerates-deep-learning-with-operator-fusion-and-cpu-gpu-code-generation-35132a85bd26"
+    },
+    {
+      "kind": "p",
+      "text": "Fusion example\nAll 5 pointwise operations can be fused into a single CUDA kernel call.\n‘Easy’ fusions like this can be done automatically by compilers ( torch.compile )"
+    },
+    {
+      "kind": "p",
+      "text": "Trick 3: recomputation\nIn backpropagation, we store the activations (yellow) and compute Jacobians (green)\n[From cs221]"
+    },
+    {
+      "kind": "p",
+      "text": "Storing (and retrieving) activations can be expensive!\nLet’s say we stack 3 sigmoids  on top of each other. \nThis is really terrible for perf – 8 mem read/writes, very low arithmetic intensity.\nhttps://dev-discuss.pytorch.org/t/min-cut-optimal-recomputation-i-e-activation-checkpointing-with-aotautograd/467"
+    },
+    {
+      "kind": "p",
+      "text": "Throw away the activations, re-compute them!\nThrowing away computation can actually be optimal, w/ 5/8 th the memory accesses!\nhttps://dev-discuss.pytorch.org/t/min-cut-optimal-recomputation-i-e-activation-checkpointing-with-aotautograd/467"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "deb25489f655cc3a9b6e13b022425036cf861daefefc096699aba98eb65049cd",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 5.pdf",
+    "attachment_sha256": "ff25621de3d3d462a534070a209a8efac1b8410e3da58de08f764e33482bb6ba",
+    "attachment_bytes": 4766673
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "endpoints": [
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_01.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_01.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_02.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_02.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_06.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_06.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_08.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_08.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_10.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_10.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_12.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_12.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_13.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_13.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_14.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_14.py"
+    },
+    {
+      "method": "GET",
+      "url": "https://cs336.stanford.edu/spring2025-lectures?trace=var/traces/lecture_17.json",
+      "path": "/spring2025-lectures",
+      "same_origin": true,
+      "source": "api_link",
+      "page_id": "spring2025",
+      "note": "lecture_17.py"
+    }
+  ],
+  "forms": [],
+  "openapi": [],
+  "well_known": [],
+  "feeds": [],
+  "sitemaps": [
+    {
+      "url": "https://cs336.stanford.edu/sitemap.xml",
+      "url_count": 3,
+      "sample": [
+        "https://cs336.stanford.edu/",
+        "https://cs336.stanford.edu/spring2025/index.html",
+        "https://cs336.stanford.edu/spring2024/index.html"
+      ],
+      "source": "sitemap_probe"
+    }
+  ],
+  "observed_network": []
+}

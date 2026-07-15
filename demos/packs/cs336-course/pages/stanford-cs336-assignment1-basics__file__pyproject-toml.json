@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__pyproject-toml",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "pyproject.toml",
+  "title": "pyproject.toml",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "pyproject.toml",
+  "summary": "[project]\nname = \"cs336_basics\"\nversion = \"26.0.0\"\ndescription = \"CS336 Assignment 1\"\nreadme = \"README.md\"\nrequires-python = \">=3.12,<3.14\"\ndependencies = [\n    \"einops>=0.8\",      # tensor operations\n    \"einx>=0.4\",        # more general…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "[project]\nname = \"cs336_basics\"\nversion = \"26.0.0\"\ndescription = \"CS336 Assignment 1\"\nreadme = \"README.md\"\nrequires-python = \">=3.12,<3.14\"\ndependencies = [\n    \"einops>=0.8\",      # tensor operations\n    \"einx>=0.4\",        # more general tensor operations\n    \"jaxtyping>=0.3\",   # type hints for pytorch/jax/numpy\n    \"numpy>=2.4\",\n    \"psutil>=7\",\n    \"pytest>=9.0\",\n    \"pytest-timeout\",\n    \"regex>=2026.3.32\", # more powerful regex than the builtin `re` module\n    \"tiktoken>=0.12.0\",\n    \"torch~=2.11.0\",\n    \"tqdm>=4.67\",\n    \"wandb>=0.25\",\n    \"ty>=0.0.26\",\n    \"ruff>=0.15.8\",\n]\n\n[build-system]\nrequires = [\"uv_build>=0.11.0,<0.12.0\"]\nbuild-backend = \"uv_build\"\n\n[tool.uv.build-backend]\nmodule-name = \"cs336_basics\"\nmodule-root = \"\"\n\n[tool.uv]\npackage = true\npython-preference = \"managed\"\n\n[tool.pytest.ini_options]\nlog_cli = true\nlog_cli_level = \"WARNING\"\naddopts = \"-s\"\n\n[tool.ruff]\nline-length = 120\n\n[tool.ruff.lint.extend-per-file-ignores]\n# Also ignore `E402` in all `__init__.py` files.\n\"__init__.py\" = [\"E402\", \"F401\", \"F403\", \"E501\"]\n\n[tool.ruff.lint]\nextend-select = [\"UP\"]\nignore = [\"F722\"]\n",
+      "lang": "toml"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "77c3921985a2f22b969fc0effe3f99931c4306d2455d825600a7b3e12624104e",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

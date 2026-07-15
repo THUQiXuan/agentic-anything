@@ -81,3 +81,11 @@ class BuildConfig:
     max_js_bytes: int = 400_000        # per-file JS scan cap
     render_wait_ms: int = 1500
     extra_seeds: list[str] = field(default_factory=list)
+
+    # Deep capture: follow links from crawled pages into non-HTML resources
+    # and merge them into the same pack. 0 disables following (the links are
+    # still recorded in the frontier instead of being dropped).
+    follow_docs: int = 0               # linked documents/data files to ingest
+    follow_repos: int = 0              # linked GitHub repositories to ingest
+    follow_hosts: list[str] = field(default_factory=list)  # extra allowed hosts
+    follow_max_bytes: int = 30_000_000  # per-attachment download cap

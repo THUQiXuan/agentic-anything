@@ -1,19 +1,19 @@
 <div align="center">
 
-<img src="assets/agentic-anything-banner.png" alt="Agentic Anything" width="920">
-
 # Agentic Anything
 
 **Turn any resource into an agent-native representation — and into a resource agent you can talk to or call.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-173%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-178%20passing-brightgreen.svg)](tests/)
 
 [English](README.md) | [中文](README_ZH.md)
 
+<img src="assets/demo-course-agent.svg" alt="Agentic Anything: agentify one course URL, then talk to it — animated demo" width="920">
+
 [**Live Demo Gallery**](https://thuqixuan.github.io/agentic-anything/) ·
-[reproducible demo sources and outputs](demos/)
+[recorded runs, sources, and rebuild scripts](demos/)
 
 </div>
 
@@ -47,14 +47,21 @@ website, book, video, program, or repository is organized.
   human entry points. `build` remains available when you only need the
   representation layer.
 
+- **Deep capture** follows a page's *attachments* into the same pack: linked
+  lecture PDFs, datasets, and GitHub starter repositories become first-class,
+  citable units next to the crawled pages — and everything that is *not*
+  followed (more PDFs, videos, dead links) is recorded in the frontier with a
+  reason instead of silently vanishing. One course URL becomes one course
+  agent. See [Deep capture](#deep-capture-follow-a-pages-attachments).
+
 - **Heterogeneous ingestion** covers:
 
   | Kind | Sources |
   |---|---|
-  | Websites | same-site crawl · structured manifests · **API surface** (forms, JS endpoints, OpenAPI, feeds, observed network calls) · HTML evidence · optional screenshots |
+  | Websites | same-site crawl · structured manifests · **API surface** (forms, JS endpoints, OpenAPI, feeds, observed network calls) · HTML evidence · optional screenshots · **deep-captured linked docs & repos** |
   | Papers & docs | PDF (local, **direct URL, `arxiv:<id>`**) · DOCX · EPUB · Markdown · plain text/RST/LaTeX |
   | Presentations & data | PPTX · XLSX · CSV/TSV · JSON/JSONL · Jupyter notebooks · **SQLite databases** |
-  | Videos & audio | online video URLs (YouTube/Bilibili/… via `yt-dlp` subtitles) · local media (`ffmpeg` embedded subs → `whisper` transcription) · SRT/VTT |
+  | Videos & audio | online video URLs (YouTube/Bilibili/… via `yt-dlp` subtitles) · local media (`ffmpeg` embedded subs → `whisper` transcription) · SRT/VTT with **per-cue timecodes** |
   | Software & code | **installed CLI tools** (`build cli:git` — help/subcommands/man introspection) · **GitHub repos by URL** · local source trees |
   | Everything else | folders · zip/tar archives · RSS/Atom feeds & podcasts · email (.eml/.mbox) |
 
@@ -83,19 +90,36 @@ cookies on datacenter IPs (a yt-dlp/YouTube constraint).
 
 Requires Python 3.10+. The core installation uses only the standard library.
 
+## See it work first
+
+The [**demo gallery**](https://thuqixuan.github.io/agentic-anything/) replays
+recorded, verifiable sessions — no mockups:
+
+- 🎓 **One course URL → a course agent.** Stanford CS336's page is captured
+  with six lecture PDF decks and the assignment starter repo deep-captured
+  into the same pack. Three recorded real-model conversations answer "which
+  slide pages cover RoPE?" and even route around a dead handout link the pack
+  recorded honestly. A 14-step deterministic agent run ships alongside.
+- 🎬 **A footage folder → a cutting agent.** Three CC-BY Blender films'
+  transcripts become a moment-searchable library; a recorded run emits a
+  frame-accurate teaser cut list with executable ffmpeg commands and per-film
+  attribution.
+- 📦📖🐍📊📄 **Five more resource shapes** (repository, book, docs site, NASA
+  dataset, scholarly paper), plus a real 21-step GPT-4.1-mini tool loop over
+  stdio MCP with its rejections preserved.
+
+Everything on that page derives from committed recordings; 74/74 offline run
+checks and every recorded citation re-verify in CI.
+
 ## Quick start
 
-Want to see real outputs before installing? The
-[interactive demo gallery](https://thuqixuan.github.io/agentic-anything/)
-uses five hash-pinned resources from Project Gutenberg, the PSF Requests
-repository, Python's official documentation, NASA GISTEMP, and PubMed Central.
-It now shows three recorded long-horizon runs: a real model completing a
-21-step code-impact task through MCP, a reproducible NASA + FAIR research
-audit, and a deterministic 14-step repository analysis. Exact tool calls,
-rejections, final artifacts, locators, hashes, and 52 offline checks are all
-inspectable.
-
 ```bash
+# 0. The flagship move: one course URL → one course agent
+agentic-anything agentify https://cs336.stanford.edu/spring2025/ \
+    --follow-docs 6 --follow-repos 1 -o packs/cs336-course
+agentic-anything chat packs/cs336-course \
+    --ask "Which slides cover RoPE, and which pages should I read?"
+
 # 1. Turn ANY resource into an agent-native pack + resource-agent interfaces
 agentic-anything agentify https://quotes.toscrape.com/  -o packs/quotes
 agentic-anything agentify arxiv:1706.03762              -o packs/paper
@@ -148,26 +172,67 @@ agentic-anything build https://quotes.toscrape.com/js/ -o packs/quotes-js \
 
 Rendered mode also **sniffs the network**: every XHR/fetch API call the page makes is recorded into the pack's API surface — real endpoints, observed, not guessed.
 
+## Deep capture: follow a page's attachments
+
+A web page is usually a *hub*: a course page links its lecture PDFs, starter
+repositories, and videos; a project page links its manual and releases. A
+same-site crawl alone captures the hub and loses the knowledge. Deep capture
+pulls the attachments into the same pack:
+
+```bash
+agentic-anything agentify https://cs336.stanford.edu/spring2025/ \
+    --follow-docs 6 --follow-repos 1
+```
+
+| Flag | Meaning |
+|---|---|
+| `--follow-docs N` | Ingest up to N linked documents (PDF/DOCX/PPTX/XLSX/EPUB/CSV/TSV/ipynb/MD/SRT/VTT, zip/tar archives) through the matching ingester |
+| `--follow-repos N` | Ingest up to N linked GitHub repositories (codeload zip export → tree + per-file units) |
+| `--follow-host HOST` | Additionally allow downloads from HOST (repeatable). Same-site and the github.com family are always allowed |
+| `--follow-max-mb MB` | Per-attachment download cap (default 30) |
+
+Rules the capture keeps, so the pack stays honest:
+
+- Every followed attachment records **download provenance**: original link,
+  actually-fetched URL (GitHub blobs → `raw.githubusercontent.com`, repos →
+  codeload), SHA-256, byte size, the page that linked it, and the anchor text.
+  Summaries live in `site.json → attachments`.
+- Attachment units are **first-class pages**: retrieval, `chat`, MCP, `serve`,
+  the SKILL and the resource CLI treat a lecture-slide unit
+  (`pages 25-32`) exactly like a crawled page.
+- **Nothing disappears silently.** Links beyond the budget, on disallowed
+  hosts, or that fail to download land in the frontier as
+  `attachment_budget_exhausted` / `attachment_not_followed` /
+  `attachment_host_not_allowed` / `attachment_fetch_failed:*`. Video links are
+  recorded (`video_link_recorded`), never downloaded.
+- Repository trees list files **beyond the text-capture boundary** (binaries,
+  PDFs) with sizes — which is how the demo course agent proves a "404"
+  handout actually still exists in the repo under a new name.
+
 ## What an agentified resource looks like
 
 ```
-packs/quotes/
+packs/cs336-course/
 ├── agent-pack.json          # discovery document: what's in this pack
 ├── agent-interface.json     # machine-readable ways to talk to/call this resource agent
 ├── AGENT.md                 # entry guide; no pack-layout knowledge required
-├── site.json                # page index + crawl frontier (what was NOT captured, and why)
+├── site.json                # page index · attachments (with hashes) · crawl frontier
 ├── pages/
-│   ├── index.json           # structured manifest: content, links, forms, provenance
-│   └── index.md             # the same page as agent-readable markdown
-├── html/index.html          # captured HTML evidence
-├── snapshots/index.png      # full-page screenshots (rendered mode, optional)
+│   ├── spring2025.json      # structured manifest: content, links, forms, provenance
+│   ├── spring2025.md        # the same page as agent-readable markdown
+│   ├── 2025-lecture-3-architecture__004__pages-25-32.md   # deep-captured PDF unit
+│   └── stanford-cs336-assignment1-basics__file__readme-md.md  # deep-captured repo unit
+├── html/spring2025.html     # captured HTML evidence
+├── snapshots/…png           # full-page screenshots (rendered mode, optional)
 ├── api/apis.json            # forms · JS endpoints · OpenAPI · feeds · observed network calls
 ├── skills/SKILL.md          # generated usage guide for agents (+ SKILL_ZH.md)
-└── cli/quotes_..._cli.py    # generated zero-dependency resource CLI
+└── cli/cs336_course_cli.py  # generated zero-dependency resource CLI
 ```
 
 Design principles (inherited from the projects that inspired this one — see
 [Acknowledgements](#acknowledgements)):
+
+<div align="center"><img src="assets/agentic-anything-banner.png" alt="Agentic Anything pipeline internals" width="880"></div>
 
 - **Non-visual first**: agents read markdown and JSON, not rendered pixels. Screenshots are available but opt-in.
 - **Evidence preserved**: every manifest links back to captured HTML with a SHA-256; claims are verifiable.
@@ -181,7 +246,7 @@ Design principles (inherited from the projects that inspired this one — see
 | Command | What it does |
 |---|---|
 | `agentify SOURCE -o DIR` | Preferred one-shot: build the agent-native pack, SKILL, resource CLI, `agent-interface.json`, and `AGENT.md` |
-| `build SOURCE -o DIR` | Build only the representation layer from a website / video / repo / arXiv / feed URL; local file; folder/repo; or `cli:<tool>` |
+| `build SOURCE -o DIR` | Build only the representation layer from a website / video / repo / arXiv / feed URL; local file; folder/repo; or `cli:<tool>`. Website builds accept `--follow-docs N`, `--follow-repos N`, `--follow-host H`, `--follow-max-mb MB` (deep capture) |
 | `chat PACK [--ask Q]` | Converse with the pack (REPL or one-shot). Options: `--top-k`, `--model`, `--base-url`, `--peer ID=URL` (consult remote agents), `--json` |
 | `serve PACK... ` | Host packs as HTTP agents. Options: `--host`, `--port`, `--enable-a2a`, `--model`, `--top-k` |
 | `mcp PACK...` | Expose packs as a read-only stdio MCP server (resources + tools + prompts; no API key) |
@@ -300,20 +365,27 @@ print(mcp.handle({"jsonrpc": "2.0", "id": 1, "method": "tools/list"}))
 
 ```bash
 pip install -e '.[dev]'
-python -m pytest tests -q        # 170 tests; rendered-mode tests auto-skip without Playwright
+python -m pytest tests -q        # 178 tests; rendered-mode tests auto-skip without Playwright
 ```
 
-The suite covers heterogeneous ingestion, pack construction, the generated
-resource-agent interface contract, Unicode/BM25F retrieval, MCP
+The suite covers heterogeneous ingestion, deep capture (followed documents and
+repositories, frontier discipline, host allowlists), pack construction, the
+generated resource-agent interface contract, Unicode/BM25F retrieval, MCP
 lifecycle/resources/tools/prompts and stdout purity, conversational and HTTP
 agents, skills, resource CLIs, and the LLM client. No unit test calls an
 external service or model. Reproducible retrieval and host-compatibility
-evaluations live in [`benchmarks/`](benchmarks/).
+evaluations live in [`benchmarks/`](benchmarks/), and the demo pipeline
+(`demos/build_demos.py` → `build_agent_runs.py` → `build_gallery_data.py` →
+`verify_demos.py`) rebuilds byte-identically in CI.
 
 ## Responsible use
 
 - robots.txt is respected by default (`--ignore-robots` exists for sites you own).
 - Crawling is same-site and budget-limited by default.
+- Deep capture downloads are targeted single fetches (like a user clicking the
+  link), budget- and size-capped, restricted to same-site + github.com +
+  explicitly allowed hosts, and robots-checked against the URL actually
+  fetched. Videos are never downloaded during a crawl.
 - The generated site CLI's `fetch` command is restricted to same-origin GETs.
 - Review a site's terms of service before building packs of it, and before letting agents call its endpoints.
 

@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__008__pages-57-64",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 57-64",
+  "title": "2025 Lecture 3 - architecture — pages 57-64",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 57-64",
+  "summary": "Logit soft-capping.\nSoft-capping  the logits to some maximum value via Tanh\nPrevents logits from blowing up, but also might have perf issues?\nAttention heads\nMost models don’t touch the attention heads much at all with a few minor exceptio…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Logit soft-capping.\nSoft-capping  the logits to some maximum value via Tanh\nPrevents logits from blowing up, but also might have perf issues?"
+    },
+    {
+      "kind": "p",
+      "text": "Attention heads\nMost models don’t touch the attention heads much at all with a few minor exceptions..\nGQA / MQA  : Saving inference costs by reducing the number of heads\nSparse or sliding window attention (GPT4/Mistral): restricting the attention pattern \nto reduce compute cost\nExotic SSM stuff (Jamba, Falcon 3, etc): not covered (sorry!)"
+    },
+    {
+      "kind": "p",
+      "text": "GQA/MQA – Reducing attention head cost\nLet’s think about the compute involved for attention\nTotal arithmetric  operations (𝑏𝑛𝑑2), total memory accesses (𝑏𝑛𝑑 + 𝑏ℎ𝑛2 + 𝑑2)\nArithmetic intensity is high 𝑂 1\n𝑘 + 1\n𝑏𝑛\n−1\n - we can keep our GPUs running\nX softmax projection"
+    },
+    {
+      "kind": "p",
+      "text": "GQA/MQA – Reducing attention head cost\nWhat about the incremental  case when we generate text?\n Key difference:  can’t parallelize the generation process – needs to be step by step\nIn this case – we need to incrementaly  re-compute/update attention via the ‘KV cache’\n \n[Animation from https://medium.com/@joaolages/kv -caching-explained-276520203249]"
+    },
+    {
+      "kind": "p",
+      "text": "GQA/MQA – Reducing attention head cost\nWhat’s the incremental arithmetic intensity?\nTotal arithmetric  operations (𝑏𝑛𝑑2), total memory accesses (𝑏𝑛2𝑑 + 𝑛𝑑2)\nArithmetic intensity is not good 𝑂\n𝑛\n𝑑 +\n1\n𝑏\n−1\n - need large batches + short seq length \n(n) or big model dimensions (d) \nX projection\nIs there some way around this? The n/d term is difficult to reduce."
+    },
+    {
+      "kind": "p",
+      "text": "MQA – just have fewer key dimensions.\nKey idea – have multiple queries, but just one dimension for keys and values\nWe have much fewer items to move in and out of memory (KV Cache) \nTotal memory access (𝑏𝑛𝑑 + 𝑏𝑛2𝑘 + 𝑛𝑑2), Arithmetic intensity  𝑂\n1\n𝑑 +\n𝑛\n𝑑ℎ +\n1\n𝑏\n−1\n[figure from https://blog.fireworks.ai/multi-query-attention-is-all-you-need-db072e758055]"
+    },
+    {
+      "kind": "p",
+      "text": "Recent extension – GQA\nDon’t go all the way to one dimension of KV – have fewer dims\nSimple knob to control expressiveness (key -query ratio) and inference efficiency"
+    },
+    {
+      "kind": "p",
+      "text": "Does MQA hurt? Sometimes..\nSmall PPL hit w/ MQA [ Shazeer 2019]\n Low/no hit w/ GQA [Ainslie 2023]"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "0d66deb33de0ee8d7e6c3de123c6dcf55819b24bcb9b5073d39bb0b2fd3a71ec",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

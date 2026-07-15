@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-9-scaling-laws-basics__004__pages-25-32",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+  "url_path": "pages 25-32",
+  "title": "2025 Lecture 9 - Scaling laws basics — pages 25-32",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 25-32",
+  "summary": "Recap: data scaling laws\n❖ Remarkably linear relationship between log -data size and log -error\n❖ Holds across domains and models\n❖ Theory understanding: similar to generalization bounds: mean estimation example\n❖ Applications: data collec…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Recap: data scaling laws\n❖ Remarkably linear relationship between log -data size and log -error\n❖ Holds across domains and models\n❖ Theory understanding: similar to generalization bounds: mean estimation example\n❖ Applications: data collection / curation"
+    },
+    {
+      "kind": "p",
+      "text": "Scaling laws for model engineering\nNow for what I promised at the start: model scaling!\nOur motivation: how can we efficiently design huge LMs?\n• LSTMs vs Transformers\n• Adam vs SGD\nHow should we allocate our limited resources?\n• Train models longer vs train bigger models?\n• Collect more data vs get more GPUs?\nScaling laws provide a simple procedure to answer these."
+    },
+    {
+      "kind": "p",
+      "text": "Hyperparameter questions\nWe’ll consider some of these choices in the context of the classic Kaplan scaling paper\n• Architecture\n• Optimizer\n• Aspect ratio / depth\n• Batch size"
+    },
+    {
+      "kind": "p",
+      "text": "1. Architecture: transformers vs LSTMs\nQ: Are transformers better than LSTMs?\nBrute force way: spend tens of millions to train a LSTM GPT -3\nScaling law way:\n[Kaplan+ 2021]"
+    },
+    {
+      "kind": "p",
+      "text": "1. Many architectures\nCross-architecture scaling in Tay et al."
+    },
+    {
+      "kind": "p",
+      "text": "2. Optimizer choice\nWhat about ADAM vs SGD?\n[Hestness+ 2017]\n(Note, this is in 2017, so pre -transformers. RHN is recurrent highway nets)"
+    },
+    {
+      "kind": "p",
+      "text": "3. Depth/Width: Number of layers\nDoes depth or width make a huge difference?\n• 1 vs 2 layers makes a huge difference. \n• More layers have diminishing returns below 107 params"
+    },
+    {
+      "kind": "p",
+      "text": "3. Depth/Width: But not all parameters are made equal\nWe’ve been thinking about ‘parameters’ but not all parameters are equal\nEmbedding layer parameters don’t behave the same!\nRelated : recent papers on scaling laws for mixtures of experts."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "ea9e8214b71189309eb4ba7723259410b4060bd3dc9f92889fb9a608897a4d51",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 9.pdf",
+    "attachment_sha256": "89f1e78e7c040a463a2f3a22025bcca9836ca1ecdbee88b398b780835e5bf7ce",
+    "attachment_bytes": 6014047
+  }
+}

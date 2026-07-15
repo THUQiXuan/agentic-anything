@@ -1,0 +1,831 @@
+{
+ "schema_version": "1.0",
+ "generated_from": "committed packs, recorded runs, recorded conversations",
+ "chat_model": "google/gemini-3.5-flash",
+ "chat_note": "Authentic recorded replies from `agentic-anything chat --ask` over the committed packs. Citations are unit ids; verify_demos.py re-checks offline that each one resolves inside its pack.",
+ "scenarios": [
+  {
+   "id": "course",
+   "icon": "🎓",
+   "label": "Open course",
+   "tagline": "One course URL → a study-ready course agent",
+   "before": {
+    "title": "CS336 · Language Modeling from Scratch (Stanford, Spring 2025)",
+    "url": "https://cs336.stanford.edu/spring2025/",
+    "kind": "A schedule page for humans",
+    "facts": [
+     "1 HTML page links everything",
+     "19 lecture PDFs live in a GitHub repo",
+     "5 assignment starter repositories",
+     "executable lecture traces + archives"
+    ],
+    "pain": "An agent given only the URL sees one page of links — the actual knowledge is scattered across hosts and formats."
+   },
+   "command": "agentic-anything agentify https://cs336.stanford.edu/spring2025/ \\\n    --follow-docs 6 --follow-repos 1 -o packs/cs336-course",
+   "build_events": [
+    {
+     "kind": "repo",
+     "title": "stanford-cs336/assignment1-basics",
+     "units": 31,
+     "bytes": 10635019,
+     "sha256": "8d3f2f0e336c"
+    },
+    {
+     "kind": "document",
+     "title": "2025 Lecture 3 - architecture",
+     "units": 9,
+     "bytes": 5277140,
+     "sha256": "3692b3d25b56"
+    },
+    {
+     "kind": "document",
+     "title": "2025 Lecture 4 - MoEs",
+     "units": 6,
+     "bytes": 4677130,
+     "sha256": "b62ba6416f04"
+    },
+    {
+     "kind": "document",
+     "title": "2025 Lecture 5 - GPUs",
+     "units": 7,
+     "bytes": 4766673,
+     "sha256": "ff25621de3d3"
+    },
+    {
+     "kind": "document",
+     "title": "2025 Lecture 7 - Parallelism basics",
+     "units": 8,
+     "bytes": 5004408,
+     "sha256": "c1868d601380"
+    },
+    {
+     "kind": "document",
+     "title": "2025 Lecture 9 - Scaling laws basics",
+     "units": 7,
+     "bytes": 6014047,
+     "sha256": "89f1e78e7c04"
+    },
+    {
+     "kind": "document",
+     "title": "2025 Lecture 11 - Scaling details",
+     "units": 7,
+     "bytes": 6265218,
+     "sha256": "9aab7ba7abb0"
+    }
+   ],
+   "after": {
+    "crawled_pages": 8,
+    "attachment_units": 75,
+    "frontier": 40,
+    "dead_links_recorded": 4,
+    "not_followed_recorded": 12,
+    "capabilities": [
+     "site_snapshot",
+     "page_index",
+     "page_manifests",
+     "markdown_views",
+     "api_surface",
+     "html_evidence",
+     "linked_attachments",
+     "resource_agent_interface"
+    ],
+    "interfaces": [
+     "conversation",
+     "http_agent",
+     "inspect",
+     "mcp",
+     "resource_cli",
+     "search",
+     "skill"
+    ]
+   },
+   "dead_link_example": {
+    "url": "https://github.com/stanford-cs336/assignment5-alignment/blob/main/cs336_spring2025_assignment5_supplement_safety_rlhf.pdf",
+    "candidate_page_id": "stanford-cs336__assignment5-alignment__blob__main__cs336-spring2025-assignment5-supplement",
+    "skip_reason": "attachment_fetch_failed:IngestError",
+    "discovered_via": "attachment_link",
+    "from_page_id": "spring2025",
+    "attachment_kind": "document",
+    "anchor_text": "Optional Part 2"
+   },
+   "conversations": [
+    {
+     "id": "course-slides",
+     "persona": "student",
+     "question": "Which lecture slides cover RoPE, and which pages should I read before implementing positional embeddings?",
+     "answer": "Based on the course materials, **RoPE (rotary position embeddings)** is covered in **2025 Lecture 3 - architecture** [2025-lecture-3-architecture__004__pages-25-32]. \n\nTo prepare for implementing positional embeddings, you should read the following pages:\n* **Pages 29–32** of Lecture 3, which introduce the high-level thought process behind relative position embeddings and how RoPE solves absolute position limitations [2025-lecture-3-architecture__004__pages-25-32].\n* **Pages 33–35** of Lecture 3, which cover the actual mathematical formulation of RoPE (using sines and cosines) and provide implementation details and code structure for multi-head self-attention [2025-lecture-3-architecture__005__pages-33-40].",
+     "citations": [
+      {
+       "page_id": "2025-lecture-3-architecture__004__pages-25-32",
+       "title": "2025 Lecture 3 - architecture — pages 25-32",
+       "locator": "pages 25-32",
+       "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+       "unit_kind": "segment",
+       "sha256": "3d0925b25bdb496a76b6882054fbfe5e52e4e234204ddd94882500c3a546a4e0",
+       "excerpt": "Do gated linear units work (2)?\nYes, with other works corroborating Shazeer  2020\nNarang et al 2020\nGating, activations\n• Many variations ( ReLU, GeLU, *GLU) across models.\n• *GLU isn’t necessary  for a good model (see GPT3), but it’s probably helpful\n Otuer, recent outlier models..\n  Nemotron  340B (Squared ReLU), Falcon 2 11b ( ReLU)\n• But evidence points towards somewhat consistent gains from Swi/GeGLU\nSerial vs Parallel layers\nNormal transformer blocks are serial  – they compute attention, then the MLP\nCould we parallelize the transformer block?\nParallel layers\nA few models (GPTJ, PaLM, GPT-NeoX) do parallel ",
+       "attachment_kind": "document"
+      },
+      {
+       "page_id": "2025-lecture-3-architecture__005__pages-33-40",
+       "title": "2025 Lecture 3 - architecture — pages 33-40",
+       "locator": "pages 33-40",
+       "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+       "unit_kind": "segment",
+       "sha256": "264785690dab875a04060b0ba29ca315f3bee7102932abe4183e1c44f8bc8b62",
+       "excerpt": "RoPE: rotary position embeddings\nThere are many rotations, which one do you pick? \nJust pair up the coordinates and rotate them in 2d (motivation: complex numbers)\n[Su et al 2021]\nThe actual RoPE math\nMultiply with sines and cosines \nDifference with sine embeddings – not additive, no cross terms\nImplementation and code for RoPE\n…\nSame stuff as the usual multi -head self attention below\nGet the RoPE \nmatrix cos/sin\nMultiply \nquery/key inputs\nUsual \nattention stuff\nNote: embedding at each attention operation to enforce position invariance\nHyperparameters\nTransformer hyperparameter questions you might have had in 22",
+       "attachment_kind": "document"
+      }
+     ]
+    },
+    {
+     "id": "course-handout",
+     "persona": "student",
+     "question": "The Assignment 1 handout link on the course page 404s for me. Where can I actually get the handout?",
+     "answer": "Based on the repository's `README.md`, the assignment handout is located directly within the Assignment 1 repository as a PDF file [stanford-cs336-assignment1-basics__file__readme-md]. \n\nYou can find and download it at the following path in your local or remote repository:\n* **`./cs336_assignment1_basics.pdf`** [stanford-cs336-assignment1-basics__file__readme-md]",
+     "citations": [
+      {
+       "page_id": "stanford-cs336-assignment1-basics__file__readme-md",
+       "title": "README.md",
+       "locator": "README.md",
+       "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+       "unit_kind": "code",
+       "sha256": "11bf3402f88f925e27a244b9102656a748d0c1e47f02399f42112faabe52f8fa",
+       "excerpt": "# CS336 Spring 2025 Assignment 1: Basics\nFor a full description of the assignment, see the assignment handout at\n[cs336_assignment1_basics.pdf](./cs336_assignment1_basics.pdf)\nIf you see any issues with the assignment handout or code, please feel free to\nraise a GitHub issue or open a pull request with a fix.\n## Setup\n### Environment\nWe manage our environments with `uv` to ensure reproducibility, portability, and ease of use.\nInstall `uv` [here](https://github.com/astral-sh/uv#installation) (recommended), or run `pip install uv`/`brew install uv`.\nWe recommend reading a bit about managing projects in `uv` [here](",
+       "attachment_kind": "repo"
+      }
+     ]
+    },
+    {
+     "id": "course-implement",
+     "persona": "student",
+     "question": "I'm starting Assignment 1 this week. What exactly do I need to implement, and where do I start in the starter code?",
+     "answer": "Based on the course materials and assignment files, here is what you need to implement for **Assignment 1: Basics** and how to get started with the starter code:\n\n### What You Need to Implement\nIn Assignment 1, you are tasked with implementing all of the core components necessary to train a standard, modern Transformer language model from scratch, and then training a minimal model [spring2025]. Specifically, you will implement:\n\n1. **Tokenizer**: A Byte-Pair Encoding (BPE) tokenizer, including pretokenization and training logic [spring2025, stanford-cs336-assignment1-basics__file__changelog-md].\n2. **Model Architecture**:\n   * **Linear and Embedding layers** from scratch [stanford-cs336-assignment1-basics__file__changelog-md].\n   * **RMSNorm** (with considerations for numerical stability) [stanford-cs336-assignment1-basics__file__changelog-md].\n   * **SwiGLU** activation function [stanford-cs336-assignment1-basics__file__changelog-md].\n   * **Rotary Position Embeddings (RoPE)** [stanford-cs336-assignment1-basics__file__changelog-md].\n   * Transformer blocks (with LayerNorm/RMSNorm placed in front of the block, and no bias terms in linear/layernorm layers) [2025-lecture-3-architecture__001__pages-1-8].\n3. **Optimizer**: The **AdamW** optimizer (with the correct order of weight decay vs. gradient update) [stanford-cs336-assignment1-basics__file__changelog-md].\n4. **Training Utilities**: A data batching utility (`get_batch`) to sample random context windows from your dataset [stanford-cs336-assignment1-basics__file__tests--test-data-py].\n\n---\n\n### Where to Start in the Starter Code\nTo begin working with the repository, follow these steps:\n\n1. **Explore the Repository Structure**:\n   * Your core implementation code goes inside the `cs336_basics/` directory [stanford-cs336-assignment1-basics__repo__000__tree].\n   * You can look at `cs336_basics/pretokenization_example.py` to see an example of how pretokenization is set up [stanford-cs336-assignment1-basics__file__cs336-basics--pretokenization-example-py].\n\n2. **Read the Guidelines**:\n   * Read **`CLAUDE.md`** (or `AGENTS.md`) [stanford-cs336-assignment1-basics__file__claude-md, stanford-cs336-assignment1-basics__file__agents-md]. These files outline the rules for using AI assistants in this course. Note that AI assistants are instructed to act as TAs and **are not allowed to write Python/pseudocode or complete TODOs for you** [stanford-cs336-assignment1-basics__file__claude-md].\n\n3. **Run and Inspect the Tests**:\n   The starter code includes a comprehensive suite of tests in the `tests/` directory to help you verify your implementation incrementally. You should start by looking at:\n   * `tests/test_tokenizer.py` and `tests/test_train_bpe.py` to understand the expected behavior of your tokenizer [stanford-cs336-assignment1-basics__file__tests--test-tokenizer-py, stanford-cs336-assignment1-basics__file__tests--test-train-bpe-py].\n   * `tests/test_nn_utils.py` and `tests/test_model.py` for the neural network layers and transformer architecture [stanford-cs336-assignment1-basics__file__tests--test-nn-utils-py, stanford-cs336-assignment1-basics__file__tests--test-model-py].\n   * `tests/test_optimizer.py` for your AdamW implementation [stanford-cs336-assignment1-basics__file__tests--test-optimizer-py].\n   * `tests/test_data.py` to see how your batching function (`get_batch`) is expected to sample offsets and handle device placement [stanford-cs336-assignment1-basics__file__tests--test-data-py].\n\n4. **Set Up Your Environment**:\n   * The repository uses `uv` for dependency management [stanford-cs336-assignment1-basics__file__changelog-md]. Ensure your environment is synced before running tests.",
+     "citations": [
+      {
+       "page_id": "spring2025",
+       "title": "Stanford CS336 | Language Modeling from Scratch (2025)",
+       "locator": "/spring2025",
+       "source_url": "https://cs336.stanford.edu/spring2025",
+       "unit_kind": "content",
+       "sha256": "2754583fe0977dfb746c0ae40fc19afd82437641d52919e3693d94fcaace9004",
+       "excerpt": "Coursework\nSchedule\nCS336: Language Modeling from Scratch\nStanford / Spring 2025\nThis is the archived website for the Spring 2025 offering of CS336. The latest offering is here.\nCourse Staff\nInstructor\nInstructor\nLogistics\nLectures: Tuesday/Thursday 3:00-4:20pm in NVIDIA Auditorium\nOffice hours:\nTatsu Hashimoto (Gates 364): Fridays at 3-4pm\nPercy Liang (Gates 350): Fridays at 11am-12pm\nMarcel Rød (Gates 415): Mondays 11am-12pm, Wednesdays 11am-12pm\nNeil Band (Gates 358): Mondays 4-5pm, Tuesdays 5-6pm\nRohith Kuditipudi (Gates 358): Mondays 10-11am, Wednesdays 10-11am\nContact: Students should ask all course-related",
+       "attachment_kind": null
+      },
+      {
+       "page_id": "stanford-cs336-assignment1-basics__file__changelog-md",
+       "title": "CHANGELOG.md",
+       "locator": "CHANGELOG.md",
+       "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+       "unit_kind": "code",
+       "sha256": "46dab494ae04d2cd45674df187a2fec9c5878690ae9ac79c6358f49778226bee",
+       "excerpt": "# Changelog\nAll changes we make to the assignment code or PDF will be documented in this file.\n## [26.0.3] 2026-04-07\n- handout: Adjust leaderboard time limit from 90 to 45 minutes\n## [26.0.2] 2026-04-06\n- handout: Fix SGD example bug\n- code: Add CLAUDE.md\n## [26.0.1] 2026-04-05\n- handout: Fix a few typos, broken links\n- code: Fix some references to H100s in favor of B200\n- code: Fixture for AdamW updated to cover bugfix from 26.0.0 (should not have caused an issue previously regardless)\n## [26.0.0] 2026-03-30\n- handout: Latex -> Typst (!)\n- handout: Fix tens of typos\n- handout: Assume B200s\n- handout: Clarify so",
+       "attachment_kind": "repo"
+      },
+      {
+       "page_id": "2025-lecture-3-architecture__001__pages-1-8",
+       "title": "2025 Lecture 3 - architecture — pages 1-8",
+       "locator": "pages 1-8",
+       "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+       "unit_kind": "segment",
+       "sha256": "2c5aaec7f3b7777895da973dea0b67c78342af099cc98122844928c4452580f2",
+       "excerpt": "Lecture 3\nCS336\nT atsuH\nE V E R Y T H I N GYO U D I D N’ T W A N T TO K N O W A B O U T\nL M  A R C H I T E C T U R EA N D T R A I N I N G\nLogistics\n❖ Join the slack! \n❖ Check to make sure you have the latest version of the assignment!\nOutline and goals\n❖ Quick recap of the ‘standard’ transformer (what you implement)\n❖ What do most of the large LMs have in common?\n❖ What are common variations to the architecture / training process?\nToday’s theme: the best way to learn is hands-on experience\nthe second best way is to try to learn from others’ experience\nStarting point: the ‘original’ transformer\nReview: choices in ",
+       "attachment_kind": "document"
+      },
+      {
+       "page_id": "stanford-cs336-assignment1-basics__file__tests--test-data-py",
+       "title": "tests/test_data.py",
+       "locator": "tests/test_data.py",
+       "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+       "unit_kind": "code",
+       "sha256": "e926adc0da151583092e2a4d35bc482b1ca29023bfcf240ef4d405f190649025",
+       "excerpt": "import math\nfrom collections import Counter\n\nimport numpy as np\nimport pytest\n\nfrom .adapters import run_get_batch\n\n\ndef test_get_batch():\n    dataset = np.arange(0, 100)\n    context_length = 7\n    batch_size = 32\n    device = \"cpu\"\n\n    # Sanity check to make sure that the random samples are indeed somewhat random.\n    starting_indices = Counter()\n    num_iters = 1000\n    for _ in range(num_iters):\n        x, y = run_get_batch(\n            dataset=dataset,\n            batch_size=batch_size,\n            context_length=context_length,\n            device=device,\n        )\n\n        # Make sure the shape is correct\n ",
+       "attachment_kind": "repo"
+      },
+      {
+       "page_id": "stanford-cs336-assignment1-basics__repo__000__tree",
+       "title": "Repository tree: assignment1-basics-main",
+       "locator": "tree",
+       "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+       "unit_kind": "code",
+       "sha256": "85a2471ecbd44dab6978859199a586a30634bdc1c2ac4e8ff76badb4c8771bcb",
+       "excerpt": "Repository: assignment1-basics-main\n50 files: 31 captured as text units, 19 present but not captured (binary or unsupported format).\nAGENTS.md\nCHANGELOG.md\nCLAUDE.md\nLICENSE\nREADME.md\ncs336_basics/__init__.py\ncs336_basics/pretokenization_example.py\nmake_submission.sh\npyproject.toml\ntests/__init__.py\ntests/adapters.py\ntests/common.py\ntests/conftest.py\ntests/fixtures/address.txt\ntests/fixtures/german.txt\ntests/fixtures/gpt2_merges.txt\ntests/fixtures/gpt2_vocab.json\ntests/fixtures/special_token_double_newlines_non_whitespace.txt\ntests/fixtures/special_token_trailing_newlines.txt\ntests/fixtures/tinystories_sample.txt",
+       "attachment_kind": "repo"
+      },
+      {
+       "page_id": "stanford-cs336-assignment1-basics__file__cs336-basics--pretokenization-example-py",
+       "title": "cs336_basics/pretokenization_example.py",
+       "locator": "cs336_basics/pretokenization_example.py",
+       "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+       "unit_kind": "code",
+       "sha256": "58522ef9b51b6e62aecf91b9575dd290907a2e15fb442d9c6d3a0c88825cac0e",
+       "excerpt": "import os\nfrom typing import BinaryIO\n\n\ndef find_chunk_boundaries(\n    file: BinaryIO,\n    desired_num_chunks: int,\n    split_special_token: bytes,\n) -> list[int]:\n    \"\"\"\n    Chunk the file into parts that can be counted independently.\n    May return fewer chunks if the boundaries end up overlapping.\n    \"\"\"\n    assert isinstance(split_special_token, bytes), \"Must represent special token as a bytestring\"\n\n    # Get total file size in bytes\n    file.seek(0, os.SEEK_END)\n    file_size = file.tell()\n    file.seek(0)\n\n    chunk_size = file_size // desired_num_chunks\n\n    # Initial guesses for chunk boundary location",
+       "attachment_kind": "repo"
+      },
+      {
+       "page_id": "stanford-cs336-assignment1-basics__file__claude-md",
+       "title": "CLAUDE.md",
+       "locator": "CLAUDE.md",
+       "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+       "unit_kind": "code",
+       "sha256": "005ff2d1c77f92ee2dd3a70d801ced16f63de55b16b7d0e9df29e14d87acd4bc",
+       "excerpt": "# AI Agent Guidelines for CS336 at Stanford\nThis file provides instructions for AI coding assistants (like ChatGPT, Claude Code, GitHub Copilot, Cursor, etc.) working with students in CS336.\n## Primary Role: Teaching Assistant, Not Solution Generator\nAI agents should function as teaching aids that help students learn through explanation, guidance, and feedback—not by completing assignments for them.\nCS336 is intentionally implementation-heavy. Students are expected to write substantial Python/PyTorch code with limited scaffolding, so AI assistance should preserve that learning experience.\n## What AI Agents SHOULD",
+       "attachment_kind": "repo"
+      },
+      {
+       "page_id": "stanford-cs336-assignment1-basics__file__tests--test-optimizer-py",
+       "title": "tests/test_optimizer.py",
+       "locator": "tests/test_optimizer.py",
+       "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+       "unit_kind": "code",
+       "sha256": "53498ba85e149e46d6d8a0110bed111cfd4de80c05c995da6d57a69473c8afb8",
+       "excerpt": "import numpy\nimport torch\n\nfrom .adapters import get_adamw_cls, run_get_lr_cosine_schedule\n\n\ndef _optimize(opt_class) -> torch.Tensor:\n    torch.manual_seed(42)\n    model = torch.nn.Linear(3, 2, bias=False)\n    opt = opt_class(\n        model.parameters(),\n        lr=1e-3,\n        weight_decay=0.01,\n        betas=(0.9, 0.999),\n        eps=1e-8,\n    )\n    # Use 1000 optimization steps for testing\n    for _ in range(1000):\n        opt.zero_grad()\n        x = torch.rand(model.in_features)\n        y_hat = model(x)\n        y = torch.tensor([x[0] + x[1], -x[2]])\n        loss = ((y - y_hat) ** 2).sum()\n        loss.backw",
+       "attachment_kind": "repo"
+      }
+     ]
+    }
+   ],
+   "run": {
+    "run_id": "cs336-course-week1",
+    "task": "Onboard a new CS336 student for week 1 using only the captured course pack (course page + deep-captured lecture PDFs + the assignment starter repository): (1) say what Assignment 1 is and exactly where to start in the starter repo; (2) point to the lecture slides, with page numbers, for the architecture material the assignment needs; (3) the course page links a PDF handout for Assignment 1 — check whether that link still resolves, and if it does not, locate the handout inside the captured repository instead.",
+    "mode": "deterministic-evidence-agent",
+    "model_calls": 0,
+    "summary": {
+     "assertions_passed": 10,
+     "assertions_total": 10,
+     "cited_units": 5,
+     "read_calls": 5,
+     "search_calls": 5,
+     "steps": 14
+    },
+    "steps": [
+     {
+      "step": 1,
+      "phase": "connect",
+      "tool": "initialize + tools/list",
+      "input": {
+       "protocolVersion": "2025-11-25"
+      },
+      "summary": "Connected to agentic-anything 0.5.0; tools: resource_info, search_resource, read_unit."
+     },
+     {
+      "step": 2,
+      "phase": "inspect",
+      "tool": "resource_info",
+      "input": {
+       "resource_id": "cs336-course"
+      },
+      "summary": "Inspected cs336-course: web, 8 units, 40 frontier entries."
+     },
+     {
+      "step": 3,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "language modeling from scratch coursework assignments schedule",
+       "resource_id": "cs336-course",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: spring2025 (32.124), 2025-lecture-9-scaling-laws-basics__002__pages-9-16 (7.906), stanford-cs336-assignment1-basics__file__changelog-md (7.055)."
+     },
+     {
+      "step": 4,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "cs336-course",
+       "unit_id": "spring2025"
+      },
+      "summary": "Read 15,843 Markdown characters from /spring2025; confirmed 2 required anchor(s); sha256 2754583fe0977dfb746c0ae40fc19afd82437641d52919e3693d94fcaace9004."
+     },
+     {
+      "step": 5,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "assignment 1 basics handout setup environment uv",
+       "resource_id": "cs336-course",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: stanford-cs336-assignment1-basics__file__readme-md (28.188), stanford-cs336-assignment1-basics__file__changelog-md (16.233), stanford-cs336-assignment1-basics__file__pyproject-toml (10.336)."
+     },
+     {
+      "step": 6,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "cs336-course",
+       "unit_id": "stanford-cs336-assignment1-basics__file__readme-md"
+      },
+      "summary": "Read 1,833 Markdown characters from README.md; confirmed 4 required anchor(s); sha256 11bf3402f88f925e27a244b9102656a748d0c1e47f02399f42112faabe52f8fa."
+     },
+     {
+      "step": 7,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "AI agent guidelines teaching assistant not solution generator",
+       "resource_id": "cs336-course",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: stanford-cs336-assignment1-basics__file__agents-md (33.689), stanford-cs336-assignment1-basics__file__claude-md (33.689), spring2025 (6.664)."
+     },
+     {
+      "step": 8,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "cs336-course",
+       "unit_id": "stanford-cs336-assignment1-basics__file__agents-md"
+      },
+      "summary": "Read 5,022 Markdown characters from AGENTS.md; confirmed 1 required anchor(s); sha256 005ff2d1c77f92ee2dd3a70d801ced16f63de55b16b7d0e9df29e14d87acd4bc."
+     },
+     {
+      "step": 9,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "rotary position embedding RoPE attention architecture",
+       "resource_id": "cs336-course",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: 2025-lecture-3-architecture__004__pages-25-32 (22.304), 2025-lecture-3-architecture__005__pages-33-40 (20.565), 2025-lecture-3-architecture__001__pages-1-8 (18.532)."
+     },
+     {
+      "step": 10,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "cs336-course",
+       "unit_id": "2025-lecture-3-architecture__004__pages-25-32"
+      },
+      "summary": "Read 2,794 Markdown characters from pages 25-32; confirmed 2 required anchor(s); sha256 3d0925b25bdb496a76b6882054fbfe5e52e4e234204ddd94882500c3a546a4e0."
+     },
+     {
+      "step": 11,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "repository tree files present but not captured",
+       "resource_id": "cs336-course",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: stanford-cs336-assignment1-basics__repo__000__tree (28.558), stanford-cs336-assignment1-basics__file__license (7.180), stanford-cs336-assignment1-basics__file__tests--conftest-py (6.089)."
+     },
+     {
+      "step": 12,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "cs336-course",
+       "unit_id": "stanford-cs336-assignment1-basics__repo__000__tree"
+      },
+      "summary": "Read 2,304 Markdown characters from tree; confirmed 1 required anchor(s); sha256 85a2471ecbd44dab6978859199a586a30634bdc1c2ac4e8ff76badb4c8771bcb."
+     },
+     {
+      "step": 13,
+      "phase": "compute",
+      "tool": "deterministic_link_rot_check",
+      "input": {
+       "frontier_entries_scanned": 40
+      },
+      "summary": "The page's Assignment 1 handout URL is recorded in the frontier as attachment_fetch_failed:IngestError (HTTP 404 during capture), while the captured repository tree lists cs336_assignment1_basics.pdf (965,629 bytes): the handout moved into the repo under a new name."
+     },
+     {
+      "step": 14,
+      "phase": "validate",
+      "tool": "deterministic_assertions",
+      "input": {
+       "evidence_units": 5
+      },
+      "summary": "Validated all anchors and confirmed every final citation points to a previously read unit."
+     }
+    ],
+    "checks_passed": 10,
+    "checks_total": 10,
+    "artifact_path": "runs/cs336-course-week1/artifact.md",
+    "run_path": "runs/cs336-course-week1/run.json"
+   },
+   "source_note": "Course page and lecture-viewer HTML are stored inside the pack (html/). Linked lecture PDFs and the assignment repository are not vendored; their exact download URLs, sizes, and SHA-256 digests are pinned below and inside every attachment page's provenance. Rebuild live with demos/build_course_pack.py."
+  },
+  {
+   "id": "footage",
+   "icon": "🎬",
+   "label": "Footage library",
+   "tagline": "Raw clips + subtitles → a footage agent that cuts by quote",
+   "before": {
+    "title": "A creator's footage folder — three films, no script",
+    "url": "demos/sources/footage/",
+    "kind": "Folder of media transcripts",
+    "facts": [
+     "3 open films (Blender Foundation, CC-BY)",
+     "subtitles only — no script, no notes",
+     "answers live at exact millisecond offsets"
+    ],
+    "pain": "Finding 'the moment she says X' means scrubbing three timelines by hand."
+   },
+   "command": "agentic-anything agentify ./footage -o packs/footage-library",
+   "build_events": [
+    {
+     "kind": "transcript",
+     "title": "Elephants Dream (2006) — English subtitles",
+     "license": "CC-BY 2.5 — © copyright 2006, Blender Foundation / Netherlands Media Art Institute | orange.blender.org",
+     "media_url": "https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4"
+    },
+    {
+     "kind": "transcript",
+     "title": "Sintel (2010) — official English subtitles",
+     "license": "CC-BY 3.0 — © copyright Blender Foundation | durian.blender.org",
+     "media_url": "https://download.blender.org/durian/movies/Sintel.2010.1080p.mkv"
+    },
+    {
+     "kind": "transcript",
+     "title": "Tears of Steel (2012) — official English subtitles",
+     "license": "CC-BY 3.0 — (CC) Blender Foundation | mango.blender.org",
+     "media_url": "https://media.xiph.org/tearsofsteel/tears_of_steel_1080p.webm"
+    }
+   ],
+   "after": {
+    "crawled_pages": 0,
+    "attachment_units": 10,
+    "frontier": 0,
+    "unit_shape": "3-minute windows, every cue stamped [start → end]",
+    "interfaces": [
+     "conversation",
+     "http_agent",
+     "inspect",
+     "mcp",
+     "resource_cli",
+     "search",
+     "skill"
+    ]
+   },
+   "conversations": [
+    {
+     "id": "footage-dragon",
+     "persona": "creator",
+     "question": "Find the exact moments where anyone talks about a dragon. Give me timecodes I can cut.",
+     "answer": "Based on the provided transcripts, the exact moments where a dragon is mentioned are:\n\n* **00:02:23.400 → 00:02:25.000** in *Sintel*: \n  \"A dragon.\" [sintel-en-srt__sintel-en__001__00-01-47]\n* **00:07:37.800 → 00:07:40.500** in *Sintel*: \n  \"These are dragon lands, Sintel.\" [sintel-en-srt__sintel-en__002__00-05-04]",
+     "citations": [
+      {
+       "page_id": "sintel-en-srt__sintel-en__001__00-01-47",
+       "title": "transcript 00:01:47–00:04:28",
+       "locator": "sintel_en.srt · 00:01:47–00:04:28",
+       "source_url": "demos/sources/footage/sintel_en.srt",
+       "unit_kind": "segment",
+       "sha256": "58eca9968c1ab3534b6e7b6abc54deb3919cd528207605ad10f14f5fc0fdc0f0",
+       "excerpt": "[00:01:47.250 → 00:01:50.500] This blade has a dark past.\n[00:01:51.800 → 00:01:55.800] It has shed much innocent blood.\n[00:01:58.000 → 00:02:01.450] You're a fool for traveling alone, so completely unprepared.\n[00:02:01.750 → 00:02:04.800] You're lucky your blood's still flowing.\n[00:02:05.250 → 00:02:06.300] Thank you.\n[00:02:07.500 → 00:02:09.000] So...\n[00:02:09.400 → 00:02:13.800] What brings you to the land of the gatekeepers?\n[00:02:15.000 → 00:02:17.500] I'm searching for someone.\n[00:02:18.000 → 00:02:22.200] Someone very dear? A kindred spirit?\n[00:02:23.400 → 00:02:25.000] A dragon.\n[00:02:28.850 → 00",
+       "attachment_kind": null
+      },
+      {
+       "page_id": "sintel-en-srt__sintel-en__002__00-05-04",
+       "title": "transcript 00:05:04–00:07:44",
+       "locator": "sintel_en.srt · 00:05:04–00:07:44",
+       "source_url": "demos/sources/footage/sintel_en.srt",
+       "unit_kind": "segment",
+       "sha256": "f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93",
+       "excerpt": "[00:05:04.000 → 00:05:07.500] Yeah! Come on!\n[00:05:38.750 → 00:05:42.000] Scales!\n[00:07:25.850 → 00:07:27.500] I have failed.\n[00:07:32.800 → 00:07:36.500] You've only failed to see...\n[00:07:37.800 → 00:07:40.500] These are dragon lands, Sintel.\n[00:07:40.850 → 00:07:44.000] You are closer than you know.",
+       "attachment_kind": null
+      }
+     ]
+    },
+    {
+     "id": "footage-closer",
+     "persona": "creator",
+     "question": "For the closing shot I want the moment where Thom admits the world has changed. Find its exact timing.",
+     "answer": "The moment where Thom admits the world has changed occurs at the following timing:\n\n* **[00:08:38.000 → 00:08:40.000]** \"The world's changed, Celia...\" [tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26]",
+     "citations": [
+      {
+       "page_id": "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26",
+       "title": "transcript 00:06:26–00:09:24",
+       "locator": "tears_of_steel_en.srt · 00:06:26–00:09:24",
+       "source_url": "demos/sources/footage/tears_of_steel_en.srt",
+       "unit_kind": "segment",
+       "sha256": "3ebe770891eba935503bd085cdb5ab4955e2f5ae084b45157a8b99503c394d6a",
+       "excerpt": "[00:06:26.000 → 00:06:27.000] I know.\n[00:06:27.000 → 00:06:29.000] You forgot me on earth.\n[00:06:29.000 → 00:06:30.000] I know.\n[00:06:30.500 → 00:06:33.000] I should just crush you.\n[00:06:36.000 → 00:06:37.000] I'm-\n[00:06:47.000 → 00:06:48.000] I'm sorry.\n[00:06:50.000 → 00:06:51.000] Good ad-lib.\n[00:06:59.000 → 00:07:00.500] Not my fault!\n[00:07:02.000 → 00:07:03.000] This time.\n[00:07:08.000 → 00:07:09.500] Quiet on set!\n[00:07:10.000 → 00:07:11.000] We're out of time!\n[00:08:13.000 → 00:08:14.000] Come on!\n[00:08:22.000 → 00:08:24.000] RAAAAAAAAH!\n[00:08:24.000 → 00:08:25.000] Memory overwrite, 90%.\n[00:",
+       "attachment_kind": null
+      }
+     ]
+    }
+   ],
+   "run": {
+    "run_id": "footage-teaser-cut",
+    "task": "A creator has a footage folder: three open films with subtitles but no script. Assemble a short teaser (under 45 seconds) on the theme 'dragons, machines, and a breaking world'. Find the exact spoken moments, then emit a frame-accurate cut list with per-clip attribution and executable ffmpeg commands against the films' official releases. Every timecode must come from a read transcript unit.",
+    "mode": "deterministic-evidence-agent",
+    "model_calls": 0,
+    "summary": {
+     "assertions_passed": 12,
+     "assertions_total": 12,
+     "cited_units": 5,
+     "read_calls": 5,
+     "search_calls": 5,
+     "steps": 14
+    },
+    "steps": [
+     {
+      "step": 1,
+      "phase": "connect",
+      "tool": "initialize + tools/list",
+      "input": {
+       "protocolVersion": "2025-11-25"
+      },
+      "summary": "Connected to agentic-anything 0.5.0; tools: resource_info, search_resource, read_unit."
+     },
+     {
+      "step": 2,
+      "phase": "inspect",
+      "tool": "resource_info",
+      "input": {
+       "resource_id": "footage-library"
+      },
+      "summary": "Inspected footage-library: collection, 10 units, 0 frontier entries."
+     },
+     {
+      "step": 3,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "listen to the sounds of the machine",
+       "resource_id": "footage-library",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: elephants-dream-en-srt__elephants-dream-en__001__00-00-15 (6.923), elephants-dream-en-srt__elephants-dream-en__002__00-03-18 (5.789), elephants-dream-en-srt__elephants-dream-en__003__00-06-39 (3.263)."
+     },
+     {
+      "step": 4,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "footage-library",
+       "unit_id": "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+      },
+      "summary": "Read 1,470 Markdown characters from elephants_dream_en.srt · 00:00:15–00:03:14; confirmed 1 required anchor(s); sha256 3538c39866ce3ddb823813809395bd15e69e04ce252cd321aaa9be4779810c28."
+     },
+     {
+      "step": 5,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "what did they take a dragon",
+       "resource_id": "footage-library",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: sintel-en-srt__sintel-en__002__00-05-04 (2.423), sintel-en-srt__sintel-en__001__00-01-47 (2.226), tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23 (1.958)."
+     },
+     {
+      "step": 6,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "footage-library",
+       "unit_id": "sintel-en-srt__sintel-en__001__00-01-47"
+      },
+      "summary": "Read 1,158 Markdown characters from sintel_en.srt · 00:01:47–00:04:28; confirmed 1 required anchor(s); sha256 58eca9968c1ab3534b6e7b6abc54deb3919cd528207605ad10f14f5fc0fdc0f0."
+     },
+     {
+      "step": 7,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "these are dragon lands closer than you know",
+       "resource_id": "footage-library",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: sintel-en-srt__sintel-en__002__00-05-04 (17.806), tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23 (4.027), tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26 (2.565)."
+     },
+     {
+      "step": 8,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "footage-library",
+       "unit_id": "sintel-en-srt__sintel-en__002__00-05-04"
+      },
+      "summary": "Read 474 Markdown characters from sintel_en.srt · 00:05:04–00:07:44; confirmed 1 required anchor(s); sha256 f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93."
+     },
+     {
+      "step": 9,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "no reason to destroy the world",
+       "resource_id": "footage-library",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23 (5.607), tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26 (2.399), elephants-dream-en-srt__elephants-dream-en__003__00-06-39 (3.048)."
+     },
+     {
+      "step": 10,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "footage-library",
+       "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23"
+      },
+      "summary": "Read 2,066 Markdown characters from tears_of_steel_en.srt · 00:03:23–00:06:25; confirmed 1 required anchor(s); sha256 a9f9c6ff2d04c720e6687b8d49a3dadc89cb02f2fc215dcfa805a6bc25e1e135."
+     },
+     {
+      "step": 11,
+      "phase": "search",
+      "tool": "search_resource",
+      "input": {
+       "query": "freaked out by my robot hand",
+       "resource_id": "footage-library",
+       "top_k": 5
+      },
+      "summary": "Found 5 hit(s); top evidence units: tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23 (10.020), tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23 (5.804), tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26 (1.613)."
+     },
+     {
+      "step": 12,
+      "phase": "read",
+      "tool": "read_unit",
+      "input": {
+       "resource_id": "footage-library",
+       "unit_id": "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23"
+      },
+      "summary": "Read 1,454 Markdown characters from tears_of_steel_en.srt · 00:00:23–00:03:23; confirmed 1 required anchor(s); sha256 55392d6ac98f89c07a71f9c7a4f3eb17de7a394d862c208abd26b5abf720c69e."
+     },
+     {
+      "step": 13,
+      "phase": "compute",
+      "tool": "deterministic_cut_list",
+      "input": {
+       "clips": 4,
+       "padding_seconds": 0.75
+      },
+      "summary": "Padded each pinned cue by ±0.75s and sequenced 4 clips; total teaser runtime 16.686s (< 45s budget)."
+     },
+     {
+      "step": 14,
+      "phase": "validate",
+      "tool": "deterministic_assertions",
+      "input": {
+       "evidence_units": 5
+      },
+      "summary": "Every cut derives from a cue stamp read inside the pack; runtime is within budget."
+     }
+    ],
+    "checks_passed": 12,
+    "checks_total": 12,
+    "artifact_path": "runs/footage-teaser-cut/artifact.md",
+    "run_path": "runs/footage-teaser-cut/run.json"
+   },
+   "edl": [
+    {
+     "cue": "[00:03:10.010 → 00:03:14.396]",
+     "cut_in": "00:03:09.260",
+     "cut_out": "00:03:15.146",
+     "duration": 5.886,
+     "film": "Elephants Dream (2006)",
+     "line": "Listen… Listen to the sounds of the machine.",
+     "n": 1
+    },
+    {
+     "cue": "[00:02:23.400 → 00:02:25.000]",
+     "cut_in": "00:02:22.650",
+     "cut_out": "00:02:25.750",
+     "duration": 3.1,
+     "film": "Sintel (2010)",
+     "line": "A dragon.",
+     "n": 2
+    },
+    {
+     "cue": "[00:07:37.800 → 00:07:40.500]",
+     "cut_in": "00:07:37.050",
+     "cut_out": "00:07:41.250",
+     "duration": 4.2,
+     "film": "Sintel (2010)",
+     "line": "These are dragon lands, Sintel.",
+     "n": 3
+    },
+    {
+     "cue": "[00:06:01.000 → 00:06:03.000]",
+     "cut_in": "00:06:00.250",
+     "cut_out": "00:06:03.750",
+     "duration": 3.5,
+     "film": "Tears of Steel (2012)",
+     "line": "But that's no reason to destroy the world.",
+     "n": 4
+    }
+   ],
+   "edl_total_seconds": 16.686
+  }
+ ],
+ "more": [
+  {
+   "id": "requests",
+   "icon": "📦",
+   "kind": "GitHub repository",
+   "title": "Requests",
+   "publisher": "Python Software Foundation / psf",
+   "question": "What is Requests' default redirect ceiling, where is it set, and what happens when it is exceeded?",
+   "answer": "30 redirects. Session.max_redirects is initialized from DEFAULT_REDIRECT_LIMIT; resolve_redirects raises TooManyRedirects once response history reaches that ceiling.",
+   "unit_count": 74,
+   "sha256": "f552f594e029",
+   "license": "Apache License 2.0",
+   "evidence": {
+    "unit": "file__src--requests--sessions-py",
+    "locator": "src/requests/sessions.py",
+    "sha256": "37132aa52850",
+    "blocks": [
+     "…cert = None\n\n        #: Maximum number of redirects allowed. If the request exceeds this\n        #: limit, a :class:`TooManyRedirects` exception is raised.\n        #: This defaults to requests.models.DEFAULT_REDIRECT_LIMIT, which is\n        #: 30.\n        self.max_redirects = DEFAULT_REDIRECT_LIMIT…"
+    ]
+   },
+   "llm_run": {
+    "run_id": "requests-redirect-impact-llm",
+    "model_calls": 10,
+    "steps": 21,
+    "note": "a real gpt-4.1-mini tool loop over stdio MCP, rejections preserved",
+    "run_path": "runs/requests-redirect-impact-llm/run.json"
+   }
+  },
+  {
+   "id": "alice",
+   "icon": "📖",
+   "kind": "EPUB book",
+   "title": "Alice's Adventures in Wonderland",
+   "publisher": "Project Gutenberg",
+   "question": "Does the Hatter ever answer 'Why is a raven like a writing-desk?'",
+   "answer": "No. When Alice asks for the answer, the Hatter says he has not the slightest idea; Alice later calls it a riddle with no answer.",
+   "unit_count": 14,
+   "sha256": "4ac9fc092435",
+   "license": "Public domain in the USA; Project Gutenberg terms apply",
+   "evidence": {
+    "unit": "alice-project-gutenberg-11__009__alices-adventures-in-wonderland-project",
+    "locator": "chapter 9",
+    "sha256": "d43b646af034",
+    "blocks": [
+     "“I haven’t the slightest idea,” said the Hatter.",
+     "The Hatter opened his eyes very wide on hearing this; but all he said was, “Why is a raven like a writing-desk?”"
+    ]
+   }
+  },
+  {
+   "id": "secrets",
+   "icon": "🐍",
+   "kind": "Docs website",
+   "title": "secrets — Generate secure random numbers for managing secrets",
+   "publisher": "Python Software Foundation",
+   "question": "How much randomness does Python's official documentation recommend against brute-force attacks?",
+   "answer": "As of 2015, the documentation says 32 bytes (256 bits) of randomness is believed sufficient for a typical use case.",
+   "unit_count": 1,
+   "sha256": "9464167bbc2a",
+   "license": "Python Software Foundation License Version 2",
+   "evidence": {
+    "unit": "python-3-13-secrets",
+    "locator": "/python-3.13-secrets.html",
+    "sha256": "9464167bbc2a",
+    "blocks": [
+     "To be secure against brute-force attacks, tokens need to have sufficient randomness. Unfortunately, what is considered sufficient will necessarily increase as computers get more powerful and able to make more guesses in a shorter period. As of 2015, it is believed that 32 bytes (256 bits) of randomn…",
+     "brute-force attacks"
+    ]
+   }
+  },
+  {
+   "id": "gistemp",
+   "icon": "📊",
+   "kind": "NASA dataset (CSV)",
+   "title": "GISS Surface Temperature Analysis (GISTEMP v4)",
+   "publisher": "NASA Goddard Institute for Space Studies",
+   "question": "What is NASA GISTEMP's 2024 January–December global anomaly?",
+   "answer": "1.28 °C above the 1951–1980 mean. The value is the J-D column in NASA's 2024 row.",
+   "unit_count": 3,
+   "sha256": "99d659d8c955",
+   "license": "NASA data with source acknowledgment requested",
+   "evidence": {
+    "unit": "nasa-gistemp-global__003__nasa-gistemp-global-csv-rows-101-147",
+    "locator": "rows 101-147",
+    "sha256": "53cadbd0b342",
+    "blocks": [
+     "2024 | 1.25 | 1.43 | 1.39 | 1.32 | 1.16 | 1.23 | 1.20 | 1.30 | 1.21 | 1.35 | 1.30 | 1.27 | 1.28 | 1.29 | 1.35 | 1.29 | 1.24 | 1.28"
+    ]
+   }
+  },
+  {
+   "id": "fair-paper",
+   "icon": "📄",
+   "kind": "Scholarly article",
+   "title": "The FAIR Guiding Principles for scientific data management and stewardship",
+   "publisher": "Scientific Data / PubMed Central",
+   "question": "What must a digital object expose to be machine-actionable according to the FAIR paper?",
+   "answer": "Enough information for an agent to identify the object type, judge usefulness, determine usability and license constraints, and take appropriate action.",
+   "unit_count": 1,
+   "sha256": "4ad8a99796d4",
+   "license": "Creative Commons Attribution 4.0 International",
+   "evidence": {
+    "unit": "fair-guiding-principles-pmc4792175",
+    "locator": "fair-guiding-principles-pmc4792175.html",
+    "sha256": "049c78963306",
+    "blocks": [
+     "…: a) identify the type of object (with respect to both structure and intent), b) determine if it is useful within the context of the agent’s current task by interrogating metadata and/or data elements, c) determine if it is usable, with respect to license, consent, or other accessibility or use cons…",
+     "Finally, we wish to draw a distinction between data that is machine-actionable as a result of specific investment in software supporting that data-type, for example, bespoke parsers that understand life science wwPDB files or space science Space Physics Archive Search and Extract (SPASE) files, and…"
+    ]
+   }
+  }
+ ],
+ "totals": {
+  "runs": 5,
+  "run_checks_passed": 74,
+  "run_checks_total": 74,
+  "recorded_model_calls": 15
+ }
+}

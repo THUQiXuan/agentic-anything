@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-11-scaling-details__002__pages-9-16",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+  "url_path": "pages 9-16",
+  "title": "2025 Lecture 11 - Scaling details — pages 9-16",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 9-16",
+  "summary": "Setting the empirical values\nmuP is combined with aggressive scaling for hyperparameter optimization.\nGenerally stable hyperparameters.\nMiniCPM\nMiniCPM  (2024) – new small, high -perf LM from Tsinghua group.\nCareful, extensive scaling comp…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Setting the empirical values\nmuP is combined with aggressive scaling for hyperparameter optimization.\nGenerally stable hyperparameters."
+    },
+    {
+      "kind": "p",
+      "text": "MiniCPM\nMiniCPM  (2024) – new small, high -perf LM from Tsinghua group.\nCareful, extensive scaling computations + muP to stabilize and simplify scaling"
+    },
+    {
+      "kind": "p",
+      "text": "MiniCPM\nHigh performance 1 -2.5 B parameter models. These models beat most out 2Bs and \nmatch many modern 7B models."
+    },
+    {
+      "kind": "p",
+      "text": "Techique 1: muP to stabilize scaling\nScale_emb  = 12, scale_depth  = 1.4, init_std  = 0.1, lr =0.01\nc.f. CerebrasGPT – Scale_emb = 10, lr=6e-3, init_base = 0.08"
+    },
+    {
+      "kind": "p",
+      "text": "Scaling recipe / strategy\nUse muP for initialization, fix the aspect ratio, scale up the overall model size.\nNote that the gap between the largest model here and the actual model they train is ~5x\nOptimal batch, LR, token -to-size ratios are directly fitted via scaling analysis"
+    },
+    {
+      "kind": "p",
+      "text": "Optimal batch\nThree model sizes (9m, 30m, 170m) as a function of data size (y), batch (x) and loss (col)\nVertical columns of points represent a single training curve (fixed batch, more points).\nRed line attempts to identify minimum loss points for each y -value \n– this is the ‘optimal batch size’ for a model size / dataset size combination."
+    },
+    {
+      "kind": "p",
+      "text": "Optimal batch size\nWe can then follow the Kaplan 2020 analysis and plot optimal batch size vs final loss.\nFairly clean trend – polynomially  increase the batch size as loss decreases."
+    },
+    {
+      "kind": "p",
+      "text": "Optimal LR \nAccording to muP – optimal learning rate should be (roughly) stable. Is it?"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "817ca7e0f71854fc0c4dfe8a0f3669b7c8b3c341fc0334fdaf36feda0035388e",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 11.pdf",
+    "attachment_sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+    "attachment_bytes": 6265218
+  }
+}

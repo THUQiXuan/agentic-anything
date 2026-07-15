@@ -8,7 +8,7 @@
 
 ### Repository: requests-2.34.2
 
-74 files.
+104 files: 74 captured as text units, 30 present but not captured (binary or unsupported format).
 
 ```
 AUTHORS.rst
@@ -85,4 +85,39 @@ tests/testserver/__init__.py
 tests/testserver/server.py
 tests/utils.py
 tox.ini
+```
+
+#### Files present but not captured as text
+
+```
+MANIFEST.in  (126 bytes)
+NOTICE  (38 bytes)
+docs/_static/requests-sidebar.png  (306,086 bytes)
+docs/_templates/sidebar.html  (1,361 bytes)
+docs/make.bat  (7,258 bytes)
+ext/kr.png  (9,459 bytes)
+ext/psf.png  (14,561 bytes)
+ext/requests-logo-compressed.png  (192,073 bytes)
+ext/requests-logo.ai  (2,189,478 bytes)
+ext/requests-logo.png  (192,073 bytes)
+ext/requests-logo.svg  (883,794 bytes)
+src/requests/py.typed  (0 bytes)
+tests/certs/expired/ca/ca-private.key  (1,700 bytes)
+tests/certs/expired/ca/ca.cnf  (463 bytes)
+tests/certs/expired/ca/ca.crt  (1,322 bytes)
+tests/certs/expired/ca/ca.srl  (41 bytes)
+tests/certs/expired/server/cert.cnf  (457 bytes)
+tests/certs/expired/server/server.csr  (1,159 bytes)
+tests/certs/expired/server/server.key  (1,704 bytes)
+tests/certs/expired/server/server.pem  (2,628 bytes)
+tests/certs/mtls/client/ca  (17 bytes)
+tests/certs/mtls/client/cert.cnf  (696 bytes)
+tests/certs/mtls/client/client.csr  (1,500 bytes)
+tests/certs/mtls/client/client.key  (1,704 bytes)
+tests/certs/mtls/client/client.pem  (2,628 bytes)
+tests/certs/valid/ca  (13 bytes)
+tests/certs/valid/server/cert.cnf  (722 bytes)
+tests/certs/valid/server/server.csr  (1,175 bytes)
+tests/certs/valid/server/server.key  (1,704 bytes)
+tests/certs/valid/server/server.pem  (2,770 bytes)
 ```

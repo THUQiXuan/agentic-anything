@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-4-moes__003__pages-17-24",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+  "url_path": "pages 17-24",
+  "title": "2025 Lecture 4 - MoEs — pages 17-24",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 17-24",
+  "summary": "Common routing variants in detail\nTop-k\nUsed in most MoEs\nSwitch Transformer (k=1)\nGshard (k=2), Grok (2), Mixtral (2), \nQwen (4), DBRX (4), \nDeepSeek (7)\nHashing\n Common baseline\n[Fedus et al 2022]\nOther routing methods\nRL to learn routes…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Common routing variants in detail\nTop-k\nUsed in most MoEs\nSwitch Transformer (k=1)\nGshard (k=2), Grok (2), Mixtral (2), \nQwen (4), DBRX (4), \nDeepSeek (7)\nHashing\n Common baseline\n[Fedus et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "Other routing methods\nRL to learn routes Used in some of the earliest work\nBengio 2013, not common now\nLinear assignment for routing\nUsed in various papers like Clark ‘22\nSolve a matching \nproblem\n[Fedus et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "Top-K routing in detail.\nMost papers do the old and classic top -k routing. How does this work?\n[Dai et al 2024]\nGating\nGates selected by a logistic regressor\nThis is the \nDeepSeek (V1-2) router\n(Grok, Qwen do this too)\nMixtral, DBRX, \nDeepSeek v3 \nsoftmaxes after the \nTopK"
+    },
+    {
+      "kind": "p",
+      "text": "Recent variations from DeepSeek and other Chinese LMs\nSmaller, larger number of experts + a few shared experts that are always on.\n(Used in DeepSeek / Qwen, originally from DeepSpeed MoE)"
+    },
+    {
+      "kind": "p",
+      "text": "Various ablations from the DeepSeek paper\nMore experts, shared experts all seem to generally help"
+    },
+    {
+      "kind": "p",
+      "text": "Ablations from OlMoE\nGains from fine -grained experts, none from shared experts."
+    },
+    {
+      "kind": "p",
+      "text": "Expert routing setups for recent MoEs\nModel Routed Active Shared Fine-grained ratio\nGShard 2048 2 0\nSwitch Transformer 64 1 0\nST-MOE 64 2 0\nMixtral 8 2 0\nDBRX 16 4 0\nGrok 8 2 0\nDeepSeek v1 64 6 2 1/4\nQwen 1.5 60 4 4 1/8\nDeepSeek v3 256 8 1 1/14\nOlMoE 64 8 0 1/8\nMiniMax 32 2 0 ~1/4\nLlama 4 (maverick) 128 1 1 1/2"
+    },
+    {
+      "kind": "p",
+      "text": "How do we train MoEs?\nMajor challenge: we need sparsity for training -time efficiency…\nBut sparse gating decisions are not differentiable!\nSolutions?  \n1. Reinforcment  learning to optimize gating policies\n2. Stochastic perturbations\n3. Heuristic ‘balancing’ losses.\nGuess which one people use in practice?"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "4a3961bd722045741c86f09327d2788cf043995d0cbfd0a0a01d52b8f2e8f827",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 4.pdf",
+    "attachment_sha256": "b62ba6416f04c4473834fffa19119317e78542a6b8dc94a5e816790643cb0c4f",
+    "attachment_bytes": 4677130
+  }
+}

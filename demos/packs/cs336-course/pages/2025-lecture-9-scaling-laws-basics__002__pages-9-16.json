@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-9-scaling-laws-basics__002__pages-9-16",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+  "url_path": "pages 9-16",
+  "title": "2025 Lecture 9 - Scaling laws basics — pages 9-16",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 9-16",
+  "summary": "Early history of scaling laws – data scaling\nEarly tests of functional forms\nKolachina  et al 2012 – power law relation between data and downstream performance\nHestness et al 2017\nEarliest ‘large scale neural’ scaling work: Hestness  2017…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Early history of scaling laws – data scaling\nEarly tests of functional forms\nKolachina  et al 2012 – power law relation between data and downstream performance"
+    },
+    {
+      "kind": "p",
+      "text": "Hestness et al 2017\nEarliest ‘large scale neural’ scaling work: Hestness  2017\nPredictable scaling on many tasks (MT, LM, Speech) and hypothesized scaling shape."
+    },
+    {
+      "kind": "p",
+      "text": "Hestness II\nVery ahead of its time..\n“Emergence”\nScaling by compute\nSpeed = accuracy"
+    },
+    {
+      "kind": "p",
+      "text": "Part 2. Neural (LLM) scaling behaviors\n1.Data vs performance \n“Are there simple rules that determine how data affects \nperformance?”\n2. Data vs model size \nDo we train on more data or bigger models?\n3. Hyper-parameters vs performance\n“How should we set hyperparameters on the big model??”"
+    },
+    {
+      "kind": "p",
+      "text": "Scaling laws – power law relationships for many factors\nThese scaling laws hold on many different kind of phenomena!\nThey even hold in non -standard \nsettings (when train ≠ test)\n[Kaplan+ 2020]"
+    },
+    {
+      "kind": "p",
+      "text": "Data vs performance \nWhat’s a data scaling law?\nData scaling laws  : simple formula that maps dataset size (n) to error\nWhat do we expect out of scaling laws?\nMonotonic, logistic -\nlike curves\n[Hestness+ 2017]"
+    },
+    {
+      "kind": "p",
+      "text": "Data scaling laws for language models\nFirst, an empirical observation\nTest Loss\nLoss and dataset size is linear on a log-log plot\n“Scale-free” or\n“Power law”\n(For language modeling, from Kaplan+ 2020)"
+    },
+    {
+      "kind": "p",
+      "text": "Conceptual foundations of data scaling laws.\nQ: Why do scaling laws show up?\n We know error should be monotone\nBut why is it a power law / linear in log -log?\nA (?): Estimation error naturally decays polynomially .\nBut this answer may take a moment to understand. Let’s work through an example.\nExample: If our task is to estimate the mean of a dataset, what’s the scaling law?"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "2353127e08b48a7a9fb8718d53f6488f92af84736df62eda743fc44300483920",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 9.pdf",
+    "attachment_sha256": "89f1e78e7c040a463a2f3a22025bcca9836ca1ecdbee88b398b780835e5bf7ce",
+    "attachment_bytes": 6014047
+  }
+}

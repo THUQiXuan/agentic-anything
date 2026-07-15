@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-5-gpus__005__pages-33-40",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+  "url_path": "pages 33-40",
+  "title": "2025 Lecture 5 - GPUs — pages 33-40",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 33-40",
+  "summary": "Trick (?) 4: Memory coalescing and DRAM\nDRAM (global memory) is read in ‘burst mode’ – each read gives you many bytes! \n[https://blog.csdn.net/xll_bit/article/details/117702476]\nBurst mode comes from the slow per -row copy to the sense amp…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Trick (?) 4: Memory coalescing and DRAM\nDRAM (global memory) is read in ‘burst mode’ – each read gives you many bytes! \n[https://blog.csdn.net/xll_bit/article/details/117702476]\nBurst mode comes from the slow per -row copy to the sense amplifier \n[https://www.youtube.com/watch?v=9BjVUmaXaCQ]"
+    },
+    {
+      "kind": "p",
+      "text": "Memory coalescing \nMemory accesses are coalesced  if all the threads (in a warp) fall within the same burst \nReminder: a warp is a set of 32 consecutively \nnumbered threads that execute together in a \nblock. Memory accesses happen together"
+    },
+    {
+      "kind": "p",
+      "text": "Coalescing for matrix multiplication\nFor row -major matrices – threads that move along rows are not coalesced\nNote how the second diagram reads the entire vector at each step!"
+    },
+    {
+      "kind": "p",
+      "text": "Trick 5 (the big one): tiling\nTiling  is the idea of grouping and ordering threads to minimize global memory access.\nLet’s go back to matrix multiplication..\nNote that memory access is not coalesced, and repeated (M0,0 and N1,0)"
+    },
+    {
+      "kind": "p",
+      "text": "Tiling – store and reuse information in shared memory\nCut up the matrix into smaller ‘tiles’, and load this into shared memory\nCompute the matrix multiply in ‘phases’\n1. Load 𝑀0,0 and 𝑁0,0 tiles into SHM\n2. Compute partial sums for 𝑃\n(Done with one tile)\n3. Load the 𝑀0,0 and 𝑁2,0 tile into SHM\n4. … \nAdvantages: repeated reads now access shared, not global memory\n and memory access can be coalesced"
+    },
+    {
+      "kind": "p",
+      "text": "Tiling math\nNon-tiled matrix multiply: each input is read 𝑁 times from global memory\nTiled matrix multiply: each input is read \n𝑁\n𝑇 times from global memory, and 𝑇 times \nwithin each tile. This is a factor of 𝑇 reduction in global memory access"
+    },
+    {
+      "kind": "p",
+      "text": "Complexities with tiling\nTile sizes may not divide the matrix size and lead to low utilization\nhttps://docs.nvidia.com/deeplearning/perform ance/dl-performance-matrix-multiplication/index.html#tile-quant\nFactors affecting tile sizes\n• Coalesced memory access\n• Shared memory size\n• Divisibility of the matrix dim"
+    },
+    {
+      "kind": "p",
+      "text": "Complexities with tiling 2 – memory alignment\nCoalesced accesses may be impossible depending on the dimension of the matrix..\n(have to do padding)\nMemory comes in bursts\nLoading tiles are fast if \nbursts align with the matrix\nhttps:/ /www.thonking.ai/p/ what-shapes-do-matrix-multiplications"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "da609f181b7d4758226b3c400d9e347f1ad5984f9545c0ab4d24f0b5ed74060f",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 5.pdf",
+    "attachment_sha256": "ff25621de3d3d462a534070a209a8efac1b8410e3da58de08f764e33482bb6ba",
+    "attachment_bytes": 4766673
+  }
+}

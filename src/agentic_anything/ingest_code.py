@@ -79,6 +79,7 @@ def ingest_repo_dir(path: Path) -> list:
     from .ingest import Unit, _read_text
 
     files: list[Path] = []
+    uncaptured: list[tuple[str, int]] = []  # (rel path, bytes) — exist but not text-ingested
     for p in sorted(path.rglob("*")):
         if not p.is_file():
             continue
@@ -91,6 +92,12 @@ def ingest_repo_dir(path: Path) -> list:
             ("README", "LICENSE", "MAKEFILE", "DOCKERFILE")
         ):
             files.append(p)
+        elif len(uncaptured) < _MAX_REPO_FILES:
+            try:
+                size = p.stat().st_size
+            except OSError:
+                size = 0
+            uncaptured.append((str(p.relative_to(path)), size))
     if not files:
         raise CodeError(f"no code or documentation files under {path}")
 
@@ -98,12 +105,25 @@ def ingest_repo_dir(path: Path) -> list:
     files = files[:_MAX_REPO_FILES]
 
     units = []
-    # 1. tree overview
+    # 1. tree overview — every file in the repository, so agents can see
+    # binaries and assets that exist beyond the text capture boundary
     tree_lines = [str(p.relative_to(path)) for p in files]
     overview = [{"kind": "heading", "level": 2, "text": f"Repository: {path.name}"},
-                {"kind": "p", "text": f"{len(files)} files"
-                                      f"{' (truncated)' if truncated_repo else ''}."},
+                {"kind": "p", "text": f"{len(files) + len(uncaptured)} files: "
+                                      f"{len(files)} captured as text units"
+                                      f"{' (truncated)' if truncated_repo else ''}, "
+                                      f"{len(uncaptured)} present but not captured "
+                                      "(binary or unsupported format)."},
                 {"kind": "pre", "text": "\n".join(tree_lines)}]
+    if uncaptured:
+        overview.append({
+            "kind": "heading", "level": 3,
+            "text": "Files present but not captured as text",
+        })
+        overview.append({
+            "kind": "pre",
+            "text": "\n".join(f"{rel}  ({size:,} bytes)" for rel, size in uncaptured),
+        })
     units.append(Unit(
         unit_id="repo__000__tree",
         title=f"Repository tree: {path.name}",
@@ -153,39 +173,65 @@ def ingest_repo_dir(path: Path) -> list:
 
 # ------------------------------------------------------------ GitHub URL ---
 
-def ingest_github_url(url: str, timeout: float = 60.0) -> tuple[str, list]:
-    """GitHub repo URL → (repo_name, units) via the codeload zip export."""
-    from .fetcher import fetch
+def codeload_zip_urls(url: str) -> list[str]:
+    """Candidate codeload zip URLs for a GitHub repo URL, best guess first.
 
+    A ``/tree/<ref>`` capture may be ``<branch>/<subdir>``; git refs cannot be
+    disambiguated without the API, so progressively shorter prefixes are tried.
+    """
     match = _GITHUB_RE.match(_github_bare(url))
     if not match:
         raise CodeError(f"not a recognizable GitHub repository URL: {url}")
     owner, repo, branch = match.group(1), match.group(2), match.group(3)
     branch = (branch or "").rstrip("/")
-
-    # A /tree/<ref> capture may be <branch>/<subdir>; git refs cannot be
-    # disambiguated without the API, so try progressively shorter prefixes.
-    candidates: list[str] = []
     if branch:
         parts = branch.split("/")
-        candidates = ["/".join(parts[:i]) for i in range(len(parts), 0, -1)]
-    else:
-        candidates = ["HEAD"]
+        return [
+            f"https://codeload.github.com/{owner}/{repo}/zip/refs/heads/"
+            + "/".join(parts[:i])
+            for i in range(len(parts), 0, -1)
+        ]
+    return [f"https://codeload.github.com/{owner}/{repo}/zip/HEAD"]
+
+
+def ingest_github_url(url: str, timeout: float = 60.0,
+                      max_bytes: int | None = None,
+                      meta: dict | None = None) -> tuple[str, list]:
+    """GitHub repo URL → (repo_name, units) via the codeload zip export.
+
+    ``meta``, when given, is filled with the fetched_url / content_sha256 /
+    content_bytes of the zip archive actually downloaded.
+    """
+    from .fetcher import fetch
+    from .util import sha256_bytes
+
+    match = _GITHUB_RE.match(_github_bare(url))
+    if not match:
+        raise CodeError(f"not a recognizable GitHub repository URL: {url}")
+    owner, repo = match.group(1), match.group(2)
+
+    cap = min(max_bytes, _MAX_ZIP_BYTES) if max_bytes else _MAX_ZIP_BYTES
     archive = None
-    for ref in candidates:
-        zip_url = f"https://codeload.github.com/{owner}/{repo}/zip/refs/heads/{ref}" \
-            if ref != "HEAD" else f"https://codeload.github.com/{owner}/{repo}/zip/HEAD"
-        result = fetch(zip_url, timeout=timeout, max_bytes=_MAX_ZIP_BYTES, retries=1)
+    fetched_url = ""
+    for zip_url in codeload_zip_urls(url):
+        result = fetch(zip_url, timeout=timeout, max_bytes=cap, retries=1)
         if result.ok and result.body[:2] == b"PK":
             archive = result.body
+            fetched_url = zip_url
             break
     if archive is None:
         raise CodeError(
             f"could not download {owner}/{repo} from codeload.github.com "
             "(private repo, wrong branch, or network issue)"
         )
-    if len(archive) >= _MAX_ZIP_BYTES:
-        raise CodeError(f"repository archive exceeds {_MAX_ZIP_BYTES // 1_000_000}MB cap")
+    if len(archive) >= cap:
+        raise CodeError(f"repository archive exceeds {cap // 1_000_000}MB cap")
+    if meta is not None:
+        meta.update(
+            fetched_url=fetched_url,
+            content_sha256=sha256_bytes(archive),
+            content_bytes=len(archive),
+        )
 
     workdir = Path(tempfile.mkdtemp(prefix="aany_repo_"))
     zip_path = workdir / "repo.zip"

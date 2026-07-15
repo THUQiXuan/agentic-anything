@@ -1,0 +1,58 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-4-moes__006__pages-41-47",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+  "url_path": "pages 41-47",
+  "title": "2025 Lecture 4 - MoEs — pages 41-47",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 41-47",
+  "summary": "DeepSeek MoE v1-v2-v3\nTo wrap up, we’ll walk through the DeepSeek  MoE architecture.\nV1 (16B – 2.8 active): \nStandard, top-k routing\nShared (2) + Fine-grained (64/4) experts\nStandard Aux-loss balancing (Expert + Device)\nDeepSeek MoE v2\nV2…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "DeepSeek MoE v1-v2-v3\nTo wrap up, we’ll walk through the DeepSeek  MoE architecture.\nV1 (16B – 2.8 active): \nStandard, top-k routing\nShared (2) + Fine-grained (64/4) experts\nStandard Aux-loss balancing (Expert + Device)"
+    },
+    {
+      "kind": "p",
+      "text": "DeepSeek MoE v2\nV2 (236B – 21 active): \nNew things:\nShared (2) + Fine-grained (160/10) experts, 6 active\nCommunication balancing loss – balancing both communication in and out\nTop-M device routing"
+    },
+    {
+      "kind": "p",
+      "text": "DeepSeek MoE v3\nSigmoid+Softmax  topK + topM\nV2 (671B – 37 active): \nShared (1) + Fine-grained (258) experts, 8 active\nNew things\nAux-loss-free + seq -wise aux"
+    },
+    {
+      "kind": "p",
+      "text": "Bonus: What else do you need to make DeepSeek MoE v3?\nMLA : Multihead , latent attention\nBasic idea:  express the Q, K, V as functions of a lower -dim, ‘latent’ activation"
+    },
+    {
+      "kind": "p",
+      "text": "What else do you need to make DeepSeek MoE v3?\nBasic idea:  express the Q, K, V as functions of a lower -dim, ‘latent’ activation\nBenefits: when KV-caching, we only need to store 𝑐𝑡\n𝐾𝑉, which can be much smaller. \n𝑊𝑈𝐾 can be merged into the Q projection\n(they also compress queries, for memory savings during training)\nComplexity: rope conflicts with MLA -style caching.\n Without RoPE – 𝑄, 𝐾 = ℎ𝑊 𝑄, 𝑊 𝑈𝐾 𝑐𝑡\n𝐾𝑉 = ⟨ℎ 𝑊 𝑄𝑊 𝑈𝐾 , 𝑐𝑡\n𝐾𝑉 ⟩\n With RoPE - 𝑄𝑅𝑞, 𝑅𝑘𝐾 = ℎ𝑊 𝑄𝑅𝑞, 𝑅𝑘𝑊 𝑈𝐾 𝑐𝑡\n𝐾𝑉 = ℎ 𝑊 𝑄𝑅𝑞𝑅𝑘𝑊 𝑈𝐾 , 𝑐𝑡\n𝐾𝑉\nThe solution – Have a few non-latent key dimensions that can be rotated"
+    },
+    {
+      "kind": "p",
+      "text": "What else do you need to make DeepSeek MoE v3?\nMTP: Have small, lightweight models that predict multiple steps ahead\n[Deepseek v3] [EAGLE]\n(See paper for ablations)\n(But they only do MTP with one token ahead)"
+    },
+    {
+      "kind": "p",
+      "text": "MoE summary\n❖ MoEs take advantage of sparsity – not all inputs need the full model\n❖ Discrete routing is hard, but top -k heuristics seem to work\n❖ Lots of empirical evidence now that MoEs work, and are cost -effective"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "1f79deeaad83184bc67c6e47d5afb635e078393ec00aafbd7a1fa0b77b3aadd3",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 4.pdf",
+    "attachment_sha256": "b62ba6416f04c4473834fffa19119317e78542a6b8dc94a5e816790643cb0c4f",
+    "attachment_bytes": 4677130
+  }
+}

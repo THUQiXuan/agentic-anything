@@ -1,0 +1,29 @@
+{
+  "spec_version": "0.2",
+  "page_id": "elephants-dream-en-srt__elephants-dream-en__002__00-03-18",
+  "source_url": "demos/sources/footage/elephants_dream_en.srt",
+  "url_path": "elephants_dream_en.srt · 00:03:18–00:06:19",
+  "title": "transcript 00:03:18–00:06:19",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "elephants_dream_en.srt · 00:03:18–00:06:19",
+  "summary": "[00:03:18.050 → 00:03:20.000] Listen to your breathing.\n[00:04:26.646 → 00:04:29.313] Well, don’t you ever get tired of this?\n[00:04:29.313 → 00:04:31.090] Tired?!\n[00:04:31.090 → 00:04:33.313] Emo, the machine is like…\n[00:04:33.310 → 00:…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "[00:03:18.050 → 00:03:20.000] Listen to your breathing.\n[00:04:26.646 → 00:04:29.313] Well, don’t you ever get tired of this?\n[00:04:29.313 → 00:04:31.090] Tired?!\n[00:04:31.090 → 00:04:33.313] Emo, the machine is like…\n[00:04:33.310 → 00:04:35.260] Like clockwork!\n[00:04:35.260 → 00:04:37.063] One move out of place…\n[00:04:37.063 → 00:04:39.120] …and you’re ground to a pulp.\n[00:04:40.950 → 00:04:42.104] But isn’t it—\n[00:04:42.104 → 00:04:46.030] Pulp, Emo! Is that what you want? Pulp?\n[00:04:47.104 → 00:04:50.420] Emo, your goal in life…\n[00:04:50.440 → 00:04:51.950] …pulp?!\n[00:05:41.310 → 00:05:43.420] Emo, close your eyes.\n[00:05:44.150 → 00:05:45.396] –Why?–Now!\n[00:05:51.150 → 00:05:51.970] OK.\n[00:05:53.110 → 00:05:54.680] Good.\n[00:05:59.420 → 00:06:02.100] What do you see at your left side, Emo?\n[00:06:04.020 → 00:06:06.000] –Nothing.–Really?\n[00:06:06.000 → 00:06:07.580] No, nothing at all.\n[00:06:07.580 → 00:06:11.980] Really? A–And at your right? What do you see at your right side, Emo?\n[00:06:13.310 → 00:06:16.840] The same, Proog. Exactly the same…\n[00:06:16.840 → 00:06:19.896] –…nothing!–Great."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "demos/sources/footage/elephants_dream_en.srt",
+    "capture_mode": "ingest",
+    "content_sha256": "9f638e701c3177fa848a2efc95170f32dac1672a735d2e8721809650d847f0cd",
+    "start_seconds": 198.05,
+    "end_seconds": 379.896,
+    "cue_count": 21
+  }
+}

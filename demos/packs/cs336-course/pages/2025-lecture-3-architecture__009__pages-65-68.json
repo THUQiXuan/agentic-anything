@@ -1,0 +1,46 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__009__pages-65-68",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 65-68",
+  "title": "2025 Lecture 3 - architecture — pages 65-68",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 65-68",
+  "summary": "Sparse / sliding window attention\nAttending to the entire context can be expensive (quadratic). \nBuild sparse / structured attention that trades off expressiveness vs runtime (GPT3)\n[Child et al 2019]\nSliding window attention\nAnother varia…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Sparse / sliding window attention\nAttending to the entire context can be expensive (quadratic). \nBuild sparse / structured attention that trades off expressiveness vs runtime (GPT3)\n[Child et al 2019]"
+    },
+    {
+      "kind": "p",
+      "text": "Sliding window attention\nAnother variation on this idea – sliding window attention\nJust use the main part of the strided  pattern – let depth extend effective context (Mistral)"
+    },
+    {
+      "kind": "p",
+      "text": "Current standard trick – interleave ‘full’ and ‘LR’ attention\nFrom Cohere Command A – Every 4 th layer is a full attention\nLong-range info via NoPE, short -range info via RoPE + SWA.\nOther models – LLaMA  4, Gemma does SWA+Full  RoPE."
+    },
+    {
+      "kind": "p",
+      "text": "Recap, conclusion, etc.\nMany aspects (arch, hparams ) of transformers are in common across the big LMs\nMajor differences? Position embeddings, activations, tokenization"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "fdade933620552e0ffb7d27f20dda5a9da849f52d9ab55467aa2230e8b76f6be",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

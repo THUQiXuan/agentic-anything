@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--common-py",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/common.py",
+  "title": "tests/common.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/common.py",
+  "summary": "from __future__ import annotations\n\nimport pathlib\nfrom functools import lru_cache\n\nFIXTURES_PATH = (pathlib.Path(__file__).resolve().parent) / \"fixtures\"\n\n\n@lru_cache\ndef gpt2_bytes_to_unicode() -> dict[int, str]:\n    \"\"\"\n    Returns a ma…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "from __future__ import annotations\n\nimport pathlib\nfrom functools import lru_cache\n\nFIXTURES_PATH = (pathlib.Path(__file__).resolve().parent) / \"fixtures\"\n\n\n@lru_cache\ndef gpt2_bytes_to_unicode() -> dict[int, str]:\n    \"\"\"\n    Returns a mapping between every possible byte (an integer from 0 to 255) to a\n    printable unicode string character representation. This function is taken\n    from the GPT-2 code.\n\n    For example, `chr(0)` is `\\x00`, which is an unprintable character:\n\n    >>> chr(0)\n    '\\x00'\n    >>> print(chr(0))\n\n    As a result, this function returns a dictionary `d` where `d[0]` returns `Ā`.\n    The bytes that are visually printable keep their original string representation [1].\n    For example, `chr(33)` returns `!`, and so accordingly `d[33]` returns `!`.\n    Note in particular that the space character `chr(32)` becomes `d[32]`, which\n    returns 'Ġ'.\n\n    For unprintable characters, the function shifts takes the integer representing\n    the Unicode code point of that character (returned by the Python `ord`) function\n    and shifts it by 256. For example, `ord(\" \")` returns `32`, so the the space character\n    ' ' is shifted to `256 + 32`. Since `chr(256 + 32)` returns `Ġ`, we use that as the\n    string representation of the space.\n\n    This function can simplify the BPE implementation and makes it slightly easier to\n    manually inspect the generated merges after they're serialized to a file.\n    \"\"\"\n    # These 188 integers can used as-is, since they are not whitespace or control characters.\n    # See https://www.ssec.wisc.edu/~tomw/java/unicode.html.\n    bs = list(range(ord(\"!\"), ord(\"~\") + 1)) + list(range(ord(\"¡\"), ord(\"¬\") + 1)) + list(range(ord(\"®\"), ord(\"ÿ\") + 1))\n    cs = bs[:]\n    # now get the representations of the other 68 integers that do need shifting\n    # each will get mapped chr(256 + n), where n will grow from 0...67 in the loop\n    # Get printable representations of the remaining integers 68 integers.\n    n = 0\n    for b in range(2**8):\n        if b not in bs:\n            # If this integer isn't in our list of visually-representable\n            # charcters, then map it to the next nice character (offset by 256)\n            bs.append(b)\n            cs.append(2**8 + n)\n            n += 1\n    characters = [chr(n) for n in cs]\n    d = dict(zip(bs, characters))\n    return d\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "f9f4e859eea004adcbf9ba80e6f114730c5208e7079354b4710a909a1dbd3db1",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

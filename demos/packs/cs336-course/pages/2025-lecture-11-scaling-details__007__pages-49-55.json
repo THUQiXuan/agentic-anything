@@ -1,0 +1,58 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-11-scaling-details__007__pages-49-55",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+  "url_path": "pages 49-55",
+  "title": "2025 Lecture 11 - Scaling details — pages 49-55",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 49-55",
+  "summary": "What is muP robust to? Batch size \nLarger and smaller batches. \nThe original derivation doesn’t handle batch size considerations.\nWhat is muP robust to? initialization\nThere are new initializations that are sometimes used\n• SP Unembedding…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "What is muP robust to? Batch size \nLarger and smaller batches. \nThe original derivation doesn’t handle batch size considerations."
+    },
+    {
+      "kind": "p",
+      "text": "What is muP robust to? initialization\nThere are new initializations that are sometimes used\n• SP Unembedding – This is the pre -softmax  linear layer. 1/M (SP) vs 1/M^2 ( muP)\n• Zero Query – Set the query matrix to zero (so that all items get uniform attention)"
+    },
+    {
+      "kind": "p",
+      "text": "What is muP not robust to? RMSnorm gain\nIn our arch – RMSNorm  has learnable gains. This turns out to break muP\nBut these gains can be removed with little loss of perf.."
+    },
+    {
+      "kind": "p",
+      "text": "What is muP not robust to? Exotic optimizers\nThere are other, exotic optimizers based on just gradient signs. Do they transfer?"
+    },
+    {
+      "kind": "p",
+      "text": "What is muP not robust to? – (strong) weight decay \nWhat about strong (0.1) weight decay? – this is maybe the only significant muP failure"
+    },
+    {
+      "kind": "p",
+      "text": "Is muP useful? At least to some extent..\nOverall, muP generally seems useful – insofar that SP is quite a bit more unstable.\nCurrent evidence suggests that muP parametrization / initialization may be easier to tune."
+    },
+    {
+      "kind": "p",
+      "text": "Recap: scaling in the wild\nWhat are challenges in scaling ‘in practice’\n1. Setting model arch hyperparameters ( width, etc)\n2. Setting optimizer hyperparameters (LR, batch)\n3. Compute needed to fit the big chinchilla sweep\nSome solutions?\n1. Assume stability (or use muP)\n2. Search for optimal LR / batch in small scale, either keep fixed or predict scaling\n3. Use alternative learning schedules (WSD -like)"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "9cafecc9cb91a0e8c43c13377c0eb67dd16e710b292516aa02a48e3a89ac851a",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 11.pdf",
+    "attachment_sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+    "attachment_bytes": 6265218
+  }
+}

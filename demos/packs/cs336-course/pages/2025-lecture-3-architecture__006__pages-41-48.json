@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__006__pages-41-48",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 41-48",
+  "title": "2025 Lecture 3 - architecture — pages 41-48",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 41-48",
+  "summary": "What can we learn from the model-dim hyperparam?\n• The ‘default’ choices of 𝑑𝑓𝑓 = 4𝑑𝑚𝑜𝑑𝑒𝑙  and 𝑑𝑓𝑓 = 2.66𝑑𝑚𝑜𝑑𝑒𝑙  have worked well for nearly \nall modern LLMs.\n• But T5 does show that even radical choices of 𝑑𝑓𝑓 = 64𝑑𝑚𝑜𝑑𝑒𝑙  can work. This…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "What can we learn from the model-dim hyperparam?\n• The ‘default’ choices of 𝑑𝑓𝑓 = 4𝑑𝑚𝑜𝑑𝑒𝑙  and 𝑑𝑓𝑓 = 2.66𝑑𝑚𝑜𝑑𝑒𝑙  have worked well for nearly \nall modern LLMs.\n• But T5 does show that even radical choices of 𝑑𝑓𝑓 = 64𝑑𝑚𝑜𝑑𝑒𝑙  can work. This \nhyperparameter choice isn’t written in stone.\n• That said, T5 has a follow -up model (T5 v1.1) that is ‘improved’ and uses a much more \nstandard 2.5 multiplier on GeGLU , so the 64 -times multiplier is likely suboptimal."
+    },
+    {
+      "kind": "p",
+      "text": "Surprising (?) consensus hyperparameter 2\nHead-dim*num -heads to model -dim ratio. As a reminder, slide from 224n.\nThis doesn’t have to be true: we can have head -dimensions > model -dim / num -heads.\nBut most models do follow this guideline"
+    },
+    {
+      "kind": "p",
+      "text": "How many heads, whats the model dim?\nSome examples of this hyperparameter\nNum heads Head dim Model dim Ratio\nGPT3 96 128 12288 1\nT5 128 128 1024 16\nT5 v1.1 64 64 4096 1\nLaMDA 128 128 8192 2\nPaLM 48 258 18432 1.48\nLLaMA2 64 128 8192 1\nMost models have ratios around 1 – notable exceptions by some google models."
+    },
+    {
+      "kind": "p",
+      "text": "Evidence for 1-1 ratio?\nThere have been papers written against the 1 -1 ratio [ Bhojanapalli  et al 2020]\nBut we don’t seem to be seeing significant ‘low rank bottlenecks’ in practice.."
+    },
+    {
+      "kind": "p",
+      "text": "Aspect ratios\nShould my model be deep or wide? How deep and how wide?\nMost models are surprisingly consistent on this one too! \nModel 𝒅𝒎𝒐𝒅𝒆𝒍 /𝒏𝒍𝒂𝒚𝒆𝒓\nBLOOM 205\nT5 v1.1 171\nPaLM (540B) 156\nGPT3/OPT/Mistral/ Qwen 128\nLLaMA / LLaMA2 / \nChinchila\n102\nT5 (11B) 43\nGPT2 33\nSweet spot?"
+    },
+    {
+      "kind": "p",
+      "text": "Considerations about aspect ratio\nExtremely deep models are harder to parallelize and have higher latency\n[Tay et al 2021]"
+    },
+    {
+      "kind": "p",
+      "text": "Evidence on aspect ratio scaling\n[Kaplan et al 2020]\n [Tay et al 2021]"
+    },
+    {
+      "kind": "p",
+      "text": "What are typical vocabulary sizes? \nMonolingual models – 30-50k vocab\nModel Token count\nOriginal \ntransformer\n37000\nGPT 40257\nGPT2/3 50257\nT5/T5v1.1 32128\nLLaMA 32000\nModel Token count\nmT5 250000\nPaLM 256000\nGPT4 100276\nCommand A 255000\nDeepSeek 100000\nQwen 15B 152064\nYi 64000\nMultilingual / production systems 100 -250k\nMonolingual vocabs don’t need to be huge, but multilingual ones do"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "f350c1a2f2c1a0acdeb20b04b267bbd157f682448c04c967978c58a1d6554323",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

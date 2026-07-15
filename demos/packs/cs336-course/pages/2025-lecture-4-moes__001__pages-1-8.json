@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-4-moes__001__pages-1-8",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+  "url_path": "pages 1-8",
+  "title": "2025 Lecture 4 - MoEs — pages 1-8",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 1-8",
+  "summary": "Lecture 4\nCS336\nT atsuH\nM I X T U R E S OF E X P E R T S\nMixture of experts\nGPT4 (?)\nWhat’s a MoE?\nReplace big feedforward with (many) big feedforward networks and a selector layer\nYou can increase the # experts without affecting FLOPs\n[Fe…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Lecture 4\nCS336\nT atsuH\nM I X T U R E S OF E X P E R T S"
+    },
+    {
+      "kind": "p",
+      "text": "Mixture of experts\nGPT4 (?)"
+    },
+    {
+      "kind": "p",
+      "text": "What’s a MoE?\nReplace big feedforward with (many) big feedforward networks and a selector layer\nYou can increase the # experts without affecting FLOPs\n[Fedus et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "Why are MoEs getting popular?\nSame FLOP, more param does better\n[Fedus et al 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "Why are MoEs getting popular?\nFaster to train MoEs\n[OlMoE]"
+    },
+    {
+      "kind": "p",
+      "text": "Why are MoEs getting popular?\nHighly competitive vs dense equivalents"
+    },
+    {
+      "kind": "p",
+      "text": "Why are MoEs getting popular?\nParallelizable to many devices"
+    },
+    {
+      "kind": "p",
+      "text": "Some MoE results – from the west\nMoEs are most of the highest -performance open models, and are quite quick"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "b3be74a3aafffcf8fce83825e77b95e985f79b6f047e93d5ef973483d895ee41",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 4.pdf",
+    "attachment_sha256": "b62ba6416f04c4473834fffa19119317e78542a6b8dc94a5e816790643cb0c4f",
+    "attachment_bytes": 4677130
+  }
+}

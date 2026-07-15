@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "recorded_at": "2026-07-15T00:00:00Z",
+  "mode": "real-model-grounded-chat",
+  "model": "google/gemini-3.5-flash",
+  "provider_base": "openrouter (OpenAI-compatible)",
+  "model_calls": 5,
+  "note": "Authentic recorded replies from `agentic-anything chat --ask` over the committed packs. Citations are unit ids; verify_demos.py re-checks offline that each one resolves inside its pack.",
+  "conversations": [
+    {
+      "id": "course-implement",
+      "pack": "cs336-course",
+      "persona": "student",
+      "question": "I'm starting Assignment 1 this week. What exactly do I need to implement, and where do I start in the starter code?",
+      "answer": "Based on the course materials and assignment files, here is what you need to implement for **Assignment 1: Basics** and how to get started with the starter code:\n\n### What You Need to Implement\nIn Assignment 1, you are tasked with implementing all of the core components necessary to train a standard, modern Transformer language model from scratch, and then training a minimal model [spring2025]. Specifically, you will implement:\n\n1. **Tokenizer**: A Byte-Pair Encoding (BPE) tokenizer, including pretokenization and training logic [spring2025, stanford-cs336-assignment1-basics__file__changelog-md].\n2. **Model Architecture**:\n   * **Linear and Embedding layers** from scratch [stanford-cs336-assignment1-basics__file__changelog-md].\n   * **RMSNorm** (with considerations for numerical stability) [stanford-cs336-assignment1-basics__file__changelog-md].\n   * **SwiGLU** activation function [stanford-cs336-assignment1-basics__file__changelog-md].\n   * **Rotary Position Embeddings (RoPE)** [stanford-cs336-assignment1-basics__file__changelog-md].\n   * Transformer blocks (with LayerNorm/RMSNorm placed in front of the block, and no bias terms in linear/layernorm layers) [2025-lecture-3-architecture__001__pages-1-8].\n3. **Optimizer**: The **AdamW** optimizer (with the correct order of weight decay vs. gradient update) [stanford-cs336-assignment1-basics__file__changelog-md].\n4. **Training Utilities**: A data batching utility (`get_batch`) to sample random context windows from your dataset [stanford-cs336-assignment1-basics__file__tests--test-data-py].\n\n---\n\n### Where to Start in the Starter Code\nTo begin working with the repository, follow these steps:\n\n1. **Explore the Repository Structure**:\n   * Your core implementation code goes inside the `cs336_basics/` directory [stanford-cs336-assignment1-basics__repo__000__tree].\n   * You can look at `cs336_basics/pretokenization_example.py` to see an example of how pretokenization is set up [stanford-cs336-assignment1-basics__file__cs336-basics--pretokenization-example-py].\n\n2. **Read the Guidelines**:\n   * Read **`CLAUDE.md`** (or `AGENTS.md`) [stanford-cs336-assignment1-basics__file__claude-md, stanford-cs336-assignment1-basics__file__agents-md]. These files outline the rules for using AI assistants in this course. Note that AI assistants are instructed to act as TAs and **are not allowed to write Python/pseudocode or complete TODOs for you** [stanford-cs336-assignment1-basics__file__claude-md].\n\n3. **Run and Inspect the Tests**:\n   The starter code includes a comprehensive suite of tests in the `tests/` directory to help you verify your implementation incrementally. You should start by looking at:\n   * `tests/test_tokenizer.py` and `tests/test_train_bpe.py` to understand the expected behavior of your tokenizer [stanford-cs336-assignment1-basics__file__tests--test-tokenizer-py, stanford-cs336-assignment1-basics__file__tests--test-train-bpe-py].\n   * `tests/test_nn_utils.py` and `tests/test_model.py` for the neural network layers and transformer architecture [stanford-cs336-assignment1-basics__file__tests--test-nn-utils-py, stanford-cs336-assignment1-basics__file__tests--test-model-py].\n   * `tests/test_optimizer.py` for your AdamW implementation [stanford-cs336-assignment1-basics__file__tests--test-optimizer-py].\n   * `tests/test_data.py` to see how your batching function (`get_batch`) is expected to sample offsets and handle device placement [stanford-cs336-assignment1-basics__file__tests--test-data-py].\n\n4. **Set Up Your Environment**:\n   * The repository uses `uv` for dependency management [stanford-cs336-assignment1-basics__file__changelog-md]. Ensure your environment is synced before running tests.",
+      "citations": [
+        "spring2025",
+        "stanford-cs336-assignment1-basics__file__changelog-md",
+        "2025-lecture-3-architecture__001__pages-1-8",
+        "stanford-cs336-assignment1-basics__file__tests--test-data-py",
+        "stanford-cs336-assignment1-basics__repo__000__tree",
+        "stanford-cs336-assignment1-basics__file__cs336-basics--pretokenization-example-py",
+        "stanford-cs336-assignment1-basics__file__claude-md",
+        "stanford-cs336-assignment1-basics__file__tests--test-optimizer-py"
+      ],
+      "citations_resolved_in_pack": [
+        "spring2025",
+        "stanford-cs336-assignment1-basics__file__changelog-md",
+        "2025-lecture-3-architecture__001__pages-1-8",
+        "stanford-cs336-assignment1-basics__file__tests--test-data-py",
+        "stanford-cs336-assignment1-basics__repo__000__tree",
+        "stanford-cs336-assignment1-basics__file__cs336-basics--pretokenization-example-py",
+        "stanford-cs336-assignment1-basics__file__claude-md",
+        "stanford-cs336-assignment1-basics__file__tests--test-optimizer-py"
+      ],
+      "all_citations_resolve": true,
+      "used_units": [
+        "stanford-cs336-assignment1-basics__file__agents-md",
+        "stanford-cs336-assignment1-basics__file__claude-md",
+        "2025-lecture-3-architecture__001__pages-1-8",
+        "stanford-cs336-assignment1-basics__file__tests--test-data-py",
+        "spring2025",
+        "stanford-cs336-assignment1-basics__file__changelog-md"
+      ]
+    },
+    {
+      "id": "course-slides",
+      "pack": "cs336-course",
+      "persona": "student",
+      "question": "Which lecture slides cover RoPE, and which pages should I read before implementing positional embeddings?",
+      "answer": "Based on the course materials, **RoPE (rotary position embeddings)** is covered in **2025 Lecture 3 - architecture** [2025-lecture-3-architecture__004__pages-25-32]. \n\nTo prepare for implementing positional embeddings, you should read the following pages:\n* **Pages 29–32** of Lecture 3, which introduce the high-level thought process behind relative position embeddings and how RoPE solves absolute position limitations [2025-lecture-3-architecture__004__pages-25-32].\n* **Pages 33–35** of Lecture 3, which cover the actual mathematical formulation of RoPE (using sines and cosines) and provide implementation details and code structure for multi-head self-attention [2025-lecture-3-architecture__005__pages-33-40].",
+      "citations": [
+        "2025-lecture-3-architecture__004__pages-25-32",
+        "2025-lecture-3-architecture__005__pages-33-40"
+      ],
+      "citations_resolved_in_pack": [
+        "2025-lecture-3-architecture__004__pages-25-32",
+        "2025-lecture-3-architecture__005__pages-33-40"
+      ],
+      "all_citations_resolve": true,
+      "used_units": [
+        "2025-lecture-3-architecture__005__pages-33-40",
+        "2025-lecture-3-architecture__004__pages-25-32",
+        "2025-lecture-3-architecture__001__pages-1-8",
+        "2025-lecture-9-scaling-laws-basics__001__pages-1-8",
+        "stanford-cs336-assignment1-basics__file__agents-md",
+        "stanford-cs336-assignment1-basics__file__claude-md"
+      ]
+    },
+    {
+      "id": "course-handout",
+      "pack": "cs336-course",
+      "persona": "student",
+      "question": "The Assignment 1 handout link on the course page 404s for me. Where can I actually get the handout?",
+      "answer": "Based on the repository's `README.md`, the assignment handout is located directly within the Assignment 1 repository as a PDF file [stanford-cs336-assignment1-basics__file__readme-md]. \n\nYou can find and download it at the following path in your local or remote repository:\n* **`./cs336_assignment1_basics.pdf`** [stanford-cs336-assignment1-basics__file__readme-md]",
+      "citations": [
+        "stanford-cs336-assignment1-basics__file__readme-md"
+      ],
+      "citations_resolved_in_pack": [
+        "stanford-cs336-assignment1-basics__file__readme-md"
+      ],
+      "all_citations_resolve": true,
+      "used_units": [
+        "stanford-cs336-assignment1-basics__file__changelog-md",
+        "stanford-cs336-assignment1-basics__file__readme-md",
+        "stanford-cs336-assignment1-basics__file__agents-md",
+        "stanford-cs336-assignment1-basics__file__claude-md",
+        "spring2025",
+        "stanford-cs336-assignment1-basics__file__tests--fixtures--tinystories-sample-txt"
+      ]
+    },
+    {
+      "id": "footage-dragon",
+      "pack": "footage-library",
+      "persona": "creator",
+      "question": "Find the exact moments where anyone talks about a dragon. Give me timecodes I can cut.",
+      "answer": "Based on the provided transcripts, the exact moments where a dragon is mentioned are:\n\n* **00:02:23.400 → 00:02:25.000** in *Sintel*: \n  \"A dragon.\" [sintel-en-srt__sintel-en__001__00-01-47]\n* **00:07:37.800 → 00:07:40.500** in *Sintel*: \n  \"These are dragon lands, Sintel.\" [sintel-en-srt__sintel-en__002__00-05-04]",
+      "citations": [
+        "sintel-en-srt__sintel-en__001__00-01-47",
+        "sintel-en-srt__sintel-en__002__00-05-04"
+      ],
+      "citations_resolved_in_pack": [
+        "sintel-en-srt__sintel-en__001__00-01-47",
+        "sintel-en-srt__sintel-en__002__00-05-04"
+      ],
+      "all_citations_resolve": true,
+      "used_units": [
+        "elephants-dream-en-srt__elephants-dream-en__003__00-06-39",
+        "elephants-dream-en-srt__elephants-dream-en__001__00-00-15",
+        "sintel-en-srt__sintel-en__001__00-01-47",
+        "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26",
+        "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23",
+        "sintel-en-srt__sintel-en__002__00-05-04"
+      ]
+    },
+    {
+      "id": "footage-closer",
+      "pack": "footage-library",
+      "persona": "creator",
+      "question": "For the closing shot I want the moment where Thom admits the world has changed. Find its exact timing.",
+      "answer": "The moment where Thom admits the world has changed occurs at the following timing:\n\n* **[00:08:38.000 → 00:08:40.000]** \"The world's changed, Celia...\" [tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26]",
+      "citations": [
+        "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26"
+      ],
+      "citations_resolved_in_pack": [
+        "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26"
+      ],
+      "all_citations_resolve": true,
+      "used_units": [
+        "sintel-en-srt__sintel-en__001__00-01-47",
+        "tears-of-steel-en-srt__tears-of-steel-en__003__00-06-26",
+        "tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23",
+        "elephants-dream-en-srt__elephants-dream-en__003__00-06-39",
+        "tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23",
+        "elephants-dream-en-srt__elephants-dream-en__001__00-00-15"
+      ]
+    }
+  ]
+}

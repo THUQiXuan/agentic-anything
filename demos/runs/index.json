@@ -43,16 +43,88 @@
     {
       "files": {
         "artifact.md": {
+          "path": "cs336-course-week1/artifact.md",
+          "sha256": "7deb67b1d713105c4e374710ff7ebe08ba0a0027ece14978aee9e56c8c07ebd1"
+        },
+        "raw-events.jsonl": {
+          "path": "cs336-course-week1/raw-events.jsonl",
+          "sha256": "db99198cbeb2f4fe82c37c24e3ecee41d488841cb3342a189e0f300a7449a18f"
+        },
+        "run.json": {
+          "path": "cs336-course-week1/run.json",
+          "sha256": "8be4b5d0f9fe35c1f353ad55169c41a6811103c8388553b0e26173ff473184a4"
+        },
+        "verification.json": {
+          "path": "cs336-course-week1/verification.json",
+          "sha256": "cbc678c48e5283cdada258f44d69699f5bdae574d498f107939518a40cc27c6d"
+        }
+      },
+      "mode": "deterministic-evidence-agent",
+      "model_calls": 0,
+      "packs": [
+        "cs336-course"
+      ],
+      "passed": true,
+      "run_id": "cs336-course-week1",
+      "summary": {
+        "assertions_passed": 10,
+        "assertions_total": 10,
+        "cited_units": 5,
+        "read_calls": 5,
+        "search_calls": 5,
+        "steps": 14
+      },
+      "task": "Onboard a new CS336 student for week 1 using only the captured course pack (course page + deep-captured lecture PDFs + the assignment starter repository): (1) say what Assignment 1 is and exactly where to start in the starter repo; (2) point to the lecture slides, with page numbers, for the architecture material the assignment needs; (3) the course page links a PDF handout for Assignment 1 — check whether that link still resolves, and if it does not, locate the handout inside the captured repository instead."
+    },
+    {
+      "files": {
+        "artifact.md": {
+          "path": "footage-teaser-cut/artifact.md",
+          "sha256": "5c692043ef26e607e41635fc8b586b11cf298d1aca3213516e59ee645f963876"
+        },
+        "raw-events.jsonl": {
+          "path": "footage-teaser-cut/raw-events.jsonl",
+          "sha256": "e0a786bbf7fa819998a5907a57613914aa66df104cff06e72f93833e15d7aea4"
+        },
+        "run.json": {
+          "path": "footage-teaser-cut/run.json",
+          "sha256": "ae4a988e939ea50bd4211e2860685e3062232e45ca4a4d19f79a7a9c1090632a"
+        },
+        "verification.json": {
+          "path": "footage-teaser-cut/verification.json",
+          "sha256": "186334be06eb2f9276512f17fc06310bae6f43f9ed451ae3e196c6b4159cfc88"
+        }
+      },
+      "mode": "deterministic-evidence-agent",
+      "model_calls": 0,
+      "packs": [
+        "footage-library"
+      ],
+      "passed": true,
+      "run_id": "footage-teaser-cut",
+      "summary": {
+        "assertions_passed": 12,
+        "assertions_total": 12,
+        "cited_units": 5,
+        "read_calls": 5,
+        "search_calls": 5,
+        "steps": 14
+      },
+      "task": "A creator has a footage folder: three open films with subtitles but no script. Assemble a short teaser (under 45 seconds) on the theme 'dragons, machines, and a breaking world'. Find the exact spoken moments, then emit a frame-accurate cut list with per-clip attribution and executable ffmpeg commands against the films' official releases. Every timecode must come from a read transcript unit."
+    },
+    {
+      "files": {
+        "artifact.md": {
           "path": "requests-redirect-impact/artifact.md",
           "sha256": "a6820fefe8553c3c2bf6800debf19f70f0afabc1815f8fa00c55b61407ec9484"
         },
         "raw-events.jsonl": {
           "path": "requests-redirect-impact/raw-events.jsonl",
-          "sha256": "2f46aec58b948ad0f954014dca7fe0264f551cb751fd6b96f6226f060041cead"
+          "sha256": "67a0b66232adcdaed5c0bccd19d63973b0bb5bc8ae99869c84526636c286a40c"
         },
         "run.json": {
           "path": "requests-redirect-impact/run.json",
-          "sha256": "749e3a0aeae8829cafbe5c51c850f04692e1196525c8c5bc895e485f2ae5c383"
+          "sha256": "c4c37a07ad1050c02b9494d7d7d16a1806bcc3806589e859dc1406a8c47d7aea"
         },
         "verification.json": {
           "path": "requests-redirect-impact/verification.json",
@@ -84,11 +156,11 @@
         },
         "raw-events.jsonl": {
           "path": "gistemp-fair-audit/raw-events.jsonl",
-          "sha256": "3fbca45aefba234ab080267cd54e1abd7d09cd056641202123d4805420cf6088"
+          "sha256": "6259fba43dba883c3e3375979893a28d454be77d09896aeb34c8001c98d4ba6a"
         },
         "run.json": {
           "path": "gistemp-fair-audit/run.json",
-          "sha256": "ccc2113f26371b1bed6fe31c4076663401c35a0d05fb7b2e2b88c5449a9cfa32"
+          "sha256": "81b8e17e17f711784e1a94f04893808cfb61a49e7649c4b9b3132c685e47ed32"
         },
         "verification.json": {
           "path": "gistemp-fair-audit/verification.json",
@@ -118,9 +190,9 @@
   "snapshot_date": "2026-07-11",
   "summary": {
     "all_passed": true,
-    "assertions_passed": 52,
-    "assertions_total": 52,
-    "run_count": 3,
-    "runs_passed": 3
+    "assertions_passed": 74,
+    "assertions_total": 74,
+    "run_count": 5,
+    "runs_passed": 5
   }
 }

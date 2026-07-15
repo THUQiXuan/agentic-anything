@@ -1,0 +1,29 @@
+{
+  "spec_version": "0.2",
+  "page_id": "sintel-en-srt__sintel-en__002__00-05-04",
+  "source_url": "demos/sources/footage/sintel_en.srt",
+  "url_path": "sintel_en.srt · 00:05:04–00:07:44",
+  "title": "transcript 00:05:04–00:07:44",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "sintel_en.srt · 00:05:04–00:07:44",
+  "summary": "[00:05:04.000 → 00:05:07.500] Yeah! Come on!\n[00:05:38.750 → 00:05:42.000] Scales!\n[00:07:25.850 → 00:07:27.500] I have failed.\n[00:07:32.800 → 00:07:36.500] You've only failed to see...\n[00:07:37.800 → 00:07:40.500] These are dragon lands…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "[00:05:04.000 → 00:05:07.500] Yeah! Come on!\n[00:05:38.750 → 00:05:42.000] Scales!\n[00:07:25.850 → 00:07:27.500] I have failed.\n[00:07:32.800 → 00:07:36.500] You've only failed to see...\n[00:07:37.800 → 00:07:40.500] These are dragon lands, Sintel.\n[00:07:40.850 → 00:07:44.000] You are closer than you know."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "demos/sources/footage/sintel_en.srt",
+    "capture_mode": "ingest",
+    "content_sha256": "f72121b65476a6963033f61465fc62e08d32ca17d5a89799d029a4567cd4cc93",
+    "start_seconds": 304.0,
+    "end_seconds": 464.0,
+    "cue_count": 6
+  }
+}

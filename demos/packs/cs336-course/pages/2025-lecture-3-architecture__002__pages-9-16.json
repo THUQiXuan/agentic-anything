@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-3-architecture__002__pages-9-16",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+  "url_path": "pages 9-16",
+  "title": "2025 Lecture 3 - architecture — pages 9-16",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 9-16",
+  "summary": "Architecture variations..\nLet’s think about the core architecture piece\nHigh level view:\n• Low consensus \n(except pre-norm)\n• Trends toward ‘LLaMA-\nlike’ architectures\nPre-vs-post norm\nThe one thing everyone  agrees on (in 2024)\nFigure fro…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Architecture variations..\nLet’s think about the core architecture piece\nHigh level view:\n• Low consensus \n(except pre-norm)\n• Trends toward ‘LLaMA-\nlike’ architectures"
+    },
+    {
+      "kind": "p",
+      "text": "Pre-vs-post norm\nThe one thing everyone  agrees on (in 2024)\nFigure from Xiong 2020\nSet up LayerNorm so that it doesn’t affect the \nmain residual signal path (on the left)\nAlmost all modern LMs use pre-norm (but BERT was post-norm) \n(One somewhat funny exception – OPT350M. I don’t know why this is post-norm)"
+    },
+    {
+      "kind": "p",
+      "text": "Pre-vs-post-norm, the data\nFigure from Xiong 2020\nSalazar and Ngyuen 2019"
+    },
+    {
+      "kind": "p",
+      "text": "Pre-vs-post norm, explanations?\nGradient attenuation [ Xiong 2020]\n Gradient spikes [Salazar and Ngyuen ] \nOriginal stated advantage– removing warmup. \nToday – stability and larger LRs for large networks"
+    },
+    {
+      "kind": "p",
+      "text": "New things – ‘double’ norm.\nIf putting LayerNorms  in residual streams is bad.. Why not post -norm outside the stream?\nRecent models: Grok, Gemma 2. Olmo 2 only does non-residual post norm"
+    },
+    {
+      "kind": "p",
+      "text": "LayerNorm vs RMSNorm\nOriginal transformer: LayerNorm  – normalizes \nthe mean and variance across 𝑑𝑚𝑜𝑑𝑒𝑙\nMany modern LMs: RMSNorm  – does not \nsubtract mean or add a bias term\n𝑦 = 𝑥\n𝑥 2\n2\n+ 𝜀\n∗ 𝛾\nNotable models:\nGPT3/2/1, OPT, GPT -J, BLOOM \nNotable models:\nLLaMA-family, PaLM, Chinchilla, T5"
+    },
+    {
+      "kind": "p",
+      "text": "Why RMSNorm?\nModern explanation – it’s faster (and just as good).\n• Fewer operations (no mean calculation)\n• Fewer parameters (no bias term to store)\nDoes this explanation make sense?\nMatrix multiplies are the vast majority of FLOPs (and memory)\n[Ivanov et al 2023]"
+    },
+    {
+      "kind": "p",
+      "text": "Why RMSNorm (2)\nImportant lesson: FLOPS are not runtime! (we will discuss this in far more detail later)\n[Ivanov et al 2023]\nLeft top (”43G”) is FLOPS\nRight top (“153”) is the FLOP-to-memory ratio\nRMSNorm can still matter due to \nthe importance of data movement"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "5c5b7bf586c00b7ab820332f8ce724acb25333245c775ef44f799536a6da327b",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 3.pdf",
+    "attachment_sha256": "3692b3d25b5605e70930abc81d63241c71c136dfb573029d4544420925e0f9c4",
+    "attachment_bytes": 5277140
+  }
+}

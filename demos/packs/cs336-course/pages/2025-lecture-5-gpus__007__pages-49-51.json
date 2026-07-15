@@ -1,0 +1,42 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-5-gpus__007__pages-49-51",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+  "url_path": "pages 49-51",
+  "title": "2025 Lecture 5 - GPUs — pages 49-51",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 49-51",
+  "summary": "Tiling part 2: incremental computation of the softmax\nFrom Mikailov  and Gimelshein  2018,\nNormal softmax\nOnline softmax\nTo keep track of the max, incrementally update the max, and set up a telescoping sum\nThis lets you compute the softmax…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Tiling part 2: incremental computation of the softmax\nFrom Mikailov  and Gimelshein  2018,\nNormal softmax\nOnline softmax\nTo keep track of the max, incrementally update the max, and set up a telescoping sum\nThis lets you compute the softmax tile-by-tile"
+    },
+    {
+      "kind": "p",
+      "text": "Putting it all together – the forward pass of flash attention\nFrom Dao 2023, we see\n• Tile-wise computation of the inner products,  ( 𝑆) \n• Fusion of the exponential operator\n• Tile-wise computation of the softmax  via the online, telescoping sum trick\n(We won’t cover the backward pass – but they recompute tile-by-tile..)"
+    },
+    {
+      "kind": "p",
+      "text": "Recap for the whole lecture\n❖ Hardware powers scale, and low -level details \ndetermine what scales or doesnt\n❖ Curent  GPU based compute strongly \nencourages thinking about matmul  + data \nmovement\n❖ Thinking carefully about the GPU (coalescing, \ntiling, fusion) leads us to good performance"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "3c47b98b845a654ff28f12ca891d806713d4c5a399f4b6cef42ca9c146bdd20b",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 5.pdf",
+    "attachment_sha256": "ff25621de3d3d462a534070a209a8efac1b8410e3da58de08f764e33482bb6ba",
+    "attachment_bytes": 4766673
+  }
+}

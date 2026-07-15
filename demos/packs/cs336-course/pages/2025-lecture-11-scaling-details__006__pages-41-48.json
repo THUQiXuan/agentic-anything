@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-11-scaling-details__006__pages-41-48",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+  "url_path": "pages 41-48",
+  "title": "2025 Lecture 11 - Scaling details — pages 41-48",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 41-48",
+  "summary": "Deriving muP (condition A2) part 2\nRecall – we want all 3 terms of Δhl = WlΔℎ𝑙−1 + Δ𝑊𝑙(ℎ𝑙−1 + Δℎ𝑙−1) to be Θ( 𝑛𝑙)\nAnd the key is to pick LR such that Δ𝑊𝑙 ∗ 𝑛𝑙−1 = Θ 𝑛𝑙 . How can we do that?\nSuppose that the loss update also scales O(1). Th…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Deriving muP (condition A2) part 2\nRecall – we want all 3 terms of Δhl = WlΔℎ𝑙−1 + Δ𝑊𝑙(ℎ𝑙−1 + Δℎ𝑙−1) to be Θ( 𝑛𝑙)\nAnd the key is to pick LR such that Δ𝑊𝑙 ∗ 𝑛𝑙−1 = Θ 𝑛𝑙 . How can we do that?\nSuppose that the loss update also scales O(1). Then we can write down..\nΔℓ = Θ Δ𝑊𝑙, ∇𝑊𝑙ℓ = Θ Δ𝑊𝑙 𝐹 ∇𝑊𝑙ℓ 𝐹 = Θ Δ𝑊𝑙 ∗ ∇𝑊𝑙ℓ ∗\nWhere we use the fact that Δ𝑊𝑙 = −𝜂∇𝑊𝑙ℓ in standard SGD updates. \nNow plug in Δℓ = O 1 , Δ𝑊𝑙 ∗ = Θ 𝑛𝑙\n𝑛𝑙−1 to get that ∇𝑊𝑙ℓ ∗ = Θ 𝑛𝑙−1\n𝑛𝑙\nFinally, from the previous slide, recall that Δ𝑊𝑙 = −𝜂𝑙∇ℎ𝑙ℓ ℎ𝑙−1\n⊤  and thus\n𝜂𝑙 = Θ 𝑛𝑙\n𝑛𝑙−1\n \n[with Adam, Δ𝑊𝑙 ∗ 𝑛𝑙−1 = Θ 1 ]"
+    },
+    {
+      "kind": "p",
+      "text": "muP mini recap..\nSo, what is (baby) muP about? Controlling activations (and changes) via 𝑊 and Δ𝑊\nInitialization: Set to Θ 1\n𝑛𝑙−1\nmin 1, 𝑛𝑙\n𝑛𝑙−1\nLearning rates: Set to 𝑛𝑙\n𝑛𝑙−1\nCompared to ‘standard’ parametrizations – these set  \nInitialization: Set to 1\n𝑛𝑙−1\n \nLearning rates: Set to Θ(1)\nDifferences – LR changes for Adam, also init diffs when fanout 𝑛𝑙 < fanin\n(for Adam 1\nnl−1\n)"
+    },
+    {
+      "kind": "p",
+      "text": "Implementation in Cerebras GPT\nWe now have the background to follow cerebrasGPT"
+    },
+    {
+      "kind": "p",
+      "text": "Deeper dive into muP\nRecall – muP is a scaling procedure for hyperparams  (as a function of width)\nAttention params\nEmbedding\nInput/output MLP MM\nSoftmax linear"
+    },
+    {
+      "kind": "p",
+      "text": "Scaling protocol in the work\nArchitecture – mostly similar to what’s in the class\nImportant limitation of the work: only width scaling"
+    },
+    {
+      "kind": "p",
+      "text": "Replicating muP\nQ1: Does muP work as claimed? When we scale widths, is optimal LR constant?"
+    },
+    {
+      "kind": "p",
+      "text": "What is muP robust to?\nModern LMs have many components that deviate from muP’s  theory\n• Activations – SwiGLU  and squared relu\n• Batch sizes – Large / small \n• Initialization variations – zero attention, etc.\n• RMS norm gains\n• Exotic optimizers (Lion)\n• Regularizers\nWhich of these (if any) break muP?"
+    },
+    {
+      "kind": "p",
+      "text": "What is muP robust to? Nonlinearities\nSwiGLU , Squared ReLU have the same optimal LR (and both provide minor gains)"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "e2368abb4c4d1069a75ba96559b8075ddc4607ddc50faa4de933d7cb937f209f",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 11.pdf",
+    "attachment_sha256": "9aab7ba7abb0059170c2626291f7ff4b6f5c81bc6448a52945143008bcc9b887",
+    "attachment_bytes": 6265218
+  }
+}

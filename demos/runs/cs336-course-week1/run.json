@@ -1,0 +1,481 @@
+{
+  "citations": [
+    {
+      "citation_id": "C1",
+      "cited_after_read": true,
+      "claim": "The course page schedules Assignment 1 and links the starter repository.",
+      "content_sha256": "2754583fe0977dfb746c0ae40fc19afd82437641d52919e3693d94fcaace9004",
+      "locator": "/spring2025",
+      "read_step": 4,
+      "resource_id": "cs336-course",
+      "unit_id": "spring2025"
+    },
+    {
+      "citation_id": "C2",
+      "cited_after_read": true,
+      "claim": "Assignment 1 is 'Basics'; setup uses uv; the README points to the handout PDF path inside the repo.",
+      "content_sha256": "11bf3402f88f925e27a244b9102656a748d0c1e47f02399f42112faabe52f8fa",
+      "locator": "README.md",
+      "read_step": 6,
+      "resource_id": "cs336-course",
+      "unit_id": "stanford-cs336-assignment1-basics__file__readme-md"
+    },
+    {
+      "citation_id": "C3",
+      "cited_after_read": true,
+      "claim": "Course policy: AI assistants act as teaching aids, not solution generators.",
+      "content_sha256": "005ff2d1c77f92ee2dd3a70d801ced16f63de55b16b7d0e9df29e14d87acd4bc",
+      "locator": "AGENTS.md",
+      "read_step": 8,
+      "resource_id": "cs336-course",
+      "unit_id": "stanford-cs336-assignment1-basics__file__agents-md"
+    },
+    {
+      "citation_id": "C4",
+      "cited_after_read": true,
+      "claim": "Lecture 3 slides pages 25-32 cover RoPE / rotary position embeddings.",
+      "content_sha256": "3d0925b25bdb496a76b6882054fbfe5e52e4e234204ddd94882500c3a546a4e0",
+      "locator": "pages 25-32",
+      "read_step": 10,
+      "resource_id": "cs336-course",
+      "unit_id": "2025-lecture-3-architecture__004__pages-25-32"
+    },
+    {
+      "citation_id": "C5",
+      "cited_after_read": true,
+      "claim": "The repository tree lists cs336_assignment1_basics.pdf (965,629 bytes) beyond the text-capture boundary.",
+      "content_sha256": "85a2471ecbd44dab6978859199a586a30634bdc1c2ac4e8ff76badb4c8771bcb",
+      "locator": "tree",
+      "read_step": 12,
+      "resource_id": "cs336-course",
+      "unit_id": "stanford-cs336-assignment1-basics__repo__000__tree"
+    }
+  ],
+  "data_access": "real stdio MCP subprocess only",
+  "mcp": {
+    "command": [
+      "python",
+      "-m",
+      "agentic_anything",
+      "mcp",
+      "demos/packs/cs336-course"
+    ],
+    "protocol_version": "2025-11-25",
+    "server": {
+      "name": "agentic-anything",
+      "title": "Agentic Anything Resource Agents",
+      "version": "0.5.0"
+    },
+    "tools": [
+      "resource_info",
+      "search_resource",
+      "read_unit"
+    ],
+    "transport": "stdio"
+  },
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "network_access": false,
+  "outputs": {
+    "artifact": "artifact.md",
+    "raw_events": "raw-events.jsonl",
+    "verification": "verification.json"
+  },
+  "packs": [
+    "cs336-course"
+  ],
+  "planner": "fixed transparent state machine",
+  "raw_event_normalization": "Local checkout prefix replaced with '.'; all other JSON-RPC data preserved.",
+  "result": {
+    "assignment": "Assignment 1 — Basics (from-scratch foundations)",
+    "link_rot": {
+      "frontier_skip_reason": "attachment_fetch_failed:IngestError",
+      "renamed_file_bytes": 965629,
+      "renamed_file_in_repo": "cs336_assignment1_basics.pdf",
+      "stale_url": "https://github.com/stanford-cs336/assignment1-basics/blob/main/cs336_spring2025_assignment1_basics.pdf"
+    },
+    "slides": "2025 Lecture 3 — architecture, pages 25-32 (RoPE / rotary embeddings)",
+    "start_here": [
+      "README.md",
+      "cs336_assignment1_basics.pdf",
+      "tests/adapters.py"
+    ]
+  },
+  "run_id": "cs336-course-week1",
+  "schema_version": "1.0",
+  "snapshot_date": "2026-07-11",
+  "steps": [
+    {
+      "next_step_reason": "Inspect the course resource: units, linked attachments, capture frontier.",
+      "output_summary": "Connected to agentic-anything 0.5.0; tools: resource_info, search_resource, read_unit.",
+      "phase": "connect",
+      "step": 1,
+      "tool": "initialize + tools/list",
+      "tool_input": {
+        "protocolVersion": "2025-11-25"
+      },
+      "units": []
+    },
+    {
+      "next_step_reason": "Find the course page unit that anchors the schedule and assignment links.",
+      "output_summary": "Inspected cs336-course: web, 8 units, 40 frontier entries.",
+      "phase": "inspect",
+      "step": 2,
+      "tool": "resource_info",
+      "tool_input": {
+        "resource_id": "cs336-course"
+      },
+      "units": []
+    },
+    {
+      "next_step_reason": "Read the course page to ground what Assignment 1 links to.",
+      "output_summary": "Found 5 hit(s); top evidence units: spring2025 (32.124), 2025-lecture-9-scaling-laws-basics__002__pages-9-16 (7.906), stanford-cs336-assignment1-basics__file__changelog-md (7.055).",
+      "phase": "search",
+      "step": 3,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "language modeling from scratch coursework assignments schedule",
+        "resource_id": "cs336-course",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 32.124,
+          "status": "discovered_not_yet_read",
+          "unit_id": "spring2025"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 7.906,
+          "status": "discovered_not_yet_read",
+          "unit_id": "2025-lecture-9-scaling-laws-basics__002__pages-9-16"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 7.055,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__changelog-md"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Open the starter repository README that the page links to.",
+      "output_summary": "Read 15,843 Markdown characters from /spring2025; confirmed 2 required anchor(s); sha256 2754583fe0977dfb746c0ae40fc19afd82437641d52919e3693d94fcaace9004.",
+      "phase": "read",
+      "step": 4,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "cs336-course",
+        "unit_id": "spring2025"
+      },
+      "units": [
+        {
+          "content_sha256": "2754583fe0977dfb746c0ae40fc19afd82437641d52919e3693d94fcaace9004",
+          "locator": "/spring2025",
+          "resource_id": "cs336-course",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "spring2025"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the starter README: assignment scope, handout path, setup commands.",
+      "output_summary": "Found 5 hit(s); top evidence units: stanford-cs336-assignment1-basics__file__readme-md (28.188), stanford-cs336-assignment1-basics__file__changelog-md (16.233), stanford-cs336-assignment1-basics__file__pyproject-toml (10.336).",
+      "phase": "search",
+      "step": 5,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "assignment 1 basics handout setup environment uv",
+        "resource_id": "cs336-course",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 28.188,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__readme-md"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 16.233,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__changelog-md"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 10.336,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__pyproject-toml"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Check the course's explicit policy for AI assistants before drafting a plan.",
+      "output_summary": "Read 1,833 Markdown characters from README.md; confirmed 4 required anchor(s); sha256 11bf3402f88f925e27a244b9102656a748d0c1e47f02399f42112faabe52f8fa.",
+      "phase": "read",
+      "step": 6,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "cs336-course",
+        "unit_id": "stanford-cs336-assignment1-basics__file__readme-md"
+      },
+      "units": [
+        {
+          "content_sha256": "11bf3402f88f925e27a244b9102656a748d0c1e47f02399f42112faabe52f8fa",
+          "locator": "README.md",
+          "resource_id": "cs336-course",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "stanford-cs336-assignment1-basics__file__readme-md"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the AI-usage policy the staff ship inside the starter repo.",
+      "output_summary": "Found 5 hit(s); top evidence units: stanford-cs336-assignment1-basics__file__agents-md (33.689), stanford-cs336-assignment1-basics__file__claude-md (33.689), spring2025 (6.664).",
+      "phase": "search",
+      "step": 7,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "AI agent guidelines teaching assistant not solution generator",
+        "resource_id": "cs336-course",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 33.689,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__agents-md"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 33.689,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__claude-md"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 6.664,
+          "status": "discovered_not_yet_read",
+          "unit_id": "spring2025"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Locate the exact architecture slides the assignment depends on.",
+      "output_summary": "Read 5,022 Markdown characters from AGENTS.md; confirmed 1 required anchor(s); sha256 005ff2d1c77f92ee2dd3a70d801ced16f63de55b16b7d0e9df29e14d87acd4bc.",
+      "phase": "read",
+      "step": 8,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "cs336-course",
+        "unit_id": "stanford-cs336-assignment1-basics__file__agents-md"
+      },
+      "units": [
+        {
+          "content_sha256": "005ff2d1c77f92ee2dd3a70d801ced16f63de55b16b7d0e9df29e14d87acd4bc",
+          "locator": "AGENTS.md",
+          "resource_id": "cs336-course",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "stanford-cs336-assignment1-basics__file__agents-md"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the slide segment and confirm it covers RoPE at page granularity.",
+      "output_summary": "Found 5 hit(s); top evidence units: 2025-lecture-3-architecture__004__pages-25-32 (22.304), 2025-lecture-3-architecture__005__pages-33-40 (20.565), 2025-lecture-3-architecture__001__pages-1-8 (18.532).",
+      "phase": "search",
+      "step": 9,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "rotary position embedding RoPE attention architecture",
+        "resource_id": "cs336-course",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 22.304,
+          "status": "discovered_not_yet_read",
+          "unit_id": "2025-lecture-3-architecture__004__pages-25-32"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 20.565,
+          "status": "discovered_not_yet_read",
+          "unit_id": "2025-lecture-3-architecture__005__pages-33-40"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 18.532,
+          "status": "discovered_not_yet_read",
+          "unit_id": "2025-lecture-3-architecture__001__pages-1-8"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "The course page's handout link failed during capture; verify what the repo actually contains.",
+      "output_summary": "Read 2,794 Markdown characters from pages 25-32; confirmed 2 required anchor(s); sha256 3d0925b25bdb496a76b6882054fbfe5e52e4e234204ddd94882500c3a546a4e0.",
+      "phase": "read",
+      "step": 10,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "cs336-course",
+        "unit_id": "2025-lecture-3-architecture__004__pages-25-32"
+      },
+      "units": [
+        {
+          "content_sha256": "3d0925b25bdb496a76b6882054fbfe5e52e4e234204ddd94882500c3a546a4e0",
+          "locator": "pages 25-32",
+          "resource_id": "cs336-course",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "2025-lecture-3-architecture__004__pages-25-32"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Read the full repository tree, including files beyond the text-capture boundary.",
+      "output_summary": "Found 5 hit(s); top evidence units: stanford-cs336-assignment1-basics__repo__000__tree (28.558), stanford-cs336-assignment1-basics__file__license (7.180), stanford-cs336-assignment1-basics__file__tests--conftest-py (6.089).",
+      "phase": "search",
+      "step": 11,
+      "tool": "search_resource",
+      "tool_input": {
+        "query": "repository tree files present but not captured",
+        "resource_id": "cs336-course",
+        "top_k": 5
+      },
+      "units": [
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 28.558,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__repo__000__tree"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 7.18,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__license"
+        },
+        {
+          "content_sha256": null,
+          "resource_id": "cs336-course",
+          "score": 6.089,
+          "status": "discovered_not_yet_read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__tests--conftest-py"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Cross-check the dead link recorded in the capture frontier against the repo tree.",
+      "output_summary": "Read 2,304 Markdown characters from tree; confirmed 1 required anchor(s); sha256 85a2471ecbd44dab6978859199a586a30634bdc1c2ac4e8ff76badb4c8771bcb.",
+      "phase": "read",
+      "step": 12,
+      "tool": "read_unit",
+      "tool_input": {
+        "resource_id": "cs336-course",
+        "unit_id": "stanford-cs336-assignment1-basics__repo__000__tree"
+      },
+      "units": [
+        {
+          "content_sha256": "85a2471ecbd44dab6978859199a586a30634bdc1c2ac4e8ff76badb4c8771bcb",
+          "locator": "tree",
+          "resource_id": "cs336-course",
+          "status": "read_and_hash_verified_by_pack",
+          "unit_id": "stanford-cs336-assignment1-basics__repo__000__tree"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Validate citation discipline and emit the study plan.",
+      "output_summary": "The page's Assignment 1 handout URL is recorded in the frontier as attachment_fetch_failed:IngestError (HTTP 404 during capture), while the captured repository tree lists cs336_assignment1_basics.pdf (965,629 bytes): the handout moved into the repo under a new name.",
+      "phase": "compute",
+      "step": 13,
+      "tool": "deterministic_link_rot_check",
+      "tool_input": {
+        "frontier_entries_scanned": 40
+      },
+      "units": [
+        {
+          "content_sha256": "85a2471ecbd44dab6978859199a586a30634bdc1c2ac4e8ff76badb4c8771bcb",
+          "locator": "tree",
+          "resource_id": "cs336-course",
+          "status": "read",
+          "unit_id": "stanford-cs336-assignment1-basics__repo__000__tree"
+        }
+      ]
+    },
+    {
+      "next_step_reason": "Emit the evidence-backed week-1 study plan.",
+      "output_summary": "Validated all anchors and confirmed every final citation points to a previously read unit.",
+      "phase": "validate",
+      "step": 14,
+      "tool": "deterministic_assertions",
+      "tool_input": {
+        "evidence_units": 5
+      },
+      "units": [
+        {
+          "content_sha256": "2754583fe0977dfb746c0ae40fc19afd82437641d52919e3693d94fcaace9004",
+          "locator": "/spring2025",
+          "resource_id": "cs336-course",
+          "status": "read",
+          "unit_id": "spring2025"
+        },
+        {
+          "content_sha256": "11bf3402f88f925e27a244b9102656a748d0c1e47f02399f42112faabe52f8fa",
+          "locator": "README.md",
+          "resource_id": "cs336-course",
+          "status": "read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__readme-md"
+        },
+        {
+          "content_sha256": "005ff2d1c77f92ee2dd3a70d801ced16f63de55b16b7d0e9df29e14d87acd4bc",
+          "locator": "AGENTS.md",
+          "resource_id": "cs336-course",
+          "status": "read",
+          "unit_id": "stanford-cs336-assignment1-basics__file__agents-md"
+        },
+        {
+          "content_sha256": "3d0925b25bdb496a76b6882054fbfe5e52e4e234204ddd94882500c3a546a4e0",
+          "locator": "pages 25-32",
+          "resource_id": "cs336-course",
+          "status": "read",
+          "unit_id": "2025-lecture-3-architecture__004__pages-25-32"
+        },
+        {
+          "content_sha256": "85a2471ecbd44dab6978859199a586a30634bdc1c2ac4e8ff76badb4c8771bcb",
+          "locator": "tree",
+          "resource_id": "cs336-course",
+          "status": "read",
+          "unit_id": "stanford-cs336-assignment1-basics__repo__000__tree"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "assertions_passed": 10,
+    "assertions_total": 10,
+    "cited_units": 5,
+    "read_calls": 5,
+    "search_calls": 5,
+    "steps": 14
+  },
+  "task": "Onboard a new CS336 student for week 1 using only the captured course pack (course page + deep-captured lecture PDFs + the assignment starter repository): (1) say what Assignment 1 is and exactly where to start in the starter repo; (2) point to the lecture slides, with page numbers, for the architecture material the assignment needs; (3) the course page links a PDF handout for Assignment 1 — check whether that link still resolves, and if it does not, locate the handout inside the captured repository instead."
+}

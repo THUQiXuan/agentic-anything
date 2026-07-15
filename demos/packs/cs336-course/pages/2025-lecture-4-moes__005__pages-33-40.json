@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-4-moes__005__pages-33-40",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+  "url_path": "pages 33-40",
+  "title": "2025 Lecture 4 - MoEs — pages 33-40",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 33-40",
+  "summary": "Training MoEs – the systems side\nMoE routing allows for parallelism, but also some complexities\nModern libraries like MegaBlocks  (used in many open MoEs) use smarter sparse MMs\nFun side issue – stochasticity of MoE models\nThere was specul…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Training MoEs – the systems side\nMoE routing allows for parallelism, but also some complexities\nModern libraries like MegaBlocks  (used in many open MoEs) use smarter sparse MMs"
+    },
+    {
+      "kind": "p",
+      "text": "Fun side issue – stochasticity of MoE models\nThere was speculation that GPT -4’s stochasticity was due to MoE.. \nWhy would a MoE have additional randomness?\nToken dropping from routing happens at a batch level – this means that\nother people’s queries can drop your token!"
+    },
+    {
+      "kind": "p",
+      "text": "Issues with MoEs - stability\nSolution: Use Float 32 just for the expert router (sometimes with an aux z -loss)\n[Zoph 2022]"
+    },
+    {
+      "kind": "p",
+      "text": "Z-loss stability for the router\nWhat happens when we remove the z -loss?"
+    },
+    {
+      "kind": "p",
+      "text": "Issues with MoEs – fine-tuning\nSparse MoEs can overfit on smaller fine -tuning data\nZoph et al solution – finetune non -MoE MLPs\n DeepSeek  solution – use lots of data 1.4M SFT"
+    },
+    {
+      "kind": "p",
+      "text": "Other training methods - upcycling\nCan we use a pre -trained LM to initialize a MoE?"
+    },
+    {
+      "kind": "p",
+      "text": "Upcycling example - MiniCPM\nUses the MiniCPM  model ( topk=2, 8 experts, ~ 4B active params).\nSimple MoE, shows gains from the base model with ~ 520B tokens for training"
+    },
+    {
+      "kind": "p",
+      "text": "Upcycling example – Qwen MoE\nQwen MoE – Initialized from the Qwen 1.8B model top -k=4, 60 experts w/ 4 shared.\nSimilar architecture / setup to DeepSeekMoE , but one of the first (confirmed) upcycling successes"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "bc31f548b53fd652266fad704eb361cf425c982c116f00c316d1c69653ce5fad",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 4.pdf",
+    "attachment_sha256": "b62ba6416f04c4473834fffa19119317e78542a6b8dc94a5e816790643cb0c4f",
+    "attachment_bytes": 4677130
+  }
+}

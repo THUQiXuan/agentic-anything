@@ -1,0 +1,46 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-7-parallelism-basics__008__pages-57-60",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+  "url_path": "pages 57-60",
+  "title": "2025 Lecture 7 - Parallelism basics — pages 57-60",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 57-60",
+  "summary": "Llama3 405B\n(Stage 1, small bsz training, Stage 2 pretraining, Stage 3 long-context)\nLlama 3 405B\nSide note – Lots of GPU failures at this scale!\nGemma 2\nFor 2, 9, 27B models\nZeRO-3, MP (=TP+SP), DP\nRecap for the whole lecture\n❖ Scaling be…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Llama3 405B\n(Stage 1, small bsz training, Stage 2 pretraining, Stage 3 long-context)"
+    },
+    {
+      "kind": "p",
+      "text": "Llama 3 405B\nSide note – Lots of GPU failures at this scale!"
+    },
+    {
+      "kind": "p",
+      "text": "Gemma 2\nFor 2, 9, 27B models\nZeRO-3, MP (=TP+SP), DP"
+    },
+    {
+      "kind": "p",
+      "text": "Recap for the whole lecture\n❖ Scaling beyond a certain point requires multi -gpu, multi -node parallelism \n❖ No single solution to the parallelism problem (probably want all 3 approaches)\n❖ Simple, interpretable rules of thumb for combining different forms of parallelism"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "d625b98133520b9365453a745776aca150d27ff3564433afd6411b3e7f2824d1",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 7.pdf",
+    "attachment_sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+    "attachment_bytes": 5004408
+  }
+}

@@ -28,7 +28,7 @@ from urllib.parse import urljoin, urlsplit
 PACK_DIR = Path(__file__).resolve().parent.parent
 SITE_ID = 'secrets'
 SEED_URL = 'https://docs.python.org/3.13/library/python-3.13-secrets.html'
-USER_AGENT = "agentic-anything-sitecli/0.4.1"
+USER_AGENT = "agentic-anything-sitecli/0.5.0"
 
 
 def _read_json(path):

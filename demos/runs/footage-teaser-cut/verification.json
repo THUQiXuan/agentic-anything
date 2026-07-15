@@ -1,0 +1,71 @@
+{
+  "artifact_sha256": "5c692043ef26e607e41635fc8b586b11cf298d1aca3213516e59ee645f963876",
+  "assertions": [
+    {
+      "detail": "Cut 1 quotes cue and line verbatim from elephants-dream-en-srt__elephants-dream-en__001__00-00-15.",
+      "id": "clip-1-cue-grounded",
+      "passed": true
+    },
+    {
+      "detail": "Cut 2 quotes cue and line verbatim from sintel-en-srt__sintel-en__001__00-01-47.",
+      "id": "clip-2-cue-grounded",
+      "passed": true
+    },
+    {
+      "detail": "Cut 3 quotes cue and line verbatim from sintel-en-srt__sintel-en__002__00-05-04.",
+      "id": "clip-3-cue-grounded",
+      "passed": true
+    },
+    {
+      "detail": "Cut 4 quotes cue and line verbatim from tears-of-steel-en-srt__tears-of-steel-en__002__00-03-23.",
+      "id": "clip-4-cue-grounded",
+      "passed": true
+    },
+    {
+      "detail": "The scouted b-roll beat quotes cue and line verbatim from tears-of-steel-en-srt__tears-of-steel-en__001__00-00-23.",
+      "id": "alternate-cue-grounded",
+      "passed": true
+    },
+    {
+      "detail": "Total teaser runtime 16.686s is under the 45s budget.",
+      "id": "teaser-within-budget",
+      "passed": true
+    },
+    {
+      "detail": "Each padded cut equals its cue range extended by exactly ±0.75s.",
+      "id": "padding-is-pure-arithmetic",
+      "passed": true
+    },
+    {
+      "detail": "Every clip command targets an official, manifest-pinned media URL.",
+      "id": "ffmpeg-commands-reference-pinned-media",
+      "passed": true
+    },
+    {
+      "detail": "The artifact carries the full CC-BY attribution line for all three films.",
+      "id": "attribution-block-complete",
+      "passed": true
+    },
+    {
+      "detail": "Every citation points to a unit read earlier in the run.",
+      "id": "citations-only-after-read",
+      "passed": true
+    },
+    {
+      "detail": "The artifact embeds the full unit + locator + hash marker for every citation.",
+      "id": "citation-markers-in-artifact",
+      "passed": true
+    },
+    {
+      "detail": "Raw JSON-RPC events contain no local checkout paths.",
+      "id": "raw-events-have-no-local-paths",
+      "passed": true
+    }
+  ],
+  "assertions_passed": 12,
+  "assertions_total": 12,
+  "mode": "deterministic-evidence-agent",
+  "model_calls": 0,
+  "passed": true,
+  "schema_version": "1.0"
+}

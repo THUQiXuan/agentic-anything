@@ -64,7 +64,7 @@
     "server": {
       "name": "agentic-anything",
       "title": "Agentic Anything Resource Agents",
-      "version": "0.4.1"
+      "version": "0.5.0"
     },
     "tools": [
       "resource_info",
@@ -110,7 +110,7 @@
   "steps": [
     {
       "next_step_reason": "Inspect the resource boundary before searching for redirect behavior.",
-      "output_summary": "Connected to agentic-anything 0.4.1; tools: resource_info, search_resource, read_unit.",
+      "output_summary": "Connected to agentic-anything 0.5.0; tools: resource_info, search_resource, read_unit.",
       "phase": "connect",
       "step": 1,
       "tool": "initialize + tools/list",
@@ -132,7 +132,7 @@
     },
     {
       "next_step_reason": "Read the definition and verify the exact current value.",
-      "output_summary": "Found 5 hit(s); top evidence units: file__src--requests--models-py (12.551), file__src--requests--sessions-py (13.215), file__src--requests--status-codes-py (9.201).",
+      "output_summary": "Found 5 hit(s); top evidence units: file__src--requests--models-py (12.474), file__src--requests--sessions-py (13.143), file__src--requests--status-codes-py (9.212).",
       "phase": "search",
       "step": 3,
       "tool": "search_resource",
@@ -145,21 +145,21 @@
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 12.551,
+          "score": 12.474,
           "status": "discovered_not_yet_read",
           "unit_id": "file__src--requests--models-py"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 13.215,
+          "score": 13.143,
           "status": "discovered_not_yet_read",
           "unit_id": "file__src--requests--sessions-py"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 9.201,
+          "score": 9.212,
           "status": "discovered_not_yet_read",
           "unit_id": "file__src--requests--status-codes-py"
         }
@@ -187,7 +187,7 @@
     },
     {
       "next_step_reason": "Read Session initialization and the runtime redirect guard together.",
-      "output_summary": "Found 5 hit(s); top evidence units: file__tests--test-requests-py (24.286), file__src--requests--sessions-py (26.089), file__tests--test-lowlevel-py (13.178).",
+      "output_summary": "Found 5 hit(s); top evidence units: file__tests--test-requests-py (24.315), file__src--requests--sessions-py (26.126), file__tests--test-lowlevel-py (13.195).",
       "phase": "search",
       "step": 5,
       "tool": "search_resource",
@@ -200,21 +200,21 @@
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 24.286,
+          "score": 24.315,
           "status": "discovered_not_yet_read",
           "unit_id": "file__tests--test-requests-py"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 26.089,
+          "score": 26.126,
           "status": "discovered_not_yet_read",
           "unit_id": "file__src--requests--sessions-py"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 13.178,
+          "score": 13.195,
           "status": "discovered_not_yet_read",
           "unit_id": "file__tests--test-lowlevel-py"
         }
@@ -242,7 +242,7 @@
     },
     {
       "next_step_reason": "Read the exception declaration and inheritance.",
-      "output_summary": "Found 5 hit(s); top evidence units: file__src--requests--exceptions-py (17.236), file__tests--test-requests-py (11.698), file__docs--api-rst (7.952).",
+      "output_summary": "Found 5 hit(s); top evidence units: file__src--requests--exceptions-py (17.256), file__tests--test-requests-py (11.725), file__docs--api-rst (7.968).",
       "phase": "search",
       "step": 7,
       "tool": "search_resource",
@@ -255,21 +255,21 @@
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 17.236,
+          "score": 17.256,
           "status": "discovered_not_yet_read",
           "unit_id": "file__src--requests--exceptions-py"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 11.698,
+          "score": 11.725,
           "status": "discovered_not_yet_read",
           "unit_id": "file__tests--test-requests-py"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 7.952,
+          "score": 7.968,
           "status": "discovered_not_yet_read",
           "unit_id": "file__docs--api-rst"
         }
@@ -297,7 +297,7 @@
     },
     {
       "next_step_reason": "Read the tests to identify assertions affected by a 30-to-10 change.",
-      "output_summary": "Found 5 hit(s); top evidence units: file__tests--test-requests-py (31.924), file__history-md (17.158), file__tests--test-lowlevel-py (21.507).",
+      "output_summary": "Found 5 hit(s); top evidence units: file__tests--test-requests-py (31.872), file__history-md (17.010), file__tests--test-lowlevel-py (21.532).",
       "phase": "search",
       "step": 9,
       "tool": "search_resource",
@@ -310,21 +310,21 @@
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 31.924,
+          "score": 31.872,
           "status": "discovered_not_yet_read",
           "unit_id": "file__tests--test-requests-py"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 17.158,
+          "score": 17.01,
           "status": "discovered_not_yet_read",
           "unit_id": "file__history-md"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 21.507,
+          "score": 21.532,
           "status": "discovered_not_yet_read",
           "unit_id": "file__tests--test-lowlevel-py"
         }
@@ -352,7 +352,7 @@
     },
     {
       "next_step_reason": "Read the documentation contract and distinguish numeric from qualitative promises.",
-      "output_summary": "Found 5 hit(s); top evidence units: file__docs--user--quickstart-rst (13.910), file__docs--api-rst (8.669), file__src--requests--sessions-py (8.323).",
+      "output_summary": "Found 5 hit(s); top evidence units: file__docs--user--quickstart-rst (13.948), file__docs--api-rst (8.692), file__src--requests--sessions-py (8.348).",
       "phase": "search",
       "step": 11,
       "tool": "search_resource",
@@ -365,21 +365,21 @@
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 13.91,
+          "score": 13.948,
           "status": "discovered_not_yet_read",
           "unit_id": "file__docs--user--quickstart-rst"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 8.669,
+          "score": 8.692,
           "status": "discovered_not_yet_read",
           "unit_id": "file__docs--api-rst"
         },
         {
           "content_sha256": null,
           "resource_id": "requests",
-          "score": 8.323,
+          "score": 8.348,
           "status": "discovered_not_yet_read",
           "unit_id": "file__src--requests--sessions-py"
         }

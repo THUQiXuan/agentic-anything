@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-7-parallelism-basics__002__pages-9-16",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+  "url_path": "pages 9-16",
+  "title": "2025 Lecture 7 - Parallelism basics — pages 9-16",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 9-16",
+  "summary": "TPUs vs GPUs – design differences at the comm level\nTPU networking \ntoroidal mesh\nGPU networking\nAll-to-all (up to 256)\nPart 1 recap\n❖ New unit of compute – the datacenter\n❖ What we want from multi -machine scaling:\n❖Linear memory scaling…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "TPUs vs GPUs – design differences at the comm level\nTPU networking \ntoroidal mesh\nGPU networking\nAll-to-all (up to 256)"
+    },
+    {
+      "kind": "p",
+      "text": "Part 1 recap\n❖ New unit of compute – the datacenter\n❖ What we want from multi -machine scaling:\n❖Linear memory scaling (max model params scales with num gpus)\n❖Linear compute scaling (model flops scale linearly with num gpus)\n❖ Simple collective comms primitives"
+    },
+    {
+      "kind": "p",
+      "text": "Part 2 – Standard LLM parallelization primitives\nHow do we parallelize LLMs? 3 important ideas\n• Data parallelism\n• Naïve data parallel\n• ZeRO levels 1-3\n• Model parallelism\n• Pipeline parallel\n• Tensor parallel\n• Activation parallelism\n• Sequence parallel"
+    },
+    {
+      "kind": "p",
+      "text": "Naïve data parallelism\nStarting point – imagine we are doing naïve SGD\n𝜃𝑡+1 = 𝜃𝑡 − 𝜂 ෍\n𝑖=1\n𝐵\n∇𝑓(𝑥𝑖)\nNaive parallelism: split the elements of B sized batch across M machines. Exchange gradients to \nsynchronize\nHow does this do?\n Compute scaling – each GPU gets B/M examples. \n Communication overhead – transmits 2x # params every batch. OK if batches are big\n Memory scaling – none. Every GPU needs # params at least"
+    },
+    {
+      "kind": "p",
+      "text": "What’s wrong with naïve data parallel?\nMemory seems like it’d be a problem – we copy the model parameters to each GPU. \nLet’s take a closer look.."
+    },
+    {
+      "kind": "p",
+      "text": "What’s wrong with naïve data parallelism?  -  Memory \nOur memory situation is actually terrible.\nDepending on our precision.. \nWe need 5 copies of weights and 16 bytes per param! \n- 2 bytes for FP/BF 16 model parameters\n- 2 bytes for FP/BF 16 gradients\n- 4 bytes for FP32 master weights (the thing you accumulate into in SGD)\n- 4 (or 2) bytes for FP32/BF16 Adam first moment estimates\n- 4 (or 2) bytes for FP32/BF16 Adam second moment estimates\n“Optimizer state”"
+    },
+    {
+      "kind": "p",
+      "text": "ZeRO – solving the memory overhead issue of DP\nCore idea: split up the expensive parts (state) and use the reduce -scatter equivalence."
+    },
+    {
+      "kind": "p",
+      "text": "ZeRO stage 1. optimizer state sharding\nHigh level idea:\n• Split up the optimizer state (first + second moments) across GPUs\n• Everyone has the parameters + gradients \nEach worker is responsible for updating a subset of params (corresponding to their slice)"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "2f0704122fe8d18d2d4a00a4a217d94126dc81d806ebbc690c640600c16217ea",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 7.pdf",
+    "attachment_sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+    "attachment_bytes": 5004408
+  }
+}

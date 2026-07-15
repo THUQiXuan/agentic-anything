@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--test-data-py",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/test_data.py",
+  "title": "tests/test_data.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/test_data.py",
+  "summary": "import math\nfrom collections import Counter\n\nimport numpy as np\nimport pytest\n\nfrom .adapters import run_get_batch\n\n\ndef test_get_batch():\n    dataset = np.arange(0, 100)\n    context_length = 7\n    batch_size = 32\n    device = \"cpu\"\n\n    #…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import math\nfrom collections import Counter\n\nimport numpy as np\nimport pytest\n\nfrom .adapters import run_get_batch\n\n\ndef test_get_batch():\n    dataset = np.arange(0, 100)\n    context_length = 7\n    batch_size = 32\n    device = \"cpu\"\n\n    # Sanity check to make sure that the random samples are indeed somewhat random.\n    starting_indices = Counter()\n    num_iters = 1000\n    for _ in range(num_iters):\n        x, y = run_get_batch(\n            dataset=dataset,\n            batch_size=batch_size,\n            context_length=context_length,\n            device=device,\n        )\n\n        # Make sure the shape is correct\n        assert x.shape == (batch_size, context_length)\n        assert y.shape == (batch_size, context_length)\n\n        # Make sure the y's are always offset by 1\n        np.testing.assert_allclose((x + 1).detach().numpy(), y.detach().numpy())\n\n        starting_indices.update(x[:, 0].tolist())\n\n    # Make sure we never sample an invalid start index\n    num_possible_starting_indices = len(dataset) - context_length\n    assert max(starting_indices) == num_possible_starting_indices - 1\n    assert min(starting_indices) == 0\n    # Expected # of times that we see each starting index\n    expected_count = (num_iters * batch_size) / num_possible_starting_indices\n    standard_deviation = math.sqrt(\n        (num_iters * batch_size) * (1 / num_possible_starting_indices) * (1 - (1 / num_possible_starting_indices))\n    )\n    # Range for expected outcomes (mu +/- 5sigma). For a given index,\n    # this should happen 99.99994% of the time of the time.\n    # So, in the case where we have 93 possible start indices,\n    # the entire test should pass with 99.9944202% of the time\n    occurrences_lower_bound = expected_count - 5 * standard_deviation\n    occurrences_upper_bound = expected_count + 5 * standard_deviation\n\n    for starting_index, count in starting_indices.items():\n        if count < occurrences_lower_bound:\n            raise ValueError(\n                f\"Starting index {starting_index} occurs {count} times, but expected at least {occurrences_lower_bound}\"\n            )\n        if count > occurrences_upper_bound:\n            raise ValueError(\n                f\"Starting index {starting_index} occurs {count} times, but expected at most {occurrences_upper_bound}\"\n            )\n\n    with pytest.raises((RuntimeError, AssertionError)) as excinfo:\n        # We're assuming that cuda:99 is an invalid device ordinal.\n        # Just adding this here to make sure that the device flag is\n        # being handled.\n        run_get_batch(\n            dataset=dataset,\n            batch_size=batch_size,\n            context_length=context_length,\n            device=\"cuda:99\",\n        )\n        assert \"CUDA error\" in str(excinfo.value) or \"Torch not compiled with CUDA enabled\" in str(excinfo.value)\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "e926adc0da151583092e2a4d35bc482b1ca29023bfcf240ef4d405f190649025",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--test-nn-utils-py",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/test_nn_utils.py",
+  "title": "tests/test_nn_utils.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/test_nn_utils.py",
+  "summary": "import numpy\nimport torch\nimport torch.nn.functional as F\nfrom torch.nn.utils.clip_grad import clip_grad_norm_\n\nfrom .adapters import run_cross_entropy, run_gradient_clipping, run_softmax\n\n\ndef test_softmax_matches_pytorch():\n    x = torch…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import numpy\nimport torch\nimport torch.nn.functional as F\nfrom torch.nn.utils.clip_grad import clip_grad_norm_\n\nfrom .adapters import run_cross_entropy, run_gradient_clipping, run_softmax\n\n\ndef test_softmax_matches_pytorch():\n    x = torch.tensor(\n        [\n            [0.4655, 0.8303, 0.9608, 0.9656, 0.6840],\n            [0.2583, 0.2198, 0.9334, 0.2995, 0.1722],\n            [0.1573, 0.6860, 0.1327, 0.7284, 0.6811],\n        ]\n    )\n    expected = F.softmax(x, dim=-1)\n    numpy.testing.assert_allclose(run_softmax(x, dim=-1).detach().numpy(), expected.detach().numpy(), atol=1e-5)\n    # Test that softmax handles numerical overflow issues\n    numpy.testing.assert_allclose(\n        run_softmax(x + 100, dim=-1).detach().numpy(),\n        expected.detach().numpy(),\n        atol=1e-5,\n    )\n\n\ndef test_cross_entropy():\n    inputs = torch.tensor(\n        [\n            [\n                [0.1088, 0.1060, 0.6683, 0.5131, 0.0645],\n                [0.4538, 0.6852, 0.2520, 0.3792, 0.2675],\n                [0.4578, 0.3357, 0.6384, 0.0481, 0.5612],\n                [0.9639, 0.8864, 0.1585, 0.3038, 0.0350],\n            ],\n            [\n                [0.3356, 0.9013, 0.7052, 0.8294, 0.8334],\n                [0.6333, 0.4434, 0.1428, 0.5739, 0.3810],\n                [0.9476, 0.5917, 0.7037, 0.2987, 0.6208],\n                [0.8541, 0.1803, 0.2054, 0.4775, 0.8199],\n            ],\n        ]\n    )\n    targets = torch.tensor([[1, 0, 2, 2], [4, 1, 4, 0]])\n    expected = F.cross_entropy(inputs.view(-1, inputs.size(-1)), targets.view(-1))\n    numpy.testing.assert_allclose(\n        run_cross_entropy(inputs.view(-1, inputs.size(-1)), targets.view(-1)).detach().numpy(),\n        expected.detach().numpy(),\n        atol=1e-4,\n    )\n\n    # Test that cross-entropy handles numerical overflow issues\n    large_inputs = 1000.0 * inputs\n    large_expected_cross_entropy = F.cross_entropy(large_inputs.view(-1, large_inputs.size(-1)), targets.view(-1))\n    numpy.testing.assert_allclose(\n        run_cross_entropy(large_inputs.view(-1, large_inputs.size(-1)), targets.view(-1)).detach().numpy(),\n        large_expected_cross_entropy.detach().numpy(),\n        atol=1e-4,\n    )\n\n\ndef test_gradient_clipping():\n    tensors = [torch.randn((5, 5)) for _ in range(6)]\n    max_norm = 1e-2\n\n    t1 = tuple(torch.nn.Parameter(torch.clone(t)) for t in tensors)\n    # Test freezing one parameter.\n    t1[-1].requires_grad_(False)\n\n    loss = torch.cat(t1).sum()\n    loss.backward()\n    clip_grad_norm_(t1, max_norm)\n    t1_grads = [torch.clone(t.grad) for t in t1 if t.grad is not None]\n\n    t1_c = tuple(torch.nn.Parameter(torch.clone(t)) for t in tensors)\n    t1_c[-1].requires_grad_(False)\n    loss_c = torch.cat(t1_c).sum()\n    loss_c.backward()\n    run_gradient_clipping(t1_c, max_norm)\n    t1_c_grads = [torch.clone(t.grad) for t in t1_c if t.grad is not None]\n\n    assert len(t1_grads) == len(t1_c_grads)\n\n    for t1_grad, t1_c_grad in zip(t1_grads, t1_c_grads):\n        numpy.testing.assert_allclose(\n            t1_grad.detach().numpy(),\n            t1_c_grad.detach().numpy(),\n            atol=1e-5,\n        )\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "51bbe52e275500a2c766baf844fd10b87c02d2f17cd60db9dad4eaa84f3e972d",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

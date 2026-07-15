@@ -1,0 +1,34 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--fixtures--train-bpe-reference-merges-txt",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/fixtures/train-bpe-reference-merges.txt",
+  "title": "tests/fixtures/train-bpe-reference-merges.txt",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/fixtures/train-bpe-reference-merges.txt",
+  "summary": "Ġ t\nĠ a\nh e\ni n\nĠt he\nr e\nĠ o\nĠ ,\ne r\nĠ s\na t\nĠ .\nn d\ni s\no r\nĠ w\nĠ c\no n\nĠ b\nĠ f\no u\ni t\ne n\ne s\nĠo f\nĠ p\nin g\nĠ in\ne d\na l\nĠ m\nĠa nd\nĠ d\na n\na r\nĠt o\no m\nĠt h\ni c\ni on\nĠ h\nĠ l\nĠ y\nĠ e\na s\no t\ni l\nĠ n\nĠ u\nen t\nĠb e\nĠ &\nĠ is\nĠy ou\no s\nĠ re…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Ġ t\nĠ a\nh e\ni n\nĠt he\nr e\nĠ o\nĠ ,\ne r\nĠ s\na t\nĠ .\nn d\ni s\no r\nĠ w\nĠ c\no n\nĠ b\nĠ f\no u\ni t\ne n\ne s\nĠo f\nĠ p\nin g\nĠ in\ne d\na l\nĠ m\nĠa nd\nĠ d\na n\na r\nĠt o\no m\nĠt h\ni c\ni on\nĠ h\nĠ l\nĠ y\nĠ e\na s\no t\ni l\nĠ n\nĠ u\nen t\nĠb e\nĠ &\nĠ is\nĠy ou\no s\nĠ re\ne t\nĠf or\nu t\ne l\nĠ g\na y\ns t\no w\nl e\nc e\na d\nĠo n\nĠ I\nv er\nv e\nĠ A\nu r\no l\nc t\nq u\nĠth at\ni m\nal l\na m\ni g\nc h\nat ion\nĠ P\nit h\ni r\nĠ S\nĠ it\nĠp r\na p\nĠs h\nĠ C\nt h\nĠc om\nĠ @\nĠw h\n- @\nĠa re\nĠ@ -@\nn t\ni d\nĠw ith\nĠa l\no p\nĠu s\ner s\nĠa s\nt he\na nd\ni f\nor d\no d\nĠ he\nis t\nqu ot\nm ent\nĠ M\nĠo r\no re\nĠ G\nĠf r\nil l\nre s\nĠs t\nes s\nl d\nĠth is\nĠ 2\nar t\nĠ ;\nĠ L\nl y\na in\nu l\nĠd e\nĠc on\nes t\ns e\nap os\na g\nĠfr om\nĠa n\nĠw e\nĠ (\n0 0\nt er\nĠ E\ne m\na ve\nĠn ot\nĠ )\nĠ 1\nĠyou r\no c\nĠc an\nĠb y\nĠ D\nĠn e\nĠ v\nig h\nic h\nĠal l\nr i\nĠu p\nĠ r\nĠ W\nb le\nĠthe y\nĠ B\nu n\nĠy e\nĠwh ich\nĠ O\nk e\nĠw or\nĠs u\nĠ F\nĠ H\nĠh ave\nat e\nĠsh all\nĠc h\ne ct\nit y\nĠs p\nres s\nigh t\nĠw ill\nĠcom p\nor t\nan t\nĠ& #\ni ve\na re\n. .\nĠe x\nĠA nd\nĠ. ..\nas t\n2 4\nĠ T\nou ld\nv en\nĠt r\nu st\nu m\nou t\nc om\nĠu nt\nĠs e\nf t\nre e\nos t\no g\nis h\nion s\ni z\n1 24\nĠunt o\nm er\ning s\nĠa c\nth is\nat ed\na c\nl u\ne re\nĠm an\nf or\nĠm y\nĠa t\ni es\nag e\nr ou\nl o\nan s\np p\nin d\nĠwor k\nhe re\nf ore\nĠs it\nĠ ver"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "6114064b12c687c34b79ca4e694f9155863edbfff4760de89d92d2eb64ec3ac4",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

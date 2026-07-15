@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-7-parallelism-basics__003__pages-17-24",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+  "url_path": "pages 17-24",
+  "title": "2025 Lecture 7 - Parallelism basics — pages 17-24",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 17-24",
+  "summary": "ZeRO stage 1. how it works\nStep 1. Everyone computes a full gradient on their subset of the batch\nStep 2. ReduceScatter  the gradients – incur #params communication cost\nStep 3. Each machine updates their param using their gradient + state…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "ZeRO stage 1. how it works\nStep 1. Everyone computes a full gradient on their subset of the batch\nStep 2. ReduceScatter  the gradients – incur #params communication cost\nStep 3. Each machine updates their param using their gradient + state.\nStep 4. All Gather the parameters – incur #params communication cost"
+    },
+    {
+      "kind": "p",
+      "text": "Comparing ZeRO stage 1 and naïve data parallel\nNaïve DDP ZeRO stage 1\nCommunication \nprimitive\nOne all-reduce \n(gradients)\nOne reduce scatter (send \ngradients) + all gather \n(collect params)\nCommunication cost 2* # params 2* # params\nMemory (4+K) * #params (4+K/Ngpu) * #params\nZeRO stage 1 is free (in the bandwidth limited regime) memory wins"
+    },
+    {
+      "kind": "p",
+      "text": "ZeRO stage 2. the simple extension to gradient sharding\nEmboldened by our success, let’s shard even more stuff\nHigh level idea\n• Also keep the gradients (pink slices) sharded across the machines. \n• Use the same (rough) tricks as stage 1.\nComplexity  – we can never instantiate a full gradient vector, but each worker must \ncompute a full gradient (since we’re data parallel)"
+    },
+    {
+      "kind": "p",
+      "text": "ZeRO stage 2. how it works\nStep 1. Everyone incrementally goes backward on the computation graph\n Step 1a. After computing a layer’s gradients, immediately reduce to send this to the \nright worker\n Step 1b. Once gradients are not needed in the backward graph, immediately free it.\nStep 2. Each machine updates their param using their gradient + state.\nStep 3. All Gather the parameters."
+    },
+    {
+      "kind": "p",
+      "text": "ZeRO stage 3 (aka FSDP) shard everything \nWe’ve gotten almost everything for free so far.. lets try to solve all our memory issues\nHigh level idea\n• Shard everything – incl parameters!\n• Use the same ‘incremental communication / computation’ ideas\n• Send and request parameters on demand while stepping through the compute graph.\nIs it possible to do this with low overhead?"
+    },
+    {
+      "kind": "p",
+      "text": "ZeRO stage 3 (aka FSDP) how it works (baby version)\nhttps://pytorch.org/tutorials/intermediate/FSDP_tutorial.html\nCommunication cost – 2 all gather (#param), 1 reduce-scatter (#param)."
+    },
+    {
+      "kind": "p",
+      "text": "Actual picture of how FDSP / ZeRO stage 3 works\nLet’s walk through a FSDP example to see some important ideas\nIncremental computation / communication\n• Parameters / gradients are requested / sent and then immediately freed\nOverlapping communication and computation ( 𝑾𝟏𝑾𝟎 + 𝑾𝟐𝑾𝟎)𝒙 = 𝒚 \n•  The all -gathers happen all at once while forward happens, masking the comm cost.\nhttps://arxiv.org/pdf/2304.11277.pdf"
+    },
+    {
+      "kind": "p",
+      "text": "What’s the point? \nDistributed data parallel costs 2*# param communication\nWhat about ZeRO?\n• Zero stage 1 is 2*# param – it’s free! – you might as well always do it\n• Zero stage 2 is 2*# param – it’s (almost) free (ignoring overhead)\n• Zero stage 3 is 3*# param – 1.5x comm cost, but that’s not bad! (ignoring latency..)\nThis is also conceptually very simple – write a FSDP block wrapper."
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "4574a6ff5a2386ac8e90e02f20a47a8d30b36a3d0dc1da4050453a11b86176ab",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 7.pdf",
+    "attachment_sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+    "attachment_bytes": 5004408
+  }
+}

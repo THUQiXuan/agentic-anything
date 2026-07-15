@@ -1,0 +1,34 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--fixtures--german-txt",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/fixtures/german.txt",
+  "title": "tests/fixtures/german.txt",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/fixtures/german.txt",
+  "summary": "Die Leland Stanford Junior University (kurz Stanford University oder Stanford, Spitzname „Die Farm“) ist eine private US-amerikanische Universität in Stanford, Kalifornien. Sie liegt etwa 60 Kilometer südöstlich von San Francisco in der Nä…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "Die Leland Stanford Junior University (kurz Stanford University oder Stanford, Spitzname „Die Farm“) ist eine private US-amerikanische Universität in Stanford, Kalifornien. Sie liegt etwa 60 Kilometer südöstlich von San Francisco in der Nähe von Palo Alto und wurde von Leland Stanford und seiner Ehefrau Jane Stanford im Jahr 1891 im Andenken an ihren früh verstorbenen, einzigen Sohn Leland Stanford junior gegründet. 2021 waren 16.937 Studenten an der Universität eingeschrieben und studierten an einer der sieben Fakultäten. Ihr Präsident war bis 2023 Marc Tessier-Lavigne.[2]"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "92242862edf9e764a319be9bc797506765762effb3957c06a92adfbe740db1fc",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

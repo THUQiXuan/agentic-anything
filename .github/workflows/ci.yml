@@ -44,6 +44,7 @@ jobs:
           python demos/build_demos.py
           python demos/review_recorded_llm_run.py
           python demos/build_agent_runs.py
+          python demos/build_gallery_data.py
           python demos/verify_demos.py
           git diff --exit-code -- demos/packs demos/results demos/runs
           test -z "$(git status --porcelain --untracked-files=all -- demos/packs demos/results demos/runs)"

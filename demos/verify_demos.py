@@ -15,7 +15,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DEMO = ROOT / "demos"
 SOURCES = DEMO / "sources"
 RUNS = DEMO / "runs"
+PACKS = DEMO / "packs"
 EXPECTED = {"requests", "alice", "secrets", "gistemp", "fair-paper"}
+EXPECTED_FOOTAGE = {"footage-sintel", "footage-tears-of-steel", "footage-elephants-dream"}
 EXPECTED_PHRASES = {
     "requests": "DEFAULT_REDIRECT_LIMIT",
     "alice": "slightest idea",
@@ -72,7 +74,8 @@ def last_accepted_submission(raw: dict) -> tuple[str, dict]:
 def verify_sources_and_packs() -> tuple[dict, dict[str, dict]]:
     source_manifest = load(SOURCES / "real-sources.json")
     declared = source_manifest["sources"]
-    check(set(declared) == EXPECTED, "source manifest declares exactly five real resources")
+    check(set(declared) == EXPECTED | EXPECTED_FOOTAGE,
+          "source manifest declares the five showcase resources plus three footage transcripts")
     for demo_id, meta in declared.items():
         source = SOURCES / meta["snapshot_file"]
         check(source.is_file(), f"{demo_id} source snapshot is checked in")
@@ -114,6 +117,84 @@ def verify_sources_and_packs() -> tuple[dict, dict[str, dict]]:
     check("147 data rows, 19 columns" in overview_text and "Preamble:" in overview_text,
           "GISTEMP overview preserves its title preamble and real 19-column schema")
     return payload, declared
+
+
+def verify_footage_pack() -> None:
+    pack = PACKS / "footage-library"
+    site = load(pack / "site.json")
+    check(site["resource_type"] == "collection" and site["page_count"] == 10,
+          "footage pack is a ten-unit collection built from the three pinned transcripts")
+    sample = (pack / "pages" / "sintel-en-srt__sintel-en__002__00-05-04.md").read_text(encoding="utf-8")
+    check("[00:07:37.800 → 00:07:40.500] These are dragon lands, Sintel." in sample,
+          "footage units carry per-cue timecodes as inline evidence")
+    for relative in ("agent-pack.json", "agent-interface.json", "AGENT.md", "skills/SKILL.md"):
+        check((pack / relative).is_file(), f"footage-library contains {relative}")
+    check("demos/sources/footage" in json.dumps(load(pack / "site.json")),
+          "footage pack locators point at the checked-in transcript sources")
+
+
+def verify_course_pack() -> None:
+    pack = PACKS / "cs336-course"
+    manifest = load(SOURCES / "real-sources.json")
+    pinned = manifest.get("remote_pinned", {}).get("cs336-course")
+    check(bool(pinned), "course pack is declared in the remote-pinned source section")
+    site = load(pack / "site.json")
+    check(site["seed_url"].startswith("https://cs336.stanford.edu/"),
+          "course pack seed is the real course page")
+    attachments = site.get("attachments", [])
+    check(len(attachments) == 7 and sum(a["kind"] == "repo" for a in attachments) == 1
+          and sum(a["kind"] == "document" for a in attachments) == 6,
+          "course pack deep-captured one repository and six lecture documents")
+    manifest_atts = {(a["url"], a["sha256"], a["bytes"]) for a in pinned["attachments"]}
+    site_atts = {(a["url"], a["content_sha256"], a["content_bytes"]) for a in attachments}
+    check(manifest_atts == site_atts,
+          "remote-pinned attachment hashes match the pack's recorded provenance")
+    dead = [e for e in site["frontier"] if e["skip_reason"].startswith("attachment_fetch_failed")]
+    check(len(dead) == len(pinned["dead_links_recorded"]) == 4,
+          "all four stale assignment-handout links are recorded, not hidden")
+    check(any("cs336_spring2025_assignment1_basics.pdf" in e["url"] for e in dead),
+          "the Assignment 1 handout dead link is individually visible in the frontier")
+    discovery = load(pack / "agent-pack.json")
+    check("linked_attachments" in discovery["capabilities"],
+          "course pack advertises the linked_attachments capability")
+
+    attachment_pages = [p for p in site["pages"] if p.get("discovered_via") == "attachment"]
+    check(len(attachment_pages) == site["attachment_page_count"] and attachment_pages,
+          "attachment units are first-class pages in the course pack index")
+    for entry in attachment_pages:
+        page = load(pack / "pages" / f"{entry['page_id']}.json")
+        prov = page["provenance"]
+        text = "\n".join(block.get("text", "") for block in page["content"])
+        recomputed = hashlib.sha256(text.encode("utf-8", "replace")).hexdigest()
+        check_quiet(prov["content_sha256"] == recomputed,
+                    f"course attachment unit text hash matches provenance: {entry['page_id']}")
+        check_quiet(prov.get("discovered_via") == "attachment" and prov.get("attachment_sha256"),
+                    f"course attachment unit has download provenance: {entry['page_id']}")
+    print(f"✓ all {len(attachment_pages)} course attachment units re-hash to their recorded sha256")
+    tree = (pack / "pages" / "stanford-cs336-assignment1-basics__repo__000__tree.md").read_text(encoding="utf-8")
+    check("cs336_assignment1_basics.pdf  (965,629 bytes)" in tree,
+          "repository tree records the renamed handout beyond the text-capture boundary")
+
+
+def verify_recorded_chats() -> None:
+    payload = load(RUNS / "recorded-chats.json")
+    check(payload["mode"] == "real-model-grounded-chat"
+          and payload["model_calls"] == len(payload["conversations"]) == 5,
+          "five real grounded conversations are recorded with an explicit model call count")
+    for conversation in payload["conversations"]:
+        pack = PACKS / conversation["pack"]
+        valid = {p["page_id"] for p in load(pack / "site.json")["pages"]}
+        cited = conversation["citations"]
+        check_quiet(bool(cited) and all(cid in valid for cid in cited),
+                    f"recorded chat citations resolve in pack: {conversation['id']}")
+        check_quiet(conversation["all_citations_resolve"] is True,
+                    f"recorded chat flagged as fully resolving: {conversation['id']}")
+    print("✓ every recorded conversation cites only units that exist in its pack")
+
+
+def check_quiet(condition: bool, message: str) -> None:
+    if not condition:
+        raise AssertionError(message)
 
 
 def verify_deterministic_run(entry: dict) -> None:
@@ -316,19 +397,25 @@ def verify_llm_run(entry: dict, declared: dict[str, dict]) -> None:
 def verify_runs(declared: dict[str, dict]) -> None:
     index = load(RUNS / "index.json")
     entries = {item["run_id"]: item for item in index["runs"]}
-    expected_runs = {"requests-redirect-impact-llm", "requests-redirect-impact", "gistemp-fair-audit"}
-    check(set(entries) == expected_runs, "run index contains one real model run and two deterministic long runs")
+    expected_runs = {
+        "requests-redirect-impact-llm", "requests-redirect-impact",
+        "gistemp-fair-audit", "cs336-course-week1", "footage-teaser-cut",
+    }
+    check(set(entries) == expected_runs,
+          "run index contains one real model run and four deterministic long runs")
     check(index["summary"] == {
         "all_passed": True,
-        "assertions_passed": 52,
-        "assertions_total": 52,
-        "run_count": 3,
-        "runs_passed": 3,
-    }, "all fifty-two long-run checks pass")
+        "assertions_passed": 74,
+        "assertions_total": 74,
+        "run_count": 5,
+        "runs_passed": 5,
+    }, "all seventy-four long-run checks pass")
     check(index["model_calls"] == 10, "index separates ten recorded model calls from zero-call rebuilds")
     verify_llm_run(entries["requests-redirect-impact-llm"], declared)
     verify_deterministic_run(entries["requests-redirect-impact"])
     verify_deterministic_run(entries["gistemp-fair-audit"])
+    verify_deterministic_run(entries["cs336-course-week1"])
+    verify_deterministic_run(entries["footage-teaser-cut"])
 
 
 def verify_publishable_html() -> None:
@@ -348,24 +435,45 @@ def verify_publishable_html() -> None:
 
     html = (DEMO / "index.html").read_text(encoding="utf-8")
     required_story = (
-        "Watch the work, not a one-line answer.",
-        "runs/requests-redirect-impact-llm/run.json",
-        "runs/gistemp-fair-audit/run.json",
-        "Exact tool input",
-        "Recorded output",
-        "Claim → evidence ledger",
-        "The run ends with",
-        "Real inputs, pinned",
-        "Boundary of this demo",
-        "The page is a replay.",
+        "Stop reading resources.",
+        "Start talking to them.",
+        "results/gallery-data.json",
+        "Everything below is a replay",
+        "BEFORE — built for humans",
+        "ONE COMMAND",
+        "AFTER — agent-native pack",
+        "And it runs long tasks",
+        "show the evidence",
+        "no model runs in your browser",
+        "python demos/build_demos.py",
     )
     check(all(marker in html for marker in required_story),
-          "HTML leads with long work, exact tool traces, artifacts, evidence, and explicit replay limits")
+          "gallery leads with before/command/after, replayed conversations, long runs, and explicit replay limits")
+
+    gallery = load(DEMO / "results" / "gallery-data.json")
+    check([s["id"] for s in gallery["scenarios"]] == ["course", "footage"]
+          and len(gallery["more"]) == 5,
+          "gallery data carries both flagship scenarios and the five-resource grid")
+    for scenario in gallery["scenarios"]:
+        pack = DEMO / "packs" / ("cs336-course" if scenario["id"] == "course" else "footage-library")
+        valid = {p["page_id"] for p in load(pack / "site.json")["pages"]}
+        for conversation in scenario["conversations"]:
+            for citation in conversation["citations"]:
+                check_quiet(citation["page_id"] in valid and bool(citation["excerpt"]),
+                            f"gallery citation resolves with evidence: {citation['page_id']}")
+        check_quiet((DEMO / scenario["run"]["artifact_path"]).is_file(),
+                    f"gallery links an existing artifact for {scenario['id']}")
+        check_quiet((DEMO / scenario["run"]["run_path"]).is_file(),
+                    f"gallery links an existing run.json for {scenario['id']}")
+    print("✓ gallery data citations, artifacts, and run links all resolve on disk")
 
 
 def main() -> int:
     _, declared = verify_sources_and_packs()
+    verify_footage_pack()
+    verify_course_pack()
     verify_runs(declared)
+    verify_recorded_chats()
     verify_publishable_html()
     print("\nLong-horizon authentic demo verification complete.")
     return 0

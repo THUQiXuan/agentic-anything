@@ -1,0 +1,1090 @@
+{
+  "spec_version": "0.1",
+  "page_id": "spring2025",
+  "source_url": "https://cs336.stanford.edu/spring2025",
+  "url_path": "/spring2025",
+  "title": "Stanford CS336 | Language Modeling from Scratch (2025)",
+  "lang": "en",
+  "meta_description": "Archived course website for Stanford CS336: Language Modeling from Scratch (Spring 2025), including schedule, assignments, logistics, and materials.",
+  "page_type": "content",
+  "summary": "CS336: Language Modeling from Scratch — Coursework",
+  "content": [
+    {
+      "kind": "li",
+      "text": "Coursework"
+    },
+    {
+      "kind": "li",
+      "text": "Schedule"
+    },
+    {
+      "kind": "heading",
+      "level": 1,
+      "text": "CS336: Language Modeling from Scratch"
+    },
+    {
+      "kind": "p",
+      "text": "Stanford / Spring 2025"
+    },
+    {
+      "kind": "p",
+      "text": "This is the archived website for the Spring 2025 offering of CS336. The latest offering is here."
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Course Staff"
+    },
+    {
+      "kind": "text",
+      "text": "Instructor"
+    },
+    {
+      "kind": "text",
+      "text": "Instructor"
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Logistics"
+    },
+    {
+      "kind": "li",
+      "text": "Lectures: Tuesday/Thursday 3:00-4:20pm in NVIDIA Auditorium"
+    },
+    {
+      "kind": "li",
+      "text": "Office hours:"
+    },
+    {
+      "kind": "li",
+      "text": "Tatsu Hashimoto (Gates 364): Fridays at 3-4pm"
+    },
+    {
+      "kind": "li",
+      "text": "Percy Liang (Gates 350): Fridays at 11am-12pm"
+    },
+    {
+      "kind": "li",
+      "text": "Marcel Rød (Gates 415): Mondays 11am-12pm, Wednesdays 11am-12pm"
+    },
+    {
+      "kind": "li",
+      "text": "Neil Band (Gates 358): Mondays 4-5pm, Tuesdays 5-6pm"
+    },
+    {
+      "kind": "li",
+      "text": "Rohith Kuditipudi (Gates 358): Mondays 10-11am, Wednesdays 10-11am"
+    },
+    {
+      "kind": "li",
+      "text": "Contact: Students should ask all course-related questions in public Slack channels. All announcements will also be made in Slack. For personal matters, email cs336-spr2425-staff@lists.stanford.edu."
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Content"
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "What is this course about?"
+    },
+    {
+      "kind": "p",
+      "text": "Language models serve as the cornerstone of modern natural language processing (NLP) applications and open up a new paradigm of having a single general purpose system address a range of downstream tasks. As the field of artificial intelligence (AI), machine learning (ML), and NLP continues to grow, possessing a deep understanding of language models becomes essential for scientists and engineers alike. This course is designed to provide students with a comprehensive understanding of language models by walking them through the entire process of developing their own. Drawing inspiration from operating systems courses that create an entire operating system from scratch, we will lead students through every aspect of language model creation, including data collection and cleaning for pre-training, transformer model construction, model training, and evaluation before deployment."
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Prerequisites"
+    },
+    {
+      "kind": "li",
+      "text": "Proficiency in Python"
+    },
+    {
+      "kind": "p",
+      "text": "The majority of class assignments will be in Python. Unlike most other AI classes, students will be given minimal scaffolding. The amount of code you will write will be at least an order of magnitude greater than for other classes. Therefore, being proficient in Python and software engineering is paramount."
+    },
+    {
+      "kind": "li",
+      "text": "Experience with deep learning and systems optimization"
+    },
+    {
+      "kind": "p",
+      "text": "A significant part of the course will involve making neural language models run quickly and efficiently on GPUs across multiple machines. We expect students to be able to have a strong familiarity with PyTorch and know basic systems concepts like the memory hierarchy."
+    },
+    {
+      "kind": "li",
+      "text": "College Calculus, Linear Algebra (e.g. MATH 51, CME 100)"
+    },
+    {
+      "kind": "p",
+      "text": "You should be comfortable understanding matrix/vector notation and operations."
+    },
+    {
+      "kind": "li",
+      "text": "Basic Probability and Statistics (e.g. CS 109 or equivalent)"
+    },
+    {
+      "kind": "p",
+      "text": "You should know the basics of probabilities, Gaussian distributions, mean, standard deviation, etc."
+    },
+    {
+      "kind": "li",
+      "text": "Machine Learning (e.g. CS221, CS229, CS230, CS124, CS224N)"
+    },
+    {
+      "kind": "p",
+      "text": "You should be comfortable with the basics of machine learning and deep learning."
+    },
+    {
+      "kind": "p",
+      "text": "Note that this is a 5-unit class. This is a very implementation-heavy class, so please allocate enough time for it."
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Coursework"
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Assignments"
+    },
+    {
+      "kind": "li",
+      "text": "Assignment 1: Basics [leaderboard]"
+    },
+    {
+      "kind": "li",
+      "text": "Implement all of the components (tokenizer, model architecture, optimizer) necessary to train a standard Transformer language model."
+    },
+    {
+      "kind": "li",
+      "text": "Train a minimal language model."
+    },
+    {
+      "kind": "li",
+      "text": "Assignment 2: Systems [leaderboard]"
+    },
+    {
+      "kind": "li",
+      "text": "Profile and benchmark the model and layers from Assignment 1 using advanced tools, optimize Attention with your own Triton implementation of FlashAttention2."
+    },
+    {
+      "kind": "li",
+      "text": "Build a memory-efficient, distributed version of the Assignment 1 model training code."
+    },
+    {
+      "kind": "li",
+      "text": "Assignment 3: Scaling"
+    },
+    {
+      "kind": "li",
+      "text": "Understand the function of each component of the Transformer."
+    },
+    {
+      "kind": "li",
+      "text": "Query a training API to fit a scaling law to project model scaling."
+    },
+    {
+      "kind": "li",
+      "text": "Assignment 4: Data [leaderboard]"
+    },
+    {
+      "kind": "li",
+      "text": "Convert raw Common Crawl dumps into usable pretraining data."
+    },
+    {
+      "kind": "li",
+      "text": "Perform filtering and deduplication to improve model performance."
+    },
+    {
+      "kind": "li",
+      "text": "Assignment 5: Alignment and Reasoning RL"
+    },
+    {
+      "kind": "li",
+      "text": "Apply supervised finetuning and reinforcement learning to train LMs to reason when solving math problems."
+    },
+    {
+      "kind": "li",
+      "text": "Optional Part 2: implement and apply safety alignment methods such as DPO."
+    },
+    {
+      "kind": "text",
+      "text": "All (currently tentative) deadlines are listed in the ."
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "GPU compute for self-study"
+    },
+    {
+      "kind": "p",
+      "text": "If you are following along at home, you can access GPU compute from a cloud provider to complete the assignments. Here are a few options (prices for a single H100 80GB GPU on June 6, 2025):"
+    },
+    {
+      "kind": "li",
+      "text": "RunPod: $1.99-$2.99/hour (RunPod Pricing)"
+    },
+    {
+      "kind": "li",
+      "text": "Lambda Labs: $2.49–$3.29/hour (Lambda Labs Pricing)"
+    },
+    {
+      "kind": "li",
+      "text": "Paperspace: $2.24/hour (Paperspace Pricing)"
+    },
+    {
+      "kind": "li",
+      "text": "Together: $2.85/hour, minimum 8 GPUs (Together Instant GPU Cluster Pricing)"
+    },
+    {
+      "kind": "text",
+      "text": "For convenience and to save money, we recommend debugging correctness of your implementation on CPU first and then using GPU(s) (with the count recommended in the assignments) for completing training runs (A1, A4, A5) or benchmarking GPU operations (A2)."
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Honor code"
+    },
+    {
+      "kind": "text",
+      "text": "Like all other classes at Stanford, we take the student seriously. Please respect the following policies:"
+    },
+    {
+      "kind": "li",
+      "text": "Collaboration: Study groups are allowed, but students must understand and complete their own assignments, and hand in one assignment per student. If you worked in a group, please put the names of the members of your study group at the top of your assignment. Please ask if you have any questions about the collaboration policy."
+    },
+    {
+      "kind": "li",
+      "text": "AI tools: Prompting LLMs such as ChatGPT is permitted for low-level programming questions or high-level conceptual questions about language models, but using it directly to solve the problem is prohibited. We strongly encourage you to disable AI autocomplete (e.g., Cursor Tab, GitHub CoPilot) in your IDE when completing assignments (though non-AI autocomplete, e.g., autocompleting function names is totally fine). We have found that AI autocomplete makes it much harder to engage deeply with the content."
+    },
+    {
+      "kind": "li",
+      "text": "Existing code: Implementations for many of the things you will implement exist online. The handouts we'll give will be self-contained, so that you will not need to consult third-party code for producing your own implementation. Thus, you should not look at any existing code unless when otherwise specified in the handouts."
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Submitting coursework"
+    },
+    {
+      "kind": "li",
+      "text": "All coursework are submitted via Gradescope by the deadline. Do not submit your coursework via email."
+    },
+    {
+      "kind": "li",
+      "text": "If anything goes wrong, please ask a question in Slack or contact a course assistant."
+    },
+    {
+      "kind": "li",
+      "text": "You can submit as many times as you'd like until the deadline: we will only grade the last submission."
+    },
+    {
+      "kind": "li",
+      "text": "Partial work is better than not submitting any work."
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Late days"
+    },
+    {
+      "kind": "li",
+      "text": "Each student has 6 late days to use. A late day extends the deadline by 24 hours."
+    },
+    {
+      "kind": "li",
+      "text": "You can use up to 3 late days per assignment."
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Regrade requests"
+    },
+    {
+      "kind": "p",
+      "text": "If you believe that the course staff made an objective error in grading, you may submit a regrade request on Gradescope within 3 days after the grades are released."
+    },
+    {
+      "kind": "heading",
+      "level": 3,
+      "text": "Sponsor"
+    },
+    {
+      "kind": "p",
+      "text": "We would like to thank Together AI for sponsoring the compute for this class."
+    },
+    {
+      "kind": "heading",
+      "level": 2,
+      "text": "Schedule"
+    },
+    {
+      "kind": "th",
+      "text": "Date"
+    },
+    {
+      "kind": "th",
+      "text": "Description"
+    },
+    {
+      "kind": "th",
+      "text": "Course Materials"
+    },
+    {
+      "kind": "th",
+      "text": "Deadlines"
+    },
+    {
+      "kind": "td",
+      "text": "Tues April 1"
+    },
+    {
+      "kind": "td",
+      "text": "Overview, tokenization (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_01.py"
+    },
+    {
+      "kind": "td",
+      "text": "Assignment 1 out [code] [preview] [leaderboard]"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs April 3"
+    },
+    {
+      "kind": "td",
+      "text": "PyTorch, resource accounting (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_02.py"
+    },
+    {
+      "kind": "td",
+      "text": "Tues April 8"
+    },
+    {
+      "kind": "td",
+      "text": "Architectures, hyperparameters (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 3.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs April 10"
+    },
+    {
+      "kind": "td",
+      "text": "Mixture of experts (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 4.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "Tues April 15"
+    },
+    {
+      "kind": "td",
+      "text": "GPUs (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 5.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "Assignment 1 due Assignment 2 out [code] [preview] [leaderboard]"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs April 17"
+    },
+    {
+      "kind": "td",
+      "text": "Kernels, Triton (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_06.py"
+    },
+    {
+      "kind": "td",
+      "text": "Tues April 22"
+    },
+    {
+      "kind": "td",
+      "text": "Parallelism (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 7.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs April 24"
+    },
+    {
+      "kind": "td",
+      "text": "Parallelism (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_08.py"
+    },
+    {
+      "kind": "td",
+      "text": "Tues April 29"
+    },
+    {
+      "kind": "td",
+      "text": "Scaling laws (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 9.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "Assignment 3 out [code] [preview]"
+    },
+    {
+      "kind": "td",
+      "text": "Wed April 30"
+    },
+    {
+      "kind": "td",
+      "text": "Assignment 2 due"
+    },
+    {
+      "kind": "td",
+      "text": "10"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs May 1"
+    },
+    {
+      "kind": "td",
+      "text": "Inference (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_10.py"
+    },
+    {
+      "kind": "td",
+      "text": "11"
+    },
+    {
+      "kind": "td",
+      "text": "Tues May 6"
+    },
+    {
+      "kind": "td",
+      "text": "Scaling laws (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 11.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "Assignment 3 due Assignment 4 out [code] [preview] [leaderboard]"
+    },
+    {
+      "kind": "td",
+      "text": "12"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs May 8"
+    },
+    {
+      "kind": "td",
+      "text": "Evaluation (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_12.py"
+    },
+    {
+      "kind": "td",
+      "text": "13"
+    },
+    {
+      "kind": "td",
+      "text": "Tues May 13"
+    },
+    {
+      "kind": "td",
+      "text": "Data (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_13.py"
+    },
+    {
+      "kind": "td",
+      "text": "14"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs May 15"
+    },
+    {
+      "kind": "td",
+      "text": "Data (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_14.py"
+    },
+    {
+      "kind": "td",
+      "text": "15"
+    },
+    {
+      "kind": "td",
+      "text": "Tues May 20"
+    },
+    {
+      "kind": "td",
+      "text": "Alignment - SFT/RLHF (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 15.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "16"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs May 22"
+    },
+    {
+      "kind": "td",
+      "text": "Alignment - RL (Tatsu)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture 16.pdf"
+    },
+    {
+      "kind": "td",
+      "text": "Fri May 23"
+    },
+    {
+      "kind": "td",
+      "text": "Assignment 4 due Assignment 5 out [code] [preview]"
+    },
+    {
+      "kind": "td",
+      "text": "17"
+    },
+    {
+      "kind": "td",
+      "text": "Tues May 27"
+    },
+    {
+      "kind": "td",
+      "text": "Alignment - RL (Percy)"
+    },
+    {
+      "kind": "td",
+      "text": "lecture_17.py"
+    },
+    {
+      "kind": "td",
+      "text": "18"
+    },
+    {
+      "kind": "td",
+      "text": "Thurs May 29"
+    },
+    {
+      "kind": "td",
+      "text": "Guest Lecture by Junyang Lin"
+    },
+    {
+      "kind": "td",
+      "text": "19"
+    },
+    {
+      "kind": "td",
+      "text": "Tues June 3"
+    },
+    {
+      "kind": "td",
+      "text": "Guest lecture by Mike Lewis"
+    },
+    {
+      "kind": "td",
+      "text": "Fri June 6"
+    },
+    {
+      "kind": "td",
+      "text": "Assignment 5 due"
+    }
+  ],
+  "links": [
+    {
+      "text": "CS336",
+      "url": "https://cs336.stanford.edu/spring2025/index.html",
+      "target_page_id": null,
+      "is_nav": true
+    },
+    {
+      "text": "Coursework",
+      "url": "https://cs336.stanford.edu/spring2025/#coursework",
+      "target_page_id": "spring2025",
+      "is_nav": true
+    },
+    {
+      "text": "Schedule",
+      "url": "https://cs336.stanford.edu/spring2025/#schedule",
+      "target_page_id": "spring2025",
+      "is_nav": true
+    },
+    {
+      "text": "Stanford Natural Language Processing Group logo",
+      "url": "https://nlp.stanford.edu/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Stanford Center for Research on Foundation Models logo",
+      "url": "https://crfm.stanford.edu",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "here",
+      "url": "https://cs336.stanford.edu/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Tatsunori Hashimoto headshot Tatsunori Hashimoto",
+      "url": "https://thashim.github.io/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Percy Liang headshot Percy Liang",
+      "url": "https://cs.stanford.edu/~pliang/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Neil Band headshot Neil Band",
+      "url": "https://nband.github.io/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Marcel Rod headshot Marcel Rød",
+      "url": "https://marcel.roed.me",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Rohith Kuditipudi headshot Rohith Kuditipudi",
+      "url": "https://web.stanford.edu/~rohithk/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "NVIDIA Auditorium",
+      "url": "https://campus-map.stanford.edu/?srch=NVIDIA+Auditorium",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "cs336-spr2425-staff@lists.stanford.edu",
+      "url": "mailto:cs336-spr2425-staff@lists.stanford.edu",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Assignment 1 : Basics",
+      "url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "leaderboard",
+      "url": "https://github.com/stanford-cs336/assignment1-basics-leaderboard/tree/master",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Assignment 2 : Systems",
+      "url": "https://github.com/stanford-cs336/assignment2-systems/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "leaderboard",
+      "url": "https://github.com/stanford-cs336/assignment2-systems-leaderboard/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Assignment 3 : Scaling",
+      "url": "https://github.com/stanford-cs336/assignment3-scaling/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Assignment 4 : Data",
+      "url": "https://github.com/stanford-cs336/assignment4-data/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "leaderboard",
+      "url": "https://github.com/stanford-cs336/assignment4-data-leaderboard",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Assignment 5 : Alignment and Reasoning RL",
+      "url": "https://github.com/stanford-cs336/assignment5-alignment",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Optional Part 2",
+      "url": "https://github.com/stanford-cs336/assignment5-alignment/blob/main/cs336_spring2025_assignment5_supplement_safety_rlhf.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "schedule",
+      "url": "https://cs336.stanford.edu/spring2025/#schedule",
+      "target_page_id": "spring2025",
+      "is_nav": false
+    },
+    {
+      "text": "RunPod",
+      "url": "https://docs.runpod.io/get-started",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "RunPod Pricing",
+      "url": "https://runpod.io/pricing",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Lambda Labs",
+      "url": "https://docs.lambda.ai/public-cloud/on-demand/creating-managing-instances/#launching-instances",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Lambda Labs Pricing",
+      "url": "https://lambda.ai/pricing",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Paperspace",
+      "url": "https://docs.digitalocean.com/products/paperspace/deployments/getting-started/quickstart/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Paperspace Pricing",
+      "url": "https://www.paperspace.com/pricing",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Together",
+      "url": "https://www.together.ai/blog/instant-gpu-clusters",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Together Instant GPU Cluster Pricing",
+      "url": "https://www.together.ai/blog/instant-gpu-clusters",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Honor Code",
+      "url": "https://ed.stanford.edu/academics/masters-handbook/honor-code",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Together AI",
+      "url": "https://together.ai",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture_01.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_01.json",
+      "target_page_id": "spring2025-lectures__q_59ae59be",
+      "is_nav": false
+    },
+    {
+      "text": "code",
+      "url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "preview",
+      "url": "https://github.com/stanford-cs336/assignment1-basics/blob/main/cs336_spring2025_assignment1_basics.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "leaderboard",
+      "url": "https://github.com/stanford-cs336/spring2025-assignment1-basics-leaderboard/tree/master",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture_02.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_02.json",
+      "target_page_id": "spring2025-lectures__q_f5c60497",
+      "is_nav": false
+    },
+    {
+      "text": "lecture 3.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e9cb2488fdb53ea37f0e38924ec3a1701925cef3/nonexecutable/2025%20Lecture%203%20-%20architecture.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture 4.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/98455ec198c9a88ec1ab2b1c4058662431b54ce3/nonexecutable/2025%20Lecture%204%20-%20MoEs.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture 5.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/main/nonexecutable/2025%20Lecture%205%20-%20GPUs.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "code",
+      "url": "https://github.com/stanford-cs336/assignment2-systems/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "preview",
+      "url": "https://github.com/stanford-cs336/assignment2-systems/blob/main/cs336_spring2025_assignment2_systems.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "leaderboard",
+      "url": "https://github.com/stanford-cs336/assignment2-systems-leaderboard/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture_06.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_06.json",
+      "target_page_id": "spring2025-lectures__q_0a2f1484",
+      "is_nav": false
+    },
+    {
+      "text": "lecture 7.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture_08.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_08.json",
+      "target_page_id": "spring2025-lectures__q_8451f641",
+      "is_nav": false
+    },
+    {
+      "text": "lecture 9.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/fb79eb018fa047bf99c4c785dcbbd62fff361e54/nonexecutable/2025%20Lecture%209%20-%20Scaling%20laws%20basics.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "code",
+      "url": "https://github.com/stanford-cs336/assignment3-scaling/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "preview",
+      "url": "https://github.com/stanford-cs336/assignment3-scaling/blob/main/cs336_spring2025_assignment3_scaling.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture_10.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_10.json",
+      "target_page_id": "spring2025-lectures__q_d665f0c2",
+      "is_nav": false
+    },
+    {
+      "text": "lecture 11.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/00191bba00d6d64621dc46ccaed9122681413a24/nonexecutable/2025%20Lecture%2011%20-%20Scaling%20details.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "code",
+      "url": "https://github.com/stanford-cs336/assignment4-data/tree/main",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "preview",
+      "url": "https://github.com/stanford-cs336/assignment4-data/blob/main/cs336_spring2025_assignment4_data.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "leaderboard",
+      "url": "https://github.com/stanford-cs336/assignment4-data-leaderboard",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture_12.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_12.json",
+      "target_page_id": "spring2025-lectures__q_24e05133",
+      "is_nav": false
+    },
+    {
+      "text": "lecture_13.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_13.json",
+      "target_page_id": "spring2025-lectures__q_cc6050c6",
+      "is_nav": false
+    },
+    {
+      "text": "lecture_14.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_14.json",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture 15.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/61eddac004df975466cff0329b615f2d24230069/nonexecutable/2025%20Lecture%2015%20-%20RLHF%20Alignment.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture 16.pdf",
+      "url": "https://github.com/stanford-cs336/spring2025-lectures/blob/e94e33f433985e57036b25215dff2a4292e67a4f/nonexecutable/2025%20Lecture%2016%20-%20RLVR.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "code",
+      "url": "https://github.com/stanford-cs336/assignment5-alignment",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "preview",
+      "url": "https://github.com/stanford-cs336/assignment5-alignment/blob/master/cs336_spring2025_assignment5_alignment.pdf",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "lecture_17.py",
+      "url": "https://cs336.stanford.edu/spring2025-lectures/?trace=var/traces/lecture_17.json",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Junyang Lin",
+      "url": "https://justinlin610.github.io/",
+      "target_page_id": null,
+      "is_nav": false
+    },
+    {
+      "text": "Mike Lewis",
+      "url": "https://ai.meta.com/people/209431298931133/mike-lewis/",
+      "target_page_id": null,
+      "is_nav": false
+    }
+  ],
+  "outgoing_page_ids": [
+    "spring2025-lectures__q_0a2f1484",
+    "spring2025-lectures__q_24e05133",
+    "spring2025-lectures__q_59ae59be",
+    "spring2025-lectures__q_8451f641",
+    "spring2025-lectures__q_cc6050c6",
+    "spring2025-lectures__q_d665f0c2",
+    "spring2025-lectures__q_f5c60497"
+  ],
+  "forms": [],
+  "images": [
+    {
+      "url": "https://cs336.stanford.edu/assets/images/stanford-nlp-logo-new.jpg",
+      "alt": "Stanford Natural Language Processing Group logo"
+    },
+    {
+      "url": "https://cs336.stanford.edu/assets/images/crfm-rgb.png",
+      "alt": "Stanford Center for Research on Foundation Models logo"
+    },
+    {
+      "url": "https://cs336.stanford.edu/assets/images/thashim.jpeg",
+      "alt": "Tatsunori Hashimoto headshot"
+    },
+    {
+      "url": "https://cs336.stanford.edu/assets/images/pliang.jpeg",
+      "alt": "Percy Liang headshot"
+    },
+    {
+      "url": "https://cs336.stanford.edu/assets/images/nband.jpg",
+      "alt": "Neil Band headshot"
+    },
+    {
+      "url": "https://cs336.stanford.edu/assets/images/mroed.jpg",
+      "alt": "Marcel Rod headshot"
+    },
+    {
+      "url": "https://cs336.stanford.edu/assets/images/rohithk.jpg",
+      "alt": "Rohith Kuditipudi headshot"
+    }
+  ],
+  "json_ld_types": [
+    "Course"
+  ],
+  "provenance": {
+    "requested_url": "https://cs336.stanford.edu/spring2025/",
+    "final_url": "https://cs336.stanford.edu/spring2025",
+    "http_status": 200,
+    "redirect_chain": [],
+    "capture_mode": "static",
+    "discovered_via": "seed",
+    "depth": 0,
+    "content_sha256": "2754583fe0977dfb746c0ae40fc19afd82437641d52919e3693d94fcaace9004",
+    "html_path": "html/spring2025.html"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "spec_version": "0.2",
+  "page_id": "stanford-cs336-assignment1-basics__file__tests--test-optimizer-py",
+  "source_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+  "url_path": "tests/test_optimizer.py",
+  "title": "tests/test_optimizer.py",
+  "page_type": "code",
+  "unit_kind": "code",
+  "locator": "tests/test_optimizer.py",
+  "summary": "import numpy\nimport torch\n\nfrom .adapters import get_adamw_cls, run_get_lr_cosine_schedule\n\n\ndef _optimize(opt_class) -> torch.Tensor:\n    torch.manual_seed(42)\n    model = torch.nn.Linear(3, 2, bias=False)\n    opt = opt_class(\n        mod…",
+  "content": [
+    {
+      "kind": "pre",
+      "text": "import numpy\nimport torch\n\nfrom .adapters import get_adamw_cls, run_get_lr_cosine_schedule\n\n\ndef _optimize(opt_class) -> torch.Tensor:\n    torch.manual_seed(42)\n    model = torch.nn.Linear(3, 2, bias=False)\n    opt = opt_class(\n        model.parameters(),\n        lr=1e-3,\n        weight_decay=0.01,\n        betas=(0.9, 0.999),\n        eps=1e-8,\n    )\n    # Use 1000 optimization steps for testing\n    for _ in range(1000):\n        opt.zero_grad()\n        x = torch.rand(model.in_features)\n        y_hat = model(x)\n        y = torch.tensor([x[0] + x[1], -x[2]])\n        loss = ((y - y_hat) ** 2).sum()\n        loss.backward()\n        opt.step()\n    return model.weight.detach()\n\n\ndef test_adamw(numpy_snapshot):\n    \"\"\"\n    Our reference implementation yields slightly different results than the\n    PyTorch AdamW, since there are a couple different ways that you can apply\n    weight decay that are equivalent in principle, but differ in practice due to\n    floating point behavior. So, we test that the provided implementation matches\n    _either_ our reference implementation's expected results or those from the PyTorch AdamW.\n    \"\"\"\n    # expected_weights = torch.load(FIXTURES_PATH / \"adamw_expected_params.pt\")\n    pytorch_weights = _optimize(torch.optim.AdamW)\n    actual_weights = _optimize(get_adamw_cls())\n\n    # Might need to exit early if the weights match pytorch, since that should also be valid\n    matches_pytorch = torch.allclose(actual_weights, pytorch_weights, atol=1e-4)\n    if matches_pytorch:\n        return\n\n    numpy_snapshot.assert_match(\n        actual_weights,\n        atol=1e-4,\n    )\n\n\ndef test_get_lr_cosine_schedule():\n    max_learning_rate = 1\n    min_learning_rate = 1 * 0.1\n    warmup_iters = 7\n    cosine_cycle_iters = 21\n\n    expected_lrs = [\n        0,\n        0.14285714285714285,\n        0.2857142857142857,\n        0.42857142857142855,\n        0.5714285714285714,\n        0.7142857142857143,\n        0.8571428571428571,\n        1.0,\n        0.9887175604818206,\n        0.9554359905560885,\n        0.9018241671106134,\n        0.8305704108364301,\n        0.7452476826029011,\n        0.6501344202803414,\n        0.55,\n        0.44986557971965857,\n        0.3547523173970989,\n        0.26942958916356996,\n        0.19817583288938662,\n        0.14456400944391146,\n        0.11128243951817937,\n        0.1,\n        0.1,\n        0.1,\n        0.1,\n    ]\n    actual_lrs = [\n        run_get_lr_cosine_schedule(\n            it=it,\n            max_learning_rate=max_learning_rate,\n            min_learning_rate=min_learning_rate,\n            warmup_iters=warmup_iters,\n            cosine_cycle_iters=cosine_cycle_iters,\n        )\n        for it in range(25)\n    ]\n    numpy.testing.assert_allclose(numpy.array(actual_lrs), numpy.array(expected_lrs))\n",
+      "lang": "py"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "capture_mode": "ingest",
+    "content_sha256": "53498ba85e149e46d6d8a0110bed111cfd4de80c05c995da6d57a69473c8afb8",
+    "discovered_via": "attachment",
+    "attachment_kind": "repo",
+    "attachment_url": "https://github.com/stanford-cs336/assignment1-basics/tree/main",
+    "fetched_url": "https://codeload.github.com/stanford-cs336/assignment1-basics/zip/refs/heads/main",
+    "from_page_id": "spring2025",
+    "anchor_text": "Assignment 1 : Basics",
+    "attachment_sha256": "8d3f2f0e336ce72e101ac24b6b1a326942199501351a1ac431dd9e6b00c2acdf",
+    "attachment_bytes": 10635019
+  }
+}

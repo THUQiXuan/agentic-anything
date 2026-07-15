@@ -313,10 +313,17 @@ def main() -> int:
     manifest, source_meta = load_source_manifest()
     snapshot_paths = {key: ensure_snapshot(meta) for key, meta in source_meta.items()}
 
-    for directory in (PACKS, RESULTS):
-        if directory.exists():
-            shutil.rmtree(directory)
-        directory.mkdir(parents=True)
+    # Rebuild only the packs this script owns. cs336-course is remote-pinned
+    # and built live by demos/build_course_pack.py; never wipe it here.
+    owned_packs = ("requests", "alice", "secrets", "gistemp", "fair-paper",
+                   "footage-library")
+    if RESULTS.exists():
+        shutil.rmtree(RESULTS)
+    RESULTS.mkdir(parents=True)
+    PACKS.mkdir(parents=True, exist_ok=True)
+    for demo_id in owned_packs:
+        if (PACKS / demo_id).exists():
+            shutil.rmtree(PACKS / demo_id)
 
     display = {
         "requests": {
@@ -381,6 +388,15 @@ def main() -> int:
                 actual = PackReader(PACKS / demo_id).site.get("resource_type")
                 if actual != expected_type:
                     raise RuntimeError(f"{demo_id}: expected {expected_type}, got {actual}")
+
+            # the vlogger footage library: three CC-licensed film transcripts
+            # ingested as one folder pack (time-coded subtitle units)
+            agentify(str(SOURCES / "footage"), "footage-library")
+            footage_type = PackReader(PACKS / "footage-library").site.get("resource_type")
+            if footage_type != "collection":
+                raise RuntimeError(f"footage-library: expected collection, got {footage_type}")
+            publish_pack(PACKS / "footage-library",
+                         {str(SOURCES / "footage"): "demos/sources/footage"})
 
             public_replacements = {
                 "requests": {str(repo_root): source_meta["requests"]["origin_url"]},

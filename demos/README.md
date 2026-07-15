@@ -1,119 +1,149 @@
-# Agentic Anything long-horizon demo gallery
+# Agentic Anything demo gallery
 
-[Open the hosted gallery](https://thuqixuan.github.io/agentic-anything/) ·
-[inspect the run index](runs/index.json) ·
-[audit the source manifest](sources/real-sources.json) ·
-[read the main project documentation](../README.md)
+[**Open the hosted gallery**](https://thuqixuan.github.io/agentic-anything/) ·
+[run index](runs/index.json) ·
+[source manifest](sources/real-sources.json) ·
+[main documentation](../README.md)
 
-The gallery answers a harder question than “can the pack retrieve one fact?”:
-can an agent use a pack across a long task, produce a useful file, and leave
-enough evidence for another process to check the work?
+The gallery answers three questions in one screen, per resource:
+**what the resource was**, **what one command turned it into**, and
+**what talking to it looks like** — with every reply being a *recorded,
+offline-verifiable* replay, never a mockup.
 
-## Three recorded runs
+## The two flagship scenarios
 
-| Run | Controller | Horizon | Output | Checks |
-|---|---|---:|---|---:|
-| Requests redirect impact | Real `openai/gpt-4.1-mini` tool loop over stdio MCP + deterministic offline reviewer | 19 recorded model/MCP steps + 2 offline steps | raw accepted draft + reviewed maintainer brief + claim ledger | 9/9 |
-| NASA GISTEMP + FAIR audit | Deterministic evidence agent over two packs | 16 steps | computed climate brief + 15-principle audit | 23/23 |
-| Requests redirect impact | Deterministic evidence agent | 14 steps | reproducible change-impact report | 20/20 |
+### 🎓 One course URL → a course agent (`packs/cs336-course`)
 
-The real model run starts with no repository context. It makes 19 tool calls,
-including five searches and eleven reads. Its first submission is rejected for
-missing search/documentation coverage. Recorded model/MCP activity ends at step
-19. Steps 20–21 are explicitly labeled deterministic offline review/publish
-operations: they catch a subtler problem where the model attributed
-`max_redirects` to a docs unit that never says it.
+```bash
+agentic-anything agentify https://cs336.stanford.edu/spring2025/ \
+    --follow-docs 6 --follow-repos 1
+```
 
-[`raw-transcript.json`](runs/requests-redirect-impact-llm/raw-transcript.json)
-contains only the recorded model messages/tool calls and MCP exchanges behind
-steps 1–19; it is not a transcript of the two offline steps. The reviewer
-extracts the last accepted `submit_deliverable.artifact_markdown` verbatim into
-[`accepted-model-draft.md`](runs/requests-redirect-impact-llm/accepted-model-draft.md),
-then applies five named, exact-once replacements to regenerate the reviewed
-artifact. A previously edited artifact is never a review input.
+Deep capture pulls six lecture PDF decks (page-addressable units) and the
+`assignment1-basics` starter repository into the same pack, and records four
+dead assignment-handout links in the frontier instead of hiding them. On top
+of that pack we ship:
 
-Every final LLM citation was read before publication, but not every read was
-search-discovered. In particular, `quickstart.rst` did not occur in the prior
-ranked search results: the first rejected submission's evidence gate explicitly
-required that unit, after which the model read it directly. The run and verifier
-label this path `evidence-gate-directed-read` instead of implying a universal
-search→read→cite sequence.
+- **Three recorded real-model conversations** (`runs/recorded-chats.json`,
+  `google/gemini-3.5-flash` over the production `chat --ask` path): which
+  slide pages cover RoPE; where to start Assignment 1; and how to get the
+  handout whose course-page link 404s — the agent routes around the dead link
+  using the frontier record plus the repo tree, which lists
+  `cs336_assignment1_basics.pdf (965,629 bytes)` beyond the text-capture
+  boundary.
+- **A 14-step deterministic run** (`runs/cs336-course-week1/`) through a real
+  stdio MCP subprocess: 5 searches, 5 hash-verified reads, a link-rot check,
+  and a cited week-1 study plan. 10/10 offline checks.
 
-The deterministic runs are not presented as LLM reasoning. They are explicit,
-task-specific agent policies that drive fresh `agentic-anything mcp` subprocesses,
-parse returned evidence, compute results, and reject citations to units that were
-not searched and read first. They can be rebuilt byte-for-byte without a key.
-In the FAIR table, runtime claims such as “searchable through this local MCP
-run” use separate `RUN-*` references to exact run steps and raw exchanges;
-GISTEMP/FAIR pack citations are not presented as proof of runtime behavior.
+The pack's upstream materials are **remote-pinned**: exact URLs, sizes, and
+SHA-256 digests live in `sources/real-sources.json → remote_pinned` and in
+every attachment unit's provenance. Rebuild live with
+`python demos/build_course_pack.py` (network required; CI never does this —
+it verifies the committed pack offline instead).
+
+### 🎬 A footage folder → a cutting agent (`packs/footage-library`)
+
+```bash
+agentic-anything agentify ./footage -o packs/footage-library
+```
+
+Three CC-BY Blender open-movie transcripts (Sintel, Tears of Steel, Elephants
+Dream — byte-pinned in `sources/footage/`) become one searchable library whose
+units stamp every cue: `[00:07:37.800 → 00:07:40.500] These are dragon lands,
+Sintel.` On top:
+
+- **Two recorded real-model conversations**: find every dragon mention with
+  cuttable timecodes; pin the closing line's exact timing.
+- **A 14-step deterministic run** (`runs/footage-teaser-cut/`) that assembles
+  a themed teaser: every cut is pure ±0.75 s arithmetic on a cue that was
+  read through MCP, the artifact carries per-film CC-BY attribution and
+  executable ffmpeg commands against the official releases. 12/12 checks.
+
+## Also in the gallery
+
+- Five more resource shapes (Requests repo, *Alice in Wonderland* EPUB,
+  docs.python.org, NASA GISTEMP CSV, the FAIR paper) with cited answers and
+  pinned sources — plus the previously recorded **21-step real
+  `openai/gpt-4.1-mini` tool loop** over stdio MCP
+  (`runs/requests-redirect-impact-llm/`, evidence-gate rejections preserved)
+  and two deterministic long runs (`requests-redirect-impact`,
+  `gistemp-fair-audit`).
+- In total: **5 runs, 74/74 offline checks**, and 15 recorded model calls
+  (10 tool-loop + 5 chat) — all committed, none re-run in your browser.
 
 ## What is checked in
 
 ```text
 demos/
-├── sources/                       # five byte-for-byte publisher snapshots
-├── packs/                         # generated agent-native representations
+├── index.html                 # the gallery (replay UI; fetches committed data only)
+├── results/gallery-data.json  # display data derived from packs + runs + chats
+├── sources/                   # byte-pinned snapshots + remote-pinned manifest
+│   └── footage/               # three official film transcripts (CC-BY)
+├── packs/                     # 7 committed packs (5 rebuilt in CI + course + footage)
 ├── runs/
-│   ├── requests-redirect-impact-llm/
-│   │   ├── run.json               # public step timeline and checked claims
-│   │   ├── raw-transcript.json    # model messages + full MCP JSON-RPC
-│   │   ├── accepted-model-draft.md # verbatim last accepted raw model draft
-│   │   └── maintainer-impact-brief.md
-│   ├── gistemp-fair-audit/        # run, artifact, raw events, verification
-│   └── requests-redirect-impact/  # run, artifact, raw events, verification
-├── build_demos.py                 # rebuild authentic packs (zero model calls)
-├── build_agent_runs.py            # replay deterministic agents
-├── record_llm_run.py              # optional paid one-time recorder
-├── review_recorded_llm_run.py     # raw-draft extraction + deterministic review transform
-└── verify_demos.py                # publishability and lineage checks
+│   ├── cs336-course-week1/         # run.json · artifact.md · verification · raw events
+│   ├── footage-teaser-cut/
+│   ├── requests-redirect-impact-llm/   # recorded model run (see below)
+│   ├── requests-redirect-impact/
+│   ├── gistemp-fair-audit/
+│   ├── recorded-chats.json         # five real grounded conversations
+│   └── index.json
+├── build_demos.py             # rebuild the 5 showcase packs + footage (offline)
+├── build_course_pack.py       # live rebuild of the course pack (network)
+├── build_agent_runs.py        # replay the 4 deterministic runs over real MCP
+├── build_gallery_data.py      # regenerate gallery-data.json
+├── record_showcase_chats.py   # re-record the 5 conversations (needs a key)
+├── record_llm_run.py          # re-record the model tool loop (needs a key)
+├── review_recorded_llm_run.py # deterministic review of the recorded loop
+├── render_hero_svg.py         # regenerate the README's animated SVG
+└── verify_demos.py            # the offline gate CI runs
 ```
 
-Every upstream resource still has a publisher URL, pinned version, license, and
-snapshot SHA-256 in [`real-sources.json`](sources/real-sources.json). The pack
-build verifies those bytes before doing any transformation.
-
-## Rebuild and verify
-
-From the repository root:
+## Rebuild and verify (offline, what CI runs)
 
 ```bash
 PYTHONPATH=src python demos/build_demos.py
 PYTHONPATH=src python demos/review_recorded_llm_run.py
 PYTHONPATH=src python demos/build_agent_runs.py
+PYTHONPATH=src python demos/build_gallery_data.py
 PYTHONPATH=src python demos/verify_demos.py
 ```
 
-This rebuilds five packs, regenerates the accepted draft and reviewed artifact
-from the raw recording, replays both deterministic runs through real stdio MCP
-processes, and checks 52 long-run assertions. It makes no paid calls.
+This makes **zero model calls** and is byte-deterministic: CI diffs
+`demos/packs`, `demos/results`, and `demos/runs` against the committed tree.
+`verify_demos.py` additionally re-hashes every course attachment unit,
+re-checks that every recorded chat citation resolves to a real pack unit, and
+re-validates all 74 run assertions.
 
-To record a fresh model trajectory instead:
+To re-record the paid pieces instead (small, optional):
 
 ```bash
 export OPENROUTER_API_KEY="<your-key>"
+PYTHONPATH=src python demos/record_showcase_chats.py     # 5 chat completions
 PYTHONPATH=src python demos/record_llm_run.py --model openai/gpt-4.1-mini
 PYTHONPATH=src python demos/review_recorded_llm_run.py
-PYTHONPATH=src python demos/build_agent_runs.py
 ```
 
-The key is read only from the process environment. It is never written to a
-pack, transcript, artifact, or page.
+The key is read only from the environment and never written to any artifact.
 
-To view the page locally:
+To view the gallery locally:
 
 ```bash
 python -m http.server 8000 --directory demos
 # open http://localhost:8000/
 ```
 
-## Scope
+## Scope and honesty rules
 
-- “Replay” animates committed events; GitHub Pages does not run an agent server.
-- The raw model/MCP transcript covers steps 1–19 only; steps 20–21 are
-  deterministic offline review/publish records in `run.json`.
-- The recorded model output is not accepted merely because it sounds plausible.
-- Deterministic agents demonstrate long tool use and computation, not hidden
-  model reasoning.
-- MCP access is read-only, and no upstream resource is changed.
-- Code units may be truncated at the pack capture limit; the complete release
-  archive is authenticated separately by its snapshot hash.
+- The page is a replay. GitHub Pages serves committed recordings; no model
+  runs in the browser and no network calls leave the page except loading the
+  committed JSON.
+- Deterministic runs are explicit scripted policies over real MCP
+  subprocesses — long tool use and computation, not hidden model reasoning.
+  The two recorded-model surfaces (tool loop, chats) are labeled as such.
+- Citations must exist: a run refuses to cite what it did not read, the chat
+  recorder marks whether every citation resolved, and CI fails if any
+  committed citation stops resolving.
+- MCP access is read-only; no upstream resource is modified. Course materials
+  remain © their authors; the Blender films are CC-BY with attribution
+  carried into every artifact.

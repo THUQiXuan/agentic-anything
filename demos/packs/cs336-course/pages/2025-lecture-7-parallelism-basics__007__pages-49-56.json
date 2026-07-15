@@ -1,0 +1,62 @@
+{
+  "spec_version": "0.2",
+  "page_id": "2025-lecture-7-parallelism-basics__007__pages-49-56",
+  "source_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+  "url_path": "pages 49-56",
+  "title": "2025 Lecture 7 - Parallelism basics — pages 49-56",
+  "page_type": "segment",
+  "unit_kind": "segment",
+  "locator": "pages 49-56",
+  "summary": "‘3D parallelism’ – putting it all together\nSimple rules of thumb from the literature.\n1. Until your model fits in memory..\n• Tensor parallel up to GPUs / machine\n• Pipeline parallel across machines\n› (Or use Zero-3, depending on BW)\n2. The…",
+  "content": [
+    {
+      "kind": "p",
+      "text": "‘3D parallelism’ – putting it all together\nSimple rules of thumb from the literature.\n1. Until your model fits in memory..\n• Tensor parallel up to GPUs / machine\n• Pipeline parallel across machines\n› (Or use Zero-3, depending on BW)\n2. Then until you run out of GPUs\n• Scale the rest of the way with data parallel\nIf your batch size is small.. gradient accumulate to trade higher \nbatch sizes for better communication efficiency."
+    },
+    {
+      "kind": "p",
+      "text": "Scaling strategies from Narayanan 2021\nNotes\n- Tensor parallel first up to 8, then caps out at 8. \n- Pipeline parallel goes up to make the model fit. \n- Dara parallel gradually decreases with scale, with the largest model having DP=6\n32\n32\n32\n32\n32\n32\n24\n15\n9\n6\nDP size"
+    },
+    {
+      "kind": "p",
+      "text": "Careful ‘3D’ parallelism gives linear gains\nMore GPUS, same, flat utilization!"
+    },
+    {
+      "kind": "p",
+      "text": "Tensor parallel = 8 is often optimal\nWhen parallelizing across 64 machines – it’s best to use a 8 x 8 configuration."
+    },
+    {
+      "kind": "p",
+      "text": "Activation recomputation can pay for itself (via memory)\nActivation recomputation  enables larger batches, improving throughput (t=8, p=16)"
+    },
+    {
+      "kind": "p",
+      "text": "Recent LMs – what do they do?\nDolma  – 7B model, FDSP (probably fits intra -node)"
+    },
+    {
+      "kind": "p",
+      "text": "DeepSeek\nDeepSeek – ZeRO stage 1 with Tensor, Sequence, and Pipeline parallel\nV3 – PP (16), EP (64 -way, 8 nodes), ZeRO stage 1"
+    },
+    {
+      "kind": "p",
+      "text": "Yi \nYi - ZeRO stage 1 + Tensor + Pipeline parallel\nYi-lightning (2025) – Tensor replaced by Expert parallelism"
+    }
+  ],
+  "links": [],
+  "outgoing_page_ids": [],
+  "forms": [],
+  "images": [],
+  "provenance": {
+    "source_path": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "capture_mode": "ingest",
+    "content_sha256": "9aac01bc813e142017cb68f06ff8a6e93c9e4cfe12b1a1104bf67387e27e4d9c",
+    "discovered_via": "attachment",
+    "attachment_kind": "document",
+    "attachment_url": "https://github.com/stanford-cs336/spring2025-lectures/blob/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "fetched_url": "https://raw.githubusercontent.com/stanford-cs336/spring2025-lectures/4eff81bee0a853217209e163936b264f03572b66/nonexecutable/2025%20Lecture%207%20-%20Parallelism%20basics.pdf",
+    "from_page_id": "spring2025",
+    "anchor_text": "lecture 7.pdf",
+    "attachment_sha256": "c1868d601380a62d87cbacb91589114e46e3e88e47577d9308dde1788c9cc09a",
+    "attachment_bytes": 5004408
+  }
+}

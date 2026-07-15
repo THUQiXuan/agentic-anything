@@ -1,0 +1,31 @@
+{
+  "spec_version": "0.1",
+  "kind": "agentic-anything-pack",
+  "site_id": "cs336-course",
+  "site_name": "Stanford CS336 | Language Modeling from Scratch (2025)",
+  "resource_type": "web",
+  "seed_url": "https://cs336.stanford.edu/spring2025/",
+  "generated_at": "2026-07-15T00:00:00Z",
+  "generator": "agentic-anything/0.5.0",
+  "capabilities": [
+    "site_snapshot",
+    "page_index",
+    "page_manifests",
+    "markdown_views",
+    "api_surface",
+    "html_evidence",
+    "linked_attachments",
+    "resource_agent_interface"
+  ],
+  "contents": {
+    "site_snapshot": "site.json",
+    "page_manifests": "pages/*.json",
+    "markdown_views": "pages/*.md",
+    "html_evidence": "html/*.html",
+    "api_surface": "api/apis.json",
+    "skill": "skills/SKILL.md",
+    "site_cli": "cli/cs336_course_cli.py",
+    "agent_interface": "agent-interface.json",
+    "agent_guide": "AGENT.md"
+  }
+}
